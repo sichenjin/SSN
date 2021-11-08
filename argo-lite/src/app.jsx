@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 import WorkspaceView from "./components/WorkspaceView";
 import appState from "./stores/index";
 import ThreeJSVis from "./visualizers/ThreeJSVis";
-import Map from "./visualizers/Map";
+import MapView from "./visualizers/MapView";
 import FloatingCards from "./components/FloatingCards";
 import registerIPC from "./ipc/client";
 import { fetchWorkspaceProjects } from "./ipc/client";
@@ -85,7 +85,12 @@ class App extends React.Component {
           {appState.graph.hasGraph && <FloatingCards />}
           <Dialogs />
         </div>
-        <Map />
+          {appState.graph.hasGraph ? (
+              <MapView />
+            ) : (
+                <WorkspaceView />
+              )}
+        
       </div>
       
       

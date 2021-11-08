@@ -3,6 +3,7 @@ import { Intent } from "@blueprintjs/core";
 
 import PreferencesStore from "./PreferencesStore";
 import GraphStore from "./GraphStore";
+// import MapStore from "./MapStore";
 import ImportStore from "./ImportStore";
 import ProjectStore from "./ProjectStore";
 // import { peakCSV } from "../services/CSVUtils";
@@ -19,6 +20,7 @@ export class AppState {
   constructor() {
     this.preferences = new PreferencesStore();
     this.graph = new GraphStore();
+    // this.mapview = new MapStore();
     this.import = new ImportStore();
     this.search = new SearchStore();
     this.project = new ProjectStore();
@@ -136,6 +138,13 @@ autorun(() => {
   }
 }) 
 
+// // update MapView
+autorun(() => {
+  if (appState.graph.rawGraph.nodes.length > 0 ) {  // has spatial information 
+    //
+  }
+}) 
+
 autorun(() => {
   if (appState.graph.frame) {
     appState.graph.frame.updateGraph(appState.graph.computedGraph); //loads nodes on screen when snapshot loaded
@@ -147,6 +156,10 @@ autorun(() => {
   //pins nodes only after nodes are loaded
   appState.graph.pinNodes();
 });
+
+
+
+
 
 autorun(() => {
   if (appState.graph.frame && appState.graph.positions) {
