@@ -68,6 +68,8 @@ const ipcRenderer = {
   }
 }
 
+const Nonloc = 360
+
 export default function registerIPC() {
   // ipcRenderer.on(LOADED_USER_CONFIG, (event, loadedObject) => {
   //   // Overwrite PreferenceStore values according to user config values,
@@ -590,7 +592,7 @@ async function importGraphFromCSV(config) {
   
   const edgesArr = [];
 
-  const addEdge = (from, to) => {
+  const addEdge = (from, to, fromlocLatY,fromlocLonX,tolocLatY,tolocLonX) => {
     const edgeKey = `${from}👉${to}`;
     if (edgesSet.has(edgeKey)) {
       return;
@@ -602,16 +604,39 @@ async function importGraphFromCSV(config) {
     edgesArr.push({
       source_id: from,
       target_id: to,
+      fromlocLatY:fromlocLatY,
+      fromlocLonX:fromlocLonX,
+      tolocLatY:tolocLatY,
+      tolocLonX:tolocLonX
     });
   };
   
-  edges.forEach(it => {
-    const from = it[fromId].toString();
-    const to = it[toId].toString();
-    // Argo currently works with undirected graph
-    addEdge(from, to);
-    // addEdge(to, from);
-  });
+  if(config.hasNodeFile && nodesArr[0].LatY !== undefined && nodesArr[0].LonX !== undefined){  //node has spatial location info
+    edges.forEach(it => {
+      const from = it[fromId].toString();
+      const to = it[toId].toString();
+      var fromlocLatY = parseFloat(graph.getNode(it[fromId].toString()).data.LatY)
+      var fromlocLonX = parseFloat(graph.getNode(it[fromId].toString()).data.LonX)
+      var tolocLatY = parseFloat(graph.getNode(it[toId].toString()).data.LatY)
+      var tolocLonX =  parseFloat(graph.getNode(it[toId].toString()).data.LonX) // observable array???
+      // fromloc.push(graph.getNode(it[fromId].toString()).data.LatY) 
+      // fromloc.push(graph.getNode(it[fromId].toString()).data.LonX) 
+      // toloc.push(graph.getNode(it[toId].toString()).data.LatY)
+      // toloc.push(graph.getNode(it[toId].toString()).data.LonX)
+      // Argo currently works with undirected graph
+      addEdge(from, to,fromlocLatY,fromlocLonX,tolocLatY,tolocLonX);
+      // addEdge(to, from);
+    });
+  }else{  //doesn't have  spatial location info
+    edges.forEach(it => {
+      const from = it[fromId].toString();
+      const to = it[toId].toString();
+      // Argo currently works with undirected graph
+      addEdge(from, to,Nonloc,Nonloc,Nonloc,Nonloc);
+      // addEdge(to, from);
+    });
+  }
+  
 
   const rank = pageRank(graph);
   nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: degreeDict[n.id] }));

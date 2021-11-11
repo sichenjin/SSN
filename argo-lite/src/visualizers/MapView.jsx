@@ -1,6 +1,6 @@
 import React from 'react';
 // import L from 'leaflet';
-import { MapContainer, CircleMarker, TileLayer,Tooltip } from "react-leaflet";
+import { MapContainer, CircleMarker, TileLayer,Tooltip,Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import appState from '../stores';
 import { observer } from 'mobx-react';
@@ -64,7 +64,7 @@ class MapView extends React.Component {
               <CircleMarker
                 key={i}
                 center={[node.LatY, node.LonX]}
-                radius={1000 * node.pagerank}
+                radius={10000 * node.pagerank}
                 fillOpacity={0.5}
                 stroke={false}
               >
@@ -73,7 +73,23 @@ class MapView extends React.Component {
                 </Tooltip> */}
               </CircleMarker>
             );
-          })}
+          }) 
+          
+          
+          }
+
+          {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&  
+
+          appState.graph.rawGraph.edges.map((edge, i) => {
+            var edgepositions = [[edge.fromlocLatY,edge.fromlocLonX], [edge.tolocLatY,edge.tolocLonX]]
+            return (
+              <Polyline pathOptions={{color: 'black'}} positions={edgepositions} />
+              
+            );
+          })
+          }
+
+
       </MapContainer>
     </div>
   }
