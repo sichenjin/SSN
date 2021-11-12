@@ -21,6 +21,14 @@ class MapView extends React.Component {
   
   }
 
+  onMouseOut = (e) => {
+    console.log('onMouseOut', e)
+  }
+
+  onMouseOver = (e) => {
+    console.log('onMouseOver', e)
+  }
+
   render() {
 
     
@@ -64,13 +72,32 @@ class MapView extends React.Component {
               <CircleMarker
                 key={i}
                 center={[node.LatY, node.LonX]}
-                radius={10000 * node.pagerank}
+                radius={5000 * node.pagerank}
+                fillColor={'blue'}
                 fillOpacity={0.5}
                 stroke={false}
+                data ={node} 
+                eventHandlers={{
+                  mouseover: (e) => {
+                    // appState.graph.currentlyHovered = e.target.options.data
+                    e.target.setStyle({fillOpacity: 1, fillColor:'red'})
+                    console.log(e.target.options.data)
+                  },
+                  mouseout: (e) => {
+                    // appState.graph.currentlyHovered = 
+                    e.target.setStyle({fillOpacity: 0.5,fillColor:'blue' })
+                    // console.log('marker out', e)
+                  }
+                }}
+                // onMouseOver = {this.onMouseOver}
+                // {(e) => {
+                //   // appState.graph.currentlyHovered = 
+                //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
+                // }}
+                // onMouseOut={this.onMouseOut}
+                // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
               >
-                {/* <Tooltip direction="right" offset={[-8, -2]} opacity={1}>
-                  <span>{city["name"] + ": " + "Population" + " " + city["population"]}</span>
-                </Tooltip> */}
+                
               </CircleMarker>
             );
           }) 
@@ -83,7 +110,7 @@ class MapView extends React.Component {
           appState.graph.rawGraph.edges.map((edge, i) => {
             var edgepositions = [[edge.fromlocLatY,edge.fromlocLonX], [edge.tolocLatY,edge.tolocLonX]]
             return (
-              <Polyline pathOptions={{color: 'black'}} positions={edgepositions} />
+              <Polyline key={i} pathOptions={{color: 'black',weight:'1', opacity:'0.5'}} positions={edgepositions} />
               
             );
           })
