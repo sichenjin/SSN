@@ -57,6 +57,8 @@
     "js-graph-algorithms": "^1.0.18",
     "jsnetworkx": "^0.3.4",
     "leaflet": "^1.7.1",
+    "leaflet-area-select": "^1.0.5",
+    "leaflet.locationfilter": "^0.1.0",
     "lodash": "^4.17.21",
     "lru-cache": "^4.1.1",
     "mini-css-extract-plugin": "0.5.0",

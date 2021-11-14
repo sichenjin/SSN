@@ -215,7 +215,7 @@ export default class GraphStore {
       // If isHidden flag is defined and true on an associated node,
       // leave out its related edges.
       if (graph.hasNode(e.source_id.toString()) && graph.hasNode(e.target_id.toString())) {
-        graph.addLink(e.source_id.toString(), e.target_id.toString());
+        graph.addLink(e.source_id.toString(), e.target_id.toString(),e);
       }
     });
 

@@ -307,6 +307,15 @@ module.exports = function(self) {
     return nodes;
   };
 
+  self.getEdgeList = function(){
+    var edges = [];
+
+    self.graph.forEachLink(function(edge) {
+      edges.push(edge);
+    });
+    return edges;
+  }
+
   self.getPositions = function() {
     var poses = {};
     self.graph.forEachNode(function(node) {

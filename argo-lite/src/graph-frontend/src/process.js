@@ -1,3 +1,5 @@
+const { observable } = require("mobx");
+
 var def = require("./imports").default;
 const spawn = require("threads").spawn;
 var THREE = def.THREE;
@@ -26,7 +28,9 @@ var Frame = function(graph, options) {
   this.textureLoader = new THREE.TextureLoader();
   this.textureLoader.crossOrigin = true;
   this.oldIntersect = -1;
+
   this.selection = [];
+ 
   this.fov = 60;
   this.near = 1;
   this.far = 5000;

@@ -111,7 +111,13 @@ module.exports = function(self) {
   };
 
   self.addEdge = function(source, target, visible = true) {
-    self.graph.addLink(source.id, target.id);
+    var locdata = {
+      fromlocLatY: source.data.ref.LatY,
+      fromlocLonX : source.data.ref.LonX,
+      tolocLatY : target.data.ref.LatY,
+      tolocLonX: target.data.ref.LonX,
+    }
+    self.graph.addLink(source.id, target.id,locdata);
     self.drawEdge(self.getNode(source.id), self.getNode(target.id), visible);
   };
 };

@@ -598,7 +598,14 @@ async function importGraphFromCSV(config) {
       return;
     }
     edgesSet.add(edgeKey);
-    graph.addLink(from, to);
+    var data = {
+      fromlocLatY:fromlocLatY,
+      fromlocLonX:fromlocLonX,
+      tolocLatY:tolocLatY,
+      tolocLonX:tolocLonX
+    }
+    graph.addLink(from, to,data);
+
     degreeDict[from] += 1;
     degreeDict[to] += 1;
     edgesArr.push({

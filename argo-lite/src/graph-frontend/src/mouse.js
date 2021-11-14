@@ -99,6 +99,7 @@ module.exports = function (self) {
         self.colorNodeEdge(n, 0.5, 0.5);
         self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
       });
+      appState.graph.currentlyHovered = null;
     }
     if (self.prevHighlights != undefined) {
       for (var i = 0; i < self.prevHighlights.length; i++) {
