@@ -3,6 +3,9 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import appState from '../stores';
 
+var def = require("../graph-frontend/src/imports").default;
+
+
 export default function AreaSelect() {
   const map = useMap();
 
@@ -13,7 +16,17 @@ export default function AreaSelect() {
 
     map.on("areaselectstart", (e) => {
         //empty selection 
+        appState.graph.frame.selection.forEach(function(node){
+          node.renderData.draw_object.children[0].material.color.set(
+            node.renderData.hcolor
+          )
+          node.renderData.draw_object.children[0].visible = false
+        })
         appState.graph.frame.selection = []
+        appState.graph.selectedNodes = []
+
+
+
       });
 
     map.on("areaselected", (e) => {
@@ -24,12 +37,14 @@ export default function AreaSelect() {
         map.eachLayer((pointLayer) => { 
             if (pointLayer instanceof L.CircleMarker && e.bounds.contains(pointLayer.getLatLng())) {
                 mapselection.push(pointLayer.options.data)
+                pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+                pointLayer.options.data.renderData.draw_object.children[0].visible = true
             }}
             )
       }
       appState.graph.selectedNodes = [...mapselection]
       appState.graph.frame.selection = [...mapselection]
-      console.log(appState.graph.selectedNodes)
+      // console.log(appState.graph.selectedNodes)
     });
 
     // You can restrict selection area like this:

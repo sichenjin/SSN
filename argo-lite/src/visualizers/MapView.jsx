@@ -43,11 +43,6 @@ class MapView extends React.Component {
   }
 
   setNodePathOption = (node)=>{
-    // if(node.renderData.draw_object.children[0].visible){
-    //   return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'100' }
-    // }else{
-    //   return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
-    // }
 
     // select area highlight 
     if (appState.graph.selectedNodes.length > 0) {
@@ -55,12 +50,12 @@ class MapView extends React.Component {
         return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
       } else {
 
-        return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'100' }
+        return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
       }
     }
     //currently hovered noce highlight 
     if(appState.graph.currentlyHovered && node.id === appState.graph.currentlyHovered.id){
-      return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'100' }
+      return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
     }else{
       return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
     }
@@ -68,8 +63,8 @@ class MapView extends React.Component {
   }
 
   setPathOption = (node) => {
-    if (appState.graph.selectedNodes.length > 0) {
-      if (appState.graph.selectedNodes.indexOf(node) == -1) {
+    if (appState.graph.frame.selection.length > 0) {
+      if (appState.graph.frame.selection.indexOf(node) == -1) {
         return { fillColor: 'blue', fillOpacity: 0.5, stroke: false, zIndex:'auto' }
       } else {
 
