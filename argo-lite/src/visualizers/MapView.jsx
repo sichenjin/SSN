@@ -6,6 +6,7 @@ import appState from '../stores';
 import { observer } from 'mobx-react';
 import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect"
+var def = require("../graph-frontend/src/imports").default;
 // import LocationFilter from "../components/LocationFilter"
 
 @observer
@@ -24,6 +25,10 @@ class MapView extends React.Component {
   
   // }
 
+ dec2hexString = (dec) =>{
+    return '0x' + (dec+0x10000).toString(16).substr(-4).toUpperCase();
+ }
+
   onMouseOut = (e) => {
     console.log('onMouseOut', e)
   }
@@ -37,13 +42,38 @@ class MapView extends React.Component {
     }
   }
 
+  setNodePathOption = (node)=>{
+    // if(node.renderData.draw_object.children[0].visible){
+    //   return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'100' }
+    // }else{
+    //   return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
+    // }
+
+    // select area highlight 
+    if (appState.graph.selectedNodes.length > 0) {
+      if (appState.graph.selectedNodes.indexOf(node) == -1) {
+        return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
+      } else {
+
+        return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'100' }
+      }
+    }
+    //currently hovered noce highlight 
+    if(appState.graph.currentlyHovered && node.id === appState.graph.currentlyHovered.id){
+      return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'100' }
+    }else{
+      return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
+    }
+    
+  }
+
   setPathOption = (node) => {
     if (appState.graph.selectedNodes.length > 0) {
       if (appState.graph.selectedNodes.indexOf(node) == -1) {
-        return { fillColor: 'blue', fillOpacity: 0.5, stroke: false }
+        return { fillColor: 'blue', fillOpacity: 0.5, stroke: false, zIndex:'auto' }
       } else {
 
-        return { fillColor: 'red', fillOpacity: 1, stroke: false }
+        return { fillColor: 'red', fillOpacity: 1, stroke: false,zIndex: '100' }
       }
     }
     if (appState.graph.currentlyHovered && node.id === appState.graph.currentlyHovered.id) {
@@ -61,7 +91,7 @@ class MapView extends React.Component {
 
 
 
-
+    
     return <div id="map"
       style={{
         width: "50vw",
@@ -89,7 +119,7 @@ class MapView extends React.Component {
                 key={node.id}
                 center={[node.data.ref.LatY, node.data.ref.LonX]}
                 radius={5000 * node.data.ref.pagerank}
-                pathOptions={this.setPathOption(node)}
+                pathOptions={this.setNodePathOption(node)}
 
                 // fillColor={this.setCircleColor(node)}
                 // fillOpacity={0.5}
@@ -98,15 +128,21 @@ class MapView extends React.Component {
                 eventHandlers={{
                   mouseover: (e) => {
                     appState.graph.currentlyHovered = e.target.options.data
-                    appState.graph.frame.lastHover = e.target.options.data
-                    appState.graph.frame.highlightNode(e.target.options.data, true)
+                    e.target.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+                    e.target.options.data.renderData.draw_object.children[0].visible = true
+                    // appState.graph.frame.lastHover = e.target.options.data
+                    // appState.graph.frame.highlightNode(e.target.options.data, true)
                     // e.target.setStyle({fillOpacity: 1, fillColor:'red'})
                     // console.log(e.target.options.data)
                   },
                   mouseout: (e) => {
+                    e.target.options.data.renderData.draw_object.children[0].material.color.set(
+                      e.target.options.data.renderData.hcolor
+                    )
+                    e.target.options.data.renderData.draw_object.children[0].visible = false
                     // appState.graph.currentlyHovered = null
                     // appState.graph.frame.highlightNode(e.target.options.data,false)
-                    e.target.setStyle({ fillOpacity: 0.5, fillColor: 'blue' })
+                    // e.target.setStyle({ fillOpacity: 0.5, fillColor: 'blue' })
 
                     // console.log('marker out', e)
                   }
@@ -133,8 +169,9 @@ class MapView extends React.Component {
           appState.graph.frame.getEdgeList().map((edge, i) => {
             // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
               var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
+              
               return (
-                <Polyline key={i} pathOptions={{ color: 'black', weight: '1', opacity: '0.5' }} positions={edgepositions} />
+                <Polyline key={i} pathOptions={{ color: appState.graph.edges.color, weight: '2', opacity: '0.5' }} positions={edgepositions} />
 
               );
             

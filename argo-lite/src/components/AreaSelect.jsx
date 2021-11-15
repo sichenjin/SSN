@@ -28,6 +28,7 @@ export default function AreaSelect() {
             )
       }
       appState.graph.selectedNodes = [...mapselection]
+      appState.graph.frame.selection = [...mapselection]
       console.log(appState.graph.selectedNodes)
     });
 
