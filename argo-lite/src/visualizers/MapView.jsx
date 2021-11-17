@@ -43,11 +43,15 @@ class MapView extends React.Component {
   }
 
   setNodePathOption = (node)=>{
+    //no hover and selection 
+    if(!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0){
+      return {fillColor: node.renderData.color , fillOpacity: 1, stroke: false, zIndex:'auto'}
+    }
 
     // select area highlight 
     if (appState.graph.selectedNodes.length > 0) {
       if (appState.graph.selectedNodes.indexOf(node) == -1) {
-        return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
+        return { fillColor: node.renderData.color , fillOpacity: 0.3, stroke: false, zIndex:'auto' }
       } else {
 
         return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
@@ -57,7 +61,7 @@ class MapView extends React.Component {
     if(appState.graph.currentlyHovered && node.id === appState.graph.currentlyHovered.id){
       return { fillColor: node.renderData.color , fillOpacity: 1, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
     }else{
-      return { fillColor: node.renderData.color , fillOpacity: 0.5, stroke: false, zIndex:'auto' }
+      return { fillColor: node.renderData.color , fillOpacity: 0.3, stroke: false, zIndex:'auto' }
     }
     
   }
@@ -84,9 +88,6 @@ class MapView extends React.Component {
 
   render() {
 
-
-
-    
     return <div id="map"
       style={{
         width: "50vw",
@@ -105,7 +106,20 @@ class MapView extends React.Component {
         <AreaSelect />
 
 
+        {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
         
+        appState.graph.frame.getEdgeList().map((edge, i) => {
+          // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
+            var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
+            
+            return (
+              <Polyline key={i} pathOptions={{ color: appState.graph.edges.color, weight: '2', opacity: '0.5' }} positions={edgepositions} />
+
+            );
+          
+
+        })
+      }
 
         {appState.graph.rawGraph.nodes[0].LatY !== undefined && appState.graph.rawGraph.nodes[0].LonX !== undefined &&
           appState.graph.frame.getNodeList().map((node, i) => {
@@ -159,20 +173,7 @@ class MapView extends React.Component {
         }
 
 
-        {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
         
-          appState.graph.frame.getEdgeList().map((edge, i) => {
-            // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
-              var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
-              
-              return (
-                <Polyline key={i} pathOptions={{ color: appState.graph.edges.color, weight: '2', opacity: '0.5' }} positions={edgepositions} />
-
-              );
-            
-
-          })
-        }
 
 
 
