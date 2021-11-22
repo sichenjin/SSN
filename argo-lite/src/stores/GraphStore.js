@@ -14,7 +14,8 @@ export default class GraphStore {
       color: {
         scale: "Linear Scale",
         from: "#448AFF",
-        to: "#E91E63"
+        to: "#E91E63",
+        ordinalColor:  ["#e377c2","#98df8a" , "#ff7f0e", "#a55194" , "#2ca02c",  "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94","#1f77b4" , "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5","#9c9ede","#8c6d31", "#ffbb78","#bd9e39"]
       },
       sizeBy: "pagerank",
       size: {
@@ -137,6 +138,12 @@ export default class GraphStore {
     return this.hasGraphLoaded;
   }
 
+  // @computed
+  // get ordinalDomain(colorBy){
+  //   return this.rawGraph.nodes.map(function(n){
+  //     n[colorBy]
+  //   })
+  // }
   @computed
   get minMax() {
     const ret = {};
@@ -166,10 +173,25 @@ export default class GraphStore {
 
   @computed
   get nodeColorScale() {
-    return scales[this.nodes.color.scale]()
+    if(this.nodes.color.scale == "Ordinal Scale"){ //ordinal scale 
+      return scales[this.nodes.color.scale]()
+      .domain([...new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))])
+      .range(this.nodes.color.ordinalColor);
+    }else{ //linear and log scale 
+      return scales[this.nodes.color.scale]()
       .domain(this.minMax[this.nodes.colorBy])
       .range([this.nodes.color.from, this.nodes.color.to]);
+    }
+    
   }
+
+  // @computed
+  // get nodeColorCategory() {
+  //   return scales[this.nodes.color.scale]()
+  //     .domain(this.minMax[this.nodes.colorBy])
+  //     .range([this.nodes.color.from, this.nodes.color.to]);
+  // }
+
 
   // Return raw graph nodes that is neighbor with the selected node,
   // excluding the node itself.

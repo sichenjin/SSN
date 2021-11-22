@@ -14,6 +14,8 @@ import { runSearch } from "../ipc/client";
 import { BACKEND_URL, SAMPLE_GRAPH_SNAPSHOTS} from "../constants";
 import { toaster } from '../notifications/client';
 
+import {LocalFileData,constructFileFromLocalFileData} from "get-file-object-from-local-path"
+
 // import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 export class AppState {
@@ -91,9 +93,43 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
 window.loadAndDisplaySnapshotFromURL = loadAndDisplaySnapshotFromURL;
 window.loadAndDisplaySnapshotFromStrapi = loadAndDisplaySnapshotFromStrapi;
 
+// var getFileBlob = function (url, cb) {
+//   var xhr = new XMLHttpRequest();
+//   xhr.open("GET", url);
+//   xhr.responseType = "blob";
+//   xhr.addEventListener('load', function() {
+//       cb(xhr.response);
+//   });
+//   xhr.send();
+// };
+
+// var blobToFile = function (blob, name) {
+//   blob.lastModifiedDate = new Date();
+//   blob.name = name;
+//   return blob;
+// };
+
+// var getFileObject = function(filePathOrUrl, cb) {
+//  getFileBlob(filePathOrUrl, function (blob) {
+//     cb(blobToFile(blob, 'test.jpg'));
+//  });
+// };
+
 window.loadInitialSampleGraph = async () => {
+  // const nodeFileData = new LocalFileData('/Users/jsc/repositories/SSN/argo-lite/MafiaNodes_2.csv')
+  // const nodeFile = constructFileFromLocalFileData(nodeFileData)
+  // console.log(nodeFile)
+  // appState.import.selectedNodeFileFromInput = nodeFile
+
+  // const edgeFileData = new LocalFileData('/Users/jsc/repositories/SSN/argo-lite/MafiaEdges_2.csv')
+  // const edgeFile = constructFileFromLocalFileData(edgeFileData)
+  // console.log(edgeFile)
+  // appState.import.selectedEdgeFileFromInput = edgeFile
+
+  
+
   // default fallback url
-  let url = "https://argo-graph-lite.s3.amazonaws.com/lesmiserables.json";
+  let url = "https://argo-graph-lite.s3.amazonaws.com/lesmiserables.json"
 
   // check url hash
   if (window.location.hash) {
@@ -114,8 +150,8 @@ window.loadInitialSampleGraph = async () => {
     }
     
   }
-  // loadAndDisplaySnapshotFromURL(url)
-  loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[0][1]);
+  loadAndDisplaySnapshotFromURL(url)
+  // loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[0][1]);
 };
 
 window.saveSnapshotToString = () => {

@@ -20,18 +20,18 @@ function Legends() {
           const { size } = props;
           return (
             <svg width={size} height={size}>
-              <circle {...props} r={size / 2} cx={size / 2} cy={size / 2} />
+              <circle  {...props} r={size / 2} cx={size / 2} cy={size / 2} fill={'#f5f8fa'}/>
             </svg>
           );
         }}
       />
-      <LegendLinear
+      {/* <LegendLinear
         direction="row"
         itemDirection="column"
         shape="circle"
         scale={appState.graph.nodeColorScale}
         labelFormat={format(".4f")}
-      />
+      /> */}
     </div>
   );
 }

@@ -75,7 +75,7 @@ module.exports = function(self) {
     self.cssRenderer.domElement.style.position = "absolute";
     self.cssRenderer.domElement.style.top = 0;
     self.minimapRenderer.domElement.style.position = "absolute";
-    self.minimapRenderer.domElement.style.bottom = 0;
+    self.minimapRenderer.domElement.style.bottom = '50px';
     self.minimapRenderer.domElement.style.left = 0;
     self.minimapRenderer.setSize(0.2 * self.height, 0.2 * self.height);
     self.minimapRenderer.zIndex = 1000;

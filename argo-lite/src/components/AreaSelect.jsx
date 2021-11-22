@@ -39,10 +39,26 @@ export default function AreaSelect() {
                 mapselection.push(pointLayer.options.data)
                 pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
                 pointLayer.options.data.renderData.draw_object.children[0].visible = true
-            }}
+                // appState.graph.frame.colorNodeOpacity(pointLayer.options.data,1)
+            }
+            // else if(pointLayer instanceof L.CircleMarker){
+            //   pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(pointLayer.options.data.renderData.hcolor);
+            //   pointLayer.options.data.renderData.draw_object.children[0].visible = false
+            //   appState.graph.frame.colorNodeOpacity(pointLayer.options.data,0.5)
+            // }
+          }
             )
       }
       appState.graph.selectedNodes = [...mapselection]
+      // //highlight selected nodes 
+      // if (appState.graph.selectedNodes.length > 0) {
+      //   if (appState.graph.selectedNodes.indexOf(node) == -1) {
+      //     return { fillColor: node.renderData.color , fillOpacity: 0.3, stroke: node.renderData.draw_object.children[0].material.color, zIndex:'auto' }
+      //   } else {
+  
+      //     return { fillColor: node.renderData.color , fillOpacity: 0.9, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
+      //   }
+      // }
       appState.graph.frame.selection = [...mapselection]
       // console.log(appState.graph.selectedNodes)
     });

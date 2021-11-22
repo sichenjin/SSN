@@ -27,10 +27,12 @@ export const MOBILE_HEIGHT_CUTOFF = 480;
 
 export const SCALE_LINEAR = "Linear Scale";
 export const SCALE_LOG = "Log Scale";
+export const SCALE_CATEGORY = "Ordinal Scale";
 
 export const scales = {
   [SCALE_LINEAR]: scale.scaleLinear,
-  [SCALE_LOG]: scale.scaleLog
+  [SCALE_LOG]: scale.scaleLog,
+  [SCALE_CATEGORY] : scale.scaleOrdinal
 };
 
 export const LOAD_USER_CONFIG = "load-user-config";

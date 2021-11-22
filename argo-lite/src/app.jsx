@@ -70,7 +70,7 @@ class App extends React.Component {
     return (
       <div className={classnames({
         "app-wrapper": true,
-        // [Classes.DARK]: appState.preferences.darkMode
+        [Classes.DARK]: appState.preferences.darkMode
       })}>
         <div className="graph">
           <Navbar />

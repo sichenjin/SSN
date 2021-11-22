@@ -51,7 +51,7 @@ html {
 }
 
 .app-wrapper.pt-dark {
-  background-color: #293742;
+  background-color: #111010;
 }
 
 .floating-overlay {
@@ -256,7 +256,7 @@ div.legends {
   justify-content: space-between;
   position: absolute;
   right: 10px;
-  bottom: 40px;
+  bottom: 60px;
 }
 
 div.legends .scale-legend {
