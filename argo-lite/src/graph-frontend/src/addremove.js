@@ -111,11 +111,15 @@ module.exports = function(self) {
   };
 
   self.addEdge = function(source, target, visible = true) {
+    var withinState = (source.data.ref.GEOID === target.data.ref.GEOID)
+    var withinFamily = (source.data.ref.Family === target.data.ref.Family)
     var locdata = {
       fromlocLatY: source.data.ref.LatY,
       fromlocLonX : source.data.ref.LonX,
       tolocLatY : target.data.ref.LatY,
       tolocLonX: target.data.ref.LonX,
+      withinState: withinState,
+      withinFamily: withinFamily
     }
     self.graph.addLink(source.id, target.id,locdata);
     self.drawEdge(self.getNode(source.id), self.getNode(target.id), visible);

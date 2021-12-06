@@ -62,12 +62,12 @@ class MapView extends React.Component {
   setEdgePathOption = (edge)=>{
     if(appState.graph.currentlyHovered ){
       if(edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id){
-        return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
+        return { color: edge.data.withinFamily? appState.graph.edges.color: appState.graph.edges.crossColor, weight: '1', opacity: '1' }
       }else{
-        return { color: appState.graph.edges.color, weight: '1', opacity: '0' }
+        return { color: edge.data.withinFamily? appState.graph.edges.color: appState.graph.edges.crossColor, weight: '1', opacity: '0' }
       }
     }else{
-      return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
+      return { color: edge.data.withinFamily? appState.graph.edges.color: appState.graph.edges.crossColor, weight: '1', opacity: '1' }
     }
   }
 
@@ -148,6 +148,7 @@ class MapView extends React.Component {
         
         appState.graph.frame.getEdgeList().map((edge, i) => {
           // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
+         
             var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
             
             return (
@@ -155,71 +156,76 @@ class MapView extends React.Component {
 
             );
           
+          
+          
 
         })
       }
 
         {appState.graph.rawGraph.nodes[0].LatY !== undefined && appState.graph.rawGraph.nodes[0].LonX !== undefined &&
           appState.graph.frame.getNodeList().map((node, i) => {
-            return (
-              <CircleMarker
-                key={node.id}
-                center={[node.data.ref.LatY, node.data.ref.LonX]}
-                radius={ node.data.ref.degree/5}
-                pathOptions={this.setNodePathOption(node)}
-
-                // fillColor={this.setCircleColor(node)}
-                // fillOpacity={0.5}
-                // stroke={false}
-                data={node}
-                eventHandlers={{
-                  mouseover: (e) => {
-                    // var currentNode = e.target.options.data
-                    appState.graph.currentlyHovered = e.target.options.data
-                    appState.graph.frame.highlightNode(e.target.options.data, true);
-                    appState.graph.frame.highlightEdges(e.target.options.data, true);
-                    
-                
-                    // e.target.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
-                    // e.target.options.data.renderData.draw_object.children[0].visible = true
-                    
-                    // appState.graph.frame.lastHover = e.target.options.data
-                    // appState.graph.frame.highlightNode(e.target.options.data, true)
-                    // e.target.setStyle({fillOpacity: 1, fillColor:'red'})
-                    // console.log(e.target.options.data)
-                  },
-                  mouseout: (e) => {
-                    appState.graph.frame.graph.forEachNode(n => {
-                      appState.graph.frame.colorNodeOpacity(n, 1);
-                      appState.graph.frame.colorNodeEdge(n, 0.5, 0.5);
-                      appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
-                    });
-                    appState.graph.currentlyHovered = null;
-                    
-
-                    // e.target.options.data.renderData.draw_object.children[0].material.color.set(
-                    //   e.target.options.data.renderData.hcolor
-                    // )
-                    // e.target.options.data.renderData.draw_object.children[0].visible = false
-
-                    // appState.graph.currentlyHovered = null
-                    // appState.graph.frame.highlightNode(e.target.options.data,false)
-                    // e.target.setStyle({ fillOpacity: 0.5, fillColor: 'blue' })
-
-                    // console.log('marker out', e)
-                  }
-                }}
-              // onMouseOver = {this.onMouseOver}
-              // {(e) => {
-              //   // appState.graph.currentlyHovered = 
-              //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
-              // }}
-              // onMouseOut={this.onMouseOut}
-              // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
-              >
-
-              </CircleMarker>
-            );
+            
+              return (
+                <CircleMarker
+                  key={node.id}
+                  center={[node.data.ref.LatY, node.data.ref.LonX]}
+                  radius={ node.data.ref.degree/5}
+                  pathOptions={this.setNodePathOption(node)}
+  
+                  // fillColor={this.setCircleColor(node)}
+                  // fillOpacity={0.5}
+                  // stroke={false}
+                  data={node}
+                  eventHandlers={{
+                    mouseover: (e) => {
+                      // var currentNode = e.target.options.data
+                      appState.graph.currentlyHovered = e.target.options.data
+                      appState.graph.frame.highlightNode(e.target.options.data, true);
+                      appState.graph.frame.highlightEdges(e.target.options.data, true);
+                      
+                  
+                      // e.target.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+                      // e.target.options.data.renderData.draw_object.children[0].visible = true
+                      
+                      // appState.graph.frame.lastHover = e.target.options.data
+                      // appState.graph.frame.highlightNode(e.target.options.data, true)
+                      // e.target.setStyle({fillOpacity: 1, fillColor:'red'})
+                      // console.log(e.target.options.data)
+                    },
+                    mouseout: (e) => {
+                      appState.graph.frame.graph.forEachNode(n => {
+                        appState.graph.frame.colorNodeOpacity(n, 1);
+                        appState.graph.frame.colorNodeEdge(n, 0.5, 0.5);
+                        appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+                      });
+                      appState.graph.currentlyHovered = null;
+                      
+  
+                      // e.target.options.data.renderData.draw_object.children[0].material.color.set(
+                      //   e.target.options.data.renderData.hcolor
+                      // )
+                      // e.target.options.data.renderData.draw_object.children[0].visible = false
+  
+                      // appState.graph.currentlyHovered = null
+                      // appState.graph.frame.highlightNode(e.target.options.data,false)
+                      // e.target.setStyle({ fillOpacity: 0.5, fillColor: 'blue' })
+  
+                      // console.log('marker out', e)
+                    }
+                  }}
+                // onMouseOver = {this.onMouseOver}
+                // {(e) => {
+                //   // appState.graph.currentlyHovered = 
+                //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
+                // }}
+                // onMouseOut={this.onMouseOut}
+                // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
+                >
+  
+                </CircleMarker>
+              );
+            
+            
           })
 
 

@@ -592,7 +592,7 @@ async function importGraphFromCSV(config) {
   
   const edgesArr = [];
 
-  const addEdge = (from, to, fromlocLatY,fromlocLonX,tolocLatY,tolocLonX) => {
+  const addEdge = (from, to, fromlocLatY,fromlocLonX,tolocLatY,tolocLonX,withinState, withinFamily) => {
     const edgeKey = `${from}👉${to}`;
     if (edgesSet.has(edgeKey)) {
       return;
@@ -602,7 +602,9 @@ async function importGraphFromCSV(config) {
       fromlocLatY:fromlocLatY,
       fromlocLonX:fromlocLonX,
       tolocLatY:tolocLatY,
-      tolocLonX:tolocLonX
+      tolocLonX:tolocLonX,
+      withinState:withinState,
+      withinFamily: withinFamily
     }
     graph.addLink(from, to,data);
 
@@ -614,7 +616,9 @@ async function importGraphFromCSV(config) {
       fromlocLatY:fromlocLatY,
       fromlocLonX:fromlocLonX,
       tolocLatY:tolocLatY,
-      tolocLonX:tolocLonX
+      tolocLonX:tolocLonX,
+      withinState:withinState,
+      withinFamily:withinFamily
     });
   };
   
@@ -626,12 +630,14 @@ async function importGraphFromCSV(config) {
       var fromlocLonX = parseFloat(graph.getNode(it[fromId].toString()).data.LonX)
       var tolocLatY = parseFloat(graph.getNode(it[toId].toString()).data.LatY)
       var tolocLonX =  parseFloat(graph.getNode(it[toId].toString()).data.LonX) // observable array???
+      var withinState = (graph.getNode(to).data.GEOID === graph.getNode(from).data.GEOID)
+      var withinFamily = (graph.getNode(to).data.Family === graph.getNode(from).data.Family)
       // fromloc.push(graph.getNode(it[fromId].toString()).data.LatY) 
       // fromloc.push(graph.getNode(it[fromId].toString()).data.LonX) 
       // toloc.push(graph.getNode(it[toId].toString()).data.LatY)
       // toloc.push(graph.getNode(it[toId].toString()).data.LonX)
       // Argo currently works with undirected graph
-      addEdge(from, to,fromlocLatY,fromlocLonX,tolocLatY,tolocLonX);
+      addEdge(from, to,fromlocLatY,fromlocLonX,tolocLatY,tolocLonX,withinState,withinFamily);
       // addEdge(to, from);
     });
   }else{  //doesn't have  spatial location info

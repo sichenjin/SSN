@@ -29,7 +29,8 @@ export default class GraphStore {
       labelLength: 10
     },
     edges: {
-      color: "#7f7f7f"
+      color: "#7f7f7f",
+      crossColor: "#0055aa"
     }
   }
 
