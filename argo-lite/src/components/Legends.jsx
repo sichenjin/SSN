@@ -8,23 +8,23 @@ import { observer } from "mobx-react";
 function Legends() {
   return (
     <div className="legends" style={{visibility: appState.preferences.isLegendShowing ? 'visible' : 'hidden'}}>
-      <LegendSize
+      {/* <LegendSize
         className="scale-legend"
         direction="row"
         itemDirection="column"
         itemMargin="0"
         shapeMargin="5px 0"
-        labelFormat={format(".4f")}
+        labelFormat={format(".2f")}
         scale={appState.graph.nodeSizeScale}
         shape={props => {
           const { size } = props;
           return (
             <svg width={size} height={size}>
-              <circle  {...props} r={size / 2} cx={size / 2} cy={size / 2} fill={'#f5f8fa'}/>
+              <circle  {...props} r={size / 2} cx={size / 2} cy={size / 2} fill={'#9a9ea1'}/>
             </svg>
           );
         }}
-      />
+      /> */}
       {/* <LegendLinear
         direction="row"
         itemDirection="column"

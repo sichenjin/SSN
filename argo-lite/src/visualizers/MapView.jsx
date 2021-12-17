@@ -140,7 +140,7 @@ class MapView extends React.Component {
         zoom={4.3}
         center={[37, -100]}
       >
-        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png" />
+        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
         <AreaSelect />
 
 
@@ -169,7 +169,7 @@ class MapView extends React.Component {
                 <CircleMarker
                   key={node.id}
                   center={[node.data.ref.LatY, node.data.ref.LonX]}
-                  radius={ node.data.ref.degree/5}
+                  radius={ node.data.ref.degree}
                   pathOptions={this.setNodePathOption(node)}
   
                   // fillColor={this.setCircleColor(node)}

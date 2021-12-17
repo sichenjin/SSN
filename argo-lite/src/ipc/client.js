@@ -652,7 +652,7 @@ async function importGraphFromCSV(config) {
   
 
   const rank = pageRank(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: degreeDict[n.id] }));
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id]/2) }));
   return {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
@@ -710,7 +710,7 @@ export async function importGraphFromGexf() {
   });
 
   const rank = pageRank(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: degreeDict[n.id] }));
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id]/2) }));
   return {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
