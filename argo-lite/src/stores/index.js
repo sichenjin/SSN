@@ -150,8 +150,8 @@ window.loadInitialSampleGraph = async () => {
     }
     
   }
-  loadAndDisplaySnapshotFromURL(url)
-  // loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[0][1]);
+  // loadAndDisplaySnapshotFromURL(url)
+  loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[1][1]);
 };
 
 window.saveSnapshotToString = () => {
