@@ -28,6 +28,8 @@ class MapView extends React.Component {
   // @observable neighborTosID = []
   // @observable neighborFromsID = []
 
+
+
   @computed
   get neighborNodesID() {
     const neighborIDs = []
@@ -39,6 +41,11 @@ class MapView extends React.Component {
       }
     } 
     return neighborIDs
+  }
+
+  @computed
+  get zoomLevelCenter(){
+    
   }
 
 
@@ -137,7 +144,7 @@ class MapView extends React.Component {
     >
       <MapContainer
         // style={{ height: "480px", width: "100%" }}
-        zoom={4.3}
+        zoom={4}
         center={[37, -100]}
       >
         <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
@@ -169,7 +176,7 @@ class MapView extends React.Component {
                 <CircleMarker
                   key={node.id}
                   center={[node.data.ref.LatY, node.data.ref.LonX]}
-                  radius={ node.data.ref.degree}
+                  radius={ node.data.size}
                   pathOptions={this.setNodePathOption(node)}
   
                   // fillColor={this.setCircleColor(node)}

@@ -49,6 +49,8 @@ export default class GraphStore {
   // Updated by frame event
   @observable selectedNodes = [];
 
+
+
   // Currently hovered node
   @observable currentlyHovered = undefined;
 
