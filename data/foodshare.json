@@ -1,0 +1,3308 @@
+{
+    "rawGraph": {
+        "nodes": [
+            {
+                "ID": "AUMC",
+                "ORGANIZATION": "Auburn United Methodist Church",
+                "SHORT": "Auburn UMC",
+                "LonX": "-80.43937055",
+                "LatY": "37.06509281",
+                "id": "AUMC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "AUMC",
+                "isHidden": false
+            },
+            {
+                "ID": "BRR",
+                "ORGANIZATION": "Beans and Rice, Radford",
+                "SHORT": "Beans and Rice",
+                "LonX": "-80.58952135",
+                "LatY": "37.12018291",
+                "id": "BRR",
+                "degree": 1,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BRR",
+                "isHidden": false
+            },
+            {
+                "ID": "BRP",
+                "ORGANIZATION": "Beans and Rice, Pulaski",
+                "SHORT": "Beans and Rice",
+                "LonX": "-80.77926708",
+                "LatY": "37.0487835",
+                "id": "BRP",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BRP",
+                "isHidden": false
+            },
+            {
+                "ID": "BUMC",
+                "ORGANIZATION": "Belview UMC Backpack Program",
+                "SHORT": "Belview UMC",
+                "LonX": "-80.50819271",
+                "LatY": "37.17001371",
+                "id": "BUMC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BUMC",
+                "isHidden": false
+            },
+            {
+                "ID": "BBBC",
+                "ORGANIZATION": "Big Brother Big Sister",
+                "SHORT": "BBBS",
+                "LonX": "-79.94343682",
+                "LatY": "37.27566081",
+                "id": "BBBC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BBBC",
+                "isHidden": false
+            },
+            {
+                "ID": "BL",
+                "ORGANIZATION": "Blacksburg Breakfast Lions Club",
+                "SHORT": "Lions",
+                "LonX": "-80.40171127",
+                "LatY": "37.19585675",
+                "id": "BL",
+                "degree": 1,
+                "pagerank": 0.027232507348829312,
+                "node_id": "BL",
+                "isHidden": false
+            },
+            {
+                "ID": "BFM",
+                "ORGANIZATION": "Blacksburg Farmers Market",
+                "SHORT": "Bburg FM",
+                "LonX": "-80.41442147",
+                "LatY": "37.22944669",
+                "id": "BFM",
+                "degree": 2,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BFM",
+                "isHidden": false
+            },
+            {
+                "ID": "BIFP",
+                "ORGANIZATION": "Blacksburg Interfaith Food Pantry",
+                "SHORT": "BIFP",
+                "LonX": "-80.40631337",
+                "LatY": "37.23680011",
+                "id": "BIFP",
+                "degree": 4,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BIFP",
+                "isHidden": false
+            },
+            {
+                "ID": "BBRP",
+                "ORGANIZATION": "Blacksburg Refugee Partnership",
+                "SHORT": "BRP",
+                "LonX": "-80.41425702",
+                "LatY": "37.23024081",
+                "id": "BBRP",
+                "degree": 1,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BBRP",
+                "isHidden": false
+            },
+            {
+                "ID": "BBP",
+                "ORGANIZATION": "Bobcat Backpacks Program, Radford Public Schools",
+                "SHORT": "Bobcat BP",
+                "LonX": "-80.57139133",
+                "LatY": "37.13246013",
+                "id": "BBP",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "BBP",
+                "isHidden": false
+            },
+            {
+                "ID": "CB",
+                "ORGANIZATION": "Calvary Baptist Church",
+                "SHORT": "Cavalry Bap",
+                "LonX": "-80.27236679",
+                "LatY": "36.93820809",
+                "id": "CB",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CB",
+                "isHidden": false
+            },
+            {
+                "ID": "CC",
+                "ORGANIZATION": "Carilion Clinic",
+                "SHORT": "Carilion",
+                "LonX": "-80.50562529",
+                "LatY": "37.08940601",
+                "id": "CC",
+                "degree": 1,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CC",
+                "isHidden": false
+            },
+            {
+                "ID": "CL",
+                "ORGANIZATION": "Christ Lutheran Church",
+                "SHORT": "Christ Luth",
+                "LonX": "-80.57382183",
+                "LatY": "37.13340559",
+                "id": "CL",
+                "degree": 1,
+                "pagerank": 0.027232507348829312,
+                "node_id": "CL",
+                "isHidden": false
+            },
+            {
+                "ID": "CFM",
+                "ORGANIZATION": "Christiansburg Farmers Market",
+                "SHORT": "Cburg FM",
+                "LonX": "-80.41032146",
+                "LatY": "37.12919672",
+                "id": "CFM",
+                "degree": 2,
+                "pagerank": 0.005089009711261255,
+                "node_id": "CFM",
+                "isHidden": false
+            },
+            {
+                "ID": "CFNRV",
+                "ORGANIZATION": "Community Foundation of the New River Valley",
+                "SHORT": "CFNRV",
+                "LonX": "-80.40526282",
+                "LatY": "37.14287995",
+                "id": "CFNRV",
+                "degree": 14,
+                "pagerank": 0.007620895055927881,
+                "node_id": "CFNRV",
+                "isHidden": false
+            },
+            {
+                "ID": "CHCM",
+                "ORGANIZATION": "Community Health Center of the New River Valley, Montgomery",
+                "SHORT": "CHCM",
+                "LonX": "-80.40170633",
+                "LatY": "37.13006054",
+                "id": "CHCM",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CHCM",
+                "isHidden": false
+            },
+            {
+                "ID": "CHCG",
+                "ORGANIZATION": "Community Health Center of the New River Valley, Giles",
+                "SHORT": "CHCG",
+                "LonX": "-80.7225259",
+                "LatY": "37.32341456",
+                "id": "CHCG",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CHCG",
+                "isHidden": false
+            },
+            {
+                "ID": "CHCRP",
+                "ORGANIZATION": "Community Health Center of the New River Valley, Radford/Pulaski",
+                "SHORT": "CHCRP",
+                "LonX": "-80.66937451",
+                "LatY": "37.11584483",
+                "id": "CHCRP",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CHCRP",
+                "isHidden": false
+            },
+            {
+                "ID": "CHP",
+                "ORGANIZATION": "Community Housing Partners",
+                "SHORT": "CHP",
+                "LonX": "-80.41046504",
+                "LatY": "37.13937452",
+                "id": "CHP",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CHP",
+                "isHidden": false
+            },
+            {
+                "ID": "CH",
+                "ORGANIZATION": "Copper Hill Church of the Bretheren",
+                "SHORT": "Copper Hill",
+                "LonX": "-80.12841649",
+                "LatY": "37.08366378",
+                "id": "CH",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CH",
+                "isHidden": false
+            },
+            {
+                "ID": "CCS",
+                "ORGANIZATION": "Council of Community Services",
+                "SHORT": "CCS",
+                "LonX": "-79.949939",
+                "LatY": "37.27129754",
+                "id": "CCS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "CCS",
+                "isHidden": false
+            },
+            {
+                "ID": "MDSS",
+                "ORGANIZATION": "Department of Social Services Montgomery",
+                "SHORT": "MDSS",
+                "LonX": "-80.41101362",
+                "LatY": "37.13209064",
+                "id": "MDSS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "MDSS",
+                "isHidden": false
+            },
+            {
+                "ID": "RDSS",
+                "ORGANIZATION": "Department of Social Services Radford",
+                "SHORT": "RDSS",
+                "LonX": "-80.58396308",
+                "LatY": "37.12774293",
+                "id": "RDSS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "RDSS",
+                "isHidden": false
+            },
+            {
+                "ID": "PDSS",
+                "ORGANIZATION": "Department of Social Services Pulaski",
+                "SHORT": "PDSS",
+                "LonX": "-80.78085454",
+                "LatY": "37.04534507",
+                "id": "PDSS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "PDSS",
+                "isHidden": false
+            },
+            {
+                "ID": "GDSS",
+                "ORGANIZATION": "Department of Social Services Giles",
+                "SHORT": "GDSS",
+                "LonX": "-80.62925905",
+                "LatY": "37.32034316",
+                "id": "GDSS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "GDSS",
+                "isHidden": false
+            },
+            {
+                "ID": "FDSS",
+                "ORGANIZATION": "Department of Social Services Floyd",
+                "SHORT": "FDSS",
+                "LonX": "-80.32168084",
+                "LatY": "36.91263973",
+                "id": "FDSS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "FDSS",
+                "isHidden": false
+            },
+            {
+                "ID": "DUMC",
+                "ORGANIZATION": "Dublin United Methodist Church",
+                "SHORT": "Dublin UMC",
+                "LonX": "-80.68276118",
+                "LatY": "37.10596942",
+                "id": "DUMC",
+                "degree": 1,
+                "pagerank": 0.027232507348829312,
+                "node_id": "DUMC",
+                "isHidden": false
+            },
+            {
+                "ID": "EN",
+                "ORGANIZATION": "Eagle’s Nest",
+                "SHORT": "Eagle's Nest",
+                "LonX": "-80.33919094",
+                "LatY": "37.01768718",
+                "id": "EN",
+                "degree": 1,
+                "pagerank": 0.0073120242325505165,
+                "node_id": "EN",
+                "isHidden": false
+            },
+            {
+                "ID": "EEBP",
+                "ORGANIZATION": "Eastern Elementary Backpack Program, Christiansburg Rotary",
+                "SHORT": "Eastern Elem BP",
+                "LonX": "-80.35832262",
+                "LatY": "37.21503776",
+                "id": "EEBP",
+                "degree": 1,
+                "pagerank": 0.027232507348829312,
+                "node_id": "EEBP",
+                "isHidden": false
+            },
+            {
+                "ID": "ENTF",
+                "ORGANIZATION": "Emergency Needs Task Force of Pulaski County",
+                "SHORT": "ENTF",
+                "LonX": "-80.78163634",
+                "LatY": "37.05060252",
+                "id": "ENTF",
+                "degree": 1,
+                "pagerank": 0.004195403119025974,
+                "node_id": "ENTF",
+                "isHidden": false
+            },
+            {
+                "ID": "FP",
+                "ORGANIZATION": "Fairlawn Presbyterian Church",
+                "SHORT": "Fairlawn Pres",
+                "LonX": "-80.57991814",
+                "LatY": "37.15111541",
+                "id": "FP",
+                "degree": 1,
+                "pagerank": 0.027232507348829312,
+                "node_id": "FP",
+                "isHidden": false
+            },
+            {
+                "ID": "FASWV",
+                "ORGANIZATION": "Feeding America Southwest Virginia",
+                "SHORT": "FASWV",
+                "LonX": "-80.03651902",
+                "LatY": "37.27905515",
+                "id": "FASWV",
+                "degree": 7,
+                "pagerank": 0.013692036136924993,
+                "node_id": "FASWV",
+                "isHidden": false
+            },
+            {
+                "ID": "FIE",
+                "ORGANIZATION": "Fieldstone Church, (The Giving Tree Food Pantry)",
+                "SHORT": "Fieldstone",
+                "LonX": "-80.41763641",
+                "LatY": "37.17613715",
+                "id": "FIE",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "FIE",
+                "isHidden": false
+            },
+            {
+                "ID": "GB",
+                "ORGANIZATION": "Gethsemane Baptist Church",
+                "SHORT": "Gethsemane Bap",
+                "LonX": "-80.41697482",
+                "LatY": "37.17603415",
+                "id": "GB",
+                "degree": 0,
+                "pagerank": 0.005362709902027982,
+                "node_id": "GB",
+                "isHidden": false
+            },
+            {
+                "ID": "GG",
+                "ORGANIZATION": "Giles Community Garden",
+                "SHORT": "Giles Garden",
+                "LonX": "-80.7338711",
+                "LatY": "37.32708718",
+                "id": "GG",
+                "degree": 5,
+                "pagerank": 0.004975108468376246,
+                "node_id": "GG",
+                "isHidden": false
+            },
+            {
+                "ID": "GCM",
+                "ORGANIZATION": "Giles County Christian Service Mission",
+                "SHORT": "Giles Mission",
+                "LonX": "-80.7343242",
+                "LatY": "37.32663181",
+                "id": "GCM",
+                "degree": 3,
+                "pagerank": 0.004445198631885467,
+                "node_id": "GCM",
+                "isHidden": false
+            },
+            {
+                "ID": "GCF",
+                "ORGANIZATION": "Giles County FOCUS",
+                "SHORT": "FOCUS",
+                "LonX": "-80.81105573",
+                "LatY": "37.33151797",
+                "id": "GCF",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "GCF",
+                "isHidden": false
+            },
+            {
+                "ID": "GS",
+                "ORGANIZATION": "Giles Shelter",
+                "SHORT": "Giles Shelter",
+                "LonX": "-80.80806116",
+                "LatY": "37.33731691",
+                "id": "GS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "GS",
+                "isHidden": false
+            },
+            {
+                "ID": "GCS",
+                "ORGANIZATION": "Giles County Summer Lunch Program",
+                "SHORT": "Giles Summer",
+                "LonX": "-80.74392793",
+                "LatY": "37.33138097",
+                "id": "GCS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "GCS",
+                "isHidden": false
+            },
+            {
+                "ID": "GHF",
+                "ORGANIZATION": "Giles Health and Family Center",
+                "SHORT": "Giles Health/Family",
+                "LonX": "-80.73229414",
+                "LatY": "37.32786941",
+                "id": "GHF",
+                "degree": 0,
+                "pagerank": 0.004725312955516754,
+                "node_id": "GHF",
+                "isHidden": false
+            },
+            {
+                "ID": "GYAP",
+                "ORGANIZATION": "Giles Youth Adult Partnership (GYAP)",
+                "SHORT": "GYAP",
+                "LonX": "-80.7293378",
+                "LatY": "37.31819874",
+                "id": "GYAP",
+                "degree": 3,
+                "pagerank": 0.005386878575339682,
+                "node_id": "GYAP",
+                "isHidden": false
+            },
+            {
+                "ID": "GLA",
+                "ORGANIZATION": "Glade Church",
+                "SHORT": "Glade",
+                "LonX": "-80.4499054",
+                "LatY": "37.23622578",
+                "id": "GLA",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "GLA",
+                "isHidden": false
+            },
+            {
+                "ID": "HF",
+                "ORGANIZATION": "Healthy Floyd",
+                "SHORT": "Healthy Floyd",
+                "LonX": "-80.30965756",
+                "LatY": "36.91636424",
+                "id": "HF",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "HF",
+                "isHidden": false
+            },
+            {
+                "ID": "HH",
+                "ORGANIZATION": "Helping Hands",
+                "SHORT": "Helping Hands",
+                "LonX": "-80.52155033",
+                "LatY": "37.16109638",
+                "id": "HH",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "HH",
+                "isHidden": false
+            },
+            {
+                "ID": "HC",
+                "ORGANIZATION": "Heritage Cares",
+                "SHORT": "Heritage Cares",
+                "LonX": "-80.69060354",
+                "LatY": "37.14893728",
+                "id": "HC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "HC",
+                "isHidden": false
+            },
+            {
+                "ID": "HFC",
+                "ORGANIZATION": "Holy Family Catholic Church, Justice and Peace Committee",
+                "SHORT": "Holy Family Cath",
+                "LonX": "-80.71567037",
+                "LatY": "37.33287664",
+                "id": "HFC",
+                "degree": 0,
+                "pagerank": 0.004826645196452342,
+                "node_id": "HFC",
+                "isHidden": false
+            },
+            {
+                "ID": "IAJ",
+                "ORGANIZATION": "It's All About Jesus Ministries",
+                "SHORT": "All About Jesus",
+                "LonX": "-80.58855157",
+                "LatY": "37.12479008",
+                "id": "IAJ",
+                "degree": 0,
+                "pagerank": 0.004445198631885467,
+                "node_id": "IAJ",
+                "isHidden": false
+            },
+            {
+                "ID": "JC",
+                "ORGANIZATION": "Jordan's Chapel Feed My Lambs, Backpack & Food Pantry",
+                "SHORT": "Jordan's",
+                "LonX": "-80.77304863",
+                "LatY": "37.08422042",
+                "id": "JC",
+                "degree": 1,
+                "pagerank": 0.005362709902027982,
+                "node_id": "JC",
+                "isHidden": false
+            },
+            {
+                "ID": "MBL",
+                "ORGANIZATION": "Meadowbrook Public Library Backpack Program",
+                "SHORT": "MB Lib",
+                "LonX": "-80.25589444",
+                "LatY": "37.16708883",
+                "id": "MBL",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "MBL",
+                "isHidden": false
+            },
+            {
+                "ID": "MCCS",
+                "ORGANIZATION": "Montgomery County Christmas Store",
+                "SHORT": "MCCS",
+                "LonX": "-80.40938223",
+                "LatY": "37.12894099",
+                "id": "MCCS",
+                "degree": 8,
+                "pagerank": 0.006059308711005115,
+                "node_id": "MCCS",
+                "isHidden": false
+            },
+            {
+                "ID": "MCEAP",
+                "ORGANIZATION": "Montgomery County Emergency Assistance Program (MCEAP)",
+                "SHORT": "MCEAP",
+                "LonX": "-80.40429363",
+                "LatY": "37.13058038",
+                "id": "MCEAP",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "MCEAP",
+                "isHidden": false
+            },
+            {
+                "ID": "NE",
+                "ORGANIZATION": "Narrows Elem",
+                "SHORT": "NE",
+                "LonX": "-80.8130791",
+                "LatY": "37.32682068",
+                "id": "NE",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "NE",
+                "isHidden": false
+            },
+            {
+                "ID": "NH",
+                "ORGANIZATION": "New Harvest",
+                "SHORT": "New Harvest",
+                "LonX": "-80.503012",
+                "LatY": "36.85345246",
+                "id": "NH",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "NH",
+                "isHidden": false
+            },
+            {
+                "ID": "NL",
+                "ORGANIZATION": "New Life Church of the Nazarene",
+                "SHORT": "New Life",
+                "LonX": "-80.78200097",
+                "LatY": "37.0445225",
+                "id": "NL",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "NL",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCAF",
+                "ORGANIZATION": "New River Community Action, Floyd",
+                "SHORT": "NRCAF",
+                "LonX": "-80.33266837",
+                "LatY": "36.90856234",
+                "id": "NRCAF",
+                "degree": 2,
+                "pagerank": 0.005860092266496954,
+                "node_id": "NRCAF",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCAG",
+                "ORGANIZATION": "New River Community Action, Giles",
+                "SHORT": "NRCAG",
+                "LonX": "-80.73430274",
+                "LatY": "37.32662327",
+                "id": "NRCAG",
+                "degree": 6,
+                "pagerank": 0.005607369893510468,
+                "node_id": "NRCAG",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCAHS",
+                "ORGANIZATION": "New River Community Action, Head Start",
+                "SHORT": "NRCA, HS",
+                "LonX": "-80.40732967",
+                "LatY": "37.22539007",
+                "id": "NRCAHS",
+                "degree": 5,
+                "pagerank": 0.012798910506951307,
+                "node_id": "NRCAHS",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCAM",
+                "ORGANIZATION": "New River Community Action, Montgomery",
+                "SHORT": "NRCAM",
+                "LonX": "-80.40427217",
+                "LatY": "37.13059749",
+                "id": "NRCAM",
+                "degree": 5,
+                "pagerank": 0.019123831363245625,
+                "node_id": "NRCAM",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCAP",
+                "ORGANIZATION": "New River Community Action, Pulaski",
+                "SHORT": "NRCAP",
+                "LonX": "-80.78201184",
+                "LatY": "37.05041414",
+                "id": "NRCAP",
+                "degree": 4,
+                "pagerank": 0.01887403585038613,
+                "node_id": "NRCAP",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCAR",
+                "ORGANIZATION": "New River Community Action, Radford",
+                "SHORT": "NRCAR",
+                "LonX": "-80.55665943",
+                "LatY": "37.14083198",
+                "id": "NRCAR",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "NRCAR",
+                "isHidden": false
+            },
+            {
+                "ID": "NRCC",
+                "ORGANIZATION": "New River Community College",
+                "SHORT": "NRCC",
+                "LonX": "-80.69586293",
+                "LatY": "37.10405559",
+                "id": "NRCC",
+                "degree": 0,
+                "pagerank": 0.004445198631885467,
+                "node_id": "NRCC",
+                "isHidden": false
+            },
+            {
+                "ID": "NRFS",
+                "ORGANIZATION": "New River Family Shelter",
+                "SHORT": "NR Fam Shelter",
+                "LonX": "-80.40427217",
+                "LatY": "37.13058893",
+                "id": "NRFS",
+                "degree": 1,
+                "pagerank": 0.004842453389946302,
+                "node_id": "NRFS",
+                "isHidden": false
+            },
+            {
+                "ID": "FARM",
+                "ORGANIZATION": "New River Health District, Farmacy Garden",
+                "SHORT": "Farmacy",
+                "LonX": "-80.40402654",
+                "LatY": "37.12947049",
+                "id": "FARM",
+                "degree": 4,
+                "pagerank": 0.0064205193129861,
+                "node_id": "FARM",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVA",
+                "ORGANIZATION": "New River Valley Agency on Aging",
+                "SHORT": "NRV Aging",
+                "LonX": "-80.7762553",
+                "LatY": "37.04816331",
+                "id": "NRVA",
+                "degree": 1,
+                "pagerank": 0.004195403119025974,
+                "node_id": "NRVA",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVCSF",
+                "ORGANIZATION": "New River Valley Community Services, Floyd",
+                "SHORT": "NRVCSF",
+                "LonX": "-80.3251187",
+                "LatY": "36.91909506",
+                "id": "NRVCSF",
+                "degree": 2,
+                "pagerank": 0.0062914161585700765,
+                "node_id": "NRVCSF",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVCSG",
+                "ORGANIZATION": "New River Valley Community Services, Giles",
+                "SHORT": "NRVCSG",
+                "LonX": "-80.7318141",
+                "LatY": "37.32746004",
+                "id": "NRVCSG",
+                "degree": 2,
+                "pagerank": 0.0062914161585700765,
+                "node_id": "NRVCSG",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVCSM",
+                "ORGANIZATION": "New River Valley Community Services, Montgomery",
+                "SHORT": "NRVCSM",
+                "LonX": "-80.43116357",
+                "LatY": "37.23303271",
+                "id": "NRVCSM",
+                "degree": 2,
+                "pagerank": 0.0062914161585700765,
+                "node_id": "NRVCSM",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVCSP",
+                "ORGANIZATION": "New River Valley Community Services, Pulaski",
+                "SHORT": "NRVCSP",
+                "LonX": "-80.78030763",
+                "LatY": "37.04950507",
+                "id": "NRVCSP",
+                "degree": 2,
+                "pagerank": 0.0062914161585700765,
+                "node_id": "NRVCSP",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVCSR",
+                "ORGANIZATION": "New River Valley Community Services, Radford",
+                "SHORT": "NRVCSR",
+                "LonX": "-80.577643",
+                "LatY": "37.13385254",
+                "id": "NRVCSR",
+                "degree": 2,
+                "pagerank": 0.0062914161585700765,
+                "node_id": "NRVCSR",
+                "isHidden": false
+            },
+            {
+                "ID": "NRVS",
+                "ORGANIZATION": "New River Valley Senior Services",
+                "SHORT": "NRV Senior",
+                "LonX": "-80.77624457",
+                "LatY": "37.04816331",
+                "id": "NRVS",
+                "degree": 0,
+                "pagerank": 0.004445198631885467,
+                "node_id": "NRVS",
+                "isHidden": false
+            },
+            {
+                "ID": "NUMC",
+                "ORGANIZATION": "Newport United Methodist Church",
+                "SHORT": "Newport UMC",
+                "LonX": "-80.49466263",
+                "LatY": "37.29553585",
+                "id": "NUMC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "NUMC",
+                "isHidden": false
+            },
+            {
+                "ID": "PCOG",
+                "ORGANIZATION": "Pearisburg Church of God",
+                "SHORT": "Pburg COG",
+                "LonX": "-80.75833083",
+                "LatY": "37.32912197",
+                "id": "PCOG",
+                "degree": 0,
+                "pagerank": 0.005362709902027982,
+                "node_id": "PCOG",
+                "isHidden": false
+            },
+            {
+                "ID": "PFM",
+                "ORGANIZATION": "Pearisburg Community Market (Farmer’s Market)",
+                "SHORT": "Pburg FM",
+                "LonX": "-80.7195086",
+                "LatY": "37.32638618",
+                "id": "PFM",
+                "degree": 2,
+                "pagerank": 0.009389771641566878,
+                "node_id": "PFM",
+                "isHidden": false
+            },
+            {
+                "ID": "MABP",
+                "ORGANIZATION": "Pearisburg First United Methodist Church, (Macy's Backpack Ministries)",
+                "SHORT": "Macy's BP",
+                "LonX": "-80.72693137",
+                "LatY": "37.3311309",
+                "id": "MABP",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "MABP",
+                "isHidden": false
+            },
+            {
+                "ID": "PW",
+                "ORGANIZATION": "Pearisburg Junior Women's Club Backpack Program",
+                "SHORT": "Pburg Women's",
+                "LonX": "-80.73566077",
+                "LatY": "37.32810958",
+                "id": "PW",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "PW",
+                "isHidden": false
+            },
+            {
+                "ID": "PLE",
+                "ORGANIZATION": "Plenty!",
+                "SHORT": "Plenty!",
+                "LonX": "-80.35035943",
+                "LatY": "36.93983356",
+                "id": "PLE",
+                "degree": 2,
+                "pagerank": 0.007399718599358036,
+                "node_id": "PLE",
+                "isHidden": false
+            },
+            {
+                "ID": "PFI",
+                "ORGANIZATION": "Prices Fork Incubator Kitchen",
+                "SHORT": "PF Incubator",
+                "LonX": "-80.49099736",
+                "LatY": "37.20781206",
+                "id": "PFI",
+                "degree": 2,
+                "pagerank": 0.006433138904907965,
+                "node_id": "PFI",
+                "isHidden": false
+            },
+            {
+                "ID": "PLCOG",
+                "ORGANIZATION": "Pulaski Church of God",
+                "SHORT": "Pulaski POG",
+                "LonX": "-80.77754643",
+                "LatY": "37.04562557",
+                "id": "PLCOG",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "PLCOG",
+                "isHidden": false
+            },
+            {
+                "ID": "PCCS",
+                "ORGANIZATION": "Pulaski County Christmas Store",
+                "SHORT": "PC Christmas",
+                "LonX": "-80.7834831",
+                "LatY": "37.04834474",
+                "id": "PCCS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "PCCS",
+                "isHidden": false
+            },
+            {
+                "ID": "PCS",
+                "ORGANIZATION": "Pulaski County Public Schools",
+                "SHORT": "PC School",
+                "LonX": "-80.77966387",
+                "LatY": "37.04798147",
+                "id": "PCS",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "PCS",
+                "isHidden": false
+            },
+            {
+                "ID": "PDB",
+                "ORGANIZATION": "Pulaski Daily Bread Inc.",
+                "SHORT": "Pulaski DB",
+                "LonX": "-80.7819251",
+                "LatY": "37.05015267",
+                "id": "PDB",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "PDB",
+                "isHidden": false
+            },
+            {
+                "ID": "PG",
+                "ORGANIZATION": "Pulaski Grow",
+                "SHORT": "Pulaski Grow",
+                "LonX": "-80.74725134",
+                "LatY": "37.00456638",
+                "id": "PG",
+                "degree": 2,
+                "pagerank": 0.007260917605477171,
+                "node_id": "PG",
+                "isHidden": false
+            },
+            {
+                "ID": "RU",
+                "ORGANIZATION": "Radford University (Highlander Helpers Backpack Club)",
+                "SHORT": "RU",
+                "LonX": "-80.55107423",
+                "LatY": "37.13990224",
+                "id": "RU",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "RU",
+                "isHidden": false
+            },
+            {
+                "ID": "RW",
+                "ORGANIZATION": "Radford Worship Center",
+                "SHORT": "Radford Worship",
+                "LonX": "-80.58843196",
+                "LatY": "37.11720128",
+                "id": "RW",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "RW",
+                "isHidden": false
+            },
+            {
+                "ID": "RFDB",
+                "ORGANIZATION": "Radford-Fairlawn Daily Bread",
+                "SHORT": "RF Daily Bread",
+                "LonX": "-80.54285743",
+                "LatY": "37.13573343",
+                "id": "RFDB",
+                "degree": 2,
+                "pagerank": 0.005612505414887475,
+                "node_id": "RFDB",
+                "isHidden": false
+            },
+            {
+                "ID": "RCOG",
+                "ORGANIZATION": "Riverview Church of God",
+                "SHORT": "Riverview CoG",
+                "LonX": "-80.79808957",
+                "LatY": "36.92406236",
+                "id": "RCOG",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "RCOG",
+                "isHidden": false
+            },
+            {
+                "ID": "SFP",
+                "ORGANIZATION": "Shawsville Lay Ministerial Association Food Pantry",
+                "SHORT": "Shawsville FP",
+                "LonX": "-80.22883746",
+                "LatY": "37.22041007",
+                "id": "SFP",
+                "degree": 2,
+                "pagerank": 0.037229947690283406,
+                "node_id": "SFP",
+                "isHidden": false
+            },
+            {
+                "ID": "SOF",
+                "ORGANIZATION": "SO Fresh (Southwest Virginia Fresh)",
+                "SHORT": "SO Fresh",
+                "LonX": "-80.7796746",
+                "LatY": "37.04796434",
+                "id": "SOF",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "SOF",
+                "isHidden": false
+            },
+            {
+                "ID": "SR",
+                "ORGANIZATION": "Spiritual Roots Community Food Bank",
+                "SHORT": "Spiritual Roots",
+                "LonX": "-80.41831827",
+                "LatY": "37.17471653",
+                "id": "SR",
+                "degree": 0,
+                "pagerank": 0.005362709902027982,
+                "node_id": "SR",
+                "isHidden": false
+            },
+            {
+                "ID": "GT",
+                "ORGANIZATION": "St Mary's Catholic Justice & Peace (The Glean Team)",
+                "SHORT": "Glean Team",
+                "LonX": "-80.46679697",
+                "LatY": "37.21999747",
+                "id": "GT",
+                "degree": 2,
+                "pagerank": 0.013592991704411125,
+                "node_id": "GT",
+                "isHidden": false
+            },
+            {
+                "ID": "SJ",
+                "ORGANIZATION": "St. Jude Church",
+                "SHORT": "St. Jude",
+                "LonX": "-80.52359027",
+                "LatY": "37.11361599",
+                "id": "SJ",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "SJ",
+                "isHidden": false
+            },
+            {
+                "ID": "MBP",
+                "ORGANIZATION": "St. Michael's Lutheran Church, (Micah's)",
+                "SHORT": "Micah's",
+                "LonX": "-80.46658944",
+                "LatY": "37.21103277",
+                "id": "MBP",
+                "degree": 6,
+                "pagerank": 0.014828916944928529,
+                "node_id": "MBP",
+                "isHidden": false
+            },
+            {
+                "ID": "SA",
+                "ORGANIZATION": "Salvation Army",
+                "SHORT": "Sal Army",
+                "LonX": "-80.38720927",
+                "LatY": "37.13377633",
+                "id": "SA",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "SA",
+                "isHidden": false
+            },
+            {
+                "ID": "UMCP",
+                "ORGANIZATION": "United Methodist Women of Pembroke",
+                "SHORT": "UMC Pembroke",
+                "LonX": "-80.63575927",
+                "LatY": "37.32033091",
+                "id": "UMCP",
+                "degree": 0,
+                "pagerank": 0.004826645196452342,
+                "node_id": "UMCP",
+                "isHidden": false
+            },
+            {
+                "ID": "UW",
+                "ORGANIZATION": "United Way of the New River Valley",
+                "SHORT": "United Way",
+                "LonX": "-80.41082427",
+                "LatY": "37.12836983",
+                "id": "UW",
+                "degree": 4,
+                "pagerank": 0.05132609404816581,
+                "node_id": "UW",
+                "isHidden": false
+            },
+            {
+                "ID": "UC",
+                "ORGANIZATION": "Unity Christian Church",
+                "SHORT": "Unity Christian",
+                "LonX": "-80.5535014",
+                "LatY": "37.13755709",
+                "id": "UC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "UC",
+                "isHidden": false
+            },
+            {
+                "ID": "VICCC",
+                "ORGANIZATION": "Valley Interfaith Child Care Center",
+                "SHORT": "VICCC",
+                "LonX": "-80.4495162",
+                "LatY": "37.22268194",
+                "id": "VICCC",
+                "degree": 1,
+                "pagerank": 0.006974195242441068,
+                "node_id": "VICCC",
+                "isHidden": false
+            },
+            {
+                "ID": "VCE",
+                "ORGANIZATION": "Virginia Cooperative Extension",
+                "SHORT": "VCE",
+                "LonX": "-80.39292313",
+                "LatY": "37.13106093",
+                "id": "VCE",
+                "degree": 8,
+                "pagerank": 0.04277215321298887,
+                "node_id": "VCE",
+                "isHidden": false
+            },
+            {
+                "ID": "VTFNP",
+                "ORGANIZATION": "Virginia Tech Family Nutrition Program",
+                "SHORT": "VTFNP",
+                "LonX": "-80.424202",
+                "LatY": "37.22293598",
+                "id": "VTFNP",
+                "degree": 2,
+                "pagerank": 0.007064330392361888,
+                "node_id": "VTFNP",
+                "isHidden": false
+            },
+            {
+                "ID": "VTK",
+                "ORGANIZATION": "VT Campus Kitchen/ VT Engage",
+                "SHORT": "VT Kitchen",
+                "LonX": "-80.4341316",
+                "LatY": "37.23086016",
+                "id": "VTK",
+                "degree": 3,
+                "pagerank": 0.14862032239168657,
+                "node_id": "VTK",
+                "isHidden": false
+            },
+            {
+                "ID": "WH",
+                "ORGANIZATION": "Warm Hearth Foundation",
+                "SHORT": "Warm Hearth",
+                "LonX": "-80.41947077",
+                "LatY": "37.19728943",
+                "id": "WH",
+                "degree": 3,
+                "pagerank": 0.03781468324050925,
+                "node_id": "WH",
+                "isHidden": false
+            },
+            {
+                "ID": "WUMC",
+                "ORGANIZATION": "White Memorial United Methodist Church",
+                "SHORT": "White UMC",
+                "LonX": "-80.25052587",
+                "LatY": "37.17024753",
+                "id": "WUMC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "WUMC",
+                "isHidden": false
+            },
+            {
+                "ID": "WRC",
+                "ORGANIZATION": "Women's Resource Center of the New River Valley",
+                "SHORT": "WRCNRV",
+                "LonX": "-80.55759713",
+                "LatY": "37.13948268",
+                "id": "WRC",
+                "degree": 0,
+                "pagerank": 0.004195403119025974,
+                "node_id": "WRC",
+                "isHidden": false
+            },
+            {
+                "ID": "YMCA",
+                "ORGANIZATION": "YMCA at Virginia Tech",
+                "SHORT": "YMCA VT",
+                "LonX": "-80.41949553",
+                "LatY": "37.23887516",
+                "id": "YMCA",
+                "degree": 1,
+                "pagerank": 0.004445198631885467,
+                "node_id": "YMCA",
+                "isHidden": false
+            },
+            {
+                "ID": "YMCACG",
+                "ORGANIZATION": "YMCA Community Garden",
+                "SHORT": "YMCA CG",
+                "LonX": "-80.4128085",
+                "LatY": "37.26766922",
+                "id": "YMCACG",
+                "degree": 2,
+                "pagerank": 0.027791017410757058,
+                "node_id": "YMCACG",
+                "isHidden": false
+            }
+        ],
+        "edges": [
+            {
+                "source_id": "BRR",
+                "target_id": "CFNRV",
+                "fromlocLatY": 37.12018291,
+                "fromlocLonX": -80.58952135,
+                "tolocLatY": 37.14287995,
+                "tolocLonX": -80.40526282,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BRR",
+                "target_id": "FASWV",
+                "fromlocLatY": 37.12018291,
+                "fromlocLonX": -80.58952135,
+                "tolocLatY": 37.27905515,
+                "tolocLonX": -80.03651902,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BRR",
+                "target_id": "PG",
+                "fromlocLatY": 37.12018291,
+                "fromlocLonX": -80.58952135,
+                "tolocLatY": 37.00456638,
+                "tolocLonX": -80.74725134,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BL",
+                "target_id": "BL",
+                "fromlocLatY": 37.19585675,
+                "fromlocLonX": -80.40171127,
+                "tolocLatY": 37.19585675,
+                "tolocLonX": -80.40171127,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BFM",
+                "target_id": "CFM",
+                "fromlocLatY": 37.22944669,
+                "fromlocLonX": -80.41442147,
+                "tolocLatY": 37.12919672,
+                "tolocLonX": -80.41032146,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BFM",
+                "target_id": "PFI",
+                "fromlocLatY": 37.22944669,
+                "fromlocLonX": -80.41442147,
+                "tolocLatY": 37.20781206,
+                "tolocLonX": -80.49099736,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BFM",
+                "target_id": "VCE",
+                "fromlocLatY": 37.22944669,
+                "fromlocLonX": -80.41442147,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BFM",
+                "target_id": "VTFNP",
+                "fromlocLatY": 37.22944669,
+                "fromlocLonX": -80.41442147,
+                "tolocLatY": 37.22293598,
+                "tolocLonX": -80.424202,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "CFNRV",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.14287995,
+                "tolocLonX": -80.40526282,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "FASWV",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.27905515,
+                "tolocLonX": -80.03651902,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "MCCS",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.12894099,
+                "tolocLonX": -80.40938223,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "GT",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.21999747,
+                "tolocLonX": -80.46679697,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "MBP",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BIFP",
+                "target_id": "VCE",
+                "fromlocLatY": 37.23680011,
+                "fromlocLonX": -80.40631337,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BBRP",
+                "target_id": "CFNRV",
+                "fromlocLatY": 37.23024081,
+                "fromlocLonX": -80.41425702,
+                "tolocLatY": 37.14287995,
+                "tolocLonX": -80.40526282,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BBRP",
+                "target_id": "MBP",
+                "fromlocLatY": 37.23024081,
+                "fromlocLonX": -80.41425702,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "BBP",
+                "target_id": "FASWV",
+                "fromlocLatY": 37.13246013,
+                "fromlocLonX": -80.57139133,
+                "tolocLatY": 37.27905515,
+                "tolocLonX": -80.03651902,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CC",
+                "target_id": "GYAP",
+                "fromlocLatY": 37.08940601,
+                "fromlocLonX": -80.50562529,
+                "tolocLatY": 37.31819874,
+                "tolocLonX": -80.7293378,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CC",
+                "target_id": "NRCAHS",
+                "fromlocLatY": 37.08940601,
+                "fromlocLonX": -80.50562529,
+                "tolocLatY": 37.22539007,
+                "tolocLonX": -80.40732967,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CC",
+                "target_id": "PFM",
+                "fromlocLatY": 37.08940601,
+                "fromlocLonX": -80.50562529,
+                "tolocLatY": 37.32638618,
+                "tolocLonX": -80.7195086,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CL",
+                "target_id": "CL",
+                "fromlocLatY": 37.13340559,
+                "fromlocLonX": -80.57382183,
+                "tolocLatY": 37.13340559,
+                "tolocLonX": -80.57382183,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFM",
+                "target_id": "FARM",
+                "fromlocLatY": 37.12919672,
+                "fromlocLonX": -80.41032146,
+                "tolocLatY": 37.12947049,
+                "tolocLonX": -80.40402654,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFM",
+                "target_id": "VCE",
+                "fromlocLatY": 37.12919672,
+                "fromlocLonX": -80.41032146,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFM",
+                "target_id": "VTFNP",
+                "fromlocLatY": 37.12919672,
+                "fromlocLonX": -80.41032146,
+                "tolocLatY": 37.22293598,
+                "tolocLonX": -80.424202,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "GG",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.32708718,
+                "tolocLonX": -80.7338711,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "GCM",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.32663181,
+                "tolocLonX": -80.7343242,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "IAJ",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.12479008,
+                "tolocLonX": -80.58855157,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "MCCS",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.12894099,
+                "tolocLonX": -80.40938223,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRCAG",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.32662327,
+                "tolocLonX": -80.73430274,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRCAHS",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.22539007,
+                "tolocLonX": -80.40732967,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRCC",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.10405559,
+                "tolocLonX": -80.69586293,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRFS",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.13058893,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "FARM",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.12947049,
+                "tolocLonX": -80.40402654,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRVCSF",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 36.91909506,
+                "tolocLonX": -80.3251187,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRVCSG",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.32746004,
+                "tolocLonX": -80.7318141,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRVCSM",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.23303271,
+                "tolocLonX": -80.43116357,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRVCSP",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.04950507,
+                "tolocLonX": -80.78030763,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRVCSR",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.13385254,
+                "tolocLonX": -80.577643,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "NRVS",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.04816331,
+                "tolocLonX": -80.77624457,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "MBP",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "PLE",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 36.93983356,
+                "tolocLonX": -80.35035943,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "PFI",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.20781206,
+                "tolocLonX": -80.49099736,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "PG",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.00456638,
+                "tolocLonX": -80.74725134,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "RFDB",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.13573343,
+                "tolocLonX": -80.54285743,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "VICCC",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.22268194,
+                "tolocLonX": -80.4495162,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "VCE",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "VTK",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.23086016,
+                "tolocLonX": -80.4341316,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "WH",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.19728943,
+                "tolocLonX": -80.41947077,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "CFNRV",
+                "target_id": "YMCA",
+                "fromlocLatY": 37.14287995,
+                "fromlocLonX": -80.40526282,
+                "tolocLatY": 37.23887516,
+                "tolocLonX": -80.41949553,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "DUMC",
+                "target_id": "DUMC",
+                "fromlocLatY": 37.10596942,
+                "fromlocLonX": -80.68276118,
+                "tolocLatY": 37.10596942,
+                "tolocLonX": -80.68276118,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "EN",
+                "target_id": "EN",
+                "fromlocLatY": 37.01768718,
+                "fromlocLonX": -80.33919094,
+                "tolocLatY": 37.01768718,
+                "tolocLonX": -80.33919094,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "EN",
+                "target_id": "FASWV",
+                "fromlocLatY": 37.01768718,
+                "fromlocLonX": -80.33919094,
+                "tolocLatY": 37.27905515,
+                "tolocLonX": -80.03651902,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "EEBP",
+                "target_id": "EEBP",
+                "fromlocLatY": 37.21503776,
+                "fromlocLonX": -80.35832262,
+                "tolocLatY": 37.21503776,
+                "tolocLonX": -80.35832262,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "ENTF",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.05060252,
+                "fromlocLonX": -80.78163634,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "ENTF",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.05060252,
+                "fromlocLonX": -80.78163634,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FP",
+                "target_id": "FP",
+                "fromlocLatY": 37.15111541,
+                "fromlocLonX": -80.57991814,
+                "tolocLatY": 37.15111541,
+                "tolocLonX": -80.57991814,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "FASWV",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.27905515,
+                "tolocLonX": -80.03651902,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "GB",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.17603415,
+                "tolocLonX": -80.41697482,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "JC",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.08422042,
+                "tolocLonX": -80.77304863,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "MCCS",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.12894099,
+                "tolocLonX": -80.40938223,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "PLE",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 36.93983356,
+                "tolocLonX": -80.35035943,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "PCOG",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.32912197,
+                "tolocLonX": -80.75833083,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "RFDB",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.13573343,
+                "tolocLonX": -80.54285743,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "SFP",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.22041007,
+                "tolocLonX": -80.22883746,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "SR",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.17471653,
+                "tolocLonX": -80.41831827,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FASWV",
+                "target_id": "MBP",
+                "fromlocLatY": 37.27905515,
+                "fromlocLonX": -80.03651902,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "GG",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.32708718,
+                "tolocLonX": -80.7338711,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "GHF",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.32786941,
+                "tolocLonX": -80.73229414,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "NRCAHS",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.22539007,
+                "tolocLonX": -80.40732967,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "FARM",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.12947049,
+                "tolocLonX": -80.40402654,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "PG",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.00456638,
+                "tolocLonX": -80.74725134,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "VCE",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "VTFNP",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.22293598,
+                "tolocLonX": -80.424202,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GG",
+                "target_id": "YMCACG",
+                "fromlocLatY": 37.32708718,
+                "fromlocLonX": -80.7338711,
+                "tolocLatY": 37.26766922,
+                "tolocLonX": -80.4128085,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GCM",
+                "target_id": "HFC",
+                "fromlocLatY": 37.32663181,
+                "fromlocLonX": -80.7343242,
+                "tolocLatY": 37.33287664,
+                "tolocLonX": -80.71567037,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GCM",
+                "target_id": "NRCAG",
+                "fromlocLatY": 37.32663181,
+                "fromlocLonX": -80.7343242,
+                "tolocLatY": 37.32662327,
+                "tolocLonX": -80.73430274,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GCM",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.32663181,
+                "fromlocLonX": -80.7343242,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GCM",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.32663181,
+                "fromlocLonX": -80.7343242,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GCM",
+                "target_id": "MBP",
+                "fromlocLatY": 37.32663181,
+                "fromlocLonX": -80.7343242,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GCM",
+                "target_id": "UMCP",
+                "fromlocLatY": 37.32663181,
+                "fromlocLonX": -80.7343242,
+                "tolocLatY": 37.32033091,
+                "tolocLonX": -80.63575927,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GYAP",
+                "target_id": "NRVCSF",
+                "fromlocLatY": 37.31819874,
+                "fromlocLonX": -80.7293378,
+                "tolocLatY": 36.91909506,
+                "tolocLonX": -80.3251187,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GYAP",
+                "target_id": "NRVCSG",
+                "fromlocLatY": 37.31819874,
+                "fromlocLonX": -80.7293378,
+                "tolocLatY": 37.32746004,
+                "tolocLonX": -80.7318141,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GYAP",
+                "target_id": "NRVCSM",
+                "fromlocLatY": 37.31819874,
+                "fromlocLonX": -80.7293378,
+                "tolocLatY": 37.23303271,
+                "tolocLonX": -80.43116357,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GYAP",
+                "target_id": "NRVCSP",
+                "fromlocLatY": 37.31819874,
+                "fromlocLonX": -80.7293378,
+                "tolocLatY": 37.04950507,
+                "tolocLonX": -80.78030763,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GYAP",
+                "target_id": "NRVCSR",
+                "fromlocLatY": 37.31819874,
+                "fromlocLonX": -80.7293378,
+                "tolocLatY": 37.13385254,
+                "tolocLonX": -80.577643,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "JC",
+                "target_id": "NRCAHS",
+                "fromlocLatY": 37.08422042,
+                "fromlocLonX": -80.77304863,
+                "tolocLatY": 37.22539007,
+                "tolocLonX": -80.40732967,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRCAHS",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.22539007,
+                "tolocLonX": -80.40732967,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRFS",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.13058893,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRVCSF",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 36.91909506,
+                "tolocLonX": -80.3251187,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRVCSG",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.32746004,
+                "tolocLonX": -80.7318141,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRVCSM",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.23303271,
+                "tolocLonX": -80.43116357,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRVCSP",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.04950507,
+                "tolocLonX": -80.78030763,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "NRVCSR",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.13385254,
+                "tolocLonX": -80.577643,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "SFP",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.22041007,
+                "tolocLonX": -80.22883746,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "UW",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "VCE",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MCCS",
+                "target_id": "WH",
+                "fromlocLatY": 37.12894099,
+                "fromlocLonX": -80.40938223,
+                "tolocLatY": 37.19728943,
+                "tolocLonX": -80.41947077,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAF",
+                "target_id": "NRCAF",
+                "fromlocLatY": 36.90856234,
+                "fromlocLonX": -80.33266837,
+                "tolocLatY": 36.90856234,
+                "tolocLonX": -80.33266837,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAF",
+                "target_id": "NRCAHS",
+                "fromlocLatY": 36.90856234,
+                "fromlocLonX": -80.33266837,
+                "tolocLatY": 37.22539007,
+                "tolocLonX": -80.40732967,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAF",
+                "target_id": "UW",
+                "fromlocLatY": 36.90856234,
+                "fromlocLonX": -80.33266837,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRCAG",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.32662327,
+                "tolocLonX": -80.73430274,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRVCSF",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 36.91909506,
+                "tolocLonX": -80.3251187,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRVCSG",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.32746004,
+                "tolocLonX": -80.7318141,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRVCSM",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.23303271,
+                "tolocLonX": -80.43116357,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRVCSP",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.04950507,
+                "tolocLonX": -80.78030763,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "NRVCSR",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.13385254,
+                "tolocLonX": -80.577643,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAG",
+                "target_id": "UW",
+                "fromlocLatY": 37.32662327,
+                "fromlocLonX": -80.73430274,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAHS",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.22539007,
+                "fromlocLonX": -80.40732967,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAHS",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.22539007,
+                "fromlocLonX": -80.40732967,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAHS",
+                "target_id": "MBP",
+                "fromlocLatY": 37.22539007,
+                "fromlocLonX": -80.40732967,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAHS",
+                "target_id": "WH",
+                "fromlocLatY": 37.22539007,
+                "fromlocLonX": -80.40732967,
+                "tolocLatY": 37.19728943,
+                "tolocLonX": -80.41947077,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAM",
+                "target_id": "NRCAM",
+                "fromlocLatY": 37.13059749,
+                "fromlocLonX": -80.40427217,
+                "tolocLatY": 37.13059749,
+                "tolocLonX": -80.40427217,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAM",
+                "target_id": "NRCAP",
+                "fromlocLatY": 37.13059749,
+                "fromlocLonX": -80.40427217,
+                "tolocLatY": 37.05041414,
+                "tolocLonX": -80.78201184,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRCAP",
+                "target_id": "UW",
+                "fromlocLatY": 37.05041414,
+                "fromlocLonX": -80.78201184,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRFS",
+                "target_id": "UW",
+                "fromlocLatY": 37.13058893,
+                "fromlocLonX": -80.40427217,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FARM",
+                "target_id": "PFI",
+                "fromlocLatY": 37.12947049,
+                "fromlocLonX": -80.40402654,
+                "tolocLatY": 37.20781206,
+                "tolocLonX": -80.49099736,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FARM",
+                "target_id": "PG",
+                "fromlocLatY": 37.12947049,
+                "fromlocLonX": -80.40402654,
+                "tolocLatY": 37.00456638,
+                "tolocLonX": -80.74725134,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FARM",
+                "target_id": "MBP",
+                "fromlocLatY": 37.12947049,
+                "fromlocLonX": -80.40402654,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FARM",
+                "target_id": "VCE",
+                "fromlocLatY": 37.12947049,
+                "fromlocLonX": -80.40402654,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "FARM",
+                "target_id": "YMCACG",
+                "fromlocLatY": 37.12947049,
+                "fromlocLonX": -80.40402654,
+                "tolocLatY": 37.26766922,
+                "tolocLonX": -80.4128085,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRVA",
+                "target_id": "PLE",
+                "fromlocLatY": 37.04816331,
+                "fromlocLonX": -80.7762553,
+                "tolocLatY": 36.93983356,
+                "tolocLonX": -80.35035943,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "NRVA",
+                "target_id": "VTK",
+                "fromlocLatY": 37.04816331,
+                "fromlocLonX": -80.7762553,
+                "tolocLatY": 37.23086016,
+                "tolocLonX": -80.4341316,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "PFM",
+                "target_id": "PFM",
+                "fromlocLatY": 37.32638618,
+                "fromlocLonX": -80.7195086,
+                "tolocLatY": 37.32638618,
+                "tolocLonX": -80.7195086,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "PFM",
+                "target_id": "VCE",
+                "fromlocLatY": 37.32638618,
+                "fromlocLonX": -80.7195086,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "PLE",
+                "target_id": "GT",
+                "fromlocLatY": 36.93983356,
+                "fromlocLonX": -80.35035943,
+                "tolocLatY": 37.21999747,
+                "tolocLonX": -80.46679697,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "PLE",
+                "target_id": "VCE",
+                "fromlocLatY": 36.93983356,
+                "fromlocLonX": -80.35035943,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "PFI",
+                "target_id": "VCE",
+                "fromlocLatY": 37.20781206,
+                "fromlocLonX": -80.49099736,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "PG",
+                "target_id": "VCE",
+                "fromlocLatY": 37.00456638,
+                "fromlocLonX": -80.74725134,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "RFDB",
+                "target_id": "UW",
+                "fromlocLatY": 37.13573343,
+                "fromlocLonX": -80.54285743,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "RFDB",
+                "target_id": "VTK",
+                "fromlocLatY": 37.13573343,
+                "fromlocLonX": -80.54285743,
+                "tolocLatY": 37.23086016,
+                "tolocLonX": -80.4341316,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "SFP",
+                "target_id": "SFP",
+                "fromlocLatY": 37.22041007,
+                "fromlocLonX": -80.22883746,
+                "tolocLatY": 37.22041007,
+                "tolocLonX": -80.22883746,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GT",
+                "target_id": "GT",
+                "fromlocLatY": 37.21999747,
+                "fromlocLonX": -80.46679697,
+                "tolocLatY": 37.21999747,
+                "tolocLonX": -80.46679697,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "GT",
+                "target_id": "WH",
+                "fromlocLatY": 37.21999747,
+                "fromlocLonX": -80.46679697,
+                "tolocLatY": 37.19728943,
+                "tolocLonX": -80.41947077,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MBP",
+                "target_id": "MBP",
+                "fromlocLatY": 37.21103277,
+                "fromlocLonX": -80.46658944,
+                "tolocLatY": 37.21103277,
+                "tolocLonX": -80.46658944,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MBP",
+                "target_id": "VICCC",
+                "fromlocLatY": 37.21103277,
+                "fromlocLonX": -80.46658944,
+                "tolocLatY": 37.22268194,
+                "tolocLonX": -80.4495162,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MBP",
+                "target_id": "VCE",
+                "fromlocLatY": 37.21103277,
+                "fromlocLonX": -80.46658944,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MBP",
+                "target_id": "VTK",
+                "fromlocLatY": 37.21103277,
+                "fromlocLonX": -80.46658944,
+                "tolocLatY": 37.23086016,
+                "tolocLonX": -80.4341316,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "MBP",
+                "target_id": "WH",
+                "fromlocLatY": 37.21103277,
+                "fromlocLonX": -80.46658944,
+                "tolocLatY": 37.19728943,
+                "tolocLonX": -80.41947077,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "UW",
+                "target_id": "UW",
+                "fromlocLatY": 37.12836983,
+                "fromlocLonX": -80.41082427,
+                "tolocLatY": 37.12836983,
+                "tolocLonX": -80.41082427,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "UW",
+                "target_id": "WH",
+                "fromlocLatY": 37.12836983,
+                "fromlocLonX": -80.41082427,
+                "tolocLatY": 37.19728943,
+                "tolocLonX": -80.41947077,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "VCE",
+                "target_id": "VCE",
+                "fromlocLatY": 37.13106093,
+                "fromlocLonX": -80.39292313,
+                "tolocLatY": 37.13106093,
+                "tolocLonX": -80.39292313,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "VCE",
+                "target_id": "VTK",
+                "fromlocLatY": 37.13106093,
+                "fromlocLonX": -80.39292313,
+                "tolocLatY": 37.23086016,
+                "tolocLonX": -80.4341316,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "VCE",
+                "target_id": "YMCACG",
+                "fromlocLatY": 37.13106093,
+                "fromlocLonX": -80.39292313,
+                "tolocLatY": 37.26766922,
+                "tolocLonX": -80.4128085,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "VTFNP",
+                "target_id": "YMCACG",
+                "fromlocLatY": 37.22293598,
+                "fromlocLonX": -80.424202,
+                "tolocLatY": 37.26766922,
+                "tolocLonX": -80.4128085,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "VTK",
+                "target_id": "VTK",
+                "fromlocLatY": 37.23086016,
+                "fromlocLonX": -80.4341316,
+                "tolocLatY": 37.23086016,
+                "tolocLonX": -80.4341316,
+                "withinState": true,
+                "withinFamily": true
+            },
+            {
+                "source_id": "YMCA",
+                "target_id": "YMCACG",
+                "fromlocLatY": 37.23887516,
+                "fromlocLonX": -80.41949553,
+                "tolocLatY": 37.26766922,
+                "tolocLonX": -80.4128085,
+                "withinState": true,
+                "withinFamily": true
+            }
+        ]
+    },
+    "overrides": {},
+    "nodesShowingLabels": [
+        "60",
+        "156",
+        "178",
+        "210",
+        "213",
+        "294",
+        "353",
+        "390",
+        "465",
+        "480"
+    ],
+    "positions": {
+        "AUMC": [
+            -202.3969966060104,
+            141.45788896694404
+        ],
+        "BRR": [
+            22.42553731282351,
+            37.231159510587126
+        ],
+        "BRP": [
+            -179.16820444999476,
+            -125.26423088571524
+        ],
+        "BUMC": [
+            54.191163216619096,
+            256.90598049838815
+        ],
+        "BBBC": [
+            -226.80077247169558,
+            -36.031161132883184
+        ],
+        "BL": [
+            241.8848680603413,
+            -61.67602341135952
+        ],
+        "BFM": [
+            28.451277171654706,
+            82.66410888195651
+        ],
+        "BIFP": [
+            3.570317862068548,
+            75.70759025735569
+        ],
+        "BBRP": [
+            -35.15565626617087,
+            49.64475843259824
+        ],
+        "BBP": [
+            -17.427108438849935,
+            7.115598593743846
+        ],
+        "CB": [
+            90.14305898875716,
+            -215.65979782878372
+        ],
+        "CC": [
+            -25.50910164149377,
+            34.41822694320234
+        ],
+        "CL": [
+            -184.822646366037,
+            -166.4855620653065
+        ],
+        "CFM": [
+            -4.369772834421744,
+            85.76831373318876
+        ],
+        "CFNRV": [
+            -4.330492678060545,
+            52.37248742842997
+        ],
+        "CHCM": [
+            -58.229055874260496,
+            -221.5454619630362
+        ],
+        "CHCG": [
+            229.9679822678221,
+            125.55347383373312
+        ],
+        "CHCRP": [
+            -252.85455070188436,
+            18.848420598230103
+        ],
+        "CHP": [
+            178.38162797028136,
+            -174.02720887564206
+        ],
+        "CH": [
+            -60.03869580586641,
+            260.53724318161244
+        ],
+        "CCS": [
+            -147.89312300215832,
+            -196.229243434133
+        ],
+        "MDSS": [
+            266.8701810847727,
+            12.066362419715636
+        ],
+        "RDSS": [
+            -215.12227375530324,
+            182.50292722024065
+        ],
+        "PDSS": [
+            39.116461408706954,
+            -250.41479166115536
+        ],
+        "GDSS": [
+            155.89688719305548,
+            220.16244085886373
+        ],
+        "FDSS": [
+            -232.0471909970903,
+            -108.93452971504847
+        ],
+        "DUMC": [
+            248.9048555380987,
+            -118.41741005403655
+        ],
+        "EN": [
+            -3.1980514078873883,
+            4.275588752164529
+        ],
+        "EEBP": [
+            -109.25497497605735,
+            -246.08511557430043
+        ],
+        "ENTF": [
+            -5.126432360877389,
+            70.51740655192286
+        ],
+        "FP": [
+            -258.07792518142554,
+            74.11106460263919
+        ],
+        "FASWV": [
+            -9.740509900487872,
+            36.97851898309561
+        ],
+        "FIE": [
+            103.3032872719645,
+            267.27379760180435
+        ],
+        "GB": [
+            -10.339220118011411,
+            6.114918071758765
+        ],
+        "GG": [
+            -0.32401097458912076,
+            82.11833874049991
+        ],
+        "GCM": [
+            -43.589969508185625,
+            57.47610108100586
+        ],
+        "GCF": [
+            -4.889234379012984,
+            -241.48618709732037
+        ],
+        "GS": [
+            203.5414859104526,
+            181.68528616244407
+        ],
+        "GCS": [
+            -270.9194755448563,
+            -50.948809105158546
+        ],
+        "GHF": [
+            0.7877350368646632,
+            112.87627941132305
+        ],
+        "GYAP": [
+            4.914871711009057,
+            42.50541117831876
+        ],
+        "GLA": [
+            -157.08383589148815,
+            -240.80736148927593
+        ],
+        "HF": [
+            287.62978185886556,
+            59.52026171856265
+        ],
+        "HH": [
+            -256.0873866064336,
+            121.34368270366103
+        ],
+        "HC": [
+            127.97477123586427,
+            -250.20755348049022
+        ],
+        "HFC": [
+            -70.97848298613286,
+            43.52090268077242
+        ],
+        "IAJ": [
+            9.94236746037255,
+            25.057085786688315
+        ],
+        "JC": [
+            -40.93079154794649,
+            32.09571603019526
+        ],
+        "MBL": [
+            -149.62670829094708,
+            229.19096662283906
+        ],
+        "MCCS": [
+            -15.387879945468777,
+            65.2061224157901
+        ],
+        "MCEAP": [
+            269.3544955088859,
+            110.27264434481292
+        ],
+        "NE": [
+            -300.07001859907604,
+            0.0008421268048779441
+        ],
+        "NH": [
+            172.26225318790028,
+            -222.34337527288898
+        ],
+        "NL": [
+            16.76500229794931,
+            298.13621244715586
+        ],
+        "NRCAF": [
+            -76.1500269823594,
+            57.62115031240212
+        ],
+        "NRCAG": [
+            -14.772176523855553,
+            72.84980173946073
+        ],
+        "NRCAHS": [
+            -42.88912828487336,
+            63.48668269135666
+        ],
+        "NRCAM": [
+            -31.632450557672207,
+            84.7665420240328
+        ],
+        "NRCAP": [
+            -22.075037336335495,
+            45.76861868936272
+        ],
+        "NRCAR": [
+            -290.20328644357653,
+            -89.66455764362883
+        ],
+        "NRCC": [
+            15.236071861459898,
+            28.664796203439835
+        ],
+        "NRFS": [
+            -22.625067575427924,
+            87.00199254827828
+        ],
+        "FARM": [
+            18.407897673804097,
+            89.29180330297243
+        ],
+        "NRVA": [
+            29.359840538367003,
+            58.824213269243174
+        ],
+        "NRVCSF": [
+            14.623956500858075,
+            74.99816409792328
+        ],
+        "NRVCSG": [
+            17.08461605932964,
+            70.36291083746143
+        ],
+        "NRVCSM": [
+            16.04221135665618,
+            72.70020872595997
+        ],
+        "NRVCSP": [
+            18.215751530920468,
+            67.79899591192374
+        ],
+        "NRVCSR": [
+            -28.312449521590622,
+            39.76697953563604
+        ],
+        "NRVS": [
+            -34.02646543912925,
+            59.0033902523342
+        ],
+        "NUMC": [
+            -16.271407437770243,
+            -291.4074931508858
+        ],
+        "PCOG": [
+            -24.59817496902686,
+            9.957873826166157
+        ],
+        "PFM": [
+            4.672890848953297,
+            23.913832725760713
+        ],
+        "MABP": [
+            227.20588189964425,
+            -169.41563791225497
+        ],
+        "PW": [
+            -33.611915304681986,
+            307.3340020128512
+        ],
+        "PLE": [
+            21.42870625439565,
+            27.929545694218312
+        ],
+        "PFI": [
+            -5.985117515687978,
+            81.09862027274443
+        ],
+        "PLCOG": [
+            -273.059847850976,
+            165.5729669801427
+        ],
+        "PCCS": [
+            77.63386837912975,
+            -280.2495327148489
+        ],
+        "PCS": [
+            167.82031835555347,
+            263.03892201126126
+        ],
+        "PDB": [
+            -262.72240419479425,
+            -147.8068820791378
+        ],
+        "PG": [
+            32.690142205179484,
+            66.97143800708994
+        ],
+        "RU": [
+            -146.62586737719369,
+            274.64859165322963
+        ],
+        "RW": [
+            -74.0384354378089,
+            -278.91830917960004
+        ],
+        "RFDB": [
+            -21.398634251391883,
+            70.82992018341668
+        ],
+        "RCOG": [
+            -307.56919817562715,
+            59.13433702936794
+        ],
+        "SFP": [
+            -40.54234217702889,
+            43.17093580136531
+        ],
+        "SOF": [
+            75.92836381501313,
+            310.68743965628363
+        ],
+        "SR": [
+            3.220647470961356,
+            8.958812626971831
+        ],
+        "GT": [
+            -2.8733241087751242,
+            43.36401915698435
+        ],
+        "SJ": [
+            -212.38876690210364,
+            229.90540344799467
+        ],
+        "MBP": [
+            -19.210737660271644,
+            75.29852368465738
+        ],
+        "SA": [
+            239.66915782827058,
+            200.689211293676
+        ],
+        "UMCP": [
+            -73.16411905208778,
+            65.5175013748952
+        ],
+        "UW": [
+            -48.731597492626385,
+            69.75435624242301
+        ],
+        "UC": [
+            -92.90650498036929,
+            298.97430869327695
+        ],
+        "VICCC": [
+            10.67977320567467,
+            79.63937759329508
+        ],
+        "VCE": [
+            15.28910928545406,
+            55.54169866913012
+        ],
+        "VTFNP": [
+            20.060316647086644,
+            107.43783525730551
+        ],
+        "VTK": [
+            9.036145715032324,
+            84.62721224128514
+        ],
+        "WH": [
+            -33.17062896499059,
+            41.191270390239275
+        ],
+        "WUMC": [
+            -223.27180235448597,
+            -198.06412823564142
+        ],
+        "WRC": [
+            287.25426608639793,
+            -61.45517436169673
+        ],
+        "YMCA": [
+            27.427272502908906,
+            49.15793975904222
+        ],
+        "YMCACG": [
+            38.20599849850447,
+            78.14595057432284
+        ]
+    },
+    "pinnedNodes": [],
+    "metadata": {
+        "snapshotName": "Untitled Graph",
+        "fullNodes": 105,
+        "fullEdges": 153,
+        "nodeProperties": [
+            "ID",
+            "ORGANIZATION",
+            "SHORT",
+            "LonX",
+            "LatY",
+            "id",
+            "degree",
+            "pagerank",
+            "node_id"
+        ],
+        "nodeComputed": [
+            "pagerank",
+            "degree"
+        ],
+        "edgeProperties": [
+            "source_id",
+            "target_id"
+        ]
+    },
+    "global": {
+        "nodes": {
+            "colorBy": "pagerank",
+            "color": {
+                "scale": "Linear Scale",
+                "from": "#448AFF",
+                "to": "#E91E63",
+                "ordinalColor": [
+                    "#e377c2",
+                    "#98df8a",
+                    "#ff7f0e",
+                    "#a55194",
+                    "#2ca02c",
+                    "#aec7e8",
+                    "#d62728",
+                    "#ff9896",
+                    "#9467bd",
+                    "#c5b0d5",
+                    "#8c564b",
+                    "#c49c94",
+                    "#1f77b4",
+                    "#f7b6d2",
+                    "#7f7f7f",
+                    "#c7c7c7",
+                    "#bcbd22",
+                    "#dbdb8d",
+                    "#17becf",
+                    "#9edae5",
+                    "#9c9ede",
+                    "#8c6d31",
+                    "#ffbb78",
+                    "#bd9e39"
+                ]
+            },
+            "sizeBy": "pagerank",
+            "size": {
+                "min": 2,
+                "max": 10,
+                "scale": "Linear Scale"
+            },
+            "labelBy": "node_id",
+            "shape": "circle",
+            "labelSize": 1,
+            "labelLength": 10
+        },
+        "edges": {
+            "color": "#7f7f7f",
+            "crossColor": "#0055aa"
+        }
+    }
+}
