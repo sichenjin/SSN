@@ -147,7 +147,7 @@ class MapView extends React.Component {
         zoom={4}
         center={[37, -100]}
       >
-        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
+        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=8f6a7e18-709d-4fe8-9dc9-fcce7bfa30d8" />
         <AreaSelect />
 
 
