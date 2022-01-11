@@ -153,7 +153,7 @@ class MapView extends React.Component {
 
         {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
         
-        appState.graph.frame.getEdgeList().map((edge, i) => {
+        appState.graph.frame && appState.graph.frame.getEdgeList().map((edge, i) => {
           // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
          
             var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
@@ -170,7 +170,7 @@ class MapView extends React.Component {
       }
 
         {appState.graph.rawGraph.nodes[0].LatY !== undefined && appState.graph.rawGraph.nodes[0].LonX !== undefined &&
-          appState.graph.frame.getNodeList().map((node, i) => {
+          appState.graph.frame && appState.graph.frame.getNodeList().map((node, i) => {
             
               return (
                 <CircleMarker
