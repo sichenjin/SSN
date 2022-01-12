@@ -31,7 +31,7 @@ class NodeDetail extends React.Component {
       >
         <div className={classnames(Classes.CARD, "node-details-table")}>
           <table
-            className={classnames(Classes.TABLE, Classes.TABLE_STRIPED)}
+            className={classnames(Classes.TABLE, Classes.TABLE_STRIPED, "node-details-table-content")}
             style={{
               width: "100%",
               padding: '0',

@@ -21,7 +21,7 @@ module.exports = function(self) {
 
     do {
       totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
-      totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+      totalOffsetY += currentElement.offsetTop - currentElement.scrollTop ;
     } while ((currentElement = currentElement.offsetParent));
 
     canvasX = pageX - totalOffsetX;

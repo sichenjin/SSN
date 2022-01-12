@@ -170,6 +170,7 @@ html {
   right: 2em;
   top: 5em;
   position: absolute;
+  word-wrap: break-word;
 }
 
 .minimal-navbar-right {
@@ -288,11 +289,15 @@ div.pt-card.sub-option.legend {
 .node-details-table {
   overflow-x: auto;
   overflow-y: auto;
-  max-width: 400px;
-  max-height: 60vh;
+  max-width: 150px;
+  max-height: 40vh;
   font-size: 0.4em;
   pointer-events: all;
   padding: 0;
+}
+.node-details-table-content {
+  table-layout: fixed;
+  font-size: 10px;
 }
 
 .argo-menu-list-header {

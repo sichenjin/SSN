@@ -75,7 +75,8 @@ module.exports = function(self) {
     self.cssRenderer.domElement.style.position = "absolute";
     self.cssRenderer.domElement.style.top = 0;
     self.minimapRenderer.domElement.style.position = "absolute";
-    self.minimapRenderer.domElement.style.bottom = '50px';
+    self.minimapRenderer.domElement.style.bottom = "50px";
+    self.minimapRenderer.domElement.style.offsetBottom = 50;  //numberic value of the minimap bottom offset for mouse position locate 
     self.minimapRenderer.domElement.style.left = 0;
     self.minimapRenderer.setSize(0.2 * self.height, 0.2 * self.height);
     self.minimapRenderer.zIndex = 1000;
@@ -310,12 +311,14 @@ module.exports = function(self) {
         var dir = mousePosition.sub(self.ccamera.position).clone();
         mousePosition.normalize();
         // Determine whether mouse is on minimap
+
         self.isMouseCoordinatesOnMinimap =
           coords.x <= self.minimap.width &&
-          self.height - coords.y <= self.minimap.height;
+          self.height - coords.y <= (self.minimap.height + self.minimapRenderer.domElement.style.offsetBottom) &&
+          self.height - coords.y >= self.minimapRenderer.domElement.style.offsetBottom;
         if (self.isMouseCoordinatesOnMinimap) {
           self.minimap.mouseX = coords.x;
-          self.minimap.mouseY = coords.y;
+          self.minimap.mouseY = coords.y + self.minimapRenderer.domElement.style.offsetBottom;
         }
 
         // Determine intersects
