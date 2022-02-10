@@ -45,15 +45,19 @@ class MapView extends React.Component {
     return neighborIDs
   }
 
+  @computed
+  get nodesSelectedID(){
+    var edgesOfNodes = []
+    if(appState.graph.selectedNodes.length > 0){
+      edgesOfNodes = appState.graph.selectedNodes.map(function(node){
+        return node.id
+      })
+    }
+    return edgesOfNodes
+  }
 
-  // zoomLevelCenter() {
-  //   if (appState.graph.currentlyHovered) {
-  //     const map = useMap();
-  //     console.log('map center:', map.getCenter())
-     
-  //   }
-  //   return null
-  // }
+
+
 
 
   dec2hexString = (dec) => {
@@ -74,15 +78,27 @@ class MapView extends React.Component {
   }
 
   setEdgePathOption = (edge) => {
+    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0) {
+      return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
+    }
+
+    if (appState.graph.selectedNodes.length > 0) {
+      if ( this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1 ) 
+        {
+        return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
+      } else {
+        return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '0' }
+      }
+    }
+
+
     if (appState.graph.currentlyHovered) {
       if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
         return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
       } else {
         return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '0' }
       }
-    } else {
-      return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
-    }
+    } 
   }
 
   setNodePathOption = (node) => {
@@ -194,6 +210,7 @@ class MapView extends React.Component {
                 eventHandlers={{
                   mouseover: (e) => {
                     // var currentNode = e.target.options.data
+                    appState.graph.selectedNodes = []
                     appState.graph.currentlyHovered = e.target.options.data
                     appState.graph.frame.highlightNode(e.target.options.data, true);
                     appState.graph.frame.highlightEdges(e.target.options.data, true);

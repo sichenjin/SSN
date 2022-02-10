@@ -16,9 +16,9 @@ export const BACKEND_URL = "https://argo-share.herokuapp.com"; // for production
 // export const BACKEND_URL = "http://localhost:1337"; // for local strapi development
 export const SAMPLE_GRAPH_SNAPSHOTS = [
   // ["Les Miserables", "31d8fb5a-b540-4db6-a2df-9c0158e152f0"],
-  ["Food Sharing", "a2ebf536-9b9e-4d3b-a9fc-dfc83a0ca3f1"],
+  ["Food Sharing", "ae3e9f15-10e0-4de2-84ba-dccfeae34605"],
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
-  ["Mafia Family", "c64317f8-bb10-4498-8453-2b966d615172"]
+  ["Mafia Family", "172a95c1-f2b0-41c9-b162-b936ace9010a"]
 ];
 
 // When resizing window or running on mobile,

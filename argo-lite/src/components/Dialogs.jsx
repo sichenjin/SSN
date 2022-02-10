@@ -10,6 +10,7 @@ import RenameSnapshotDialog from "./RenameSnapshotDialog";
 import OpenSnapshotDialog from "./OpenSnapshotDialog";
 import ShareDialog from './ShareDialog';
 import StatisticsDialog from './StatisticsDialog';
+import FilterDialog from './FilterDialog';
 import HelpDialog from './HelpDialog';
 import NeighborDialog from './NeighborDialog';
 import DataSheetDialog from './DataSheetDialog';
@@ -29,6 +30,7 @@ export default class Dialogs extends React.Component {
         <RenameSnapshotDialog />
         <ShareDialog />
         <StatisticsDialog />
+        <FilterDialog />
         <HelpDialog />
         <NeighborDialog />
         <DataSheetDialog />

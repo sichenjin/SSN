@@ -26,7 +26,8 @@ export default class GraphStore {
       labelBy: "node_id",
       shape: "circle",
       labelSize: 1,
-      labelLength: 10
+      labelLength: 10,
+      filter:{}
     },
     edges: {
       color: "#7f7f7f",
@@ -110,6 +111,8 @@ export default class GraphStore {
     fullNodes: 0,
     fullEdges: 0,
     nodeProperties: [],
+    nodePropertyTypes:[],
+    uniqueValue:{},
     nodeComputed: ["pagerank", "degree"],
     edgeProperties: [],
     snapshotName: "loading..." // Optional: for display in Argo-lite only
@@ -123,6 +126,8 @@ export default class GraphStore {
       ...this.metadata.nodeComputed
     ]).filter(k => k !== 'id'); // since node_id is already present
   }
+
+  
 
   @observable.ref frame = null;
   @observable.ref positions = null;
@@ -188,6 +193,8 @@ export default class GraphStore {
     
   }
 
+
+
   // @computed
   // get nodeColorCategory() {
   //   return scales[this.nodes.color.scale]()
@@ -250,6 +257,32 @@ export default class GraphStore {
   @computed
   get numHiddenNodes() {
     return this.rawGraph.nodes.filter(n => n.isHidden).length;
+  }
+
+  filterNodes() { 
+    runInAction('filter nodes', () => {
+    if(Object.keys(this.nodes.filter).length !== 0  ){
+      
+      
+        this.rawGraph.nodes = this.rawGraph.nodes.map(n => {
+          var satisfy = true
+          for (const fkey in this.nodes.filter){
+            if(this.metadata.nodePropertyTypes[fkey] == 'string'){
+              if(!this.nodes.filter[fkey].includes(n[fkey])){
+                satisfy = false
+              }
+            }else{  // number range 
+  
+            }
+          }
+          if (satisfy) {
+            return { ...n, isHidden: false };
+          }
+          return {...n, isHidden: true};
+        });
+      
+    }
+    });
   }
 
   showNodes(nodeids) {

@@ -6,6 +6,7 @@ import appState from "../stores";
 import SimpleSelect from "./utils/SimpleSelect";
 import { addNode } from "../ipc/client";
 import NodesPanel from "./panels/NodesPanel";
+import NodesFilterPanel from "./panels/NodesFilterPanel";
 import EdgesPanel from "./panels/EdgesPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodeDetail from "./panels/NodeDetailPanel";
@@ -33,6 +34,24 @@ class RenderOptionsCard extends React.Component {
     );
   }
 }
+
+@observer
+class FilterOptionsCard extends React.Component {
+  render() {
+    return (
+      <div>
+        <h4>Filter Options</h4>
+        <Tabs2 animate id="filter-options">
+          <Tab2 id="nodes" title="Nodes" panel={<NodesFilterPanel />} />
+          <Tab2 id="edges" title="Edges" panel={<EdgesPanel />} />
+          {/* <Tab2 id="layout" title="Layout" panel={<LayoutPanel />} /> */}
+          <Tabs2.Expander />
+        </Tabs2>
+      </div>
+    );
+  }
+}
+
 
 //
 
@@ -254,7 +273,8 @@ class FloatingCards extends React.Component {
               "overlay-card",
               "left-overlay-card",
               "transparent-frame",
-              "left-cards"
+              "left-cards",
+              "graph-option"
             )}
             style={appState.preferences.isRenderOptionsCardHidden ? this.optionsInvisible : this.optionsVisible}
           >
@@ -263,6 +283,25 @@ class FloatingCards extends React.Component {
             <br />
             <RenderOptionsCard />
           </div>
+
+          <div
+            className={classnames(
+              Classes.CARD,
+              Classes.ELEVATION_2,
+              "overlay-card",
+              "left-overlay-card",
+              "transparent-frame",
+              "left-cards",
+              "filter-option"
+            )}
+            style={appState.preferences.isRenderOptionsCardHidden ? this.optionsInvisible : this.optionsVisible}
+          >
+            <button className="openbtn2" onClick={this.toggleOptions}> &#8249;
+            </button>
+            <br />
+            <FilterOptionsCard />
+          </div>
+
           <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
             "transparent-frame")} style={{ width: "1em", paddingTop: "1em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
             <button className="openbtn" onClick={this.toggleOptions} style={appState.preferences.isRenderOptionsCardHidden ? this.sideButtonVis : this.sideButtonInv}>
@@ -270,6 +309,8 @@ class FloatingCards extends React.Component {
               </button>
           </div>
         </div>
+       
+
         {appState.graph.selectedNodes.length === 1 && (
           <NodeDetail node={appState.graph.selectedNodes[0].data.ref} />
         )}

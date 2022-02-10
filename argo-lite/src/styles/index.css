@@ -72,9 +72,16 @@ html {
   border-top: 4px;
   left: 0em;
   opacity: 1;
-  top: 25px;
   background-color: white;
   transition: left 0.3s;
+}
+
+.graph-option{
+  top: 25px;
+}
+
+.filter-option{
+  top: 400px;
 }
 
 .left-overlay-card {

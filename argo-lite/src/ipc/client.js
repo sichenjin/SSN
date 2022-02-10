@@ -567,7 +567,7 @@ async function importGraphFromCSV(config) {
       { id: node[config.nodes.mapping.id].toString(), degree: 0, ...node }));
     nodesArr =
       nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 }));
+        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 , LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY'])}));
     nodesArr.forEach(n => degreeDict[n.id] = 0);
   }
   const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
@@ -653,13 +653,32 @@ async function importGraphFromCSV(config) {
 
   const rank = pageRank(graph);
   nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id]/2) }));
+  const nodekeyList = Object.keys(nodesArr[0])
+  const nodePropertyTypes = {}
+  nodekeyList.forEach(function(k){
+    nodePropertyTypes[k] = typeof(nodesArr[0][k])
+  })
+  const uniqueValue = {}
+  nodekeyList.forEach(function(k,i){
+    
+    if (nodePropertyTypes[k] == 'string'){
+        uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+    }else{
+      const valuea = nodesArr.map(function (el) { return el[k]; })
+      const minv = Math.min(...valuea)
+      const maxv = Math.max(...valuea)
+      uniqueValue[k] = [minv,maxv]
+    }
+  })
   return {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
       snapshotName: 'Untitled Graph',
       fullNodes: nodesArr.length,
       fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
-      nodeProperties: Object.keys(nodesArr[0]),
+      nodeProperties: nodekeyList,
+      nodePropertyTypes:nodePropertyTypes,
+      uniqueValue:uniqueValue,
       nodeComputed: ['pagerank', 'degree'],
       edgeProperties: ['source_id', 'target_id'],
     },
@@ -711,13 +730,32 @@ export async function importGraphFromGexf() {
 
   const rank = pageRank(graph);
   nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id]/2) }));
+  const nodekeyList = Object.keys(nodesArr[0])
+  const nodePropertyTypes = {}
+  nodekeyList.forEach(function(k){
+    nodePropertyTypes[k] = typeof(nodesArr[0][k])
+  })
+  const uniqueValue = {}
+  nodekeyList.forEach(function(k,i){
+    
+    if (nodePropertyTypes[k] == 'string'){
+        uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+    }else{
+      const valuea = nodesArr.map(function (el) { return el[k]; })
+      const minv = Math.min(...valuea)
+      const maxv = Math.max(...valuea)
+      uniqueValue[k] = [minv,maxv]
+    }
+  })
   return {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
       snapshotName: 'Untitled Graph',
       fullNodes: nodesArr.length,
       fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
-      nodeProperties: Object.keys(nodesArr[0]),
+      nodeProperties: nodekeyList,
+      nodePropertyTypes:nodePropertyTypes,
+      uniqueValue:uniqueValue,
       nodeComputed: ['pagerank', 'degree'],
       edgeProperties: ['source_id', 'target_id'],
     },

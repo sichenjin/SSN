@@ -9,6 +9,7 @@ export default class PreferencesStore {
   @observable openSnapshotDialogOpen = false;
   @observable shareDialogOpen = false;
   @observable statisticsDialogOpen = false;
+  @observable filterDialogOpen = false;
   @observable helpDialogOpen = false;
   @observable neighborDialogOpen = false;
   @observable dataSheetDialogOpen = false;
