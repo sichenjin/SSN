@@ -14,6 +14,7 @@ export default class PreferencesStore {
   @observable neighborDialogOpen = false;
   @observable dataSheetDialogOpen = false;
   @observable isRenderOptionsCardHidden = IS_IFRAME_WIDGET;
+  @observable isFilterOptionsCardHidden = true;
 
   // The following fields are asynchronously loaded.
   // Any writes to these fields through saveUserConfig
@@ -44,6 +45,7 @@ export default class PreferencesStore {
 
   turnOnMinimalMode() {
     this.isRenderOptionsCardHidden = true;
+    this.isFilterOptionsCardHidden = true;
     this.minimapShowing = false;
     this.isStatusBarShowing = false;
     this.isNavbarInMinimalMode = true;
@@ -58,6 +60,7 @@ export default class PreferencesStore {
 
   turnOffMinimalMode() {
     this.isRenderOptionsCardHidden = false;
+    this.isFilterOptionsCardHidden = true;
     this.minimapShowing = true;
     this.isStatusBarShowing = true;
     this.isNavbarInMinimalMode = false;

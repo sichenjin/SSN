@@ -103,7 +103,7 @@ module.exports = function(self) {
         killed += 1;
       }
     }
-    console.log("Deleted " + killed.toString() + " edges");
+    // console.log("Deleted " + killed.toString() + " edges");
   };
 
   self.getNode = function(node_id) {

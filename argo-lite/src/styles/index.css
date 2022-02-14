@@ -76,12 +76,21 @@ html {
   transition: left 0.3s;
 }
 
+.right-cards {
+  position: absolute;
+  border-top: 4px;
+  right: 0em;
+  opacity: 1;
+  background-color: white;
+  transition: right 0.3s;
+}
+
 .graph-option{
   top: 25px;
 }
 
 .filter-option{
-  top: 400px;
+  top: 25px;
 }
 
 .left-overlay-card {
@@ -341,4 +350,9 @@ div.pt-card.sub-option.legend {
 /* Override blueprint numeric input, since it's useless unless inline */
 .pt-numeric-input.pt-control-group {
   display: inline-flex;
+}
+
+.filter-scroll {
+  max-height: 150px;
+  overflow-y: auto;
 }

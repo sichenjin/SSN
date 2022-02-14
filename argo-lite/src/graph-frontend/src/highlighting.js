@@ -70,7 +70,7 @@ module.exports = function(self) {
         !self.prevHighlights ||
         self.prevHighlights.indexOf(n.id) == -1
       ) {
-        self.colorNodeOpacity(n, 0.5);
+        self.colorNodeOpacity(n, 0.2);
         self.colorNodeEdge(n, false);
         self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
       }

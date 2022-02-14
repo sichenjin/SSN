@@ -19,7 +19,7 @@ class NodesFilterPanel extends React.Component {
     appState.graph.allPropertiesKeyList.forEach(it => {
       this.state[it + 'isOpen'] = false
     });
-    console.log(this.state)
+    // console.log(this.state)
     // this.state = 
     // {
     //   timeOutRef: null,
@@ -66,9 +66,11 @@ class NodesFilterPanel extends React.Component {
                   onSelect={selectit => {
                     appState.graph.nodes.filter[it]? appState.graph.nodes.filter[it].push(selectit): appState.graph.nodes.filter[it]=[selectit]   
                     appState.graph.filterNodes()
+                    // console.log(selectit)
+                    // console.log(appState.graph.nodes.filter[it][0])
                   }}
-                  tag = {selectit => (appState.graph.nodes.filter)}
-                  value={appState.graph.nodes.filter}
+                  tag = { selectit=> { console.log(selectit); return selectit}}
+                  value= {['sdadf']}
                 />
                 :
                 <RangeSlider

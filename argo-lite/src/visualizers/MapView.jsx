@@ -10,6 +10,7 @@ import AreaSelect from "../components/AreaSelect"
 import ZoomMap from "../components/ZoomMap"
 import { useMap } from "react-leaflet";
 var def = require("../graph-frontend/src/imports").default;
+var d3 = def.d3;
 // import LocationFilter from "../components/LocationFilter"
 
 @observer
@@ -56,8 +57,89 @@ class MapView extends React.Component {
     return edgesOfNodes
   }
 
+  // distance(fromlocLatY, fromlocLonX,tolocLatY,tolocLonX) {
+  //   const dx2 = Math.pow(fromlocLonX - tolocLonX, 2);
+  //   const dy2 = Math.pow(fromlocLatY - tolocLatY, 2);
+  
+  //   return Math.sqrt(dx2 + dy2);
+  // }
+
+  // hypotenuse = Math.sqrt(1 + 1)
+
+  // segments= d3.scaleLinear()
+  //     .domain([0, this.hypotenuse])
+  //     .range([1, 10])
 
 
+  // generateSegments(nodes, links) {
+  //   // generate separate graph for edge bundling
+  //   // nodes: all nodes including control nodes
+  //   // links: all individual segments (source to target)
+  //   // paths: all segments combined into single path for drawing
+  //   let bundle = {nodes: [], links: [], paths: []};
+  
+  //   // make existing nodes fixed
+  //   bundle.nodes = nodes.map(function(d, i) {
+  //     d.fx = d.LonX;
+  //     d.fy = d.LatY;
+  //     return d;
+  //   });
+    
+  //   links.forEach(function(d, i) {
+  //     // calculate the distance between the source and target
+  //     let length = this.distance(d.data.fromlocLatY, d.data.fromlocLonX,d.data.tolocLatY,d.data.tolocLonX);
+  
+  //     // calculate total number of inner nodes for this link
+  //     let total = Math.round(this.segments(length));
+  
+  //     // create scales from source to target
+  //     let xscale = d3.scaleLinear()
+  //       .domain([0, total + 1]) // source, inner nodes, target
+  //       .range([d.data.fromlocLonX, d.data.tolocLonX]);
+  
+  //     let yscale = d3.scaleLinear()
+  //       .domain([0, total + 1])
+  //       .range([d.data.fromlocLatY, d.data.tolocLatY]);
+  
+  //     // initialize source node
+  //     let source = d.source;
+  //     let target = null;
+  
+  //     // add all points to local path
+  //     let local = [source];
+  
+  //     for (let j = 1; j <= total; j++) {
+  //       // calculate target node
+  //       target = {
+  //         x: xscale(j),
+  //         y: yscale(j)
+  //       };
+  
+  //       local.push(target);
+  //       bundle.nodes.push(target);
+  
+  //       bundle.links.push({
+  //         source: source,
+  //         target: target
+  //       });
+  
+  //       source = target;
+  //     }
+  
+  //     local.push(d.target);
+  
+  //     // add last link to target node
+  //     bundle.links.push({
+  //       source: target,
+  //       target: d.target
+  //     });
+  
+  //     bundle.paths.push(local);
+  //   });
+  
+  //   return bundle;
+  // }
+  
 
 
   dec2hexString = (dec) => {
@@ -85,18 +167,18 @@ class MapView extends React.Component {
     if (appState.graph.selectedNodes.length > 0) {
       if ( this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1 ) 
         {
-        return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
+        return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
-        return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '0' }
+        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
       }
     }
 
 
     if (appState.graph.currentlyHovered) {
       if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
-        return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
+        return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
-        return { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '0' }
+        return { color:appState.graph.edges.color , weight: '0.7', opacity: '0.2' }
       }
     } 
   }
