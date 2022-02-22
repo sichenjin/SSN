@@ -183,8 +183,8 @@ html {
 }
 
 .right-overlay-card {
-  right: 2em;
-  top: 5em;
+  right: 5em;
+  bottom: 5em;
   position: absolute;
   word-wrap: break-word;
 }
@@ -305,7 +305,7 @@ div.pt-card.sub-option.legend {
 .node-details-table {
   overflow-x: auto;
   overflow-y: auto;
-  max-width: 150px;
+  max-width: 300px;
   max-height: 40vh;
   font-size: 0.4em;
   pointer-events: all;

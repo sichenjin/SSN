@@ -16,9 +16,9 @@ export const BACKEND_URL = "https://argo-share.herokuapp.com"; // for production
 // export const BACKEND_URL = "http://localhost:1337"; // for local strapi development
 export const SAMPLE_GRAPH_SNAPSHOTS = [
   // ["Les Miserables", "31d8fb5a-b540-4db6-a2df-9c0158e152f0"],
-  ["Food Sharing", "cc8be638-f13d-4924-87e3-77c46951a437"],
+  ["Food Sharing", "ff3f5e40-688b-4068-beea-a1b72cfb1675"],
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
-  ["Mafia Family", "bb1d9db0-3cbb-497a-81cb-4ce2636047da"]
+  ["Mafia Family", "fbe29985-a85b-4385-9c4c-b35508deb68c"]
 ];
 
 // When resizing window or running on mobile,
@@ -29,7 +29,7 @@ export const MOBILE_HEIGHT_CUTOFF = 480;
 
 export const SCALE_LINEAR = "Linear Scale";
 export const SCALE_LOG = "Log Scale";
-export const SCALE_CATEGORY = "Ordinal Scale";
+export const SCALE_CATEGORY = "Nominal Scale";
 
 export const scales = {
   [SCALE_LINEAR]: scale.scaleLinear,

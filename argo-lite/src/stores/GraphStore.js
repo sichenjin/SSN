@@ -15,12 +15,12 @@ export default class GraphStore {
         scale: "Linear Scale",
         from: "#448AFF",
         to: "#E91E63",
-        ordinalColor:  ["#e377c2","#98df8a" , "#ff7f0e", "#a55194" , "#2ca02c",  "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94","#1f77b4" , "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5","#9c9ede","#8c6d31", "#ffbb78","#bd9e39"]
+        nominalColor:  ["#e377c2","#98df8a" , "#ff7f0e", "#a55194" , "#2ca02c",  "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94","#1f77b4" , "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5","#9c9ede","#8c6d31", "#ffbb78","#bd9e39"]
       },
       sizeBy: "degree",
       size: {
         min: 2,
-        max: 10,
+        max: 6,
         scale: "Linear Scale"
       },
       labelBy: "node_id",
@@ -183,10 +183,10 @@ export default class GraphStore {
 
   @computed
   get nodeColorScale() {
-    if(this.nodes.color.scale == "Ordinal Scale"){ //ordinal scale 
+    if(this.nodes.color.scale == "Nominal Scale"){ //nominal scale 
       return scales[this.nodes.color.scale]()
       .domain([...new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))])
-      .range(this.nodes.color.ordinalColor);
+      .range(this.nodes.color.nominalColor);
     }else{ //linear and log scale 
       return scales[this.nodes.color.scale]()
       .domain(this.minMax[this.nodes.colorBy])

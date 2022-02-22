@@ -157,6 +157,7 @@ class MapView extends React.Component {
     console.log('onMouseOut', e)
   }
 
+  
 
 
   setEdgePathOption = (edge) => {
@@ -313,9 +314,9 @@ class MapView extends React.Component {
                 eventHandlers={{
                   click: (e) => {
                     if(!appState.graph.mapClicked){ //no clicked circle before 
-                      appState.graph.mapClicked = e.target.options.data
+                      appState.graph.mapClicked = e.target.options.data  //control map update 
                       // appState.graph.currentlyHovered = null
-                      appState.graph.frame.highlightNode(e.target.options.data, true);
+                      appState.graph.frame.highlightNode(e.target.options.data, true);   //control socio update 
                       appState.graph.frame.highlightEdges(e.target.options.data, true);
                     }else{  // click again to unselect 
                       appState.graph.mapClicked = null
@@ -326,9 +327,10 @@ class MapView extends React.Component {
                   mouseover: (e) => {
                     if(appState.graph.mapClicked) return;
                     // var currentNode = e.target.options.data
-                    appState.graph.selectedNodes = []
-                    appState.graph.currentlyHovered = e.target.options.data
-                    appState.graph.frame.highlightNode(e.target.options.data, true);
+                    // appState.graph.selectedNodes = []
+                    // appState.graph.frame.selection = []
+                    appState.graph.currentlyHovered = e.target.options.data  // control map update 
+                    appState.graph.frame.highlightNode(e.target.options.data, true);   // control cosio update 
                     appState.graph.frame.highlightEdges(e.target.options.data, true);
 
 
@@ -391,6 +393,7 @@ class MapView extends React.Component {
 
 
       </MapContainer>
+     
     </div>
   }
 }

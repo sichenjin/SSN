@@ -10,10 +10,12 @@ import NodesFilterPanel from "./panels/NodesFilterPanel";
 import EdgesPanel from "./panels/EdgesPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodeDetail from "./panels/NodeDetailPanel";
+import SelectionDetail from "./panels/SelectionDetail";
 import Legends from "./Legends";
 import StatusBar from './StatusBar';
 import SelectionActionPanel from "./panels/SelectionActionPanel";
 import ZoomPanel from "./panels/ZoomPanel";
+
 
 // TODO: migrate to simple select
 
@@ -339,7 +341,9 @@ class FloatingCards extends React.Component {
           </div>
         </div>
 
-
+        {// This menu only shows when there are nodes selected
+          appState.graph.selectedNodes.length > 0 && <SelectionDetail />
+        }
         {/* {appState.graph.selectedNodes.length === 1 && (
           <NodeDetail node={appState.graph.selectedNodes[0].data.ref} />
         )} */}
