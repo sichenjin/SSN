@@ -6,9 +6,10 @@ var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
 var $ = require("jquery");
+const { default: appState } = require("../../stores");
 
-module.exports = function(self) {
-  self.selectNode = function(node) {
+module.exports = function (self) {
+  self.selectNode = function (node) {
     self.dragging = node;
     self.selection = [node];
     node.renderData.isSelected = true;
@@ -18,7 +19,7 @@ module.exports = function(self) {
   /**
    * Deselect nodes in selection list
    */
-  self.clearSelection = function() {
+  self.clearSelection = function () {
     for (var i = 0; i < self.selection.length; i++) {
       self.selection[i].renderData.isSelected = false;
       if (!def.NODE_NO_HIGHLIGHT) {
@@ -33,11 +34,28 @@ module.exports = function(self) {
     self.selection = [];
   };
 
+  self.updateSelectionOpacity = function () {
+    if (self.selection.length !== 0) {
+      self.graph.forEachNode(n => {
+        self.colorNodeOpacity(n, 0.2);
+      });
+    } else {
+      self.graph.forEachNode(n => {
+        self.colorNodeOpacity(n, 1);
+      });
+    }
+
+    for (var i = 0; i < self.selection.length; i++) {
+      self.colorNodeOpacity(self.selection[i], 1);
+    }
+  }
+
+
   /**
    *  Update positions of all objects in self.selection
    *  based on diff between mouse position and self.dragging position
    */
-  self.updateSelection = function(mouseX, mouseY, selection) {
+  self.updateSelection = function (mouseX, mouseY, selection) {
     if (self.dragging) {
       var diffx = mouseX - self.dragging.x;
       var diffy = mouseY - self.dragging.y;
@@ -46,7 +64,7 @@ module.exports = function(self) {
     //'selection' only passed if a single node is double clicked
     let clickedNode = selection;
     //if not already pinned, then pin the node upon double-click
-    if(clickedNode && !clickedNode.pinnedx) {
+    if (clickedNode && !clickedNode.pinnedx) {
       clickedNode.pinnedx = true;
       clickedNode.pinnedy = true;
     } else if (clickedNode && clickedNode.pinnedx) {
@@ -54,7 +72,26 @@ module.exports = function(self) {
       clickedNode.pinnedx = false;
       clickedNode.pinnedy = false;
     }
-    
+    // update map frozen 
+    // if(clickedNode && clickedNode !== appState.graph.mapClicked) {
+    //   appState.graph.mapClicked = clickedNode
+    // } else if (clickedNode && clickedNode === appState.graph.mapClicked) {
+    //   appState.graph.mapClicked = null
+    // }
+
+
+    // if(self.selection.length!==0){
+    //   self.graph.forEachNode(n => {
+    //     self.colorNodeOpacity(n, 0.2);
+    //   });
+    // }else{
+    //   self.graph.forEachNode(n => {
+    //     self.colorNodeOpacity(n, 1);
+    //   });
+    // }
+
+
+
     for (var i = 0; i < self.selection.length; i++) {
       if (self.dragging) {
         self.selection[i].x += diffx;
@@ -62,7 +99,7 @@ module.exports = function(self) {
         self.selection[i].fx = self.selection[i].x;
         self.selection[i].fy = self.selection[i].y;
         //pins multiple nodes when dragging
-        if(!clickedNode) {
+        if (!clickedNode) {
           self.selection[i].pinnedx = true;
           self.selection[i].pinnedy = true;
         }
@@ -71,19 +108,24 @@ module.exports = function(self) {
         self.selection[i].renderData.draw_object.children[0].visible = true;
       } else {
         self.selection[i].renderData.draw_object.material.color.set(
-          new THREE.Color(self.selection[i].renderData.hcolor)
+          new THREE.Color(self.selection[i].renderData.color)
         );
+        // self.colorNodeOpacity(self.selection[i], 1);
       }
       self.selection[
         i
       ].renderData.textHolder.children[0].element.hideme = false;
     }
+
+
+
+
   };
 
   /**
    *  Find any objects within the current box selection and add it to self.selection
    */
-  self.checkSelection = function(mouseX, mouseY) {
+  self.checkSelection = function (mouseX, mouseY) {
     if (!self.dragging) {
       self.mouseEnd = new THREE.Vector3(mouseX, mouseY, 0);
       if (self.mouseStart.x < self.mouseEnd.x) {
@@ -94,7 +136,7 @@ module.exports = function(self) {
         var right = self.mouseStart;
       }
 
-      self.graph.forEachNode(function(node) {
+      self.graph.forEachNode(function (node) {
         let npos;
         if (self.options.layout == "ngraph") {
           npos = self.force.getNodePosition(node.id);
@@ -114,7 +156,7 @@ module.exports = function(self) {
   /**
    *  returns true if pos is in box with top left l and bottom right r
    */
-  self.insideBox = function(l, r, posx, posy) {
+  self.insideBox = function (l, r, posx, posy) {
     return (
       posx < r.x &&
       posx > l.x &&

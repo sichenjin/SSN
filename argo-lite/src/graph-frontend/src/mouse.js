@@ -81,6 +81,8 @@ module.exports = function (self) {
    * Mouse hover over node event that highlights the node and neighbors at mouse position
    */
   self.onHover = function (node) {
+    if(appState.graph.mapClicked) return;
+    if(self.selection.length>0) return;
     if (self.lastHover && self.selection.indexOf(self.lastHover) == -1) {
       self.highlightNode(self.lastHover, false);
       self.lastHover.renderData.textHolder.children[0].element.hideme = true;
@@ -143,6 +145,9 @@ module.exports = function (self) {
             self.selection[
               i
             ].renderData.draw_object.children[0].visible = false;
+            // self.selection[
+            //   i
+            // ].renderData.draw_object.material.opacity = 0.2;
           } else {
             self.selection[i].renderData.draw_object.material.color.set(
               new THREE.Color(self.selection[i].renderData.color)
@@ -151,6 +156,9 @@ module.exports = function (self) {
           self.selection[
             i
           ].renderData.textHolder.children[0].element.hideme = true;
+          // self.selection[
+          //   i
+          // ].renderData.draw_object.material.opacity = 0.2;
         }
         self.selection = [];
       }
@@ -160,6 +168,7 @@ module.exports = function (self) {
         //when any node is clicked, un-smartpause if smartpaused
         //appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused
         appState.graph.smartPause.interactingWithGraph = true;
+        
       }
 
 
@@ -189,6 +198,12 @@ module.exports = function (self) {
         }
       }
 
+    //   if(self.selection.length == 1){
+          
+    //     appState.graph.mapClicked = self.selection[0]
+      
+    // }
+
       if (selection) {
         self.dragging = selection;
         //only pins node if double-clicked
@@ -200,12 +215,14 @@ module.exports = function (self) {
           selection.renderData.isSelected = false;
           if (!def.NODE_NO_HIGHLIGHT) {
             selection.renderData.draw_object.children[0].visible = false;
+            // selection.renderData.draw_object.material.opacity = 0.2;
           } else {
             selection.renderData.draw_object.material.color.set(
               new THREE.Color(self.selection[i].renderData.color)
             );
           }
           selection.renderData.textHolder.children[0].element.hideme = true;
+          // selection.renderData.draw_object.material.opacity = 0.2;
           self.dragging = null;
         }
       } else {
@@ -227,6 +244,9 @@ module.exports = function (self) {
     //when not clicking, nodes aren't being interacted with
     appState.graph.smartPause.interactingWithGraph = false;
 
+
+  self.updateSelectionOpacity();
+  
     // Left or right mouse button
     if (true) {
       self.showBox = false;
@@ -234,6 +254,7 @@ module.exports = function (self) {
       self.selectBox.visible = false;
 
       self.ee.emit("select-nodes", self.selection);
+      
     }
 
   };

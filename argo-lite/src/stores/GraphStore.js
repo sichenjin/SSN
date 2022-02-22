@@ -55,6 +55,8 @@ export default class GraphStore {
   // Currently hovered node
   @observable currentlyHovered = undefined;
 
+  // Currently Clicked to frozen node on map
+  @observable mapClicked = undefined;
 
   /**
    * Stores data relevant to smart pause feature

@@ -50,6 +50,7 @@ export default function AreaSelect() {
             )
       }
       appState.graph.selectedNodes = [...mapselection]
+      
       // //highlight selected nodes 
       // if (appState.graph.selectedNodes.length > 0) {
       //   if (appState.graph.selectedNodes.indexOf(node) == -1) {
@@ -60,6 +61,7 @@ export default function AreaSelect() {
       //   }
       // }
       appState.graph.frame.selection = [...mapselection]
+      appState.graph.frame.updateSelectionOpacity()
       // console.log(appState.graph.selectedNodes)
     });
 
