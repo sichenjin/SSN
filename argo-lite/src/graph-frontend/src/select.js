@@ -34,13 +34,13 @@ module.exports = function (self) {
     self.selection = [];
   };
 
-  //return all the nodes of edges within the selction 
-  self.getEdgeWithinSelection = function () {
+  //return all the nodes of edges within the selection 
+  self.getEdgeWithinSelection = function (selection) {
     const withinEdges = []
-    for (var i = 0; i < self.selection.length; i++) {
-      if(self.selection[i].linkObjs){
-        self.selection[i].linkObjs.forEach(function (link) {
-          if (self.selection.indexOf(link.source) !== -1 && self.selection.indexOf(link.target) !== -1 && link.source!==link.target && withinEdges.indexOf(link) == -1) {
+    for (var i = 0; i < selection.length; i++) {
+      if(selection[i].linkObjs){
+        selection[i].linkObjs.forEach(function (link) {
+          if (selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1 && link.source!==link.target && withinEdges.indexOf(link) == -1) {
             withinEdges.push(link)
           }
         })
@@ -69,7 +69,7 @@ module.exports = function (self) {
       let red = new THREE.Color(appState.graph.edges.color).r;
       let blue = new THREE.Color(appState.graph.edges.color).g;
       let green = new THREE.Color(appState.graph.edges.color).b;
-      const withinEdges = self.getEdgeWithinSelection()
+      const withinEdges = self.getEdgeWithinSelection(self.selection)
 
       for (var i = 0; i < withinEdges.length; i++) {
         withinEdges[i].linecolor.r = red;

@@ -9,68 +9,40 @@ import { observable, computed, action, runInAction } from "mobx";
 @observer
 class SelectionDetail extends React.Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   this.getDistanceFromLatLonInKm = this.getDistanceFromLatLonInKm.bind(this);
-  //   this.SelectionDistanceFromLatLonIn = this.SelectionDistanceFromLatLonIn.bind(this);
-  // }
-
-  
-
- 
-  
-
-
-
 
   render() {
     // If input is number,
     // currently format number between 0-1 (eg. pagerank)
     // to show no more than 3 significant digits.
-    const SelectionDistanceFromLatLonIn =() =>{
-      const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
-        var p = 0.017453292519943295;    // Math.PI / 180
-        var c = Math.cos;
-        var a = 0.5 - c((lat2 - lat1) * p)/2 + 
-                c(lat1 * p) * c(lat2 * p) * 
-                (1 - c((lon2 - lon1) * p))/2;
-      
-        return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-      }
-  
-      const selectionDist = []
+    const SelectionDistanceFromLatLonIn = () => {
+
       if (appState.graph.selectedNodes.length > 1) {
-        const theSelection = appState.graph.selectedNodes
-        
-  
-        theSelection.forEach(function (node, i) {
-          const lat1 = node.data.ref.LatY
-          const lon1 = node.data.ref.LonX
-          for (var j = 0; j < i; j++){
-            const lat2 = theSelection[j].data.ref.LatY
-            const lon2 = theSelection[j].data.ref.LonX
-            selectionDist.push(getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2))
-          }
-      });
-      console.log(selectionDist)
-      const average = (array) => array.reduce((a, b) => a + b) 
-      // console.log(averageDist)
-      return average(selectionDist).toFixed(3);
-      }else{
+        const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
+        if (edgeSelection.length == 0) return null;
+        const edgeDistance = edgeSelection.map(e => e.edgeDist)
+
+
+        const average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+        return average(edgeDistance).toFixed(3);
+      } else {
         return null
       }
-      
+
     }
 
-    // const formatLongFloat = (nodeAttributeValue) => {
-    //   const num = Number(nodeAttributeValue);
-    //   if (Number.isNaN(num) || num > 1 || num < 0) {
-    //     // Do not format just return original
-    //     return nodeAttributeValue;
-    //   }
-    //   // Format to no more than 3 significant digit.
-    //   return Number.parseFloat(num).toPrecision(3);
-    // };
+    const SelectionDensity = () => {
+      
+        const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
+        if (edgeSelection.length == 0) return 0;
+        const nodelength = appState.graph.selectedNodes.length;
+        const selectionDen = 2*edgeSelection.length /(nodelength*(nodelength-1))
+        return selectionDen.toFixed(3)
+      
+
+    }
+
+
 
     return (
       <div
@@ -88,7 +60,7 @@ class SelectionDetail extends React.Component {
               padding: '0',
             }}
           >
-            
+
             <thead>
               {/* <tr>
                 <th></th>
@@ -97,14 +69,18 @@ class SelectionDetail extends React.Component {
               </tr> */}
             </thead>
             <tbody>
-                <tr>
-                  <td style={{ padding: '5px 10px' }}> {appState.graph.selectedNodes.length + ' nodes are selected'}</td>
-                  {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
-                </tr>
-                <tr>
-                  <td style={{ padding: '5px 10px' }}> {'The average distance is ' + SelectionDistanceFromLatLonIn() + ' km'}</td>
-                  {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
-                </tr>
+              <tr>
+                <td style={{ padding: '5px 10px' }}> {appState.graph.selectedNodes.length + ' nodes are selected'}</td>
+                {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+              </tr>
+              <tr>
+                <td style={{ padding: '5px 10px' }}> {'The average distance is ' + SelectionDistanceFromLatLonIn() + ' km'}</td>
+                {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+              </tr>
+              <tr>
+                <td style={{ padding: '5px 10px' }}> {'The network density(undirected network) is ' + SelectionDensity()}</td>
+                {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+              </tr>
               {/* {appState.graph.allPropertiesKeyList.map((it, i) => (
                 
               ))} */}

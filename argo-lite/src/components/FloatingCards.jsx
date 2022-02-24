@@ -342,7 +342,7 @@ class FloatingCards extends React.Component {
         </div>
 
         {// This menu only shows when there are nodes selected
-          appState.graph.selectedNodes.length > 0 && <SelectionDetail />
+          appState.graph.selectedNodes.length > 1 && <SelectionDetail />
         }
         {/* {appState.graph.selectedNodes.length === 1 && (
           <NodeDetail node={appState.graph.selectedNodes[0].data.ref} />

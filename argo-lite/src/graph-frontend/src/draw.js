@@ -246,6 +246,16 @@ module.exports = function(self) {
     : null;
 }
 
+self.getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+  var p = 0.017453292519943295;    // Math.PI / 180
+  var c = Math.cos;
+  var a = 0.5 - c((lat2 - lat1) * p)/2 + 
+          c(lat1 * p) * c(lat2 * p) * 
+          (1 - c((lon2 - lon1) * p))/2;
+
+  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+}
+
   /**
    *  Create an edge and add it to the lineSegments.
    */
@@ -266,12 +276,22 @@ module.exports = function(self) {
     if (!target.linkObjs) {
       target.linkObjs = [];
     }
+    var edgeDist
+    if(source.data.ref.LonX){
+      const lon1 = source.data.ref.LonX
+      const lat1 = source.data.ref.LatY
+      const lon2 = target.data.ref.LonX
+      const lat2 = target.data.ref.LatY
+      edgeDist = self.getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)
+    }
+    
 
     self.lineIndices.push({
       source: source,
       target: target,
       hide: !visible,
       linecolor: hexToRGB(appState.graph.edges.color),
+      edgeDist:edgeDist
       // hexToRGB(appState.graph.edges.color),
       // source.renderData.linecolor, 
     });

@@ -305,7 +305,7 @@ div.pt-card.sub-option.legend {
 .node-details-table {
   overflow-x: auto;
   overflow-y: auto;
-  max-width: 300px;
+  max-width: 350px;
   max-height: 40vh;
   font-size: 0.4em;
   pointer-events: all;

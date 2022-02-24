@@ -604,7 +604,8 @@ async function importGraphFromCSV(config) {
       tolocLatY:tolocLatY,
       tolocLonX:tolocLonX,
       withinState:withinState,
-      withinFamily: withinFamily
+      withinFamily: withinFamily,
+      
     }
     graph.addLink(from, to,data);
 
