@@ -34,20 +34,79 @@ module.exports = function (self) {
     self.selection = [];
   };
 
+  //return all the nodes of edges within the selction 
+  self.getEdgeWithinSelection = function () {
+    const withinEdges = []
+    for (var i = 0; i < self.selection.length; i++) {
+      if(self.selection[i].linkObjs){
+        self.selection[i].linkObjs.forEach(function (link) {
+          if (self.selection.indexOf(link.source) !== -1 && self.selection.indexOf(link.target) !== -1 && link.source!==link.target && withinEdges.indexOf(link) == -1) {
+            withinEdges.push(link)
+          }
+        })
+      }
+    }
+    return withinEdges;
+  }
+
+  //highlight nodes and edges within selection
   self.updateSelectionOpacity = function () {
     if (self.selection.length !== 0) {
-      self.graph.forEachNode(n => {
+      self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
         self.colorNodeOpacity(n, 0.2);
+        
       });
-    } else {
+      // self.colorNodeEdge(null);    // this is to highlight all 
+
+      //fisrt dehighlight all the edges
+      self.lineIndices.forEach(function (link) {
+        link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+        link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+        link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      })  
+
+      //hilight within edges
+      let red = new THREE.Color(appState.graph.edges.color).r;
+      let blue = new THREE.Color(appState.graph.edges.color).g;
+      let green = new THREE.Color(appState.graph.edges.color).b;
+      const withinEdges = self.getEdgeWithinSelection()
+
+      for (var i = 0; i < withinEdges.length; i++) {
+        withinEdges[i].linecolor.r = red;
+        withinEdges[i].linecolor.g = blue;
+        withinEdges[i].linecolor.b = green;
+      }
+      self.arrow.material.color.setRGB(red, blue, green);
+
+      //highlight nodes 
+      for (var i = 0; i < self.selection.length; i++) {
+        self.colorNodeOpacity(self.selection[i], 1);
+      }
+
+    } else {        //when no nodes are selected, all 1 opacity 
       self.graph.forEachNode(n => {
         self.colorNodeOpacity(n, 1);
+        
       });
+      self.colorNodeEdge(null);
     }
+  }
 
-    for (var i = 0; i < self.selection.length; i++) {
-      self.colorNodeOpacity(self.selection[i], 1);
+
+  self.getNeighborNodesFromGraph = function (node) {
+    const nodeNeighbor = []
+    const froms = []
+    const tos = []
+    for (var i = 0; i < node.links.length; i++) {
+      froms.push(node.links[i].fromId);
+      tos.push(node.links[i].toId);
     }
+    self.graph.forEachNode(n => {
+      if (froms.indexOf(n.id) != -1 || tos.indexOf(n.id) != -1) {
+        nodeNeighbor.push(n)
+      }
+    })
+    return nodeNeighbor
   }
 
 
@@ -67,17 +126,20 @@ module.exports = function (self) {
     if (clickedNode && !clickedNode.pinnedx) {
       clickedNode.pinnedx = true;
       clickedNode.pinnedy = true;
+      appState.graph.mapClicked = clickedNode
+      self.highlightNode(clickedNode, true);
+      self.highlightEdges(clickedNode, true);
+      const neighborNodes = self.getNeighborNodesFromGraph(clickedNode);
+      self.selection = neighborNodes;
+      console.log(self.selection)
     } else if (clickedNode && clickedNode.pinnedx) {
       //if already pinned, then unpin upon double-click
       clickedNode.pinnedx = false;
       clickedNode.pinnedy = false;
+      appState.graph.mapClicked = null
+      self.selection = []
     }
-    // update map frozen 
-    // if(clickedNode && clickedNode !== appState.graph.mapClicked) {
-    //   appState.graph.mapClicked = clickedNode
-    // } else if (clickedNode && clickedNode === appState.graph.mapClicked) {
-    //   appState.graph.mapClicked = null
-    // }
+
 
 
     // if(self.selection.length!==0){
@@ -111,6 +173,7 @@ module.exports = function (self) {
           new THREE.Color(self.selection[i].renderData.color)
         );
         // self.colorNodeOpacity(self.selection[i], 1);
+
       }
       self.selection[
         i

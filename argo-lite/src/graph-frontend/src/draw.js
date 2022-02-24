@@ -5,6 +5,7 @@ var Node = def.Node;
 var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
+const { default: appState } = require("../../stores");
 
 
 module.exports = function(self) {
@@ -238,6 +239,13 @@ module.exports = function(self) {
     }
   };
 
+  let hexToRGB = (hex) => {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? 
+    new THREE.Color(appState.graph.edges.color)
+    : null;
+}
+
   /**
    *  Create an edge and add it to the lineSegments.
    */
@@ -263,7 +271,9 @@ module.exports = function(self) {
       source: source,
       target: target,
       hide: !visible,
-      linecolor: source.renderData.linecolor, 
+      linecolor: hexToRGB(appState.graph.edges.color),
+      // hexToRGB(appState.graph.edges.color),
+      // source.renderData.linecolor, 
     });
 
     source.linkObjs.push(self.lineIndices[index / 6]);

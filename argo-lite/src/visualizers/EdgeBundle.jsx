@@ -309,9 +309,10 @@ class EdgeBundle extends React.Component {
                   mouseout: (e) => {
                     appState.graph.frame.graph.forEachNode(n => {
                       appState.graph.frame.colorNodeOpacity(n, 1);
-                      appState.graph.frame.colorNodeEdge(n, 0.5, 0.5);
+                     
                       appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
                     });
+                    appState.graph.frame.colorNodeEdge(null);
                     appState.graph.currentlyHovered = null;
 
 

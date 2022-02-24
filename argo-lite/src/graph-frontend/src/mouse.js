@@ -98,9 +98,10 @@ module.exports = function (self) {
     } else if (self.selection.length == 0) {
       self.graph.forEachNode(n => {
         self.colorNodeOpacity(n, 1);
-        self.colorNodeEdge(n, 0.5, 0.5);
+        
         self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
       });
+      self.colorNodeEdge(null);
       appState.graph.currentlyHovered = null;
     }
     if (self.prevHighlights != undefined) {
@@ -245,7 +246,7 @@ module.exports = function (self) {
     appState.graph.smartPause.interactingWithGraph = false;
 
 
-  self.updateSelectionOpacity();
+    self.updateSelectionOpacity();
   
     // Left or right mouse button
     if (true) {

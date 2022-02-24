@@ -5,11 +5,11 @@ var Node = def.Node;
 var d3 = def.d3;
 var ee = def.ee;
 
-module.exports = function(self) {
+module.exports = function (self) {
   /**
    *  Change color of node edges
    */
-  self.highlightNode = function(node, toggle, color = def.NODE_HIGHLIGHT) {
+  self.highlightNode = function (node, toggle, color = def.NODE_HIGHLIGHT) {
     if (toggle) {
       node.renderData.draw_object.children[0].material.color.setHex(color);
       node.renderData.draw_object.children[0].visible = true;
@@ -24,7 +24,7 @@ module.exports = function(self) {
   /**
    *  Highlight edges from and to a node and hide others
    */
-  self.highlightEdges = function(node, toggle) {
+  self.highlightEdges = function (node, toggle) {
     const froms = [];
     const tos = [];
     for (var i = 0; i < self.selection.length; i++) {
@@ -49,15 +49,15 @@ module.exports = function(self) {
    * 
    * Also highlights edges.
    */
-  self.highlightNeighbors = function(node, froms, tos) {
+  self.highlightNeighbors = function (node, froms, tos) {
     self.graph.forEachNode(n => {
       if (self.selection.indexOf(n) != -1 || n == node) {
         // If the node is selected or the node is the node to be highlighted
         self.colorNodeOpacity(n, 1);
-        self.colorNodeEdge(n, true);
-        for (var i = 0; n.linkObjs && i < n.linkObjs.length; i++) {
-          n.linkObjs[i].linecolor = n.renderData.linecolor;
-        }
+        self.colorNodeEdge(n);  //set the node.renderData.linecolor , i.e. color edges by nodes  
+        // for (var i = 0; n.linkObjs && i < n.linkObjs.length; i++) {
+        //   n.linkObjs[i].linecolor = n.renderData.linecolor;
+        // }
       } else if (
         self.doHighlightNeighbors &&
         (froms.indexOf(n.id) != -1 || tos.indexOf(n.id) != -1)
@@ -65,13 +65,13 @@ module.exports = function(self) {
         // If the node is not selected or highlighted and
         // if the node is present in either froms or tos arrays
         self.colorNodeOpacity(n, 1);
-        self.colorNodeEdge(n, false);
+        // self.colorNodeEdge(n, false);
       } else if (
         !self.prevHighlights ||
         self.prevHighlights.indexOf(n.id) == -1
       ) {
         self.colorNodeOpacity(n, 0.2);
-        self.colorNodeEdge(n, false);
+        // self.colorNodeEdge(n, false);
         self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
       }
     });
@@ -80,27 +80,96 @@ module.exports = function(self) {
   /**
    *  Change color of node edges
    */
-  self.colorNodeEdge = function(node, isHighlighted) {
+  //  self.colorNodeEdge = function(node, isHighlighted) {
+  //   let red = new THREE.Color(appState.graph.edges.color).r;
+  //   let blue = new THREE.Color(appState.graph.edges.color).g;
+  //   let green = new THREE.Color(appState.graph.edges.color).b;
+  //   if(isHighlighted) {
+  //     node.renderData.linecolor.r = red;
+  //     node.renderData.linecolor.g = blue;
+  //     node.renderData.linecolor.b = green;
+  //     self.arrow.material.color.setRGB(red, blue, green);
+  //   } else {
+  //     node.renderData.linecolor.r =  self.darkMode ? 0.25 : .75;
+  //     node.renderData.linecolor.g = self.darkMode ? 0.25 : .75;
+  //     node.renderData.linecolor.b = self.darkMode ? 0.25 : .75;
+  //   }
+
+  // };
+
+
+  self.colorNodeEdge = function (node) {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
-    if(isHighlighted) {
-      node.renderData.linecolor.r = red;
-      node.renderData.linecolor.g = blue;
-      node.renderData.linecolor.b = green;
-      self.arrow.material.color.setRGB(red, blue, green);
-    } else {
-      node.renderData.linecolor.r =  self.darkMode ? 0.25 : .75;
-      node.renderData.linecolor.g = self.darkMode ? 0.25 : .75;
-      node.renderData.linecolor.b = self.darkMode ? 0.25 : .75;
+    if (!node) {  //highlight all the edges 
+
+
+      self.lineIndices.forEach(function (link) {
+
+        link.linecolor.r = red;
+        link.linecolor.g = blue;
+        link.linecolor.b = green;
+      })
+
+    } else {                     //only highlight the node's edges
+      //first dehighlight all edges
+      self.lineIndices.forEach(function (link) {
+        link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+        link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+        link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      })
+      //then highlight only the node's edges
+      self.lineIndices.forEach(function (link) {
+        if (link.source.id == node.id || link.target.id == node.id) {
+          link.linecolor.r = red;
+          link.linecolor.g = blue;
+          link.linecolor.b = green;
+        }
+      })
+
+
     }
-    
+
+    // if (isHighlighted) {
+    //   self.lineIndices.forEach(function (link) {
+    //     if (link.source.id == node.id || link.target.id == node.id) {
+    //       link.linecolor.r = red;
+    //       link.linecolor.g = blue;
+    //       link.linecolor.b = green;
+    //     } else {
+    //       link.linecolor.r = self.darkMode ? 0.25 : 0.89;
+    //       link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+    //       link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+    //     }
+
+    //   })
+
+    //   // node.renderData.linecolor.r = red;
+    //   // node.renderData.linecolor.g = blue;
+    //   // node.renderData.linecolor.b = green;
+    //   self.arrow.material.color.setRGB(red, blue, green);
+
+    // } else {
+    //   self.lineIndices.forEach(function (link) {
+    //     link.linecolor.r = self.darkMode ? 0.25 : 0.89;
+    //     link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+    //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+    //   })
+
+    //   // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
+    //   // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
+    //   // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
+    // }
+
   };
+
+
 
   /**
    *  Change node opacity
    */
-  self.colorNodeOpacity = function(node, op) {
+  self.colorNodeOpacity = function (node, op) {
     node.renderData.draw_object.material.opacity = op;
   };
 };

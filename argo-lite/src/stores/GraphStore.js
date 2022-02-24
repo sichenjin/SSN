@@ -222,6 +222,8 @@ export default class GraphStore {
     return this.rawGraph.nodes.filter(node => setOfNeighborIds.has(node.id.toString()));
   }
 
+  
+
   // Triggers autorun in stores/index.js to sent computedGraph to graph-frontend.
   @computed
   get computedGraph() {
