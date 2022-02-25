@@ -7,10 +7,12 @@ import { observer } from 'mobx-react';
 import { observable, computed, action, runInAction } from "mobx";
 import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect"
-import {ZoomMap,MapClick} from "../components/ZoomMap"
+import { ZoomMap, MapClick } from "../components/ZoomMap"
 import { useMap } from "react-leaflet";
+import { Tag } from "@blueprintjs/core";
 var def = require("../graph-frontend/src/imports").default;
 var d3 = def.d3;
+
 // import LocationFilter from "../components/LocationFilter"
 
 @observer
@@ -54,10 +56,10 @@ class MapView extends React.Component {
   }
 
   @computed
-  get nodesSelectedID(){
+  get nodesSelectedID() {
     var edgesOfNodes = []
-    if(appState.graph.selectedNodes.length > 0){
-      edgesOfNodes = appState.graph.selectedNodes.map(function(node){
+    if (appState.graph.selectedNodes.length > 0) {
+      edgesOfNodes = appState.graph.selectedNodes.map(function (node) {
         return node.id
       })
     }
@@ -67,7 +69,7 @@ class MapView extends React.Component {
   // distance(fromlocLatY, fromlocLonX,tolocLatY,tolocLonX) {
   //   const dx2 = Math.pow(fromlocLonX - tolocLonX, 2);
   //   const dy2 = Math.pow(fromlocLatY - tolocLatY, 2);
-  
+
   //   return Math.sqrt(dx2 + dy2);
   // }
 
@@ -84,69 +86,69 @@ class MapView extends React.Component {
   //   // links: all individual segments (source to target)
   //   // paths: all segments combined into single path for drawing
   //   let bundle = {nodes: [], links: [], paths: []};
-  
+
   //   // make existing nodes fixed
   //   bundle.nodes = nodes.map(function(d, i) {
   //     d.fx = d.LonX;
   //     d.fy = d.LatY;
   //     return d;
   //   });
-    
+
   //   links.forEach(function(d, i) {
   //     // calculate the distance between the source and target
   //     let length = this.distance(d.data.fromlocLatY, d.data.fromlocLonX,d.data.tolocLatY,d.data.tolocLonX);
-  
+
   //     // calculate total number of inner nodes for this link
   //     let total = Math.round(this.segments(length));
-  
+
   //     // create scales from source to target
   //     let xscale = d3.scaleLinear()
   //       .domain([0, total + 1]) // source, inner nodes, target
   //       .range([d.data.fromlocLonX, d.data.tolocLonX]);
-  
+
   //     let yscale = d3.scaleLinear()
   //       .domain([0, total + 1])
   //       .range([d.data.fromlocLatY, d.data.tolocLatY]);
-  
+
   //     // initialize source node
   //     let source = d.source;
   //     let target = null;
-  
+
   //     // add all points to local path
   //     let local = [source];
-  
+
   //     for (let j = 1; j <= total; j++) {
   //       // calculate target node
   //       target = {
   //         x: xscale(j),
   //         y: yscale(j)
   //       };
-  
+
   //       local.push(target);
   //       bundle.nodes.push(target);
-  
+
   //       bundle.links.push({
   //         source: source,
   //         target: target
   //       });
-  
+
   //       source = target;
   //     }
-  
+
   //     local.push(d.target);
-  
+
   //     // add last link to target node
   //     bundle.links.push({
   //       source: target,
   //       target: d.target
   //     });
-  
+
   //     bundle.paths.push(local);
   //   });
-  
+
   //   return bundle;
   // }
-  
+
 
 
   dec2hexString = (dec) => {
@@ -157,38 +159,37 @@ class MapView extends React.Component {
     console.log('onMouseOut', e)
   }
 
-  
+
 
 
   setEdgePathOption = (edge) => {
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked) {
-      return  { color:  appState.graph.edges.color , weight: '1', opacity: '1' }
+      return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
 
       // { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
     }
 
-    
 
 
-    if (appState.graph.currentlyHovered ) {
-      if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id ) {
+
+    if (appState.graph.currentlyHovered) {
+      if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
-        return { color:appState.graph.edges.color , weight: '0.7', opacity: '0.2' }
+        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
       }
     }
-    
-    if (appState.graph.mapClicked ) {
-      if (edge.fromId == appState.graph.mapClicked.id || edge.toId == appState.graph.mapClicked.id ) {
+
+    if (appState.graph.mapClicked) {
+      if (edge.fromId == appState.graph.mapClicked.id || edge.toId == appState.graph.mapClicked.id) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
-        return { color:appState.graph.edges.color , weight: '0.7', opacity: '0.2' }
+        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
       }
     }
-    
+
     if (appState.graph.selectedNodes.length > 0) {
-      if ( this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1 ) 
-        {
+      if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
         return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
@@ -207,11 +208,11 @@ class MapView extends React.Component {
       return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, zIndex: 'auto' }
     }
 
-    
+
     // //currently hovered node highlight 
-    if (appState.graph.currentlyHovered ) {
+    if (appState.graph.currentlyHovered) {
       // currently node
-      if (node.id === appState.graph.currentlyHovered.id ) {
+      if (node.id === appState.graph.currentlyHovered.id) {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
@@ -220,9 +221,9 @@ class MapView extends React.Component {
       }
     }
 
-    if (appState.graph.mapClicked ) {
+    if (appState.graph.mapClicked) {
       // currently node
-      if (node.id === appState.graph.mapClicked.id ) {
+      if (node.id === appState.graph.mapClicked.id) {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
@@ -274,7 +275,7 @@ class MapView extends React.Component {
         zIndex: "10"
         // position: "absolute"
       }}
-    >
+    > <Tag className="map-tag">Map</Tag>
       <MapContainer
         // style={{ height: "480px", width: "100%" }}
         zoom={9}
@@ -311,26 +312,26 @@ class MapView extends React.Component {
               <CircleMarker
                 key={node.id}
                 center={[node.data.ref.LatY, node.data.ref.LonX]}
-                radius={node.data.size*1.5}
+                radius={node.data.size * 1.5}
                 pathOptions={this.setNodePathOption(node)}
 
-                
+
                 data={node}
                 eventHandlers={{
                   click: (e) => {
-                    if(!appState.graph.mapClicked){ //no clicked circle before 
+                    if (!appState.graph.mapClicked) { //no clicked circle before 
                       appState.graph.mapClicked = e.target.options.data  //control map update 
                       // appState.graph.currentlyHovered = null
                       appState.graph.frame.highlightNode(e.target.options.data, true);   //control socio update 
                       appState.graph.frame.highlightEdges(e.target.options.data, true);
-                    }else{  // click again to unselect 
+                    } else {  // click again to unselect 
                       appState.graph.mapClicked = null
                     }
 
-                    
+
                   },
                   mouseover: (e) => {
-                    if(appState.graph.mapClicked) return;
+                    if (appState.graph.mapClicked) return;
                     // var currentNode = e.target.options.data
                     // appState.graph.selectedNodes = []
                     // appState.graph.frame.selection = []
@@ -348,20 +349,20 @@ class MapView extends React.Component {
                     // console.log(e.target.options.data)
                   },
                   mouseout: (e) => {
-                    if(appState.graph.mapClicked) return; 
-                  
-                    appState.graph.frame.graph.forEachNode(function(n){
-                      if(n !== appState.graph.mapClicked){
+                    if (appState.graph.mapClicked) return;
+
+                    appState.graph.frame.graph.forEachNode(function (n) {
+                      if (n !== appState.graph.mapClicked) {
                         appState.graph.frame.colorNodeOpacity(n, 1);
-                      
-                      appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+
+                        appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
                       }
                     }
                     );
                     appState.graph.frame.colorNodeEdge(null);
                     appState.graph.currentlyHovered = null;
-                    
-                    
+
+
                     // e.target.options.data.renderData.draw_object.children[0].material.color.set(
                     //   e.target.options.data.renderData.hcolor
                     // )
@@ -399,7 +400,7 @@ class MapView extends React.Component {
 
 
       </MapContainer>
-     
+
     </div>
   }
 }

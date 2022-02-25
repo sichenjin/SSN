@@ -18,8 +18,8 @@ import appState from "../stores/index";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import argologo_dark from '../images/new_argologo_dark.svg';
-import argologo_light from '../images/new_argologo_light.svg';
+import argologo_dark from '../images/Snoman title.png';
+import argologo_light from '../images/Snoman logo.png';
 import { toaster } from '../notifications/client';
 import { LOGO_URL, GITHUB_URL, SAMPLE_GRAPH_SNAPSHOTS } from '../constants';
 
@@ -27,13 +27,14 @@ import { LOGO_URL, GITHUB_URL, SAMPLE_GRAPH_SNAPSHOTS } from '../constants';
 class RegularNavbar extends React.Component {
   render() {
     return (
-      <nav className={classnames([Classes.NAVBAR])}>
+      <nav className={classnames([Classes.NAVBAR], 'navbar-head')}>
         <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])}>
           <a href={LOGO_URL} target="_blank">
-            <img title="Argo Lite" id="Argo logo" 
+            <img title="Snoman" id="SNoMAN logo" 
             src={appState.preferences.darkMode ? argologo_dark : argologo_light}
             height="28"></img>
           </a>
+          <span>SNoMAN</span>
           <div className={classnames([Classes.NAVBAR_HEADING])}></div>
           {/* <a
             href="https://poloclub.github.io/argo-graph/"

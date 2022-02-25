@@ -72,8 +72,9 @@ class App extends React.Component {
         "app-wrapper": true,
         [Classes.DARK]: appState.preferences.darkMode
       })}>
+         <Navbar />
         <div className="graph">
-          <Navbar />
+         
           <main className="main">
             {appState.graph.hasGraph ? (
               <ThreeJSVis />

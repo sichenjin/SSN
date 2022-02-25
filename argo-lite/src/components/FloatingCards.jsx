@@ -1,5 +1,5 @@
 import React from "react";
-import { Classes, Tab2, Tabs2 } from "@blueprintjs/core";
+import { Classes, Tab2, Tabs2, Tag } from "@blueprintjs/core";
 import classnames from "classnames";
 import { observer } from "mobx-react";
 import appState from "../stores";
@@ -305,7 +305,7 @@ class FloatingCards extends React.Component {
 
 
           <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", paddingTop: "1em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
+            "transparent-frame")} style={{ width: "1em", paddingTop: "0em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
             <button className="openbtn" onClick={this.toggleOptions} style={appState.preferences.isRenderOptionsCardHidden ? this.sideButtonVis : this.sideButtonInv}>
               &#9776;
             </button>
@@ -334,12 +334,18 @@ class FloatingCards extends React.Component {
           </div>
 
           <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", height: "0px", paddingTop: "0em", paddingLeft: "0px", paddingBottom: "0em", marginRight: "50px" }}>
+            "transparent-frame")} style={{ width: "1em", height: "0px", paddingTop: "0em", paddingLeft: "0px", paddingBottom: "0em", marginRight: "35px" }}>
             <button className="openbtn" onClick={this.filterToggleOptions} style={appState.preferences.isFilterOptionsCardHidden ? this.filterSideButtonVis : this.filterSideButtonInv}>
               &#9776;
             </button>
           </div>
         </div>
+
+
+        <Tag className="network-tag">
+          Network
+        </Tag>
+
 
         {// This menu only shows when there are nodes selected
           appState.graph.selectedNodes.length > 1 && <SelectionDetail />

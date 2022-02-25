@@ -86,11 +86,11 @@ html {
 }
 
 .graph-option{
-  top: 25px;
+  top: 75px;
 }
 
 .filter-option{
-  top: 25px;
+  top: 75px;
 }
 
 .left-overlay-card {
@@ -137,7 +137,7 @@ html {
 
 .openbtn {
   margin-left: 8px;
-  margin-top: 1em;
+  margin-top: 3em;
   font-size: 10px;
   cursor: pointer;
   background-color: #465d6e;
@@ -193,12 +193,33 @@ html {
   position: absolute;
   top: 0px;
   right: 0px;
+  z-index: 100;
 }
 
 .minimal-navbar-left {
   position: absolute;
   top: 0px;
   left: 0px;
+  z-index: 100;
+}
+
+.navbar-head{
+  position: absolute;
+  z-index: 100;
+  width: 100vw;
+  
+}
+
+.leaflet-control-container { 
+  position: absolute;
+  right: 60px;
+  bottom: 0;
+  margin-bottom: 200px;
+  right: 60px;
+}
+
+.leaflet-control-attribution a{
+  font-size: 0px;
 }
 
 .bottom-status-bar {
@@ -355,4 +376,22 @@ div.pt-card.sub-option.legend {
 .filter-scroll {
   max-height: 150px;
   overflow-y: auto;
+}
+
+.network-tag{
+  margin-top: 60px;
+  margin-left: 20vw;
+  font-size: 20px;
+  height: 25px;  
+  position:absolute;
+  z-index: 1000;
+}
+
+.map-tag{
+  margin-top: 60px;
+    margin-left: 25vw;
+    font-size: 20px;
+    height: 25px;
+    z-index: 1000;
+    position:absolute; 
 }
