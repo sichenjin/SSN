@@ -334,7 +334,7 @@ class FloatingCards extends React.Component {
           {/* <FilterOptionsCard /> */}
           <div id="scatter-plot">
             
-            {appState.graph.frame && appState.graph.rawGraph.nodes[0].centrality !== undefined && < ScatterPlot />}
+            {appState.graph.frame && appState.graph.rawGraph.nodes[0].dist_to_center !== undefined && < ScatterPlot />}
           </div>
         </div>
 

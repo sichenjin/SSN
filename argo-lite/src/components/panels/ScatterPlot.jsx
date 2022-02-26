@@ -31,14 +31,14 @@ class ScatterPlot extends React.Component {
     const margin = { top: 10, right: 10, bottom: 50, left: 30 }
     const width = 250 - margin.left - margin.right
     const height = 250 - margin.top - margin.bottom
-    const data = appState.graph.frame.getNodeList()
+    const data = appState.graph.frame.getNodeList().filter(node =>  !isNaN(parseFloat(node.data.ref.dist_to_center))); 
     // this.props.data
 
     const x = scaleLinear()
       .domain([
         0,
         max(data, function (d) {
-          return parseFloat(d.data.ref.centrality)
+          return parseFloat(d.data.ref.degree)
         })
       ])
       .range([0, width])
@@ -67,7 +67,7 @@ class ScatterPlot extends React.Component {
             className="main"
           >
             <RenderCircles data={data} scale={{ x, y }} />
-            <text transform={"translate(70, 235)"} font-size= "13px">centrality</text>
+            <text transform={"translate(70, 235)"} font-size= "13px">degree</text>
             <Axis 
               axis="x"
               transform={"translate(0," + height + ")"}
@@ -150,13 +150,13 @@ class RenderCircles extends React.Component {
   render() {
     let renderCircles = this.props.data.map((node, i) => (
       <circle
-        cx={this.props.scale.x(parseFloat(node.data.ref.centrality))}
+        cx={this.props.scale.x(parseFloat(node.data.ref.degree))}
         cy={this.props.scale.y(parseFloat(node.data.ref.dist_to_center))}
         r="4"
         style={this.setScatterStyle(node)}
         data-id={node.id}
         onMouseOver={(e) => {
-          console.log(e.target.dataset.id)
+          // console.log(e.target.dataset.id)
           const thenode = appState.graph.frame.getNode(e.target.dataset.id)
           appState.graph.currentlyHovered = thenode  // control map update 
           appState.graph.frame.highlightNode(thenode, true);   // control cosio update 
