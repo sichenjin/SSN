@@ -11,6 +11,7 @@ import EdgesPanel from "./panels/EdgesPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodeDetail from "./panels/NodeDetailPanel";
 import SelectionDetail from "./panels/SelectionDetail";
+import ScatterPlot from "./panels/ScatterPlot";
 import Legends from "./Legends";
 import StatusBar from './StatusBar';
 import SelectionActionPanel from "./panels/SelectionActionPanel";
@@ -313,34 +314,57 @@ class FloatingCards extends React.Component {
 
 
         </div>
-
+        {/* Filter option panels */}
         <div className="right-cards">
-          <div
-            className={classnames(
-              Classes.CARD,
-              Classes.ELEVATION_2,
-              "overlay-card",
-              "left-overlay-card",
-              "transparent-frame",
-              "right-cards",
-              "filter-option"
-            )}
-            style={appState.preferences.isFilterOptionsCardHidden ? this.filtersInvisible : this.filtersVisible}
-          >
-            <button className="openbtn2" onClick={this.filterToggleOptions}> &#8249;
-            </button>
-            <br />
-            <FilterOptionsCard />
-          </div>
-
-          <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", height: "0px", paddingTop: "0em", paddingLeft: "0px", paddingBottom: "0em", marginRight: "35px" }}>
-            <button className="openbtn" onClick={this.filterToggleOptions} style={appState.preferences.isFilterOptionsCardHidden ? this.filterSideButtonVis : this.filterSideButtonInv}>
-              &#9776;
-            </button>
+        <div
+          className={classnames(
+            Classes.CARD,
+            Classes.ELEVATION_2,
+            "overlay-card",
+            "left-overlay-card",
+            "transparent-frame",
+            "right-cards",
+            "filter-option"
+          )}
+          style={appState.preferences.isFilterOptionsCardHidden ? this.filtersInvisible : this.filtersVisible}
+        >
+          <button className="openbtn3" onClick={this.filterToggleOptions}> &#8250;
+          </button>
+          <br />
+          {/* <FilterOptionsCard /> */}
+          <div id="scatter-plot">
+            
+            {appState.graph.frame && appState.graph.rawGraph.nodes[0].centrality !== undefined && < ScatterPlot />}
           </div>
         </div>
 
+        <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
+          "transparent-frame")} style={{ width: "1em", height: "0px", paddingTop: "0em", paddingLeft: "0px", paddingBottom: "0em", marginRight: "35px" }}>
+          <button className="openbtn" onClick={this.filterToggleOptions} style={appState.preferences.isFilterOptionsCardHidden ? this.filterSideButtonVis : this.filterSideButtonInv}>
+            &#9776;
+          </button>
+        </div>
+        </div>
+
+        {/* the scatter plot */}
+        {/* <div
+          className={classnames(
+            Classes.CARD,
+            Classes.ELEVATION_2,
+            "overlay-card",
+            "left-overlay-card",
+            "transparent-frame",
+            "right-cards",
+            "filter-option"
+          )}
+
+        >
+          <div id="scatter-plot">
+           
+            {appState.graph.frame && appState.graph.rawGraph.nodes[0].centrality !== undefined && < ScatterPlot />}
+          </div>
+
+        </div> */}
 
         <Tag className="network-tag">
           Network

@@ -567,7 +567,7 @@ async function importGraphFromCSV(config) {
       { id: node[config.nodes.mapping.id].toString(), degree: 0, ...node }));
     nodesArr =
       nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 , LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY'])}));
+        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 , centrality:parseFloat(n['centrality']), dist_to_center: parseFloat(n['dist_to_center']),LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY'])}));
     nodesArr.forEach(n => degreeDict[n.id] = 0);
   }
   const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);

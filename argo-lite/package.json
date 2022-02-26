@@ -112,7 +112,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "predeploy": "npm run build",
-    "deploy": "npm run build && cp build/index.html build/200.html && surge build https://ssntest1234567.surge.sh"
+    "deploy": "npm run build && cp build/index.html build/200.html && surge build https://ssndemo.surge.sh"
   },
   "eslintConfig": {
     "extends": "react-app",

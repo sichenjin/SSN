@@ -85,6 +85,17 @@ html {
   transition: right 0.3s;
 }
 
+#scatter-plot{
+ 
+  width: 250px;
+  height:250px;
+  
+  right: 0em;
+  opacity: 1;
+  /* background-color: white; */
+  transition: right 0.3s;
+}
+
 .graph-option{
   top: 75px;
 }
@@ -167,6 +178,19 @@ html {
   background-color: transparent;
   border: black;
   transition: margin-left 0.3s;
+}
+
+.openbtn3 {
+  margin-left: 235px;
+  padding-top: 2.3em;
+  margin-top: -2.35em;
+  font-size: 40px;
+  color: rgb(162, 175, 201);
+  cursor: pointer;
+  background-color: transparent;
+  border: black;
+  transition: margin-left 0.3s;
+  transform: translate(-230px, -1vh);
 }
 
 .openbtn2:hover {
@@ -394,4 +418,8 @@ div.pt-card.sub-option.legend {
     height: 25px;
     z-index: 1000;
     position:absolute; 
+}
+
+.xaxis text{
+ transform:  rotate(-90deg) translate(-20px, -10px);
 }

@@ -352,11 +352,11 @@ class MapView extends React.Component {
                     if (appState.graph.mapClicked) return;
 
                     appState.graph.frame.graph.forEachNode(function (n) {
-                      if (n !== appState.graph.mapClicked) {
+                      // if (n !== appState.graph.mapClicked) {
                         appState.graph.frame.colorNodeOpacity(n, 1);
 
                         appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
-                      }
+                      // }
                     }
                     );
                     appState.graph.frame.colorNodeEdge(null);
