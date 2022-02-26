@@ -14,8 +14,8 @@ var def = require("../../graph-frontend/src/imports").default;
 
 
 const settings = {
-  width: 200,
-  height: 200,
+  width: 150,
+  height: 150,
   padding: 10,
   // numDataPoints: 50,
   // maxRange: () => Math.random() * 1000
@@ -29,9 +29,9 @@ class ScatterPlot extends React.Component {
 
   render() {
     const margin = { top: 10, right: 10, bottom: 50, left: 30 }
-    const width = 250 - margin.left - margin.right
-    const height = 250 - margin.top - margin.bottom
-    const data = appState.graph.frame.getNodeList().filter(node =>  !isNaN(parseFloat(node.data.ref.dist_to_center))); 
+    const width = 200 - margin.left - margin.right
+    const height = 200 - margin.top - margin.bottom
+    const data = appState.graph.frame.getNodeList().filter(node => node.data.ref.degree!==0 && !isNaN(parseFloat(node.data.ref.dist_to_center))); 
     // this.props.data
 
     const x = scaleLinear()
@@ -61,13 +61,13 @@ class ScatterPlot extends React.Component {
           className="scatterchart"
         >
           <g
-            transform={"translate(" + margin.left + "," + margin.top + ")"}
+            transform={"translate(" + margin.left + ",3)"}
             width={width}
             height={height}
             className="main"
           >
             <RenderCircles data={data} scale={{ x, y }} />
-            <text transform={"translate(70, 235)"} font-size= "13px">degree</text>
+            <text transform={"translate(50, 180)"} font-size= "13px">degree</text>
             <Axis 
               axis="x"
               transform={"translate(0," + height + ")"}
@@ -152,7 +152,7 @@ class RenderCircles extends React.Component {
       <circle
         cx={this.props.scale.x(parseFloat(node.data.ref.degree))}
         cy={this.props.scale.y(parseFloat(node.data.ref.dist_to_center))}
-        r="4"
+        r="3"
         style={this.setScatterStyle(node)}
         data-id={node.id}
         onMouseOver={(e) => {

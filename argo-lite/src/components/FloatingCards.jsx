@@ -320,8 +320,8 @@ class FloatingCards extends React.Component {
           className={classnames(
             Classes.CARD,
             Classes.ELEVATION_2,
-            "overlay-card",
-            "left-overlay-card",
+            "scatter-overlay-card",
+            "scatter-overlay-card",
             "transparent-frame",
             "right-cards",
             "filter-option"
