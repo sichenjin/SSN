@@ -302,7 +302,13 @@ class MapView extends React.Component {
             var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
 
             return (
-              <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions} />
+              <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
+              data = {edge} 
+              // eventHandlers={{
+              //   click: (e) => {
+              //     console.log(e.target.options.data)
+              //   }}}
+              />
 
             );
 
