@@ -197,6 +197,13 @@ class MapView extends React.Component {
     }
   }
 
+  setNodeCircle = (node) =>{
+    if (appState.graph.frame && appState.graph.nodes.size.max) {
+      // appState.graph.frame.updateGraph(appState.graph.computedGraph);
+      return node.data.size * 2.5
+    }
+  }
+
   setNodePathOption = (node) => {
 
     //the order of if condition matters, because of return first 
@@ -312,7 +319,7 @@ class MapView extends React.Component {
               <CircleMarker
                 key={node.id}
                 center={[node.data.ref.LatY, node.data.ref.LonX]}
-                radius={node.data.size * 1.5}
+                radius={this.setNodeCircle(node)}
                 pathOptions={this.setNodePathOption(node)}
 
 
