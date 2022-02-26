@@ -51,8 +51,8 @@ class LabelsPanel extends React.Component {
         <div style={{height: '20px'}} />
         <h6>Label Size</h6>
         <Slider
-          min={0.5}
-          max={3}
+          min={0.1}
+          max={1}
           stepSize={0.1}
           onChange={value => {
             appState.graph.nodes.labelSize = value;

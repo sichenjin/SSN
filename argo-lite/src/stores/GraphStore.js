@@ -25,7 +25,7 @@ export default class GraphStore {
       },
       labelBy: "node_id",
       shape: "circle",
-      labelSize: 1,
+      labelSize: 0.6,
       labelLength: 10,
       filter:{}
     },

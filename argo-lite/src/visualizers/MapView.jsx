@@ -169,11 +169,9 @@ class MapView extends React.Component {
       // { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
     }
 
-
-
-
-    if (appState.graph.currentlyHovered) {
-      if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
+    if (appState.graph.selectedNodes.length > 0) {
+      //highlight within selection edges , &&
+      if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
         return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
@@ -188,13 +186,17 @@ class MapView extends React.Component {
       }
     }
 
-    if (appState.graph.selectedNodes.length > 0) {
-      if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+    if (appState.graph.currentlyHovered) {
+      if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
         return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
       }
     }
+
+   
+
+    
   }
 
   setNodeCircle = (node) =>{
@@ -333,18 +335,25 @@ class MapView extends React.Component {
                 eventHandlers={{
                   click: (e) => {
                     if (!appState.graph.mapClicked) { //no clicked circle before 
-                      appState.graph.mapClicked = e.target.options.data  //control map update 
+                      const thenode = e.target.options.data
+                      appState.graph.mapClicked = thenode  //control map update 
                       // appState.graph.currentlyHovered = null
-                      appState.graph.frame.highlightNode(e.target.options.data, true);   //control socio update 
-                      appState.graph.frame.highlightEdges(e.target.options.data, true);
+                      // appState.graph.frame.highlightNode(thenode, true);   //control socio update 
+                      // appState.graph.frame.highlightEdges(thenode, true);
+                      appState.graph.frame.selection = appState.graph.frame.getNeighborNodesFromGraph(thenode);
+                      appState.graph.selectedNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode);
+                      appState.graph.frame.updateSelectionOpacity();
                     } else {  // click again to unselect 
                       appState.graph.mapClicked = null
+                      appState.graph.frame.selection = []
+                      appState.graph.selectedNodes = []
                     }
 
 
                   },
                   mouseover: (e) => {
-                    if (appState.graph.mapClicked) return;
+                    //when selection or mapclick, then freeze, no hover event 
+                    if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
                     // var currentNode = e.target.options.data
                     // appState.graph.selectedNodes = []
                     // appState.graph.frame.selection = []
@@ -362,7 +371,8 @@ class MapView extends React.Component {
                     // console.log(e.target.options.data)
                   },
                   mouseout: (e) => {
-                    if (appState.graph.mapClicked) return;
+                    //when selection or mapclick, then freeze, no hover event 
+                    if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
 
                     appState.graph.frame.graph.forEachNode(function (n) {
                       // if (n !== appState.graph.mapClicked) {
