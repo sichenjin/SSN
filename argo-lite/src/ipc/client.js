@@ -383,6 +383,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
     });
     // Reinitialize global configs
     appState.graph.nodes = appState.graph.initialGlobalConfig.nodes;
+    appState.graph.scatterplot = appState.graph.initialGlobalConfig.scatterplot;
     appState.graph.overrides = new Map();
     appState.import.loading = false;
     appState.import.dialogOpen = false;
@@ -412,6 +413,7 @@ export function requestImportGraphFromGexf() {
     });
     // Reinitialize global configs
     appState.graph.nodes = appState.graph.initialGlobalConfig.nodes;
+    appState.graph.scatterplot = appState.graph.initialGlobalConfig.scatterplot;
     appState.graph.overrides = new Map();
     appState.import.loading = false;
     appState.import.gexfDialogOpen = false;
@@ -567,7 +569,7 @@ async function importGraphFromCSV(config) {
       { id: node[config.nodes.mapping.id].toString(), degree: 0, ...node }));
     nodesArr =
       nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 , centrality:parseFloat(n['centrality']), dist_to_center: parseFloat(n['dist_to_center']),LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY'])}));
+        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 , centrality:parseFloat(n['centrality']), 'distance to center': parseFloat(n['distance to center']),LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY'])}));
     nodesArr.forEach(n => degreeDict[n.id] = 0);
   }
   const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
@@ -680,7 +682,7 @@ async function importGraphFromCSV(config) {
       nodeProperties: nodekeyList,
       nodePropertyTypes:nodePropertyTypes,
       uniqueValue:uniqueValue,
-      nodeComputed: ['pagerank', 'degree'],
+      nodeComputed: ['pagerank', 'degree','centrality', 'distance to center'],
       edgeProperties: ['source_id', 'target_id'],
     },
   }
@@ -757,7 +759,7 @@ export async function importGraphFromGexf() {
       nodeProperties: nodekeyList,
       nodePropertyTypes:nodePropertyTypes,
       uniqueValue:uniqueValue,
-      nodeComputed: ['pagerank', 'degree'],
+      nodeComputed: ['pagerank', 'degree','centrality', 'distance to center'],
       edgeProperties: ['source_id', 'target_id'],
     },
   }

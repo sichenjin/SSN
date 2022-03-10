@@ -32,11 +32,16 @@ export default class GraphStore {
     edges: {
       color: "#7f7f7f",
       crossColor: "#0055aa"
+    },
+    scatterplot:{
+      x: 'degree',
+      y:'distance to center'
     }
   }
 
   @observable nodes = this.initialGlobalConfig.nodes;
-  @observable edges = this.initialGlobalConfig.edges
+  @observable edges = this.initialGlobalConfig.edges;
+  @observable scatterplot = this.initialGlobalConfig.scatterplot;
 
   @observable enableDegree = true;
   @observable enableDensity = true;
@@ -115,7 +120,7 @@ export default class GraphStore {
     nodeProperties: [],
     nodePropertyTypes:[],
     uniqueValue:{},
-    nodeComputed: ["pagerank", "degree"],
+    nodeComputed: ["pagerank", "degree",'centrality', 'distance to center'],
     edgeProperties: [],
     snapshotName: "loading..." // Optional: for display in Argo-lite only
   };
@@ -127,6 +132,13 @@ export default class GraphStore {
       ...this.metadata.nodeProperties,
       ...this.metadata.nodeComputed
     ]).filter(k => k !== 'id'); // since node_id is already present
+  }
+
+  @computed
+  get allComputedPropertiesKeyList() {
+    return uniq([
+      ...this.metadata.nodeComputed
+    ]).filter(k => k !== 'id' ); // since node_id is already present
   }
 
   

@@ -17,7 +17,9 @@ export const BACKEND_URL = "https://argo-share.herokuapp.com"; // for production
 export const SAMPLE_GRAPH_SNAPSHOTS = [
   // ["Les Miserables", "31d8fb5a-b540-4db6-a2df-9c0158e152f0"],
   // https://poloclub.github.io/argo-graph-lite/#099905af-a9a1-417a-8a1c-92fa121d7d0d
-  ["Food Sharing", "06898fac-b9ea-4652-b2cd-4e6cd06a6d02"],   //without -degree nodes snapshot 
+  // #bc368f46-a78b-4fc7-bd29-68594a8f7e3c
+  // https://poloclub.github.io/argo-graph-lite/#ab19b31c-efe1-4b77-ba03-4656ef1bd4bc
+  ["Food Sharing", "ab19b31c-efe1-4b77-ba03-4656ef1bd4bc"],   //without -degree nodes snapshot 
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
   ["Mafia Family", "fbe29985-a85b-4385-9c4c-b35508deb68c"]
 ];

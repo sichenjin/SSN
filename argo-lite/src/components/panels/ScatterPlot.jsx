@@ -6,6 +6,7 @@ import appState from "../../stores";
 import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
 import { scaleLinear, max, axisLeft, axisBottom, select } from "d3"
+import SimpleSelect from "../utils/SimpleSelect";
 
 var def = require("../../graph-frontend/src/imports").default;
 
@@ -31,14 +32,15 @@ class ScatterPlot extends React.Component {
     const margin = { top: 10, right: 10, bottom: 50, left: 30 }
     const width = 200 - margin.left - margin.right
     const height = 200 - margin.top - margin.bottom
-    const data = appState.graph.frame.getNodeList().filter(node => node.data.ref.degree!==0 && !isNaN(parseFloat(node.data.ref.dist_to_center))); 
+    
+    // .filter(node => node.data.ref.degree !== 0 && !isNaN(parseFloat(node.data.ref.dist_to_center)));
     // this.props.data
 
     const x = scaleLinear()
       .domain([
         0,
-        max(data, function (d) {
-          return parseFloat(d.data.ref.degree)
+        max(this.props.data, function (d) {
+          return parseFloat(d.data.ref[appState.graph.scatterplot.x])
         })
       ])
       .range([0, width])
@@ -46,56 +48,82 @@ class ScatterPlot extends React.Component {
     const y = scaleLinear()
       .domain([
         0,
-        max(data, function (d) {
-          return parseFloat(d.data.ref.dist_to_center)
+        max(this.props.data, function (d) {
+          return parseFloat(d.data.ref[appState.graph.scatterplot.y])
         })
       ])
       .range([height, 0])
 
     return (
       <div>
+        <div className={classnames(Classes.CARD, "sub-option")}>
+          <div>
+            <p style={{ display: "inline" }}>X By: </p>
+            <span style={{ float: "right" }}>
+              <SimpleSelect
+                items={appState.graph.allComputedPropertiesKeyList}
+                onSelect={it => (appState.graph.scatterplot.x = it)}
+                value={appState.graph.scatterplot.x }
+              />
+            </span>
+          </div>
 
-        <svg
-          width={width + margin.right + margin.left}
-          height={height + margin.top + margin.bottom}
-          className="scatterchart"
-        >
-          <g
-            transform={"translate(" + margin.left + ",3)"}
-            width={width}
-            height={height}
-            className="main"
+          <div style={{marginTop:"10px"}}> 
+                <p style={{display: "inline"}}>Y by: </p>
+                <span style={{float:"right"}}>
+                  <SimpleSelect
+                    items={appState.graph.allComputedPropertiesKeyList}
+                    onSelect={it => (appState.graph.scatterplot.y = it)}
+                    value={appState.graph.scatterplot.y }
+                  />
+                </span>
+              </div>
+        </div>
+        <div>
+
+          <svg
+            width={width + margin.right + margin.left}
+            height={height + margin.top + margin.bottom}
+            className="scatterchart"
           >
-            <RenderCircles data={data} scale={{ x, y }} />
-            <text transform={"translate(50, 180)"} font-size= "13px">degree</text>
-            <Axis 
-              axis="x"
-              transform={"translate(0," + height + ")"}
-              scale={axisBottom().scale(x)}
-            />
-            <text 
-              transform= {"translate(-22, 140) rotate(-90)"}
-              font-size= "13px"
-            >distance to center</text>
-            <Axis
-              axis="y"
-              transform="translate(0,0)"
-              scale={axisLeft().scale(y)}
+            <g
+              transform={"translate(" + margin.left + ",3)"}
+              width={width}
+              height={height}
+              className="main"
+            >
+              <RenderCircles data={this.props.data} scale={{ x, y }} />
+              <text transform={"translate(50, 180)"} fontSize="13px">{appState.graph.scatterplot.x}</text>
+              <Axis
+                axis="x"
+                transform={"translate(0," + height + ")"}
+                scale={axisBottom().scale(x)}
+              />
+              <text
+                transform={"translate(-22, 140) rotate(-90)"}
+                fontSize="13px"
+              >{appState.graph.scatterplot.y}</text>
+              <Axis
+                axis="y"
+                transform="translate(0,0)"
+                scale={axisLeft().scale(y)}
               // decorate={(s) => {
               //   s.enter()
               //     .select('text')
               //     .style('text-anchor', 'start')
               //     .attr('transform', 'rotate(45 -10 10)');
               // }}
-            />
-          </g>
-        </svg>
+              />
+            </g>
+          </svg>
+        </div>
       </div>
+
     )
   }
 }
 
-
+@observer
 class Axis extends React.Component {
   componentDidMount() {
     const node = this.refs[this.props.axis]
@@ -103,7 +131,7 @@ class Axis extends React.Component {
   }
 
   render() {
-    if(this.props.axis == 'x'){
+    if (this.props.axis == 'x') {
       return (
         <g
           className="xaxis"
@@ -111,7 +139,7 @@ class Axis extends React.Component {
           ref={this.props.axis}
         />
       )
-    }else{
+    } else {
       return (
         <g
           // className="xaxis"
@@ -120,28 +148,43 @@ class Axis extends React.Component {
         />
       )
     }
-    
+
   }
 }
 
 @observer
 class RenderCircles extends React.Component {
   setScatterStyle = (node) => {
-    const dehighlightNode = {
-      fill: "rgba(25, 158, 199, .9)",
-      zIndex: "0"
-    }
-    const highlightNode = {
-      fill: "rgba(255, 1, 1, .9)",
-      zIndex: "10000"
-    }
+    // const dehighlightNode = {
+    //   fill: "rgba(25, 158, 199, .9)",
+    //   zIndex: "0"
+    // }
+    // const highlightNode = {
+    //   fill: "rgba(255, 1, 1, .9)",
+    //   zIndex: "10000"
+    // }
     if (!appState.graph.currentlyHovered) {
-      return dehighlightNode
+      return {
+        fill: node.renderData.color,
+        zIndex: "0",
+        stroke:false,
+        fillOpacity:0.8
+      }
     } else {
       if (node.id === appState.graph.currentlyHovered.id) {
-        return highlightNode
+        return {
+          fill: node.renderData.color,
+          zIndex: "10000",
+          stroke:def.NODE_HIGHLIGHT,
+          fillOpacity:0.8
+        }
       } else {
-        return dehighlightNode
+        return {
+          fill: node.renderData.color,
+          zIndex: "0",
+          stroke:false,
+          fillOpacity:0.3
+        }
       }
     }
   }
@@ -150,8 +193,8 @@ class RenderCircles extends React.Component {
   render() {
     let renderCircles = this.props.data.map((node, i) => (
       <circle
-        cx={this.props.scale.x(parseFloat(node.data.ref.degree))}
-        cy={this.props.scale.y(parseFloat(node.data.ref.dist_to_center))}
+        cx={this.props.scale.x(parseFloat(node.data.ref[appState.graph.scatterplot.x]))}
+        cy={this.props.scale.y(parseFloat(node.data.ref[appState.graph.scatterplot.y]))}
         r="3"
         style={this.setScatterStyle(node)}
         data-id={node.id}

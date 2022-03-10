@@ -69,8 +69,18 @@ html {
 
 .scatter-overlay-card {
   padding-right: 27px;
-  width: 250px;
+  width: 300px;
+  height:400px;
   pointer-events: all;
+  margin-top: -1em;
+  padding-top: 1.1em;
+  max-height: 500px;
+}
+
+
+
+.scatterchart {
+  margin-top: 20px;
 }
 
 .left-cards {
@@ -93,8 +103,8 @@ html {
 
 #scatter-plot{
  
-  width: 200px;
-  height:200px;
+  width: 250px;
+  height:250px;
   
   right: 0em;
   opacity: 1;
@@ -117,11 +127,7 @@ html {
   max-height: 530px;
 }
 
-.scatter-overlay-card {
-  margin-top: -1em;
-  padding-top: 1.1em;
-  max-height: 250px;
-}
+
 
 .zoom-buttons {
   margin-right: 20px;
