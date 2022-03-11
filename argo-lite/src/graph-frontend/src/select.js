@@ -34,7 +34,7 @@ module.exports = function (self) {
     self.selection = [];
   };
 
-  //return all the nodes of edges within the selection 
+  //return all the edges within the selected nodes 
   self.getEdgeWithinSelection = function (selection) {
     const withinEdges = []
     for (var i = 0; i < selection.length; i++) {
@@ -48,6 +48,7 @@ module.exports = function (self) {
     }
     return withinEdges;
   }
+
 
   //highlight nodes and edges within selection
   self.updateSelectionOpacity = function () {

@@ -15,16 +15,31 @@ class SelectionDetail extends React.Component {
     // currently format number between 0-1 (eg. pagerank)
     // to show no more than 3 significant digits.
     const SelectionDistanceFromLatLonIn = () => {
+      const selectNodes = appState.graph.selectedNodes;
+      const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
-      if (appState.graph.selectedNodes.length > 1) {
-        const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
-        if (edgeSelection.length == 0) return null;
-        const edgeDistance = edgeSelection.map(e => e.edgeDist)
+      if ( selectNodes.length> 1) {
+        //// calculate only the connected distance 
+        // const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
+        // if (edgeSelection.length == 0) return null;
+        // const edgeDistance = edgeSelection.map(e => e.edgeDist)
+        // return average(edgeDistance).toFixed(3);
 
-
-        const average = (array) => array.reduce((a, b) => a + b) / array.length;
-
+        //// calculate average distance between all selected nodes 
+        const edgeDistance = []
+        
+        for (let i = 0; i < selectNodes.length; i++) {
+          for (let j = i + 1; j < selectNodes.length; j++) {
+            const lon1 = selectNodes[i].data.ref.LonX
+            const lat1 = selectNodes[i].data.ref.LatY
+            const lon2 = selectNodes[j].data.ref.LonX
+            const lat2 = selectNodes[j].data.ref.LatY
+            const edgeDist = appState.graph.frame.getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)
+            edgeDistance.push(edgeDist)
+          }
+        }
         return average(edgeDistance).toFixed(3);
+
       } else {
         return null
       }
@@ -32,13 +47,13 @@ class SelectionDetail extends React.Component {
     }
 
     const SelectionDensity = () => {
-      
-        const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
-        if (edgeSelection.length == 0) return 0;
-        const nodelength = appState.graph.selectedNodes.length;
-        const selectionDen = 2*edgeSelection.length /(nodelength*(nodelength-1))
-        return selectionDen.toFixed(3)
-      
+
+      const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
+      if (edgeSelection.length == 0) return 0;
+      const nodelength = appState.graph.selectedNodes.length;
+      const selectionDen = 2 * edgeSelection.length / (nodelength * (nodelength - 1))
+      return selectionDen.toFixed(3)
+
 
     }
 
@@ -78,7 +93,7 @@ class SelectionDetail extends React.Component {
                 {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
               </tr>
               <tr>
-                <td style={{ padding: '5px 10px' }}> {'The network density(undirected network) is ' + SelectionDensity()}</td>
+                <td style={{ padding: '5px 10px' }}> {'The network density (undirected network) is ' + SelectionDensity()}</td>
                 {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
               </tr>
               {/* {appState.graph.allPropertiesKeyList.map((it, i) => (
