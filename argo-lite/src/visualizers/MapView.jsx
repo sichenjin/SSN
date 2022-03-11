@@ -173,7 +173,10 @@ class MapView extends React.Component {
       //highlight within selection edges , &&
       if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
-      } else {
+      } else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1){
+        return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
+      }else
+      {
         return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
       }
     }
