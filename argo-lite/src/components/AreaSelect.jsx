@@ -16,12 +16,12 @@ export default function AreaSelect() {
 
     map.on("areaselectstart", (e) => {
         //empty selection 
-        appState.graph.frame.selection.forEach(function(node){
-          node.renderData.draw_object.children[0].material.color.set(
-            node.renderData.hcolor
-          )
-          node.renderData.draw_object.children[0].visible = false
-        })
+        // appState.graph.frame.selection.forEach(function(node){
+        //   node.renderData.draw_object.children[0].material.color.set(
+        //     node.renderData.hcolor
+        //   )
+        //   node.renderData.draw_object.children[0].visible = false
+        // })
         appState.graph.frame.selection = []
         appState.graph.selectedNodes = []
 
@@ -38,7 +38,7 @@ export default function AreaSelect() {
             if (pointLayer instanceof L.CircleMarker && e.bounds.contains(pointLayer.getLatLng())) {
                 mapselection.push(pointLayer.options.data)
                 pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
-                pointLayer.options.data.renderData.draw_object.children[0].visible = true
+                // pointLayer.options.data.renderData.draw_object.children[0].visible = true
                 // appState.graph.frame.colorNodeOpacity(pointLayer.options.data,1)
             }
             // else if(pointLayer instanceof L.CircleMarker){

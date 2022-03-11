@@ -6,7 +6,9 @@ import appState from "../../stores";
 import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
 import { scaleLinear, max, axisLeft, axisBottom, select } from "d3"
+import { brush, brushY } from "d3-brush";
 import SimpleSelect from "../utils/SimpleSelect";
+import SVGBrush from 'react-svg-brush';
 
 var def = require("../../graph-frontend/src/imports").default;
 
@@ -14,24 +16,116 @@ var def = require("../../graph-frontend/src/imports").default;
 
 
 
-const settings = {
-  width: 150,
-  height: 150,
-  padding: 10,
-  // numDataPoints: 50,
-  // maxRange: () => Math.random() * 1000
-};
+// const settings = {
+//   width: 150,
+//   height: 150,
+//   padding: 10,
+//   // numDataPoints: 50,
+//   // maxRange: () => Math.random() * 1000
+// };
 
 @observer
 class ScatterPlot extends React.Component {
+  @observable data = this.props.data.filter(node => !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.x])) && !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.y])))
+  // .filter(node => node.data.ref.degree !== 0 && !isNaN(parseFloat(node.data.ref.dist_to_center)))
+
+  margin = { top: 10, right: 10, bottom: 50, left: 30 }
+   width = 200 - this.margin.left - this.margin.right
+   height = 200 - this.margin.top - this.margin.bottom
+   cr = 3
+
   constructor(props) {
     super(props)
+    this.circles = React.createRef();
   }
 
+  onBrushStart = ({target, type, selection, sourceEvent})=>{
+    appState.graph.frame.selection = []
+    appState.graph.selectedNodes = []
+
+  }
+  onBrush = ({target, type, selection, sourceEvent})=>{
+    
+  }
+  onBrushEnd = ({target, type, selection, sourceEvent})=>{
+    const selectionNodeID = []
+    const svgElement = select(this.svg)
+    const circles = svgElement.selectAll("circle")
+    const brushBounds = {
+      x0: selection[0][0] - this.margin.left,
+      x1: selection[1][0] - this.margin.left,
+      y0: selection[0][1] - this.cr,
+      y1: selection[1][1] - this.cr,
+    }
+
+    circles.each( function(d, i){
+      const nodecx = parseFloat(select(this).attr("cx"))
+      const nodecy = parseFloat(select(this).attr("cy"))
+      if(nodecx >= brushBounds.x0 && nodecx <= brushBounds.x1 && nodecy >= brushBounds.y0 && nodecy <= brushBounds.y1){
+        selectionNodeID.push(select(this).attr("id"))
+      }
+      
+     
+    
+  })
+   
+
+    const selectionNode = this.props.data.filter(node=>
+      // console.log(node)
+      selectionNodeID.includes(node.id)
+      
+    )
+    appState.graph.frame.selection = selectionNode
+    appState.graph.selectedNodes = selectionNode
+
+
+    // console.log(selectionNode)
+    appState.graph.frame.updateSelectionOpacity()
+    // this.circles.current.props.data.forEach(function(node){
+    //   if(node.){
+
+    //   }
+    // })
+    // console.log(this.circles.current.select())
+    // console.log()
+  }
+  renderBrush = () => (
+    <SVGBrush
+      // Defines the boundary of the brush.
+      // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
+      // Note: d3 allows the format [x, y] for 1d brush.
+      extent={[[this.margin.left, this.cr], [this.width + this.margin.left, this.height +this.cr]]}
+      // Obtain mouse positions relative to the current svg during mouse events.
+      // By default, getEventMouse returns [event.clientX, event.clientY]
+      getEventMouse={event => {
+        const {clientX, clientY} = event;
+        const {left, top} = this.svg.getBoundingClientRect();
+        return [clientX - left, clientY - top];
+      }}
+      brushType="2d" // "x"
+      onBrushStart={this.onBrushStart}
+      onBrush={this.onBrush}
+      onBrushEnd={this.onBrushEnd}
+    />
+  )
+  
+
+  // componentDidMount() {
+  //   var svg = select('.scatterchart');
+  //   //Do svg stuff
+  //   const brush = brushY()
+  //     .on("brush", brushed);
+
+  // svg.append("g")
+  // .call(brush); 
+  //   function brushed({selection}) {
+  //     console.log(selection)
+  //   }
+
+  // }
+
   render() {
-    const margin = { top: 10, right: 10, bottom: 50, left: 30 }
-    const width = 200 - margin.left - margin.right
-    const height = 200 - margin.top - margin.bottom
+    
     
     // .filter(node => node.data.ref.degree !== 0 && !isNaN(parseFloat(node.data.ref.dist_to_center)));
     // this.props.data
@@ -39,20 +133,20 @@ class ScatterPlot extends React.Component {
     const x = scaleLinear()
       .domain([
         0,
-        max(this.props.data, function (d) {
+        max(this.data, function (d) {
           return parseFloat(d.data.ref[appState.graph.scatterplot.x])
         })
       ])
-      .range([0, width])
+      .range([0, this.width])
 
     const y = scaleLinear()
       .domain([
         0,
-        max(this.props.data, function (d) {
+        max(this.data, function (d) {
           return parseFloat(d.data.ref[appState.graph.scatterplot.y])
         })
       ])
-      .range([height, 0])
+      .range([this.height, 0])
 
     return (
       <div>
@@ -81,22 +175,24 @@ class ScatterPlot extends React.Component {
         </div>
         <div>
 
-          <svg
-            width={width + margin.right + margin.left}
-            height={height + margin.top + margin.bottom}
+          <svg 
+            width={this.width + this.margin.right + this.margin.left}
+            height={this.height + this.margin.top + this.margin.bottom}
             className="scatterchart"
+            ref={input => (this.svg = input)}
+            // ref = {ref}
           >
             <g
-              transform={"translate(" + margin.left + ",3)"}
-              width={width}
-              height={height}
+              transform={"translate(" + this.margin.left + ",3)"}
+              width={this.width}
+              height={this.height}
               className="main"
             >
-              <RenderCircles data={this.props.data} scale={{ x, y }} />
+              <RenderCircles data={this.data} scale={{ x, y }} cr={this.cr} ref={this.circles }/>
               <text transform={"translate(50, 180)"} fontSize="13px">{appState.graph.scatterplot.x}</text>
               <Axis
                 axis="x"
-                transform={"translate(0," + height + ")"}
+                transform={"translate(0," + this.height + ")"}
                 scale={axisBottom().scale(x)}
               />
               <text
@@ -115,6 +211,7 @@ class ScatterPlot extends React.Component {
               // }}
               />
             </g>
+            {this.renderBrush()}
           </svg>
         </div>
       </div>
@@ -195,9 +292,10 @@ class RenderCircles extends React.Component {
       <circle
         cx={this.props.scale.x(parseFloat(node.data.ref[appState.graph.scatterplot.x]))}
         cy={this.props.scale.y(parseFloat(node.data.ref[appState.graph.scatterplot.y]))}
-        r="3"
+        r={this.props.cr}
         style={this.setScatterStyle(node)}
-        data-id={node.id}
+        id={node.id}
+        data = {node}
         onMouseOver={(e) => {
           // console.log(e.target.dataset.id)
           const thenode = appState.graph.frame.getNode(e.target.dataset.id)
