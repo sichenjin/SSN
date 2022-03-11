@@ -81,25 +81,22 @@ class ScatterPlot extends React.Component {
 
     // console.log(selectionNode)
     appState.graph.frame.updateSelectionOpacity()
-    // this.circles.current.props.data.forEach(function(node){
-    //   if(node.){
-
-    //   }
-    // })
-    // console.log(this.circles.current.select())
-    // console.log()
+    
   }
   renderBrush = () => (
     <SVGBrush
       // Defines the boundary of the brush.
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
-      extent={[[this.margin.left, this.cr], [this.width + this.margin.left, this.height +this.cr]]}
+      extent={
+        [[this.margin.left, this.cr], [this.width + this.margin.left, this.height +this.cr]]
+      }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
       getEventMouse={event => {
         const {clientX, clientY} = event;
         const {left, top} = this.svg.getBoundingClientRect();
+        // console.log([clientX - left, clientY - top])
         return [clientX - left, clientY - top];
       }}
       brushType="2d" // "x"
@@ -260,14 +257,14 @@ class RenderCircles extends React.Component {
     //   fill: "rgba(255, 1, 1, .9)",
     //   zIndex: "10000"
     // }
-    if (!appState.graph.currentlyHovered) {
+    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0) {
       return {
         fill: node.renderData.color,
         zIndex: "0",
         stroke:false,
         fillOpacity:0.8
       }
-    } else {
+    } else if (appState.graph.currentlyHovered){
       if (node.id === appState.graph.currentlyHovered.id) {
         return {
           fill: node.renderData.color,
@@ -281,6 +278,22 @@ class RenderCircles extends React.Component {
           zIndex: "0",
           stroke:false,
           fillOpacity:0.3
+        }
+      }
+    }else if(appState.graph.selectedNodes.length > 0){
+      if(appState.graph.selectedNodes.indexOf(node) == -1){
+        return{
+          fill: node.renderData.color,
+          zIndex: "0",
+          stroke:false,
+          fillOpacity:0.2
+        }
+      }else{
+        return {
+          fill: node.renderData.color,
+          zIndex: "10000",
+          stroke:def.NODE_HIGHLIGHT,
+          fillOpacity:0.8
         }
       }
     }
