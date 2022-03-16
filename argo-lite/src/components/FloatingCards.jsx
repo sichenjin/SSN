@@ -334,7 +334,7 @@ class FloatingCards extends React.Component {
           {/* <FilterOptionsCard /> */}
           <div id="scatter-plot">
             
-            {appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot data={appState.graph.frame.getNodeList()} />}
+            {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot data={appState.graph.frame.getNodeList()} />}
           </div>
         </div>
 
