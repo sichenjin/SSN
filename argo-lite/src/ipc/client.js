@@ -233,7 +233,7 @@ export default function registerIPC() {
   //     } else {
   //       appState.project.currentProject = null;
   //     }
-      
+
   //   }
   // });
 
@@ -257,7 +257,7 @@ export default function registerIPC() {
   // ipcRenderer.on(MENU_SAVE_GRAPH_STATE, () => {
   //   // Original implementation for opening a traditional system-level save file dialog
   //   // ipcRenderer.send(SAVE_GRAPH_STATE, appState.graph.saveImmediateStates());
-    
+
   //   // New implementation opening a dialog that saves snapshot to project
   //   appState.project.isSaveSnapshotDialogOpen = true;
   // });
@@ -457,18 +457,18 @@ async function readCSV(fileObject, hasHeader, delimiter) {
           columns: undefined,
           delimiter
         }));
-      } catch(err) {
-        let msg =  err.message
+      } catch (err) {
+        let msg = err.message
         let mismatch = msg.indexOf("Invalid Record Length:") == 0
         if (mismatch) {
           msg = msg.replace("is", "set to")
           msg = msg.replace("got", "but detected")
-        } 
+        }
         toaster.show({
           message: "Error: " + msg,
           intent: Intent.DANGER,
           timeout: -1
-      });
+        });
         appState.import.loading = false;
       }
     }
@@ -477,74 +477,74 @@ async function readCSV(fileObject, hasHeader, delimiter) {
 
 async function parseGEXF(content) {
   const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(content,"text/xml");
-      const xmlEdges = xmlDoc.getElementsByTagName('edge');
-      const xmlNodes = xmlDoc.getElementsByTagName('node');
-      const xmlAttri = xmlDoc.getElementsByTagName('attributes')
-      
-      let nodeAttri = [];
-      let edgeAttri = [];
-      const edgesArr = [];
-      const nodesArr = [];
-      const nodeAttriOrdered = {};
-      
-      for (let i = 0, l = xmlAttri.length; i < l; i++) {
-        const curr = xmlAttri[i];
-        if (curr.getAttribute('class') === 'node') {
-          nodeAttri = curr.getElementsByTagName('attribute');
-        }
-        else if (curr.getAttribute('class') === 'edge') {
-          edgeAttri = curr.getElementsByTagName('attribute');
-        }
-      }
-      
-      for (let i = 0, l = nodeAttri.length; i < l; i++) {
-        const curr = nodeAttri[i];
-        nodeAttriOrdered[curr.getAttribute("id")] = curr.getAttribute("title");
-      }
+  const xmlDoc = parser.parseFromString(content, "text/xml");
+  const xmlEdges = xmlDoc.getElementsByTagName('edge');
+  const xmlNodes = xmlDoc.getElementsByTagName('node');
+  const xmlAttri = xmlDoc.getElementsByTagName('attributes')
 
-      for (let i = 0, l = xmlEdges.length; i < l; i++) {
-        const currEdge = xmlEdges[i];
-        const s = currEdge.getAttribute('source').toString();
-        const t = currEdge.getAttribute('target').toString();
-        edgesArr.push({
-          source_id: s,
-          target_id: t,
-        });
-      }
-      for (let i = 0, l = xmlNodes.length; i < l; i++) {
-        const currNode = xmlNodes[i];
-        const id = currNode.getAttribute('id').toString();
-        const nodeAttvalues = currNode.getElementsByTagName("attvalues");
-        const nodeAttvalue = [];
-        if (nodeAttvalues.length != 0) {
-          nodeAttvalue = nodeAttvalues[0].getElementsByTagName("attvalue");
-        }
-        let node = { id: id, degree: 0, pagerank: 0, node_id: id};
-        for (let j = 0; j < nodeAttvalue.length; j++){
-          const value = nodeAttvalue[j].attributes["value"].value;
-          const attributeIdElementAttribute = nodeAttvalue[j].attributes["for"] || nodeAttvalue[j].attributes["id"];
-          const attributeId = attributeIdElementAttribute.value;
-          node[nodeAttriOrdered[attributeId]] = value;
-        }
-        for (let j = 0; j < currNode.attributes.length; j++) {
-          const currAttri = currNode.attributes[j];
-            node[currAttri.name] = currAttri.value;
-        }
-        node["id"] = id;
-        node["node_id"] = id;
-        nodesArr.push(node);
-      }
-      return [nodesArr, edgesArr];
+  let nodeAttri = [];
+  let edgeAttri = [];
+  const edgesArr = [];
+  const nodesArr = [];
+  const nodeAttriOrdered = {};
+
+  for (let i = 0, l = xmlAttri.length; i < l; i++) {
+    const curr = xmlAttri[i];
+    if (curr.getAttribute('class') === 'node') {
+      nodeAttri = curr.getElementsByTagName('attribute');
+    }
+    else if (curr.getAttribute('class') === 'edge') {
+      edgeAttri = curr.getElementsByTagName('attribute');
+    }
+  }
+
+  for (let i = 0, l = nodeAttri.length; i < l; i++) {
+    const curr = nodeAttri[i];
+    nodeAttriOrdered[curr.getAttribute("id")] = curr.getAttribute("title");
+  }
+
+  for (let i = 0, l = xmlEdges.length; i < l; i++) {
+    const currEdge = xmlEdges[i];
+    const s = currEdge.getAttribute('source').toString();
+    const t = currEdge.getAttribute('target').toString();
+    edgesArr.push({
+      source_id: s,
+      target_id: t,
+    });
+  }
+  for (let i = 0, l = xmlNodes.length; i < l; i++) {
+    const currNode = xmlNodes[i];
+    const id = currNode.getAttribute('id').toString();
+    const nodeAttvalues = currNode.getElementsByTagName("attvalues");
+    const nodeAttvalue = [];
+    if (nodeAttvalues.length != 0) {
+      nodeAttvalue = nodeAttvalues[0].getElementsByTagName("attvalue");
+    }
+    let node = { id: id, degree: 0, pagerank: 0, node_id: id };
+    for (let j = 0; j < nodeAttvalue.length; j++) {
+      const value = nodeAttvalue[j].attributes["value"].value;
+      const attributeIdElementAttribute = nodeAttvalue[j].attributes["for"] || nodeAttvalue[j].attributes["id"];
+      const attributeId = attributeIdElementAttribute.value;
+      node[nodeAttriOrdered[attributeId]] = value;
+    }
+    for (let j = 0; j < currNode.attributes.length; j++) {
+      const currAttri = currNode.attributes[j];
+      node[currAttri.name] = currAttri.value;
+    }
+    node["id"] = id;
+    node["node_id"] = id;
+    nodesArr.push(node);
+  }
+  return [nodesArr, edgesArr];
 }
 
 async function readGEXF(fileObject) {
   const file = fileObject;
   const reader = new FileReader();
   reader.readAsText(file);
-  
+
   return new Promise((resolve, reject) => {
-      reader.onload = () => {
+    reader.onload = () => {
       const content = reader.result;
       resolve(parseGEXF(content));
     }
@@ -569,7 +569,7 @@ async function importGraphFromCSV(config) {
       { id: node[config.nodes.mapping.id].toString(), degree: 0, ...node }));
     nodesArr =
       nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0 , centrality:parseFloat(n['centrality']), 'distance to center': parseFloat(n['distance to center']),LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY'])}));
+        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0, centrality: parseFloat(n['centrality']), 'dist to center': parseFloat(n['distance to center']), LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY']) }));
     nodesArr.forEach(n => degreeDict[n.id] = 0);
   }
   const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
@@ -591,48 +591,48 @@ async function importGraphFromCSV(config) {
   }
 
   const edgesSet = new Set();
-  
+
   const edgesArr = [];
 
-  const addEdge = (from, to, fromlocLatY,fromlocLonX,tolocLatY,tolocLonX,withinState, withinFamily) => {
+  const addEdge = (from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily) => {
     const edgeKey = `${from}👉${to}`;
     if (edgesSet.has(edgeKey)) {
       return;
     }
     edgesSet.add(edgeKey);
     var data = {
-      fromlocLatY:fromlocLatY,
-      fromlocLonX:fromlocLonX,
-      tolocLatY:tolocLatY,
-      tolocLonX:tolocLonX,
-      withinState:withinState,
+      fromlocLatY: fromlocLatY,
+      fromlocLonX: fromlocLonX,
+      tolocLatY: tolocLatY,
+      tolocLonX: tolocLonX,
+      withinState: withinState,
       withinFamily: withinFamily,
-      
+
     }
-    graph.addLink(from, to,data);
+    graph.addLink(from, to, data);
 
     degreeDict[from] += 1;
     degreeDict[to] += 1;
     edgesArr.push({
       source_id: from,
       target_id: to,
-      fromlocLatY:fromlocLatY,
-      fromlocLonX:fromlocLonX,
-      tolocLatY:tolocLatY,
-      tolocLonX:tolocLonX,
-      withinState:withinState,
-      withinFamily:withinFamily
+      fromlocLatY: fromlocLatY,
+      fromlocLonX: fromlocLonX,
+      tolocLatY: tolocLatY,
+      tolocLonX: tolocLonX,
+      withinState: withinState,
+      withinFamily: withinFamily
     });
   };
-  
-  if(config.hasNodeFile && nodesArr[0].LatY !== undefined && nodesArr[0].LonX !== undefined){  //node has spatial location info
+
+  if (config.hasNodeFile && nodesArr[0].LatY !== undefined && nodesArr[0].LonX !== undefined) {  //node has spatial location info
     edges.forEach(it => {
       const from = it[fromId].toString();
       const to = it[toId].toString();
       var fromlocLatY = parseFloat(graph.getNode(it[fromId].toString()).data.LatY)
       var fromlocLonX = parseFloat(graph.getNode(it[fromId].toString()).data.LonX)
       var tolocLatY = parseFloat(graph.getNode(it[toId].toString()).data.LatY)
-      var tolocLonX =  parseFloat(graph.getNode(it[toId].toString()).data.LonX) // observable array???
+      var tolocLonX = parseFloat(graph.getNode(it[toId].toString()).data.LonX) // observable array???
       var withinState = (graph.getNode(to).data.GEOID === graph.getNode(from).data.GEOID)
       var withinFamily = (graph.getNode(to).data.Family === graph.getNode(from).data.Family)
       // fromloc.push(graph.getNode(it[fromId].toString()).data.LatY) 
@@ -640,37 +640,65 @@ async function importGraphFromCSV(config) {
       // toloc.push(graph.getNode(it[toId].toString()).data.LatY)
       // toloc.push(graph.getNode(it[toId].toString()).data.LonX)
       // Argo currently works with undirected graph
-      addEdge(from, to,fromlocLatY,fromlocLonX,tolocLatY,tolocLonX,withinState,withinFamily);
+      addEdge(from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily);
       // addEdge(to, from);
     });
-  }else{  //doesn't have  spatial location info
+  } else {  //doesn't have  spatial location info
     edges.forEach(it => {
       const from = it[fromId].toString();
       const to = it[toId].toString();
       // Argo currently works with undirected graph
-      addEdge(from, to,Nonloc,Nonloc,Nonloc,Nonloc);
+      addEdge(from, to, Nonloc, Nonloc, Nonloc, Nonloc);
       // addEdge(to, from);
     });
   }
-  
 
+  const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+    var p = 0.017453292519943295;    // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) *
+      (1 - c((lon2 - lon1) * p)) / 2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  }
+
+  //calculate the diatance to centern/ average lat/lon
+  const calDIstanceToCenter = () =>{
+    const latlist = nodesArr.map(n => n['LatY'])
+    const lonlist = nodesArr.map(n => n['LonX'])
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+    var avgLat 
+    var avgLon
+    if (latlist.length > 0 && lonlist.length > 0) {
+      avgLat = average(latlist)
+      avgLon = average(lonlist)
+      nodesArr.forEach(function(n,i){
+        n['distance to center'] = calDistanceFromLatLonInKm(avgLat,avgLon,latlist[i],lonlist[i])
+      })
+    }
+  }
+
+  if(nodesArr[0]['LonX'] && nodesArr[0]['LatY']){
+    calDIstanceToCenter();
+  }
   const rank = pageRank(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id]/2) }));
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
   const nodekeyList = Object.keys(nodesArr[0])
   const nodePropertyTypes = {}
-  nodekeyList.forEach(function(k){
-    nodePropertyTypes[k] = typeof(nodesArr[0][k])
+  nodekeyList.forEach(function (k) {
+    nodePropertyTypes[k] = typeof (nodesArr[0][k])
   })
   const uniqueValue = {}
-  nodekeyList.forEach(function(k,i){
-    
-    if (nodePropertyTypes[k] == 'string'){
-        uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
-    }else{
+  nodekeyList.forEach(function (k, i) {
+
+    if (nodePropertyTypes[k] == 'string') {
+      uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+    } else {
       const valuea = nodesArr.map(function (el) { return el[k]; })
       const minv = Math.min(...valuea)
       const maxv = Math.max(...valuea)
-      uniqueValue[k] = [minv,maxv]
+      uniqueValue[k] = [minv, maxv]
     }
   })
   return {
@@ -680,9 +708,9 @@ async function importGraphFromCSV(config) {
       fullNodes: nodesArr.length,
       fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
       nodeProperties: nodekeyList,
-      nodePropertyTypes:nodePropertyTypes,
-      uniqueValue:uniqueValue,
-      nodeComputed: ['pagerank', 'degree','centrality', 'distance to center'],
+      nodePropertyTypes: nodePropertyTypes,
+      uniqueValue: uniqueValue,
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center'],
       edgeProperties: ['source_id', 'target_id'],
     },
   }
@@ -704,7 +732,7 @@ export async function importGraphFromGexf() {
   });
 
   const edgesSet = new Set();
-  
+
   const edgesArr = [];
 
   const addEdge = (from, to) => {
@@ -721,7 +749,7 @@ export async function importGraphFromGexf() {
       target_id: to,
     });
   };
-  
+
   edges.forEach(it => {
     const from = it["source_id"].toString();
     const to = it["target_id"].toString();
@@ -731,23 +759,53 @@ export async function importGraphFromGexf() {
     // addEdge(to, from);
   });
 
+  const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+    var p = 0.017453292519943295;    // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) *
+      (1 - c((lon2 - lon1) * p)) / 2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  }
+
+  //calculate the diatance to center/ average lat/lon
+  const calDIstanceToCenter = () =>{
+    const latlist = nodesArr.map(n => n['LatY'])
+    const lonlist = nodesArr.map(n => n['LonX'])
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+    var avgLat 
+    var avgLon
+    if (latlist.length > 0 && lonlist.length > 0) {
+      avgLat = average(latlist)
+      avgLon = average(lonlist)
+      nodesArr.forEach(function(n,i){
+        n['distance to center'] = calDistanceFromLatLonInKm(avgLat,avgLon,latlist[i],lonlist[i])
+      })
+    }
+  }
+
+  if(nodesArr[0]['LonX'] && nodesArr[0]['LatY']){
+    calDIstanceToCenter();
+  }
+
   const rank = pageRank(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id]/2) }));
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
   const nodekeyList = Object.keys(nodesArr[0])
   const nodePropertyTypes = {}
-  nodekeyList.forEach(function(k){
-    nodePropertyTypes[k] = typeof(nodesArr[0][k])
+  nodekeyList.forEach(function (k) {
+    nodePropertyTypes[k] = typeof (nodesArr[0][k])
   })
   const uniqueValue = {}
-  nodekeyList.forEach(function(k,i){
-    
-    if (nodePropertyTypes[k] == 'string'){
-        uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
-    }else{
+  nodekeyList.forEach(function (k, i) {
+
+    if (nodePropertyTypes[k] == 'string') {
+      uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+    } else {
       const valuea = nodesArr.map(function (el) { return el[k]; })
       const minv = Math.min(...valuea)
       const maxv = Math.max(...valuea)
-      uniqueValue[k] = [minv,maxv]
+      uniqueValue[k] = [minv, maxv]
     }
   })
   return {
@@ -757,9 +815,9 @@ export async function importGraphFromGexf() {
       fullNodes: nodesArr.length,
       fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
       nodeProperties: nodekeyList,
-      nodePropertyTypes:nodePropertyTypes,
-      uniqueValue:uniqueValue,
-      nodeComputed: ['pagerank', 'degree','centrality', 'distance to center'],
+      nodePropertyTypes: nodePropertyTypes,
+      uniqueValue: uniqueValue,
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center'],
       edgeProperties: ['source_id', 'target_id'],
     },
   }

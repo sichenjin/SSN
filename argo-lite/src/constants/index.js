@@ -21,7 +21,7 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   // https://poloclub.github.io/argo-graph-lite/#ab19b31c-efe1-4b77-ba03-4656ef1bd4bc
   ["Food Sharing", "ab19b31c-efe1-4b77-ba03-4656ef1bd4bc"],   //without -degree nodes snapshot 
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
-  ["Mafia Family", "fbe29985-a85b-4385-9c4c-b35508deb68c"]
+  ["Mafia Family", "ea3fa573-78e0-465a-98ff-f6a02d9884c2"]
 ];
 
 // When resizing window or running on mobile,
