@@ -194,7 +194,12 @@ autorun(() => {
 });
 
 
-
+// // pause layout by default 
+autorun(() => {
+  appState.graph.frame.paused = true;
+  appState.graph.frame.pauseLayout();
+                  // this.forceUpdate();
+}) 
 
 
 autorun(() => {
