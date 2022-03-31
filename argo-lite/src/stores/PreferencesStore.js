@@ -23,7 +23,7 @@ export default class PreferencesStore {
   // next time.
 
   @observable darkMode = false;
-  @observable minimapShowing = !IS_IFRAME_WIDGET;
+  @observable minimapShowing = false;
   @observable isStatusBarShowing = !IS_IFRAME_WIDGET;
   @observable isNavbarInMinimalMode = IS_IFRAME_WIDGET;
   @observable isLegendShowing = !IS_IFRAME_WIDGET;
@@ -64,14 +64,14 @@ export default class PreferencesStore {
     this.isRenderOptionsCardHidden = false;
     this.isFilterOptionsCardHidden = true;
     this.isScatterPlotCardHidden = true;
-    this.minimapShowing = true;
+    this.minimapShowing = false;
     this.isStatusBarShowing = true;
     this.isNavbarInMinimalMode = false;
     this.isLegendShowing = true;
-    if (appState.graph.frame) {
-      appState.graph.frame.showMiniMap();
-    } else {
-      console.log("Frame not ready when trying to toggle minimap.");
-    }
+    // if (appState.graph.frame) {
+    //   appState.graph.frame.showMiniMap();
+    // } else {
+    //   console.log("Frame not ready when trying to toggle minimap.");
+    // }
   }
 }

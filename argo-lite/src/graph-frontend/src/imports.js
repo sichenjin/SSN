@@ -41,7 +41,7 @@ exports.default = {
   HIGHLIGHT_SIZE: 1.0,
   LAYOUT: "d3",
   LINES: "notfancy",
-  MAP: !IS_IFRAME_WIDGET,
+  MAP: false,
   MAP_RENDER_PER_NUMBER_OF_FRAME: 10,
   TEXT_SCALE: true,
   TEXT_SIZE: 0.07,
