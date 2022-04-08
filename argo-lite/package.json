@@ -72,6 +72,7 @@
     "ngraph.generators": "^0.0.18",
     "ngraph.graph": "^0.0.14",
     "ngraph.pagerank": "^0.1.4",
+    "ngraph.path": "^1.4.0",
     "normalize.css": "^8.0.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pluralize": "^7.0.0",

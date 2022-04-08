@@ -5,10 +5,11 @@ import { Classes } from "@blueprintjs/core";
 import appState from "../../stores";
 import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
-import { scaleLinear, max, axisLeft, axisBottom, select } from "d3"
+import { scaleLinear, scalePoint, max, axisLeft, axisBottom, select } from "d3"
 import { brush, brushY } from "d3-brush";
 import SimpleSelect from "../utils/SimpleSelect";
 import SVGBrush from 'react-svg-brush';
+import path from 'ngraph.path';
 
 var def = require("../../graph-frontend/src/imports").default;
 
@@ -145,8 +146,30 @@ class ScatterPlot extends React.Component {
 
 
     if (appState.graph.hasGraph) {
+      let x,y
+      if(appState.graph.scatterplot.x === 'shortest path'){
+        const shortpathhop = appState.graph.rawGraph.paths.map(function(path,i){
+          return path['path'].length
+        })
+        shortpathhop.sort()
+        x = scalePoint()
+        .domain(shortpathhop)
+        .range([0, this.width])
 
-      const x = scaleLinear()
+      }else if(appState.graph.scatterplot.x === 'pair distance'){
+        const pairdistance = appState.graph.rawGraph.paths.map(function(path,i){
+          return parseFloat(path['distance'])
+        })
+        x = scaleLinear()
+        .domain([
+          0,
+          max(pairdistance)
+        ])
+        .range([0, this.width])
+
+
+      }else{
+        x = scaleLinear()
         .domain([
           0,
           max(appState.graph.frame.getNodeList(), function (d) {
@@ -154,8 +177,30 @@ class ScatterPlot extends React.Component {
           })
         ])
         .range([0, this.width])
+      }
+     
+      if(appState.graph.scatterplot.y === 'shortest path'){
+        const shortpathhop = appState.graph.rawGraph.paths.map(function(path,i){
+          return path['path'].length
+        })
+        shortpathhop.sort()
+        y = scalePoint()
+        .domain(shortpathhop)
+        .range([this.height, 0])
 
-      const y = scaleLinear()
+      }else if(appState.graph.scatterplot.y === 'pair distance'){
+        const pairdistance = appState.graph.rawGraph.paths.map(function(path,i){
+          return parseFloat(path['distance'])
+        })
+        y = scaleLinear()
+        .domain([
+          0,
+          max(pairdistance)
+        ])
+        .range([this.height, 0])
+
+      }else{
+      y = scaleLinear()
         .domain([
           0,
           max(appState.graph.frame.getNodeList(), function (d) {
@@ -163,6 +208,8 @@ class ScatterPlot extends React.Component {
           })
         ])
         .range([this.height, 0])
+      }
+      
 
 
       return (
@@ -230,7 +277,9 @@ class ScatterPlot extends React.Component {
                 // }}
                 />
               </g>
-              {this.renderBrush()}
+              { (appState.graph.scatterplot.y !== 'shortest path') && (appState.graph.scatterplot.x !== 'shortest path') 
+      && (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance') &&
+        this.renderBrush()}
             </svg>
           </div>
         </div>
@@ -289,92 +338,212 @@ class RenderCircles extends React.Component {
     //   fill: "rgba(255, 1, 1, .9)",
     //   zIndex: "10000"
     // }
-    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0) {
-      return {
-        fill: node.renderData.color,
-        zIndex: "0",
-        stroke: false,
-        fillOpacity: 0.8
-      }
-    } else if (appState.graph.currentlyHovered) {
-      if (node.id === appState.graph.currentlyHovered.id) {
-        return {
-          fill: node.renderData.color,
-          zIndex: "10000",
-          stroke: def.NODE_HIGHLIGHT,
-          fillOpacity: 0.8
+    if((appState.graph.scatterplot.y !== 'shortest path') && (appState.graph.scatterplot.x !== 'shortest path') 
+      && (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance')){
+        if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0) {
+          return {
+            fill: node.renderData.color,
+            zIndex: "0",
+            stroke: false,
+            fillOpacity: 0.8
+          }
+        } else if (appState.graph.currentlyHovered) {
+          if (node.id === appState.graph.currentlyHovered.id) {
+            return {
+              fill: node.renderData.color,
+              zIndex: "10000",
+              stroke: def.NODE_HIGHLIGHT,
+              fillOpacity: 0.8
+            }
+          } else {
+            return {
+              fill: node.renderData.color,
+              zIndex: "0",
+              stroke: false,
+              fillOpacity: 0.15
+            }
+          }
+        } else if (appState.graph.selectedNodes.length > 0) {
+          if (appState.graph.selectedNodes.indexOf(node) == -1) {
+            return {
+              fill: node.renderData.color,
+              zIndex: "0",
+              stroke: false,
+              fillOpacity: 0.15
+            }
+          } else {
+            return {
+              fill: node.renderData.color,
+              zIndex: "10000",
+              stroke: def.NODE_HIGHLIGHT,
+              fillOpacity: 0.8
+            }
+          }
         }
-      } else {
-        return {
-          fill: node.renderData.color,
+      }else{ //path node style 
+        return { 
+          fill: "rgba(25, 158, 199, .9)",
           zIndex: "0",
           stroke: false,
-          fillOpacity: 0.15
-        }
-      }
-    } else if (appState.graph.selectedNodes.length > 0) {
-      if (appState.graph.selectedNodes.indexOf(node) == -1) {
-        return {
-          fill: node.renderData.color,
-          zIndex: "0",
-          stroke: false,
-          fillOpacity: 0.15
-        }
-      } else {
-        return {
-          fill: node.renderData.color,
-          zIndex: "10000",
-          stroke: def.NODE_HIGHLIGHT,
           fillOpacity: 0.8
         }
       }
-    }
+    
   }
+
+  pathFinder = path.aGreedy(appState.graph.computedGraph);
 
 
   render() {
     if (appState.graph.hasGraph) {
-      let renderCircles = appState.graph.frame.getNodeList().map((node, i) => (
-        <circle
-          cx={this.props.scale.x(parseFloat(node.data.ref[appState.graph.scatterplot.x]))}
-          cy={this.props.scale.y(parseFloat(node.data.ref[appState.graph.scatterplot.y]))}
+      let renderCircles = []
+      // let ydata =[]
+      if((appState.graph.scatterplot.x === 'shortest path') && (appState.graph.scatterplot.y === 'pair distance')){
+        // const pathkeys = Object.keys(appState.graph.rawGraph.paths)
+        renderCircles = appState.graph.rawGraph.paths.map((path,i)=>(
+          <circle
+          cx={this.props.scale.x(path['path'].length)}
+          cy={this.props.scale.y(parseFloat(path['distance']))}   
           r={this.props.cr}
-          style={this.setScatterStyle(node)}
-          id={node.id}
-          data={node}
+          style={this.setScatterStyle(path)}
+          id={`${path.source}👉${path.target}`}
+          data={path}
           onMouseOver={(e) => {
-            // console.log(e.target.dataset.id)
-            const thenode = appState.graph.frame.getNode(e.target.dataset.id)
-            appState.graph.currentlyHovered = thenode  // control map update 
-            appState.graph.frame.highlightNode(thenode, true);   // control cosio update 
-            appState.graph.frame.highlightEdges(thenode, true);
+            // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
+            const [sourceid, targetid] =  e.target.getAttribute('id').split('👉')
+            // const source = appState.graph.frame.getNode(sourceid)
+            // const target = appState.graph.frame.getNode(targetid)
+            const thepath = this.pathFinder.find(sourceid, targetid)
+            const pathnode = thepath.map((node)=>{
+              return appState.graph.frame.getNode(node.id)
+            })
+            //control map highlight 
+            appState.graph.pathHovered = {
+              "sourceid":sourceid,
+              "targetid":targetid, 
+              "pathnode": pathnode
+            } 
+            // control socio update 
+            appState.graph.frame.highlightPathEdgeNode(pathnode)
+
+
 
           }}
           onMouseLeave={(e) => {
-            if (appState.graph.mapClicked) return;
+            // if (appState.graph.mapClicked) return;
 
-            appState.graph.frame.graph.forEachNode(function (n) {
+            appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
               // if (n !== appState.graph.mapClicked) {
-              appState.graph.frame.colorNodeOpacity(n, 1);
+              appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
 
-              appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+              appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
               // }
             }
             );
-            appState.graph.frame.colorNodeEdge(null);
-            appState.graph.currentlyHovered = null;
+            appState.graph.frame.colorNodeEdge(null);  //highlight all edges 
+            appState.graph.pathHovered = null;
 
 
           }}
-          // eventHandlers={{
-          //   mouseover: (e) => {
-          //     console.log(e)
-          //   }
-          // }}
-          // style={{ fill: "rgba(25, 158, 199, .9)" }}
           key={i}
-        />
-      ))
+        />)
+        )
+        
+
+      }else if((appState.graph.scatterplot.y === 'shortest path') && (appState.graph.scatterplot.x === 'pair distance')){
+        renderCircles = appState.graph.rawGraph.paths.map((path,i)=>(
+          <circle
+          cy={this.props.scale.y(path['path'].length)}
+          cx={this.props.scale.x(parseFloat(path['distance']))}   
+          r={this.props.cr}
+          style={this.setScatterStyle(path)}
+          id={`${path.source}👉${path.target}`}
+          // data={node}
+          onMouseOver={(e) => {
+            // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
+            const [sourceid, targetid] =  e.target.getAttribute('id').split('👉')
+            // const source = appState.graph.frame.getNode(sourceid)
+            // const target = appState.graph.frame.getNode(targetid)
+            const thepath = this.pathFinder.find(sourceid, targetid)
+            const pathnode = thepath.map((node)=>{
+              return appState.graph.frame.getNode(node.id)
+            })
+            //control map highlight 
+            appState.graph.pathHovered = {
+              "sourceid":sourceid,
+              "targetid":targetid, 
+              "pathnode": pathnode
+            } 
+            // control socio update 
+            appState.graph.frame.highlightPathEdgeNode(pathnode)
+
+
+
+          }}
+          onMouseLeave={(e) => {
+            // if (appState.graph.mapClicked) return;
+
+            appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
+              // if (n !== appState.graph.mapClicked) {
+              appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
+
+              appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
+              // }
+            }
+            );
+            appState.graph.frame.colorNodeEdge(null);  //highlight all edges 
+            appState.graph.pathHovered = null;
+
+
+          }}
+          key={i}
+        />)
+        )
+      }else if((appState.graph.scatterplot.y !== 'shortest path') && (appState.graph.scatterplot.x !== 'shortest path') 
+      && (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance')){
+        renderCircles = appState.graph.frame.getNodeList().map((node, i) => (
+          <circle
+            cx={this.props.scale.x(parseFloat(node.data.ref[appState.graph.scatterplot.x]))}
+            cy={this.props.scale.y(parseFloat(node.data.ref[appState.graph.scatterplot.y]))}
+            r={this.props.cr}
+            style={this.setScatterStyle(node)}
+            id={node.id}
+            data={node}
+            onMouseOver={(e) => {
+              // console.log(e.target.dataset.id)
+              const thenode = appState.graph.frame.getNode(e.target.dataset.id)
+              appState.graph.currentlyHovered = thenode  // control map update 
+              appState.graph.frame.highlightNode(thenode, true);   // control cosio update 
+              appState.graph.frame.highlightEdges(thenode, true);
+  
+            }}
+            onMouseLeave={(e) => {
+              if (appState.graph.mapClicked) return;
+  
+              appState.graph.frame.graph.forEachNode(function (n) {
+                // if (n !== appState.graph.mapClicked) {
+                appState.graph.frame.colorNodeOpacity(n, 1);
+  
+                appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+                // }
+              }
+              );
+              appState.graph.frame.colorNodeEdge(null);
+              appState.graph.currentlyHovered = null;
+  
+  
+            }}
+            // eventHandlers={{
+            //   mouseover: (e) => {
+            //     console.log(e)
+            //   }
+            // }}
+            // style={{ fill: "rgba(25, 158, 199, .9)" }}
+            key={i}
+          />
+        ))
+      }
+      
       return <g>{renderCircles}</g>
     }
   }
