@@ -60,6 +60,10 @@ module.exports = function (self) {
     pathnode.forEach((node)=>{
      self.colorNodeOpacity(node, 1);
     })
+    self.highlightNode(pathnode[0], true)
+    self.highlightNode(pathnode[pathnode.length - 1], true)
+    // pathnode[0].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+    // pathnode[pathnode.length - 1].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
     
 
     //highlight edges

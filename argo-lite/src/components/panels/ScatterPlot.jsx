@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import uniq from "lodash/uniq";
-import { Classes } from "@blueprintjs/core";
+import { Button, Classes } from "@blueprintjs/core";
 import appState from "../../stores";
 import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
@@ -10,6 +10,9 @@ import { brush, brushY } from "d3-brush";
 import SimpleSelect from "../utils/SimpleSelect";
 import SVGBrush from 'react-svg-brush';
 import path from 'ngraph.path';
+import * as SvgSaver from 'svgsaver';
+import { CSVLink, CSVDownload } from "react-csv";
+// import SvgSaver from svgsaver
 
 var def = require("../../graph-frontend/src/imports").default;
 
@@ -37,7 +40,9 @@ class ScatterPlot extends React.Component {
   //     })
   //   ])
   //   .range([0, this.width])
+   
 
+  
   // @observable y = scaleLinear()
   //   .domain([
   //     0,
@@ -54,10 +59,66 @@ class ScatterPlot extends React.Component {
   width = 220 - this.margin.left - this.margin.right
   height = 200 - this.margin.top - this.margin.bottom
   cr = 3
+  maxhop = undefined
+  formatXtext = []
+  infinityhop = []
+  
 
   constructor(props) {
     super(props)
     this.circles = React.createRef();
+    this.state = { csvarray: [] }
+  }
+
+  downloadCSV = ()=>{
+    appState.graph.frame.getNodeList().filter(node => !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.x])) && !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.y])))
+    let column1, column2
+    
+    let header = [];
+    this.setState({
+      csvarray : []
+    });
+    // this.state.;
+    if(appState.graph.scatterplot.x === 'shortest path'){
+      column1 = this.infinityhop
+      header.push('shortest path')
+    }else if(appState.graph.scatterplot.x === 'pair distance'){
+      column1 = appState.graph.rawGraph.paths.map((path,i)=>{
+        return parseFloat(path['distance'])
+      })
+      header.push('pair distance')
+    }else{
+      header.push(appState.graph.scatterplot.x)
+      column1 = appState.graph.frame.getNodeList().map((d) =>{
+        return parseFloat(d.data.ref[appState.graph.scatterplot.x])
+      })
+    }
+
+    if(appState.graph.scatterplot.y === 'shortest path'){
+      column2 = this.infinityhop
+      header.push('shortest path')
+    }else if(appState.graph.scatterplot.y === 'pair distance'){
+      column2 = appState.graph.rawGraph.paths.map((path,i)=>{
+        return parseFloat(path['distance'])
+      })
+      header.push('pair distance')
+    }else{
+      header.push(appState.graph.scatterplot.y)
+      column2 = appState.graph.frame.getNodeList().map((d) =>{
+        return parseFloat(d.data.ref[appState.graph.scatterplot.y])
+      })
+    }
+     
+    let temp = []
+    temp.push(header) 
+    for (var i=0; i<column2.length && i<column1.length; i++){
+      temp.push([column1[i], column2[i]]);
+    }
+    this.setState({
+      csvarray : temp
+    });
+    
+
   }
 
   onBrushStart = ({ target, type, selection, sourceEvent }) => {
@@ -149,15 +210,35 @@ class ScatterPlot extends React.Component {
       let x,y
       if(appState.graph.scatterplot.x === 'shortest path'){
         const shortpathhop = appState.graph.rawGraph.paths.map(function(path,i){
-          return path['path'].length
+          return path['path'].length -1
         })
         shortpathhop.sort()
+        this.maxhop = shortpathhop[shortpathhop.length -1]
+
+        this.infinityhop = shortpathhop.map((pathlen,i)=>{
+          if(pathlen == -1){
+            return this.maxhop+1
+          }else{
+            return pathlen
+          }
+        })
+        this.infinityhop.sort()
+        // console.log()
+        // this.formatXtext =  [...new Set(this.infinityhop)].map((pathlen,i)=>{
+        //   if(pathlen == (this.maxhop +1)){
+        //     return 'None'
+        //   }else{
+        //     return pathlen.toString()
+        //   }
+        // })
+        // console.log(this.formatXtext)
         x = scalePoint()
-        .domain(shortpathhop)
-        .range([0, this.width])
+        .domain(this.infinityhop)
+        .range([0, this.width]);
+       
 
       }else if(appState.graph.scatterplot.x === 'pair distance'){
-        const pairdistance = appState.graph.rawGraph.paths.map(function(path,i){
+        const pairdistance = appState.graph.rawGraph.paths.map((path,i)=>{
           return parseFloat(path['distance'])
         })
         x = scaleLinear()
@@ -180,14 +261,27 @@ class ScatterPlot extends React.Component {
       }
      
       if(appState.graph.scatterplot.y === 'shortest path'){
+
+
         const shortpathhop = appState.graph.rawGraph.paths.map(function(path,i){
-          return path['path'].length
+          return path['path'].length -1
         })
         shortpathhop.sort()
-        y = scalePoint()
-        .domain(shortpathhop)
-        .range([this.height, 0])
+        this.maxhop = shortpathhop[shortpathhop.length -1]
 
+        this.infinityhop = shortpathhop.map((pathlen,i)=>{
+          if(pathlen == -1){
+            return this.maxhop+1
+          }else{
+            return pathlen
+          }
+        })
+        this.infinityhop.sort().reverse()
+      
+        y = scalePoint()
+        .domain(this.infinityhop)
+        .range([0, this.width]);
+    
       }else if(appState.graph.scatterplot.y === 'pair distance'){
         const pairdistance = appState.graph.rawGraph.paths.map(function(path,i){
           return parseFloat(path['distance'])
@@ -214,7 +308,9 @@ class ScatterPlot extends React.Component {
 
       return (
         <div>
+         
           <div className={classnames(Classes.CARD, "sub-option")}>
+          
             <div>
               <p style={{ display: "inline" }}>X By: </p>
               <span style={{ float: "right" }}>
@@ -243,6 +339,7 @@ class ScatterPlot extends React.Component {
               width={this.width + this.margin.right + this.margin.left}
               height={this.height + this.margin.top + this.margin.bottom}
               className="scatterchart"
+              id = "scatterplot"
               ref={input => (this.svg = input)}
             // ref = {ref}
             >
@@ -252,12 +349,21 @@ class ScatterPlot extends React.Component {
                 height={this.height}
                 className="main"
               >
-                {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} />}
+                {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop ={this.infinityhop}/>}
                 <text transform={"translate(50, 180)"} fontSize="13px">{appState.graph.scatterplot.x}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
-                  scale={axisBottom().scale(x)}
+                  scale={(appState.graph.scatterplot.x === 'shortest path') ? 
+                  axisBottom().scale(x).tickFormat((label)=>{
+                    if(parseInt(label) == (this.maxhop +1)){
+                      return 'None'
+                    }else{
+                      return label
+                    }
+                    
+                  }): axisBottom().scale(x)
+                  }
                 />
                 <text
                   transform={"translate(-40, 140) rotate(-90)"}
@@ -266,8 +372,16 @@ class ScatterPlot extends React.Component {
                 <Axis
                   axis="y"
                   transform="translate(0,0)"
-                  scale={
-                    axisLeft().scale(y)
+                  scale={(appState.graph.scatterplot.y === 'shortest path') ? 
+                  axisLeft().scale(y).tickFormat((label)=>{
+                    if(parseInt(label) == (this.maxhop +1)){
+                      return 'None'
+                    }else{
+                      return label
+                    }
+                    
+                  })
+                     :axisLeft().scale(y)
                   }
                 // decorate={(s) => {
                 //   s.enter()
@@ -282,6 +396,24 @@ class ScatterPlot extends React.Component {
         this.renderBrush()}
             </svg>
           </div>
+          <Button 
+            style={{transform: "translate(0px, -2vh)"}}
+            onClick={() => {
+            var svgsaver = new SvgSaver();                      // creates a new instance
+            var svg = document.querySelector('#scatterplot');         // find the SVG element
+            svgsaver.asSvg(svg);  
+          }}>Download Image</Button>
+          
+          
+          {(
+        <CSVLink data={this.state.csvarray} onClick = {this.downloadCSV}  asyncOnClick={true} filename="bsedata.csv">
+          <Button 
+            style={{transform: "translate(0px, -2vh)"}}
+            
+            >DownLoad CSV
+          </Button>
+        </CSVLink>
+      )}
         </div>
 
       )
@@ -402,7 +534,7 @@ class RenderCircles extends React.Component {
         // const pathkeys = Object.keys(appState.graph.rawGraph.paths)
         renderCircles = appState.graph.rawGraph.paths.map((path,i)=>(
           <circle
-          cx={this.props.scale.x(path['path'].length)}
+          cx={path['path'].length == 0 ? this.props.scale.x(this.props.maxhop +1):this.props.scale.x(path['path'].length-1)}
           cy={this.props.scale.y(parseFloat(path['distance']))}   
           r={this.props.cr}
           style={this.setScatterStyle(path)}
@@ -411,6 +543,8 @@ class RenderCircles extends React.Component {
           onMouseOver={(e) => {
             // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
             const [sourceid, targetid] =  e.target.getAttribute('id').split('👉')
+            // e.target.getAttribute('fill') node.renderData.color,
+            e.target.style.fill = 'rgba(255, 1, 1, .9)'
             // const source = appState.graph.frame.getNode(sourceid)
             // const target = appState.graph.frame.getNode(targetid)
             const thepath = this.pathFinder.find(sourceid, targetid)
@@ -431,6 +565,7 @@ class RenderCircles extends React.Component {
           }}
           onMouseLeave={(e) => {
             // if (appState.graph.mapClicked) return;
+            e.target.style.fill = 'rgba(25, 158, 199, .9)'
 
             appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
               // if (n !== appState.graph.mapClicked) {
@@ -453,7 +588,7 @@ class RenderCircles extends React.Component {
       }else if((appState.graph.scatterplot.y === 'shortest path') && (appState.graph.scatterplot.x === 'pair distance')){
         renderCircles = appState.graph.rawGraph.paths.map((path,i)=>(
           <circle
-          cy={this.props.scale.y(path['path'].length)}
+          cy={path['path'].length == 0 ? this.props.scale.y(this.props.maxhop +1):this.props.scale.y(path['path'].length-1)}
           cx={this.props.scale.x(parseFloat(path['distance']))}   
           r={this.props.cr}
           style={this.setScatterStyle(path)}

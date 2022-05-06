@@ -258,11 +258,14 @@ class MapView extends React.Component {
 
     //scatterplot path highlight 
     if(appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length>0){
-      if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
+      if(node.id == appState.graph.pathHovered["sourceid"] || node.id == appState.graph.pathHovered["targetid"]){
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: 'red', zIndex: '10000' }
+      }
+      else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
         return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
       } else {
 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: '#DB7734', zIndex: '10000' }
       }
     }
 
