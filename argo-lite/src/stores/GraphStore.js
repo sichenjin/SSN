@@ -63,6 +63,8 @@ export default class GraphStore {
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
 
+  // Currently hovered path in the scatterplot view 
+  @observable pathHovered = undefined;
   /**
    * Stores data relevant to smart pause feature
    */

@@ -56,6 +56,7 @@ import { toaster } from '../notifications/client';
 
 import createGraph from 'ngraph.graph';
 import pageRank from 'ngraph.pagerank';
+import path from 'ngraph.path';
 import parse from "csv-parse/lib/sync";
 // import worker from './worker';
 
@@ -561,6 +562,8 @@ async function importGraphFromCSV(config) {
 
   // Create temporary data structures.
   let nodesArr = [];
+  // let pathsDict = {};
+
   const graph = createGraph();
   const degreeDict = {};
   if (config.hasNodeFile) {
@@ -664,25 +667,65 @@ async function importGraphFromCSV(config) {
   }
 
   //calculate the diatance to centern/ average lat/lon
-  const calDIstanceToCenter = () =>{
+  const calDIstanceToCenter = () => {
     const latlist = nodesArr.map(n => n['LatY'])
     const lonlist = nodesArr.map(n => n['LonX'])
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
-    var avgLat 
+    var avgLat
     var avgLon
     if (latlist.length > 0 && lonlist.length > 0) {
       avgLat = average(latlist)
       avgLon = average(lonlist)
-      nodesArr.forEach(function(n,i){
-        n['distance to center'] = calDistanceFromLatLonInKm(avgLat,avgLon,latlist[i],lonlist[i])
+      nodesArr.forEach(function (n, i) {
+        n['distance to center'] = calDistanceFromLatLonInKm(avgLat, avgLon, latlist[i], lonlist[i])
       })
     }
   }
 
-  if(nodesArr[0]['LonX'] && nodesArr[0]['LatY']){
+  if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
     calDIstanceToCenter();
   }
+  const shortestPathPairs = () => {
+    let pathFinder = path.aGreedy(graph);
+    const pathsArr = []
+    const pathsSet = new Set();
+
+
+
+    graph.forEachNode(function (fromnode) {
+
+      graph.forEachNode(function (tonode) {
+        if (fromnode.id !== tonode.id) {
+          const pathKey1 = `${fromnode.id}👉${tonode.id}`;
+          const pathKey2 = `${tonode.id}👉${fromnode.id}`;
+          // undirected graph:
+          // only add once for undirected graph 
+          if (!(pathsSet.has(pathKey1)) && !(pathsSet.has(pathKey2)) ) {
+            pathsSet.add(pathKey1);
+            pathsSet.add(pathKey2);
+            pathsArr.push({
+             "source":fromnode.id,
+             "target":tonode.id,
+            "path": pathFinder.find(fromnode.id, tonode.id),
+            "distance": calDistanceFromLatLonInKm(fromnode.data.LatY, fromnode.data.LonX, tonode.data.LatY, tonode.data.LonX)
+          
+           })
+          }
+           
+          //directed graph: 
+        }
+
+      })
+
+    })
+    // console.log(nodesArr.length)
+    // console.log(pathsArr.length)
+    return pathsArr
+
+  }
+  const pathsArr = shortestPathPairs();
   const rank = pageRank(graph);
+
   nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
   const nodekeyList = Object.keys(nodesArr[0])
   const nodePropertyTypes = {}
@@ -702,7 +745,7 @@ async function importGraphFromCSV(config) {
     }
   })
   return {
-    rawGraph: { nodes: nodesArr, edges: edgesArr },
+    rawGraph: { nodes: nodesArr, edges: edgesArr, paths: pathsArr },
     metadata: {
       snapshotName: 'Untitled Graph',
       fullNodes: nodesArr.length,
@@ -710,8 +753,9 @@ async function importGraphFromCSV(config) {
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center'],
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center', 'shortest path', 'pair distance'],
       edgeProperties: ['source_id', 'target_id'],
+     
     },
   }
 }
@@ -770,24 +814,62 @@ export async function importGraphFromGexf() {
   }
 
   //calculate the diatance to center/ average lat/lon
-  const calDIstanceToCenter = () =>{
+  const calDIstanceToCenter = () => {
     const latlist = nodesArr.map(n => n['LatY'])
     const lonlist = nodesArr.map(n => n['LonX'])
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
-    var avgLat 
+    var avgLat
     var avgLon
     if (latlist.length > 0 && lonlist.length > 0) {
       avgLat = average(latlist)
       avgLon = average(lonlist)
-      nodesArr.forEach(function(n,i){
-        n['distance to center'] = calDistanceFromLatLonInKm(avgLat,avgLon,latlist[i],lonlist[i])
+      nodesArr.forEach(function (n, i) {
+        n['distance to center'] = calDistanceFromLatLonInKm(avgLat, avgLon, latlist[i], lonlist[i])
       })
     }
   }
 
-  if(nodesArr[0]['LonX'] && nodesArr[0]['LatY']){
+  if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
     calDIstanceToCenter();
   }
+
+  const shortestPathPairs = () => {
+    let pathFinder = path.aGreedy(graph);
+    const pathsArr = []
+    const pathsSet = new Set();
+
+
+
+    graph.forEachNode(function (fromnode) {
+
+      graph.forEachNode(function (tonode) {
+        if (fromnode.id !== tonode.id) {
+          const pathKey1 = `${fromnode.id}👉${tonode.id}`;
+          const pathKey2 = `${tonode.id}👉${fromnode.id}`;
+          // undirected graph:
+          // only add once for undirected graph 
+          if (!(pathsSet.has(pathKey1)) && !(pathsSet.has(pathKey2)) ) {
+            pathsSet.add(pathKey1)
+            pathsSet.add(pathKey2)
+            pathsArr.push({
+             "source":fromnode.id,
+             "target":tonode.id,
+            "path": pathFinder.find(fromnode.id, tonode.id),
+            "distance": calDistanceFromLatLonInKm(fromnode.data.LatY, fromnode.data.LonX, tonode.data.LatY, tonode.data.LonX)
+          
+           })
+          }
+           
+          //directed graph: 
+        }
+
+      })
+
+    })
+    return pathsArr
+
+  }
+  const pathsArr = shortestPathPairs();
 
   const rank = pageRank(graph);
   nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
@@ -809,7 +891,7 @@ export async function importGraphFromGexf() {
     }
   })
   return {
-    rawGraph: { nodes: nodesArr, edges: edgesArr },
+    rawGraph: { nodes: nodesArr, edges: edgesArr , paths: pathsArr},
     metadata: {
       snapshotName: 'Untitled Graph',
       fullNodes: nodesArr.length,
@@ -817,8 +899,9 @@ export async function importGraphFromGexf() {
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center'],
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center', 'shortest path', 'pair distance'],
       edgeProperties: ['source_id', 'target_id'],
+     
     },
   }
 }

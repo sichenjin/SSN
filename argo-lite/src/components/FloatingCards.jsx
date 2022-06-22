@@ -1,5 +1,5 @@
 import React from "react";
-import { Classes, Tab2, Tabs2, Tag } from "@blueprintjs/core";
+import { Classes,Button, Tab2, Tabs2, Tag } from "@blueprintjs/core";
 import classnames from "classnames";
 import { observer } from "mobx-react";
 import appState from "../stores";
@@ -16,7 +16,7 @@ import Legends from "./Legends";
 import StatusBar from './StatusBar';
 import SelectionActionPanel from "./panels/SelectionActionPanel";
 import ZoomPanel from "./panels/ZoomPanel";
-
+import * as SvgSaver from 'svgsaver';
 
 // TODO: migrate to simple select
 
@@ -25,7 +25,7 @@ class RenderOptionsCard extends React.Component {
   render() {
     return (
       <div>
-        <h4>Graph Options</h4>
+        <h4>Appearance </h4>
         <Tabs2 animate id="graph-options">
           <Tab2 id="nodes" title="Nodes" panel={<NodesPanel />} />
           <Tab2 id="edges" title="Edges" panel={<EdgesPanel />} />
@@ -347,9 +347,12 @@ class FloatingCards extends React.Component {
           >
             <button className="openbtn3" onClick={this.scatterToggleOptions}> &#8250;
             </button>
+            
             <br />
             {/* <FilterOptionsCard /> */}
-            <div id="scatter-plot">
+            <div id="scatter-plot"
+            style={{transform: "translate(10px, -20px)"}}
+            >
 
               {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
             </div>
