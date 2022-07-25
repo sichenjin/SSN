@@ -9,6 +9,7 @@ import {
 } from "@blueprintjs/core";
 import Dialogs from "./components/Dialogs";
 import Navbar from "./components/Navbar";
+import ComDetection from './components/ComDetection'
 import WorkspaceView from "./components/WorkspaceView";
 import appState from "./stores/index";
 import ThreeJSVis from "./visualizers/ThreeJSVis";
@@ -20,6 +21,9 @@ import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
 
 import keydown, { Keys } from "react-keydown";
 import 'leaflet/dist/leaflet.css';
+
+import { useEffect } from "react";
+import axios from 'axios'
 
 registerIPC();
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -48,6 +52,9 @@ window.addEventListener('resize', respondToResize);
 @keydown
 @observer
 class App extends React.Component {
+
+  
+
   componentWillReceiveProps({ keydown }) {
     if (keydown.event) {
       if (keydown.event.which === DELETE || keydown.event.which === BACKSPACE) {
@@ -67,12 +74,17 @@ class App extends React.Component {
     }
   }
   render() {
+
+
     return (
       <div className={classnames({
         "app-wrapper": true,
         [Classes.DARK]: appState.preferences.darkMode
       })}>
          <Navbar />
+         {appState.graph.hasGraph && <ComDetection />}
+        
+
         <div className="graph">
          
           <main className="main">
@@ -91,7 +103,7 @@ class App extends React.Component {
             ) : (
                 <WorkspaceView />
               )}
-        
+         {/* <h3>{this.mss}</h3> */}
       </div>
       
       

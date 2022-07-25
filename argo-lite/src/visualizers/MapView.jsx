@@ -1,6 +1,6 @@
 import React from 'react';
 // import L from 'leaflet';
-import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline } from "react-leaflet";
+import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import appState from '../stores';
 import { observer } from 'mobx-react';
@@ -173,15 +173,14 @@ class MapView extends React.Component {
       //highlight within selection edges , &&
       if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
-      } else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1){
+      } else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
-      }else
-      {
+      } else {
         return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
       }
     }
 
-    
+
 
     if (appState.graph.mapClicked) {
       if (edge.fromId == appState.graph.mapClicked.id || edge.toId == appState.graph.mapClicked.id) {
@@ -199,22 +198,22 @@ class MapView extends React.Component {
       }
     }
 
-    if(appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length>0){
+    if (appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length > 0) {
       const pathnode = appState.graph.pathHovered["pathnode"]
-      for (let i = 0; i < pathnode.length-1; i++) {
-        if ((edge.fromId == pathnode[i].id && edge.toId == pathnode[i+1].id) || (edge.fromId == pathnode[i+1].id && edge.toId == pathnode[i].id))  {
+      for (let i = 0; i < pathnode.length - 1; i++) {
+        if ((edge.fromId == pathnode[i].id && edge.toId == pathnode[i + 1].id) || (edge.fromId == pathnode[i + 1].id && edge.toId == pathnode[i].id)) {
           return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
-        }  
+        }
       }
       return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
     }
 
-   
 
-    
+
+
   }
 
-  setNodeCircle = (node) =>{
+  setNodeCircle = (node) => {
     if (appState.graph.frame && appState.graph.nodes.size.max) {
       // appState.graph.frame.updateGraph(appState.graph.computedGraph);
       return node.data.size * 2.5
@@ -228,6 +227,15 @@ class MapView extends React.Component {
     // return {fillColor: node.renderData.color , fillOpacity: node.renderData.draw_object.material.opacity, stroke: node.renderData.draw_object.children[0].material.color}
 
     // //no hover and selection 
+
+    if (appState.graph.convexNodes.length > 0) {
+      if (appState.graph.convexNodes.indexOf(node) == -1) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
+      } else {
+
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
+      }
+    }
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
       return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, zIndex: 'auto' }
     }
@@ -239,7 +247,7 @@ class MapView extends React.Component {
       if (node.id === appState.graph.currentlyHovered.id) {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, zIndex: '10000' }
       } else { //others 
         return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
       }
@@ -257,8 +265,8 @@ class MapView extends React.Component {
     }
 
     //scatterplot path highlight 
-    if(appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length>0){
-      if(node.id == appState.graph.pathHovered["sourceid"] || node.id == appState.graph.pathHovered["targetid"]){
+    if (appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length > 0) {
+      if (node.id == appState.graph.pathHovered["sourceid"] || node.id == appState.graph.pathHovered["targetid"]) {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: 'red', zIndex: '10000' }
       }
       else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
@@ -268,6 +276,8 @@ class MapView extends React.Component {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: '#DB7734', zIndex: '10000' }
       }
     }
+
+
 
     // select area highlight 
     if (appState.graph.selectedNodes.length > 0) {
@@ -279,6 +289,24 @@ class MapView extends React.Component {
       }
     }
 
+  }
+
+  setPolygonPath = (polygon, pi) => {
+    if (appState.graph.convexPolygonsShow && appState.graph.currentlyHovered) {
+      if (pi === appState.graph.currentlyHovered.data.ref.community) {
+        return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0.3, opacity: 0.8 }
+      }
+      else {
+        return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0, opacity: 0 }
+      }
+
+    }
+    if(appState.graph.convexPolygonsShow){
+      return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0.5, opacity: 0.8 }
+    }else{
+      return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0, opacity: 0 }
+    }
+    
   }
 
 
@@ -323,126 +351,148 @@ class MapView extends React.Component {
         <ZoomMap />
         <MapClick />
 
+        <Pane name="edgepane" style={{ zIndex: 10000 }}>
+          {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
 
-        {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
+            appState.graph.frame && appState.graph.frame.getEdgeList().map((edge, i) => {
+              // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
 
-          appState.graph.frame && appState.graph.frame.getEdgeList().map((edge, i) => {
-            // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
+              var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
 
-            var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
+              return (
+                <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
+                  data={edge}
+                // eventHandlers={{
+                //   click: (e) => {
+                //     console.log(e.target.options.data)
+                //   }}}
+                />
 
-            return (
-              <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
-              data = {edge} 
-              // eventHandlers={{
-              //   click: (e) => {
-              //     console.log(e.target.options.data)
-              //   }}}
-              />
-
-            );
-
-
+              );
 
 
+
+
+            })
+          }
+        </Pane>
+
+
+        {appState.graph.convexPolygons.map((polygon, i) => {
+          var community = polygon.community
+          var polygonlist = polygon.points.map((p) => {
+            return [p[0], p[1]]
           })
+          // console.log(polygonlist)
+
+          return <Polygon pathOptions={this.setPolygonPath(polygon, community)} positions={polygonlist} />
+
+        })
+
         }
-
-        {appState.graph.rawGraph.nodes[0].LatY !== undefined && appState.graph.rawGraph.nodes[0].LonX !== undefined &&
-          appState.graph.frame && appState.graph.frame.getNodeList().map((node, i) => {
-
-            return (
-              <CircleMarker
-                key={node.id}
-                center={[node.data.ref.LatY, node.data.ref.LonX]}
-                radius={this.setNodeCircle(node)}
-                pathOptions={this.setNodePathOption(node)}
+        {/* </Pane> */}
 
 
-                data={node}
-                eventHandlers={{
-                  click: (e) => {
-                    if (!appState.graph.mapClicked) { //no clicked circle before 
-                      const thenode = e.target.options.data
-                      appState.graph.mapClicked = thenode  //control map update 
-                      // appState.graph.currentlyHovered = null
-                      // appState.graph.frame.highlightNode(thenode, true);   //control socio update 
-                      // appState.graph.frame.highlightEdges(thenode, true);
-                      appState.graph.frame.selection = appState.graph.frame.getNeighborNodesFromGraph(thenode);
-                      appState.graph.selectedNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode);
-                      appState.graph.frame.updateSelectionOpacity();
-                    } else {  // click again to unselect 
-                      appState.graph.mapClicked = null
-                      appState.graph.frame.selection = []
-                      appState.graph.selectedNodes = []
-                    }
 
 
-                  },
-                  mouseover: (e) => {
-                    //when selection or mapclick, then freeze, no hover event 
-                    if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
-                    // var currentNode = e.target.options.data
-                    // appState.graph.selectedNodes = []
-                    // appState.graph.frame.selection = []
-                    appState.graph.currentlyHovered = e.target.options.data  // control map update 
-                    appState.graph.frame.highlightNode(e.target.options.data, true);   // control cosio update 
-                    appState.graph.frame.highlightEdges(e.target.options.data, true);
+        <Pane name="custom" style={{ zIndex: 10000 }}>
+          {appState.graph.rawGraph.nodes[0].LatY !== undefined && appState.graph.rawGraph.nodes[0].LonX !== undefined &&
+            appState.graph.frame && appState.graph.frame.getNodeList().map((node, i) => {
+
+              return (
+                <CircleMarker
+                  key={node.id}
+                  center={[node.data.ref.LatY, node.data.ref.LonX]}
+                  radius={this.setNodeCircle(node)}
+                  pathOptions={this.setNodePathOption(node)}
 
 
-                    // e.target.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
-                    // e.target.options.data.renderData.draw_object.children[0].visible = true
+                  data={node}
+                  eventHandlers={{
+                    click: (e) => {
+                      if (!appState.graph.mapClicked) { //no clicked circle before 
+                        const thenode = e.target.options.data
+                        appState.graph.mapClicked = thenode  //control map update 
+                        // appState.graph.currentlyHovered = null
+                        // appState.graph.frame.highlightNode(thenode, true);   //control socio update 
+                        // appState.graph.frame.highlightEdges(thenode, true);
+                        appState.graph.frame.selection = appState.graph.frame.getNeighborNodesFromGraph(thenode);
+                        appState.graph.selectedNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode);
+                        appState.graph.frame.updateSelectionOpacity();
+                      } else {  // click again to unselect 
+                        appState.graph.mapClicked = null
+                        appState.graph.frame.selection = []
+                        appState.graph.selectedNodes = []
+                      }
 
-                    // appState.graph.frame.lastHover = e.target.options.data
-                    // appState.graph.frame.highlightNode(e.target.options.data, true)
-                    // e.target.setStyle({fillOpacity: 1, fillColor:'red'})
-                    // console.log(e.target.options.data)
-                  },
-                  mouseout: (e) => {
-                    //when selection or mapclick, then freeze, no hover event 
-                    if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
 
-                    appState.graph.frame.graph.forEachNode(function (n) {
-                      // if (n !== appState.graph.mapClicked) {
+                    },
+                    mouseover: (e) => {
+                      //when selection or mapclick, then freeze, no hover event 
+                      if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
+                      // var currentNode = e.target.options.data
+                      // appState.graph.selectedNodes = []
+                      // appState.graph.frame.selection = []
+                      appState.graph.currentlyHovered = e.target.options.data  // control map update 
+                      appState.graph.frame.highlightNode(e.target.options.data, true);   // control cosio update 
+                      appState.graph.frame.highlightEdges(e.target.options.data, true);
+
+
+                      // e.target.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+                      // e.target.options.data.renderData.draw_object.children[0].visible = true
+
+                      // appState.graph.frame.lastHover = e.target.options.data
+                      // appState.graph.frame.highlightNode(e.target.options.data, true)
+                      // e.target.setStyle({fillOpacity: 1, fillColor:'red'})
+                      // console.log(e.target.options.data)
+                    },
+                    mouseout: (e) => {
+                      //when selection or mapclick, then freeze, no hover event 
+                      if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
+
+                      appState.graph.frame.graph.forEachNode(function (n) {
+                        // if (n !== appState.graph.mapClicked) {
                         appState.graph.frame.colorNodeOpacity(n, 1);
 
                         appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
-                      // }
+                        // }
+                      }
+                      );
+                      appState.graph.frame.colorNodeEdge(null);
+                      appState.graph.currentlyHovered = null;
+
+
+                      // e.target.options.data.renderData.draw_object.children[0].material.color.set(
+                      //   e.target.options.data.renderData.hcolor
+                      // )
+                      // e.target.options.data.renderData.draw_object.children[0].visible = false
+
+                      // appState.graph.currentlyHovered = null
+                      // appState.graph.frame.highlightNode(e.target.options.data,false)
+                      // e.target.setStyle({ fillOpacity: 0.5, fillColor: 'blue' })
+
+                      // console.log('marker out', e)
                     }
-                    );
-                    appState.graph.frame.colorNodeEdge(null);
-                    appState.graph.currentlyHovered = null;
+                  }}
+                // onMouseOver = {this.onMouseOver}
+                // {(e) => {
+                //   // appState.graph.currentlyHovered = 
+                //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
+                // }}
+                // onMouseOut={this.onMouseOut}
+                // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
+                >
+
+                </CircleMarker>
+              );
 
 
-                    // e.target.options.data.renderData.draw_object.children[0].material.color.set(
-                    //   e.target.options.data.renderData.hcolor
-                    // )
-                    // e.target.options.data.renderData.draw_object.children[0].visible = false
-
-                    // appState.graph.currentlyHovered = null
-                    // appState.graph.frame.highlightNode(e.target.options.data,false)
-                    // e.target.setStyle({ fillOpacity: 0.5, fillColor: 'blue' })
-
-                    // console.log('marker out', e)
-                  }
-                }}
-              // onMouseOver = {this.onMouseOver}
-              // {(e) => {
-              //   // appState.graph.currentlyHovered = 
-              //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
-              // }}
-              // onMouseOut={this.onMouseOut}
-              // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
-              >
-
-              </CircleMarker>
-            );
+            })
 
 
-          })
+          }
+        </Pane>
 
-
-        }
 
 
 

@@ -93,6 +93,8 @@ module.exports = function (self) {
     }
   }
 
+ 
+
 
   self.getNeighborNodesFromGraph = function (node) {
     const nodeNeighbor = []

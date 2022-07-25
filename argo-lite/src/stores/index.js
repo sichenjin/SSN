@@ -83,6 +83,7 @@ const loadAndDisplaySnapshotFromURL = (url) => {
 };
 
 const loadAndDisplaySnapshotFromStrapi = (uuid) => {
+  appState.graph.convexPolygons =[]
   loadSnapshotFromStrapi(uuid).then(snapshotString => {
     // TODO: use more sensible snapshot name
     appState.graph.metadata.snapshotName = 'Shared';
