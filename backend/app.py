@@ -6,11 +6,11 @@ from api.Community import Community
 from api.Cliques import Cliques
 from api.MyConvexHull import MyConvexHull
 
-app = Flask(__name__, static_url_path='', static_folder='frontend/build')
+app = Flask(__name__, static_url_path='', static_folder='../argo-lite/build')
 # CORS(app) #comment this on deployment
 api = Api(app)
 
-@app.route("/flask/hello", defaults={'path':''})
+@app.route("/", defaults={'path':''})
 def serve(path):
     return send_from_directory(app.static_folder,'index.html')
 
