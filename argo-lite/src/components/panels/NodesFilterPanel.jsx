@@ -15,9 +15,12 @@ import uniq from "lodash/uniq";
 class NodesFilterPanel extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+
+    }
     appState.graph.allPropertiesKeyList.forEach(it => {
-      this.state[it + 'isOpen'] = false
+      this.state[it + 'isOpen'] = false;
+      this.state[it + '_filterlist'] = []
     });
     // console.log(this.state)
     // this.state = 
@@ -64,13 +67,46 @@ class NodesFilterPanel extends React.Component {
                 <MultiSelects
                   items={appState.graph.metadata.uniqueValue[it]}
                   onSelect={selectit => {
-                    appState.graph.nodes.filter[it]? appState.graph.nodes.filter[it].push(selectit): appState.graph.nodes.filter[it]=[selectit]   
+
+                    this.setState({
+                      [it + '_filterlist']: this.state[it + '_filterlist'] ? [...this.state[it + '_filterlist'], selectit] : [selectit]
+                    })
+                    appState.graph.nodes.filter[it] ? appState.graph.nodes.filter[it].push(selectit) : appState.graph.nodes.filter[it] = [selectit]
                     appState.graph.filterNodes()
-                    // console.log(selectit)
+
+                    console.log(this.state[it + '_filterlist'])
+                    // return selectit
                     // console.log(appState.graph.nodes.filter[it][0])
                   }}
-                  tag = { selectit=> { console.log(selectit); return selectit}}
-                  value= {['sdadf']}
+                  tag={selectit => { return selectit }}
+                  value={this.state[it + '_filterlist']}
+                  tagprops={{
+                    onRemove: selectit => {
+                      var self = this
+                      var deselectIndex0 = this.state[it + '_filterlist'].indexOf(selectit)
+                      if (deselectIndex0 > -1) {
+                        this.setState({
+                          [it + '_filterlist']:this.state[it + '_filterlist'].filter(item => item !== selectit)
+                          //  this.state[it + '_filterlist'].splice(deselectIndex0, 1)
+                        })
+                       
+                      }
+                      
+                      var deselectIndex1 = appState.graph.nodes.filter[it].indexOf(selectit)
+                      if (deselectIndex1 > -1) {
+                        appState.graph.nodes.filter[it] = appState.graph.nodes.filter[it].filter(item => item !== selectit)
+
+                        // appState.graph.nodes.filter[it].splice(deselectIndex1, 1)
+                        appState.graph.filterNodes()
+                      }
+
+
+                      console.log(this.state[it + '_filterlist'])
+                      // return selectit
+                      // console.log(appState.graph.nodes.filter[it][0])
+                    },
+                    // tagProps: getTagProps,
+                  }}
                 />
                 :
                 <RangeSlider
@@ -78,16 +114,16 @@ class NodesFilterPanel extends React.Component {
                   max={20}
                   stepSize={0.1}
                   labelStepSize={5}
-                  // onChange={([a, b]) => {
-                  //   runInAction("update scale", () => {
-                  //     appState.graph.nodes.size.min = a;
-                  //     appState.graph.nodes.size.max = b;
-                  //   });
-                  // }}
-                  // value={[
-                  //   appState.graph.nodes.size.min,
-                  //   appState.graph.nodes.size.max
-                  // ]}
+                // onChange={([a, b]) => {
+                //   runInAction("update scale", () => {
+                //     appState.graph.nodes.size.min = a;
+                //     appState.graph.nodes.size.max = b;
+                //   });
+                // }}
+                // value={[
+                //   appState.graph.nodes.size.min,
+                //   appState.graph.nodes.size.max
+                // ]}
                 />
 
               }

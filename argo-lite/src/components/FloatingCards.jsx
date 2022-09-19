@@ -77,16 +77,16 @@ class FloatingCards extends React.Component {
   };
 
   filtersVisible = {
-    right: '0em'
+    left: '0em'
   }
   filtersInvisible = {
-    right: '-22em'
+    left: '-22em'
   }
   filterSideButtonVis = {
-    marginLeft: '0px'
+    marginLeft: '50px'
   }
   filterSideButtonInv = {
-    marginLeft: '80px'
+    marginLeft: '-15px'
   }
   filterToggleOptions = () => {
     appState.preferences.isFilterOptionsCardHidden = !appState.preferences.isFilterOptionsCardHidden;
@@ -111,7 +111,7 @@ class FloatingCards extends React.Component {
   render() {
     return (
       <div className="floating-overlay">
-        <div className="left-cards">
+        <div className="left-cards" style={{zIndex: '10'}}>
           {appState.search.panelOpen && (
             <div
               className={classnames(
@@ -338,7 +338,7 @@ class FloatingCards extends React.Component {
               Classes.CARD,
               Classes.ELEVATION_2,
               "scatter-overlay-card",
-              "scatter-overlay-card",
+              
               "transparent-frame",
               "right-cards",
               "filter-option"
@@ -349,7 +349,7 @@ class FloatingCards extends React.Component {
             </button>
             
             <br />
-            {/* <FilterOptionsCard /> */}
+            
             <div id="scatter-plot"
             style={{transform: "translate(10px, -20px)"}}
             >
@@ -367,8 +367,10 @@ class FloatingCards extends React.Component {
         </div>
 
         {/* Filter option  panels */}
-        {/* <div className="left-cards">
+        <div className={"left-cards"} style={{ marginTop:'6em'}} >
           <div
+
+
             className={classnames(
               Classes.CARD,
               Classes.ELEVATION_2,
@@ -380,7 +382,7 @@ class FloatingCards extends React.Component {
             )}
             style={appState.preferences.isFilterOptionsCardHidden ? this.filtersInvisible : this.filtersVisible}
           >
-            <button className="openbtn3" onClick={this.filterToggleOptions}> &#8250;
+            <button className="openbtn2" onClick={this.filterToggleOptions}> &#8249;
             </button>
             <br />
             <FilterOptionsCard />
@@ -388,12 +390,12 @@ class FloatingCards extends React.Component {
           </div>
 
           <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", height: "0px", paddingTop: "0em", paddingLeft: "0px", paddingBottom: "0em", marginRight: "35px" }}>
+            "transparent-frame")} style={{ width: "1em", paddingTop: "0em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
             <button className="openbtn" onClick={this.filterToggleOptions} style={appState.preferences.isFilterOptionsCardHidden ? this.filterSideButtonVis : this.filterSideButtonInv}>
-              &#9776;
+               &#9776;
             </button>
           </div>
-        </div> */}
+        </div>
 
 
 

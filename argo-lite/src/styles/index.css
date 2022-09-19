@@ -77,6 +77,17 @@ html {
   max-height: 500px;
 }
 
+.filter-overlay-card {
+  padding-right: 27px;
+  width: 300px;
+  height:400px;
+  overflow-y: auto;
+  pointer-events: all;
+  margin-top: -1em;
+  padding-top: 1.1em;
+  max-height: 500px;
+}
+
 
 
 .scatterchart {
@@ -167,6 +178,20 @@ html {
 .openbtn {
   margin-left: 8px;
   margin-top: 3em;
+  font-size: 10px;
+  cursor: pointer;
+  background-color: #465d6e;
+  padding: 18px 23px;
+  border: black;
+  border-radius: 10%;
+  font-size: 15pt;
+  color: white;
+  transition: margin-left 0.2s;
+}
+
+.openbtn1 {
+  margin-left: 8px;
+  margin-top: 6em;
   font-size: 10px;
   cursor: pointer;
   background-color: #465d6e;
