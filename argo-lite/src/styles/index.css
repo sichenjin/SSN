@@ -466,3 +466,31 @@ div.pt-card.sub-option.legend {
 .xaxis text{
  transform:  rotate(-90deg) translate(-20px, -10px);
 }
+
+.leaflet-tooltip {
+  background:none;
+/*   display: none; */
+text-overflow: ellipsis;
+    overflow: hidden;
+   fillColor: none;
+    fillOpacity: 0;
+    background-color: none;
+    border-color: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: 0px;
+    cursor: none;
+    direction: 'center';
+    interactive: false;
+    fill: false;
+  color:black;
+  font-size:10px;
+  line-height:2px;
+  border-radius: 0px;
+  border: 6px solid transparent;
+  }
+
+  .pt-multi-select{
+ height: auto;
+  }

@@ -15,6 +15,7 @@ return (
   <MultiSelect
   popoverProps={{
     popoverClassName: "filter-scroll",
+    targetTagName: 'div' 
   }}
     items={items}
     itemRenderer={CommonItemRenderer}
@@ -23,6 +24,8 @@ return (
     tagRenderer = {tag}
     selectedItems = {value}
     tagInputProps = {tagprops}
+    
+
     // tagInputProps={{ tagProps: {intent: Intent.PRIMARY, interactive: true,values: value}}}
     // tagInputProps={{
     //   onRemove: {appState.graph.nodes.filter = {}},

@@ -213,9 +213,9 @@ module.exports = function(self) {
    * This is only accurate if the label is monospaced
    */
   self.changeLabelFontSize = function(node, size, relativeSize = 1) {
-    size = size * relativeSize;
+    size = size * relativeSize *10;
     node.renderData.textHolder.children[0].element.children[0].style.fontSize =
-      size.toString() + "rem";
+      size.toString() + "px";
   };
 
   /**

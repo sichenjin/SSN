@@ -9,7 +9,8 @@ import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect"
 import { ZoomMap, MapClick } from "../components/ZoomMap"
 import { useMap } from "react-leaflet";
-import { Tag } from "@blueprintjs/core";
+import { Tag , Switch} from "@blueprintjs/core";
+// import { Button, Classes, Switch, Tag } from "@blueprintjs/core";
 var def = require("../graph-frontend/src/imports").default;
 var d3 = def.d3;
 
@@ -163,6 +164,9 @@ class MapView extends React.Component {
 
 
   setEdgePathOption = (edge) => {
+    if(!appState.graph.mapEdgeShow){
+      return {  opacity: '0' }
+    }
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
       return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
 
@@ -482,6 +486,11 @@ class MapView extends React.Component {
                 // onMouseOut={this.onMouseOut}
                 // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
                 >
+                {(appState.graph.frame && node.renderData.textHolder.children[0].element.override )?  
+                <Tooltip 
+                width = {node.renderData.textHolder.children[0].element.children[0].style.width}
+                fontSize = {node.renderData.textHolder.children[0].element.children[0].style.fontSize}
+                className="maptooltip" direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip>:<Tooltip className="maptooltip" direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip> }
 
                 </CircleMarker>
               );
@@ -491,9 +500,18 @@ class MapView extends React.Component {
 
 
           }
-        </Pane>
+        </Pane> 
 
+        <Switch style={{ position: 'absolute', top: '55px', left: '40vw', zIndex: '1000' }}
+                    defaultChecked={appState.graph.mapEdgeShow}
+                    // checked={!node.isHidden}
+                    onChange={(value) => {
+                        appState.graph.mapEdgeShow = value.target.checked
 
+                    }}
+                />
+                <span style={{ position: 'absolute', top: '55px', left: '43vw', zIndex: '1000' }}> show edges</span>
+                
 
 
 

@@ -59,6 +59,8 @@ export default class GraphStore {
   @observable convexPolygons = [];
   @observable convexPolygonsShow = false;
 
+  @observable mapEdgeShow = true;
+
 
 
   // Currently hovered node

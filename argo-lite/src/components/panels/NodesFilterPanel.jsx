@@ -81,6 +81,7 @@ class NodesFilterPanel extends React.Component {
                   tag={selectit => { return selectit }}
                   value={this.state[it + '_filterlist']}
                   tagprops={{
+                    fill:true ,
                     onRemove: selectit => {
                       var self = this
                       var deselectIndex0 = this.state[it + '_filterlist'].indexOf(selectit)
