@@ -39,7 +39,7 @@ html {
 }
 
 .graph{
-  width: 50vw;
+  width: 100%;
   height: 90vh;
   flex: 1;
   position:relative
@@ -494,3 +494,48 @@ text-overflow: ellipsis;
   .pt-multi-select{
  height: auto;
   }
+
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+/* Slider */
+.container {
+  display: flex;
+  /* Misc */
+  border: 1px solid #cbd5e0;
+  width: 100%;
+}
+.container-up {
+  height: 75%;
+}
+.container-down {
+  height: 25%;
+}
+.container__left {
+  /* Initially, the left takes 3/4 width */
+  width: 50%;
+
+  /* Misc */
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}
+.resizer {
+  background-color: #cbd5e0;
+  cursor: ew-resize;
+  height: 100%;
+  width: 2px;
+}
+.container__right {
+  /* Take the remaining width */
+  flex: 1;
+
+  /* Misc */
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}

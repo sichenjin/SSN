@@ -356,7 +356,7 @@ class MapView extends React.Component {
 
     return <div id="map"
       style={{
-        width: "50vw",
+        width: "100%",
         height: "100vh",
         flex: "1",
         zIndex: "10"
