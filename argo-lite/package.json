@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@svgr/webpack": "4.3.2",
+    "@turf/turf": "^6.5.0",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
     "@vx/vx": "^0.0.158",

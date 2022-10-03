@@ -1,6 +1,6 @@
 import React from 'react';
 // import L from 'leaflet';
-import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane } from "react-leaflet";
+import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane, LayersControl , GeoJSON} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import appState from '../stores';
 import { observer } from 'mobx-react';
@@ -9,10 +9,17 @@ import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect"
 import { ZoomMap, MapClick } from "../components/ZoomMap"
 import { useMap } from "react-leaflet";
-import { Tag , Switch} from "@blueprintjs/core";
+import { Tag, Switch } from "@blueprintjs/core";
+import * as turf from '@turf/turf'
+import statejsonfile from "../layerdata/us-state.json"
+import countyjsonfile from "../layerdata/county_0_5m.json"
+import congressionjsonfile from "../layerdata/congressional_5m.json"
+
+
 // import { Button, Classes, Switch, Tag } from "@blueprintjs/core";
 var def = require("../graph-frontend/src/imports").default;
 var d3 = def.d3;
+
 
 // import LocationFilter from "../components/LocationFilter"
 
@@ -20,6 +27,17 @@ var d3 = def.d3;
 class MapView extends React.Component {
   componentDidMount() {
 
+  }
+
+  constructor(props) {
+    super(props);
+    // this.stringified = JSON.stringify(statejsonfile);
+    //  this.statejson = JSON.parse(this.stringified);
+    //  this.statePolyPath = this.statejson.features.map(statedata =>{
+    //     statedata.geometry.coordinates[0]
+    // })
+    //  this.statePolygons = turf.polygon(this.statePolyPath);
+    // console.log(this.statePolygons)
   }
 
   // frameNode = []
@@ -164,8 +182,8 @@ class MapView extends React.Component {
 
 
   setEdgePathOption = (edge) => {
-    if(!appState.graph.mapEdgeShow){
-      return {  opacity: '0' }
+    if (!appState.graph.mapEdgeShow) {
+      return { opacity: '0' }
     }
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
       return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
@@ -305,12 +323,12 @@ class MapView extends React.Component {
       }
 
     }
-    if(appState.graph.convexPolygonsShow){
+    if (appState.graph.convexPolygonsShow) {
       return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0.5, opacity: 0.8 }
-    }else{
+    } else {
       return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0, opacity: 0 }
     }
-    
+
   }
 
 
@@ -350,7 +368,37 @@ class MapView extends React.Component {
         zoom={9}
         center={[37.1, -80.5]}
       >
-        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=8f6a7e18-709d-4fe8-9dc9-fcce7bfa30d8" />
+        <LayersControl position="topright">
+          <LayersControl.BaseLayer name="OpenStreetMap">
+            <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=8f6a7e18-709d-4fe8-9dc9-fcce7bfa30d8" />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="DarkOpenStreetMap">
+            <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png" />
+          </LayersControl.BaseLayer>
+          <LayersControl.BaseLayer name="Transport">
+            <TileLayer url="'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=<3e517e9e5dff41bdbfe201c3b1d72e69>"  />
+          </LayersControl.BaseLayer>
+          <LayersControl.Overlay name="income">
+          <TileLayer url="https://www.justicemap.org/tile/{size}/income/{z}/{x}/{y}.png" 
+          size= {'county'}/>
+
+          </LayersControl.Overlay>
+          <LayersControl.Overlay name="US state">
+          
+          <GeoJSON data={statejsonfile}  /> 
+          </LayersControl.Overlay>
+
+          <LayersControl.Overlay name="US county">
+          
+          <GeoJSON data={countyjsonfile}  /> 
+          </LayersControl.Overlay>
+
+          <LayersControl.Overlay name="US Congressional">
+          
+          <GeoJSON data={congressionjsonfile}  /> 
+          </LayersControl.Overlay>
+        </LayersControl>
+        
         <AreaSelect />
         <ZoomMap />
         <MapClick />
@@ -486,11 +534,11 @@ class MapView extends React.Component {
                 // onMouseOut={this.onMouseOut}
                 // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
                 >
-                {(appState.graph.frame && node.renderData.textHolder.children[0].element.override )?  
-                <Tooltip 
-                width = {node.renderData.textHolder.children[0].element.children[0].style.width}
-                fontSize = {node.renderData.textHolder.children[0].element.children[0].style.fontSize}
-                className="maptooltip" direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip>:<Tooltip className="maptooltip" direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip> }
+                  {(appState.graph.frame && node.renderData.textHolder.children[0].element.override) ?
+                    <Tooltip
+                      width={node.renderData.textHolder.children[0].element.children[0].style.width}
+                      fontSize={node.renderData.textHolder.children[0].element.children[0].style.fontSize}
+                      className="maptooltip" direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> : <Tooltip className="maptooltip" direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
 
                 </CircleMarker>
               );
@@ -500,18 +548,18 @@ class MapView extends React.Component {
 
 
           }
-        </Pane> 
+        </Pane>
 
         <Switch style={{ position: 'absolute', top: '55px', left: '40vw', zIndex: '1000' }}
-                    defaultChecked={appState.graph.mapEdgeShow}
-                    // checked={!node.isHidden}
-                    onChange={(value) => {
-                        appState.graph.mapEdgeShow = value.target.checked
+          defaultChecked={appState.graph.mapEdgeShow}
+          // checked={!node.isHidden}
+          onChange={(value) => {
+            appState.graph.mapEdgeShow = value.target.checked
 
-                    }}
-                />
-                <span style={{ position: 'absolute', top: '55px', left: '43vw', zIndex: '1000' }}> show edges</span>
-                
+          }}
+        />
+        <span style={{ position: 'absolute', top: '55px', left: '43vw', zIndex: '1000' }}> show edges</span>
+
 
 
 
