@@ -494,13 +494,24 @@ text-overflow: ellipsis;
   .pt-multi-select{
  height: auto;
   }
+
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 /* Slider */
 .container {
   display: flex;
-
   /* Misc */
   border: 1px solid #cbd5e0;
   width: 100%;
+}
+.container-up {
+  height: 75%;
+}
+.container-down {
+  height: 25%;
 }
 .container__left {
   /* Initially, the left takes 3/4 width */
@@ -510,6 +521,7 @@ text-overflow: ellipsis;
   align-items: center;
   display: flex;
   justify-content: center;
+  overflow: auto;
 }
 .resizer {
   background-color: #cbd5e0;
@@ -525,4 +537,5 @@ text-overflow: ellipsis;
   align-items: center;
   display: flex;
   justify-content: center;
+  overflow: auto;
 }

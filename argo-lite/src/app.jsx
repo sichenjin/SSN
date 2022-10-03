@@ -43,6 +43,7 @@ function respondToResize() {
   if (window.innerWidth < MOBILE_WIDTH_CUTOFF || window.innerHeight < MOBILE_HEIGHT_CUTOFF) {
     appState.preferences.turnOnMinimalMode();
   }
+  appState.graph.setUpFrame();
 }
 
 respondToResize();
@@ -142,32 +143,34 @@ class App extends React.Component {
       })}>
          <Navbar />
          {appState.graph.hasGraph && <ComDetection />}
-        <div class="container">
-          <div class="container__left">
-            <div className="graph">         
-              <main className="main">
-                {appState.graph.hasGraph ? (
-                  <ThreeJSVis />
-                  ) : (
+         <div class="outer-container">
+          <div class="container-up container">
+            <div class="container__left">
+              <div className="graph">         
+                <main className="main">
+                  {appState.graph.hasGraph ? (
+                    <ThreeJSVis />
+                    ) : (
+                    <WorkspaceView />
+                  )}  
+                </main>
+                {/* {appState.graph.hasGraph && <FloatingCards />} */}
+                <Dialogs />
+              </div>
+            </div>
+            <div class="resizer" id="dragMe"></div>
+            <div class="container__right">
+              {appState.graph.hasGraph ? (
+                  <MapView />
+                ) : (
                   <WorkspaceView />
-                )}  
-              </main>
-              {appState.graph.hasGraph && <FloatingCards />}
-              <Dialogs />
+                )}
+              {/* <h3>{this.mss}</h3> */}
             </div>
           </div>
-          <div class="resizer" id="dragMe"></div>
-          <div class="container__right">
-            {appState.graph.hasGraph ? (
-                <MapView />
-              ) : (
-                <WorkspaceView />
-              )}
-            {/* <h3>{this.mss}</h3> */}
-          </div>
-        </div>
+          <div class="container-down container">Location for the graphs</div>
       </div>
-      
+    </div>
       
     );
   }
