@@ -72,7 +72,6 @@ html {
   width: 300px;
   height:400px;
   pointer-events: all;
-  margin-top: -1em;
   padding-top: 1.1em;
   max-height: 500px;
 }
@@ -508,10 +507,13 @@ text-overflow: ellipsis;
   width: 100%;
 }
 .container-up {
-  height: 75%;
+  height: 65%;
 }
 .container-down {
-  height: 25%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
 }
 .container__left {
   /* Initially, the left takes 3/4 width */
@@ -528,6 +530,12 @@ text-overflow: ellipsis;
   cursor: ew-resize;
   height: 100%;
   width: 2px;
+}
+.resizer-up {
+  background-color: #cbd5e0;
+  cursor: ew-resize;
+  width: 100%;
+  height: 2px;
 }
 .container__right {
   /* Take the remaining width */
