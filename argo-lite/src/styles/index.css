@@ -69,12 +69,12 @@ html {
 
 .scatter-overlay-card {
   padding-right: 27px;
-  width: 300px;
-  height:400px;
+  width: 400px;
+  height: 420px;
   pointer-events: all;
   margin-top: -1em;
   padding-top: 1.1em;
-  max-height: 500px;
+  /* max-height: 500px; */
 }
 
 .filter-overlay-card {
@@ -494,3 +494,35 @@ text-overflow: ellipsis;
   .pt-multi-select{
  height: auto;
   }
+
+.tg-pt-dialog-resizable-draggable
+  .pt-overlay.pt-overlay-scroll-container.pt-overlay-inline {
+  position: static;
+  height: 50%;
+  width: 50%;
+}
+.tg-pt-dialog-resizable-draggable .pt-overlay-inline .pt-overlay-content,
+.tg-pt-dialog-resizable-draggable
+  .pt-overlay-scroll-container
+  .pt-overlay-content {
+  position: static;
+  width: 50%;
+  height: 50%;
+}
+.tg-pt-dialog-resizable-draggable .pt-dialog-container .pt-dialog {
+  position: static;
+  width: 50%;
+  height: 50%;
+  margin: 0 !important;
+}
+.tg-pt-dialog-resizable-draggable .pt-dialog-header {
+  cursor: move;
+}
+.tg-pt-dialog-resizable-draggable .pt-dialog-body {
+  height: 50%;
+  width: -webkit-fill-available;
+  overflow: auto;
+}
+.tg-pt-dialog-resizable-draggable .pt-overlay-backdrop {
+  display: none;
+}

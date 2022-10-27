@@ -96,7 +96,7 @@ class FloatingCards extends React.Component {
     right: '0em'
   }
   scatterInvisible = {
-    right: '-22em'
+    right: '-52em'
   }
   scatterSideButtonVis = {
     marginLeft: '0px'

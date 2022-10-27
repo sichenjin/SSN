@@ -131,6 +131,11 @@ class RegularNavbar extends React.Component {
                   onClick={() => { appState.preferences.statisticsDialogOpen = true }}
                 />
                 <MenuItem
+                  text="Scatterplot"
+                  iconName="pt-icon-timeline-bar-chart"
+                  onClick={() => { appState.preferences.isScatterPlotDialogOpen = true }}
+                />
+                <MenuItem
                   text="Filter"
                   iconName="graph"
                   onClick={() => { appState.preferences.filterDialogOpen = true }}

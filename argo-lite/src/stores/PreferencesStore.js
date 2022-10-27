@@ -16,6 +16,7 @@ export default class PreferencesStore {
   @observable isRenderOptionsCardHidden = IS_IFRAME_WIDGET;
   @observable isFilterOptionsCardHidden = true;
   @observable isScatterPlotCardHidden = true;
+  @observable isScatterPlotDialogOpen = false;
 
   // The following fields are asynchronously loaded.
   // Any writes to these fields through saveUserConfig

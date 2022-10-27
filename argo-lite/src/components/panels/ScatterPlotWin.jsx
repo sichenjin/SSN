@@ -12,7 +12,6 @@ import SVGBrush from 'react-svg-brush';
 import path from 'ngraph.path';
 import * as SvgSaver from 'svgsaver';
 import { CSVLink, CSVDownload } from "react-csv";
-import { transform } from "lodash";
 // import SvgSaver from svgsaver
 
 var def = require("../../graph-frontend/src/imports").default;
@@ -28,6 +27,49 @@ var def = require("../../graph-frontend/src/imports").default;
 //   // numDataPoints: 50,
 //   // maxRange: () => Math.random() * 1000
 // };
+
+
+@observer
+class ScatterPlotWin extends React.Component {
+    constructor(props) {
+      super(props);
+      
+    }
+  
+    render() {
+      const w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName("body")[0],
+      windowWidth = w.innerWidth || e.clientWidth || g.clientWidth,
+      windowHeight = w.innerHeight || e.clientHeight || g.clientHeight;
+      return (
+        
+<div
+      className={"tg-pt-dialog-resizable-draggable"}
+      style={{ top: 0, left: 0, position: "fixed" }}
+    >
+         <Rnd
+        style={{backgroundColor:'red'}}
+        bounds={"body"}
+        default={{
+          x: window.innerWidth/3,
+          y: window.innerHeight/3,
+          width: 320,
+          height: 200,
+        }}
+      > 
+      <ScatterPlot/>
+        
+        
+      </Rnd>
+    </div>
+     
+  
+      )
+    }}
+    
+export default ScatterPlotWin;
 
 @observer
 class ScatterPlot extends React.Component {
@@ -57,8 +99,8 @@ class ScatterPlot extends React.Component {
   // .filter(node => node.data.ref.degree !== 0 && !isNaN(parseFloat(node.data.ref.dist_to_center)))
 
   margin = { top: 10, right: 10, bottom: 50, left: 50 }
-  width = 350 - this.margin.left - this.margin.right
-  height = 300 - this.margin.top - this.margin.bottom
+  width = window.innerWidth/3 - this.margin.left - this.margin.right
+  height = window.innerHeight/3 - this.margin.top - this.margin.bottom
   cr = 3
   maxhop = undefined
   formatXtext = []
@@ -310,9 +352,9 @@ class ScatterPlot extends React.Component {
       return (
         <div>
          
-          <div style={{ width:'350px', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}>
+          <div className={classnames(Classes.CARD, "sub-option")}>
           
-            <div style={{ position: "absolute" , top:"3px" }}>
+            <div>
               <p style={{ display: "inline" }}>X By: </p>
               <span style={{ float: "right" }}>
                 < SimpleSelect
@@ -323,7 +365,7 @@ class ScatterPlot extends React.Component {
               </span>
             </div>
 
-            <div style={{ position: "absolute" , top:"3px" , transform:'translate(170px,0px)' }}>
+            <div style={{ marginTop: "10px" }}>
               <p style={{ display: "inline" }}>Y by: </p>
               <span style={{ float: "right" }}>
                 <SimpleSelect
@@ -351,7 +393,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop ={this.infinityhop}/>}
-                <text transform={"translate(150, 280)"} fontSize="13px">{appState.graph.scatterplot.x}</text>
+                <text transform={"translate(50, 180)"} fontSize="13px">{appState.graph.scatterplot.x}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -398,7 +440,7 @@ class ScatterPlot extends React.Component {
             </svg>
           </div>
           <Button 
-            style={{transform: "translate(0px, -15px)", }}
+            style={{transform: "translate(0px, -2vh)"}}
             onClick={() => {
             var svgsaver = new SvgSaver();                      // creates a new instance
             var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -409,7 +451,7 @@ class ScatterPlot extends React.Component {
           {(
         <CSVLink data={this.state.csvarray} onClick = {this.downloadCSV}  asyncOnClick={true} filename="bsedata.csv">
           <Button 
-            style={{transform: "translate(0px, -15px)", }}
+            style={{transform: "translate(0px, -2vh)"}}
             
             >DownLoad CSV
           </Button>
@@ -685,5 +727,5 @@ class RenderCircles extends React.Component {
   }
 }
 
-export default ScatterPlot;
+
 

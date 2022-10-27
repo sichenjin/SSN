@@ -198,7 +198,7 @@ class MapView extends React.Component {
       } else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
       } else {
-        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
+        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0' }
       }
     }
 
@@ -208,7 +208,7 @@ class MapView extends React.Component {
       if (edge.fromId == appState.graph.mapClicked.id || edge.toId == appState.graph.mapClicked.id) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
-        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
+        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0' }
       }
     }
 
@@ -216,7 +216,7 @@ class MapView extends React.Component {
       if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
         return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
       } else {
-        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
+        return { color: appState.graph.edges.color, weight: '0.7', opacity: '0' }
       }
     }
 
@@ -227,7 +227,7 @@ class MapView extends React.Component {
           return { color: appState.graph.edges.crossColor, weight: '3', opacity: '1' }
         }
       }
-      return { color: appState.graph.edges.color, weight: '0.7', opacity: '0.2' }
+      return { color: appState.graph.edges.color, weight: '0.7', opacity: '0' }
     }
 
 
@@ -252,7 +252,7 @@ class MapView extends React.Component {
 
     if (appState.graph.convexNodes.length > 0) {
       if (appState.graph.convexNodes.indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       } else {
 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
@@ -271,7 +271,7 @@ class MapView extends React.Component {
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, zIndex: '10000' }
       } else { //others 
-        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       }
     }
 
@@ -282,7 +282,7 @@ class MapView extends React.Component {
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }
       } else { //others 
-        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       }
     }
 
@@ -292,7 +292,7 @@ class MapView extends React.Component {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: 'red', zIndex: '10000' }
       }
       else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       } else {
 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: '#DB7734', zIndex: '10000' }
@@ -304,7 +304,7 @@ class MapView extends React.Component {
     // select area highlight 
     if (appState.graph.selectedNodes.length > 0) {
       if (appState.graph.selectedNodes.indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       } else {
 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: def.NODE_HIGHLIGHT, zIndex: '10000' }

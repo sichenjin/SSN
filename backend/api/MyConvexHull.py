@@ -9,6 +9,8 @@ from scipy.spatial import ConvexHull, convex_hull_plot_2d
 import numpy as np
 import json
 import ast
+from scipy import stats
+
 
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -51,6 +53,12 @@ class MyConvexHull(Resource):
       glat = [n["LatY"] for n in groupnodes]
       glon = [n["LonX"] for n in groupnodes]
       points = np.array(list(zip(glat, glon)))
+
+      #remove outlier
+      gdf = pd.DataFrame(points, columns = ['glat','glon'])
+      ngdf = gdf[(np.abs(stats.zscore(gdf)) < 3).all(axis=1)]
+      points = ngdf.to_numpy()
+      
       hull = ConvexHull(points)
       # Get the indices of the hull points.
       hull_indices = hull.vertices
