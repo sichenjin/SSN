@@ -356,10 +356,12 @@ class MapView extends React.Component {
 
     return <div id="map"
       style={{
-        width: "50vw",
-        height: "100vh",
-        flex: "1",
-        zIndex: "10"
+        // width: "50vw",
+        height: "60vh",
+        flex: "1 1 50%",
+        zIndex: "10",
+        border:'#C0C0C0',
+          borderStyle:'solid',
         // position: "absolute"
       }}
     > <Tag className="map-tag">Map</Tag>
@@ -550,7 +552,7 @@ class MapView extends React.Component {
           }
         </Pane>
 
-        <Switch style={{ position: 'absolute', top: '55px', left: '40vw', zIndex: '1000' }}
+        <Switch style={{ position: 'absolute', top: '55vh', left: '40vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -558,7 +560,19 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ position: 'absolute', top: '55px', left: '43vw', zIndex: '1000' }}> show edges</span>
+        <span style={{ position: 'absolute', top: '55vh', left: '43vw', zIndex: '1000' }}> show edges</span>
+
+
+        <Switch style={{ position: 'absolute', top: '55vh', left: '0', zIndex: '1000' }}
+                    defaultChecked={appState.graph.convexPolygonsShow}
+                    // checked={!node.isHidden}
+                    onChange={(value) => {
+                        appState.graph.convexPolygonsShow = value.target.checked
+
+                    }}
+                />
+                <span style={{ position: 'absolute', top: '55vh', left: '3vw', zIndex: '1000' }}> show community convex hull</span>
+                {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null}
 
 
 

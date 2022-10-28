@@ -15,6 +15,8 @@ import appState from "./stores/index";
 import ThreeJSVis from "./visualizers/ThreeJSVis";
 import MapView from "./visualizers/MapView";
 import FloatingCards from "./components/FloatingCards";
+import ScatterPlot from "./components/panels/ScatterPlot"
+import SelectionDetail from "./components/panels/SelectionDetail";
 import registerIPC from "./ipc/client";
 import { fetchWorkspaceProjects } from "./ipc/client";
 import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
@@ -98,12 +100,25 @@ class App extends React.Component {
           {appState.graph.hasGraph && <FloatingCards />}
           <Dialogs />
         </div>
-          {appState.graph.hasGraph ? (
-              <MapView />
-            ) : (
-                <WorkspaceView />
-              )}
-         {/* <h3>{this.mss}</h3> */}
+
+        {appState.graph.hasGraph ? (
+            <MapView />
+          ) : (
+              <WorkspaceView />
+        )}
+        <div  className= "scatter-overlay-card"
+        style = {{ border:'#C0C0C0',
+        borderStyle:'solid',}}>
+        {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
+          
+        
+
+        </div>
+
+        {
+           <SelectionDetail />
+        }
+       
       </div>
       
       

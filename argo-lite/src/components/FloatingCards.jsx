@@ -111,7 +111,7 @@ class FloatingCards extends React.Component {
   render() {
     return (
       <div className="floating-overlay">
-        <div className="left-cards" style={{zIndex: '10'}}>
+        <div className="left-cards" style={{zIndex: '5000'}}>
           {appState.search.panelOpen && (
             <div
               className={classnames(
@@ -332,7 +332,7 @@ class FloatingCards extends React.Component {
 
         </div>
         {/* Scatter Plot  panels */}
-        <div className="right-cards">
+        {/* <div className="right-cards">
           <div
             className={classnames(
               Classes.CARD,
@@ -364,7 +364,7 @@ class FloatingCards extends React.Component {
               &#9776;
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* Filter option  panels */}
         <div className={"left-cards"} style={{ marginTop:'6em'}} >
@@ -404,9 +404,9 @@ class FloatingCards extends React.Component {
         </Tag>
 
 
-        {// This menu only shows when there are nodes selected
+        {/* {// This menu only shows when there are nodes selected
           appState.graph.selectedNodes.length > 1 && <SelectionDetail />
-        }
+        } */}
         {/* {appState.graph.selectedNodes.length === 1 && (
           <NodeDetail node={appState.graph.selectedNodes[0].data.ref} />
         )} */}
@@ -418,7 +418,7 @@ class FloatingCards extends React.Component {
 
 
         <Legends />
-        <StatusBar />
+        {/* <StatusBar /> */}
         {// This menu only shows when there are nodes selected
           appState.graph.selectedNodes.length > 0 && !appState.preferences.isNavbarInMinimalMode && <SelectionActionPanel />
         }

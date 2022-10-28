@@ -211,27 +211,18 @@ class ComDetection extends React.Component {
         return (
             <div>
                 <Button
-                    style={{ position: 'absolute', bottom: '30px', left: '15vw', zIndex: '1000' }}
+                className="bp4-button"
+                    style={{ position: 'absolute', top: '55vh', left: '15vw', zIndex: '1000' }}
                     onClick={this.runcommunity}>Run Community</Button>
                 {/* {this.modularity? <Tag className="network-tag">{this.modularity}</Tag>: null} */}
                 {/* <Button
                     style={{ position: 'absolute', top: '50px', left: '500px', zIndex: '1000' }}
                     onClick={this.findcliques}>Find Cliques</Button> */}
                 <Button
-                    style={{ position: 'absolute', bottom: '30px', left: '30vw', zIndex: '1000' }}
+                className="bp4-button"
+                    style={{ position: 'absolute', top: '55vh', left: '30vw', zIndex: '1000' }}
                     onClick={() => this.convexhull('community')}>Convex Hull by Group</Button>
-                <Switch style={{ position: 'absolute', bottom: '25px', left: '50vw', zIndex: '1000' }}
-                    defaultChecked={appState.graph.convexPolygonsShow}
-                    // checked={!node.isHidden}
-                    onChange={(value) => {
-                        appState.graph.convexPolygonsShow = value.target.checked
-
-                    }}
-                />
-                <span style={{ position: 'absolute', bottom: '35px', left: '53vw', zIndex: '1000' }}> show community convex hull</span>
-                {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', bottom: '30px', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null}
-
-
+                
             </div>
 
         )

@@ -7,7 +7,7 @@ import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
 import { scaleLinear, scalePoint, max, axisLeft, axisBottom, select } from "d3"
 import { brush, brushY } from "d3-brush";
-import SimpleSelect from "../utils/SimpleSelect";
+import XYSelect from "../utils/XYSelect";
 import SVGBrush from 'react-svg-brush';
 import path from 'ngraph.path';
 import * as SvgSaver from 'svgsaver';
@@ -57,8 +57,8 @@ class ScatterPlot extends React.Component {
   // .filter(node => node.data.ref.degree !== 0 && !isNaN(parseFloat(node.data.ref.dist_to_center)))
 
   margin = { top: 10, right: 10, bottom: 50, left: 50 }
-  width = 350 - this.margin.left - this.margin.right
-  height = 300 - this.margin.top - this.margin.bottom
+  width = window.innerWidth/2 - this.margin.left - this.margin.right
+  height = window.innerHeight*0.38 - this.margin.top - this.margin.bottom
   cr = 3
   maxhop = undefined
   formatXtext = []
@@ -310,12 +310,12 @@ class ScatterPlot extends React.Component {
       return (
         <div>
          
-          <div style={{ width:'350px', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}>
+          {/* <div style={{ width:'50vw', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}> */}
           
-            <div style={{ position: "absolute" , top:"3px" }}>
-              <p style={{ display: "inline" }}>X By: </p>
+            <div style={{ position:'absolute' , top:'62vh' , left: '16vw'}}>
+              <p className="scatter-plot-font" style={{ display: "inline" }}>X By: </p>
               <span style={{ float: "right" }}>
-                < SimpleSelect
+                < XYSelect  className="scatter-plot-font" style={{ display: "inline" }}
                   items={appState.graph.allComputedPropertiesKeyList}
                   onSelect={it => (appState.graph.scatterplot.x = it)}
                   value={appState.graph.scatterplot.x}
@@ -323,17 +323,18 @@ class ScatterPlot extends React.Component {
               </span>
             </div>
 
-            <div style={{ position: "absolute" , top:"3px" , transform:'translate(170px,0px)' }}>
-              <p style={{ display: "inline" }}>Y by: </p>
+            <div style={{position:'absolute' , top:'62vh' , left: '30vw' }}>
+              <p className="scatter-plot-font" style={{ display: "inline" }}>Y by: </p>
               <span style={{ float: "right" }}>
-                <SimpleSelect
+                <XYSelect 
+                className="scatter-plot-font"
                   items={appState.graph.allComputedPropertiesKeyList}
                   onSelect={it => (appState.graph.scatterplot.y = it)}
                   value={appState.graph.scatterplot.y}
                 />
               </span>
             </div>
-          </div>
+          {/* </div> */}
           <div>
 
             <svg
@@ -351,7 +352,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop ={this.infinityhop}/>}
-                <text transform={"translate(150, 280)"} fontSize="13px">{appState.graph.scatterplot.x}</text>
+                <text style ={{transform: 'translate(10vw, 36vh)'}}  fontSize="13px">{appState.graph.scatterplot.x}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -398,7 +399,8 @@ class ScatterPlot extends React.Component {
             </svg>
           </div>
           <Button 
-            style={{transform: "translate(0px, -15px)", }}
+          className="bp4-button"
+            style={{transform: "translate(38vw, -5vh)", }}
             onClick={() => {
             var svgsaver = new SvgSaver();                      // creates a new instance
             var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -409,7 +411,8 @@ class ScatterPlot extends React.Component {
           {(
         <CSVLink data={this.state.csvarray} onClick = {this.downloadCSV}  asyncOnClick={true} filename="bsedata.csv">
           <Button 
-            style={{transform: "translate(0px, -15px)", }}
+          className="bp4-button"
+            style={{transform: "translate(17vw, -5vh)", }}
             
             >DownLoad CSV
           </Button>

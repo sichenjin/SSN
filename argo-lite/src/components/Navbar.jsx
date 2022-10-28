@@ -25,6 +25,10 @@ import { LOGO_URL, GITHUB_URL, SAMPLE_GRAPH_SNAPSHOTS } from '../constants';
 
 @observer
 class RegularNavbar extends React.Component {
+
+
+
+  
   render() {
     return (
       <nav className={classnames([Classes.NAVBAR], 'navbar-head')}>
@@ -136,13 +140,18 @@ class RegularNavbar extends React.Component {
                   onClick={() => { appState.preferences.isScatterPlotDialogOpen = true }}
                 />
                 <MenuItem
-                  text="Filter"
+                  text="Run Community"
                   iconName="graph"
                   onClick={() => { appState.preferences.filterDialogOpen = true }}
                 />
-                <MenuItem text="Filters" iconName="graph">
+                <MenuItem
+                  text="Convex Hull"
+                  iconName="graph"
+                  onClick={() => { appState.preferences.filterDialogOpen = true }}
+                />
+                {/* <MenuItem text="Community Detection" iconName="graph">
                   <MenuItem
-                    text="Show All Nodes"
+                    text="Convex Hull"
                     onClick={() => {
                       appState.graph.showNodes(appState.graph.rawGraph.nodes.map(n => n.id));
                     }}
@@ -189,7 +198,7 @@ class RegularNavbar extends React.Component {
                       appState.graph.hideNodes(appState.graph.rawGraph.nodes.map(n => n.id));
                     }}
                   />
-                </MenuItem>
+                </MenuItem> */}
               </Menu>
             }
             position={Position.BOTTOM}
