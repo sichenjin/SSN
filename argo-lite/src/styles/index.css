@@ -547,3 +547,23 @@ text-overflow: ellipsis;
   justify-content: center;
   overflow: auto;
 }
+
+/* Nav */
+.pt-navbar {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar-menu {
+  display: flex;
+  width: 10%;
+}
+
+.sidebar-container {
+  margin-top: 25%;
+  width: 100%;
+}
+
+.city {
+  width: 100%;
+}

@@ -27,6 +27,8 @@ import axios from 'axios'
 
 import ScatterPlot from "./components/panels/ScatterPlot";
 
+import Sidebar from "./components/Sidebar"
+
 registerIPC();
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -203,9 +205,12 @@ class App extends React.Component {
         "app-wrapper": true,
         [Classes.DARK]: appState.preferences.darkMode
       })}>
+      <div class="container">
          <Navbar />
+         <div class="container">
+         <Sidebar />
          {/* {appState.graph.hasGraph && <ComDetection />} */}
-         <div class="outer-container">
+        <div class="outer-container">
           <div class="container-up container">
             <div class="container__left">
               <div className="graph">         
@@ -251,6 +256,8 @@ class App extends React.Component {
             </div>
             </div>
           </div>
+        </div>
+        </div>
       </div>
     </div>
       

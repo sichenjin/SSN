@@ -344,49 +344,6 @@ convexhull = (group) => {
           </Popover>
           <Popover
             content={
-              <div>
-                <h4>Appearance </h4>
-                <Tabs2 animate id="graph-options">
-                  <Tab2 id="nodes" title="Nodes" panel={<NodesPanel />} />
-                  <Tab2 id="edges" title="Edges" panel={<EdgesPanel />} />
-                  <Tab2 id="labels" title="Labels" panel={<LabelsPanel />} />
-                  {/* <Tab2 id="layout" title="Layout" panel={<LayoutPanel />} /> */}
-                  <Tabs2.Expander />
-                </Tabs2>
-              </div>
-            }
-            position={Position.BOTTOM}
-          >
-            <Button
-              className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-              iconName="graph"
-            >
-              Appearance
-            </Button>
-          </Popover>
-          <Popover
-            content={
-              <div>
-                <h4>Filter Options</h4>
-                <Tabs2 animate id="filter-options">
-                  <Tab2 id="nodes" title="Nodes" panel={<NodesFilterPanel />} />
-                  <Tab2 id="edges" title="Edges" panel={<EdgesPanel />} />
-                  {/* <Tab2 id="layout" title="Layout" panel={<LayoutPanel />} /> */}
-                  <Tabs2.Expander />
-                </Tabs2>
-              </div>
-            }
-            position={Position.BOTTOM}
-          >
-            <Button
-              className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-              iconName="graph"
-            >
-              Filter Options
-            </Button>
-          </Popover>
-          <Popover
-            content={
               <Menu>
                 <MenuItem
                   text="Data Sheet"
