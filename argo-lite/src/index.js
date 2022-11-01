@@ -6,6 +6,8 @@ import 'normalize.css/normalize.css';
 import '@blueprintjs/core/dist/blueprint.css';
 import '@blueprintjs/table/dist/table.css';
 import './styles/index.css';
+import './styles/w3.css'
+
 
 const render = () => {
     ReactDOM.render(<App/>, document.getElementById('root'));

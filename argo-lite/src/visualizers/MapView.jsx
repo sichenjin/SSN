@@ -366,7 +366,7 @@ class MapView extends React.Component {
       }}
     > <Tag className="map-tag">Map</Tag>
       <MapContainer
-        // style={{ height: "480px", width: "100%" }}
+        style={{ height: "100%", width: "100%" }}
         zoom={9}
         center={[37.1, -80.5]}
       >
