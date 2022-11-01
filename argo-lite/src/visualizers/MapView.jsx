@@ -371,7 +371,7 @@ class MapView extends React.Component {
         center={[37.1, -80.5]}
       >
         <LayersControl position="topright">
-          <LayersControl.BaseLayer name="OpenStreetMap">
+          <LayersControl.BaseLayer name="OpenStreetMap" checked="true">
             <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=8f6a7e18-709d-4fe8-9dc9-fcce7bfa30d8" />
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer name="DarkOpenStreetMap">

@@ -5,7 +5,7 @@ import { Button, Classes } from "@blueprintjs/core";
 import appState from "../../stores";
 import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
-import { scaleLinear, scalePoint, max, axisLeft, axisBottom, select } from "d3"
+import { scaleLinear, scalePoint, max, axisLeft, axisBottom, select, group } from "d3"
 import { brush, brushY } from "d3-brush";
 import XYSelect from "../utils/XYSelect";
 import SVGBrush from 'react-svg-brush';
@@ -33,30 +33,9 @@ var def = require("../../graph-frontend/src/imports").default;
 class ScatterPlot extends React.Component {
 
   @observable data = appState.graph.frame.getNodeList().filter(node => !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.x])) && !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.y])))
-  // @observable x = scaleLinear()
-  //   .domain([
-  //     0,
-  //     max(appState.graph.frame.getNodeList(), function (d) {
-  //       return parseFloat(d.data.ref[appState.graph.scatterplot.x])
-  //     })
-  //   ])
-  //   .range([0, this.width])
-   
-
   
-  // @observable y = scaleLinear()
-  //   .domain([
-  //     0,
-  //     max(appState.graph.frame.getNodeList(), function (d) {
-  //       return parseFloat(d.data.ref[appState.graph.scatterplot.y])
-  //     })
-  //   ])
-  //   .range([this.height, 0])
-
-  // this.props.data.filter(node => !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.x])) && !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.y])))
-  // .filter(node => node.data.ref.degree !== 0 && !isNaN(parseFloat(node.data.ref.dist_to_center)))
-
-  margin = { top: 10, right: 10, bottom: 50, left: 50 }
+  margin = { top: 20, right: 10, bottom: 50, left: 50 }
+  // clustermargin = {top: 50, right: 50, bottom: 50, left: 50}
   width = window.innerWidth/2 - this.margin.left - this.margin.right
   height = window.innerHeight*0.38 - this.margin.top - this.margin.bottom
   cr = 3
@@ -209,7 +188,17 @@ class ScatterPlot extends React.Component {
 
     if (appState.graph.hasGraph) {
       let x,y
-      if(appState.graph.scatterplot.x === 'shortest path'){
+      if(appState.graph.scatterplot.x === 'network density' || appState.graph.scatterplot.x === 'standard distance'){
+        x = scaleLinear()
+        .domain([
+          0,
+          max(appState.graph.densityDistance, function (d) {
+            return parseFloat(d[appState.graph.scatterplot.x])
+          })
+        ])
+        .range([0, this.width])
+      }
+      else if(appState.graph.scatterplot.x === 'shortest path'){
         const shortpathhop = appState.graph.rawGraph.paths.map(function(path,i){
           return path['path'].length -1
         })
@@ -261,7 +250,17 @@ class ScatterPlot extends React.Component {
         .range([0, this.width])
       }
      
-      if(appState.graph.scatterplot.y === 'shortest path'){
+      if(appState.graph.scatterplot.y === 'network density' || appState.graph.scatterplot.y === 'standard distance'){
+        y = scaleLinear()
+        .domain([
+          0,
+          max(appState.graph.densityDistance, function (d) {
+            return parseFloat(d[appState.graph.scatterplot.y])
+          })
+        ])
+        .range([this.height, 0])
+      }
+      else if(appState.graph.scatterplot.y === 'shortest path'){
 
 
         const shortpathhop = appState.graph.rawGraph.paths.map(function(path,i){
@@ -346,13 +345,13 @@ class ScatterPlot extends React.Component {
             // ref = {ref}
             >
               <g
-                transform={"translate(" + this.margin.left + ",3)"}
+                transform={"translate(" + this.margin.left + "," + this.margin.top +")"}
                 width={this.width}
                 height={this.height}
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop ={this.infinityhop}/>}
-                <text style ={{transform: 'translate(10vw, 36vh)'}}  fontSize="13px">{appState.graph.scatterplot.x}</text>
+                <text style ={{transform: 'translate(10vw, 36vh)'}}  fontSize="13px">{(appState.graph.scatterplot.x === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.x}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -370,7 +369,7 @@ class ScatterPlot extends React.Component {
                 <text
                   transform={"translate(-40, 140) rotate(-90)"}
                   fontSize="13px"
-                >{appState.graph.scatterplot.y}</text>
+                >{(appState.graph.scatterplot.y === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.y}</text>
                 <Axis
                   axis="y"
                   transform="translate(0,0)"
@@ -393,8 +392,10 @@ class ScatterPlot extends React.Component {
                 // }}
                 />
               </g>
-              { (appState.graph.scatterplot.y !== 'shortest path') && (appState.graph.scatterplot.x !== 'shortest path') 
-      && (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance') &&
+              { (appState.graph.scatterplot.y !== 'shortest path') && (appState.graph.scatterplot.x !== 'shortest path') &&
+               (appState.graph.scatterplot.y !== 'network density') && (appState.graph.scatterplot.x !== 'standard distance') &&
+               (appState.graph.scatterplot.y !== 'standard distance') && (appState.graph.scatterplot.x !== 'network density') &&
+      (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance') &&
         this.renderBrush()}
             </svg>
           </div>
@@ -465,7 +466,7 @@ class Axis extends React.Component {
 
 @observer
 class RenderCircles extends React.Component {
-  setScatterStyle = (node) => {
+  setScatterStyle = (node,ni) => {
     // const dehighlightNode = {
     //   fill: "rgba(25, 158, 199, .9)",
     //   zIndex: "0"
@@ -475,7 +476,9 @@ class RenderCircles extends React.Component {
     //   zIndex: "10000"
     // }
     if((appState.graph.scatterplot.y !== 'shortest path') && (appState.graph.scatterplot.x !== 'shortest path') 
-      && (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance')){
+      && (appState.graph.scatterplot.y !== 'pair distance') && (appState.graph.scatterplot.x !== 'pair distance')
+      && (appState.graph.scatterplot.y !== 'standard distance') && (appState.graph.scatterplot.x !== 'standard distance') 
+      && (appState.graph.scatterplot.y !== 'network density') && (appState.graph.scatterplot.x !== 'network density')){
         if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0) {
           return {
             fill: node.renderData.color,
@@ -516,7 +519,41 @@ class RenderCircles extends React.Component {
             }
           }
         }
-      }else{ //path node style 
+      }else if(((appState.graph.scatterplot.y == 'network density') && (appState.graph.scatterplot.x == 'standard distance')) || 
+       ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))){  // density distance node style
+        // density distance node style
+
+        //hover on one group 
+        if(appState.graph.distanceDensityCurrentlyHovered){
+
+          if (node['name'] === appState.graph.distanceDensityCurrentlyHovered) {
+            return {
+              fill: appState.graph.nodeColorScale(node['name']),
+              zIndex: "10000",
+              stroke: def.NODE_HIGHLIGHT,
+              fillOpacity: 0.8
+            }
+          } else {
+            return {
+              fill: appState.graph.nodeColorScale(node['name']),
+              zIndex: "0",
+              stroke: false,
+              fillOpacity: 0.15
+            }
+          }
+
+        }else{// no hover 
+          return {
+            fill: appState.graph.nodeColorScale(node['name']),
+            zIndex: "0",
+            stroke: false,
+            fillOpacity: 0.8
+          }
+
+        }
+
+      }
+      else{ //path node style 
         return { 
           fill: "rgba(25, 158, 199, .9)",
           zIndex: "0",
@@ -534,7 +571,57 @@ class RenderCircles extends React.Component {
     if (appState.graph.hasGraph) {
       let renderCircles = []
       // let ydata =[]
-      if((appState.graph.scatterplot.x === 'shortest path') && (appState.graph.scatterplot.y === 'pair distance')){
+      if(((appState.graph.scatterplot.x === 'network density') && (appState.graph.scatterplot.y === 'standard distance'))||
+      ((appState.graph.scatterplot.x === 'standard distance') && (appState.graph.scatterplot.y === 'network density'))){
+        renderCircles = appState.graph.densityDistance.map((cluster,ci)=>(
+          <circle
+          cx={this.props.scale.x(cluster[appState.graph.scatterplot.x])}
+          cy={this.props.scale.y(cluster[appState.graph.scatterplot.y])}   
+          r={cluster['size']/8}
+          style={this.setScatterStyle(cluster,ci)}
+          id={`${cluster.name}`}
+          onMouseOver={(e) => {
+            appState.graph.distanceDensityCurrentlyHovered = e.target.getAttribute('id')
+
+            const selectionNode = appState.graph.frame.getNodeList().filter(node =>
+              // console.log(node)
+              node.data.ref[appState.graph.groupby] == appState.graph.distanceDensityCurrentlyHovered
+        
+            )
+            appState.graph.frame.selection = selectionNode
+            appState.graph.selectedNodes = selectionNode
+        
+        
+            // console.log(selectionNode)
+            appState.graph.frame.updateSelectionOpacity()
+            
+
+
+          }}
+          onMouseLeave={(e) => {
+            
+            // if (appState.graph.mapClicked) return;
+            appState.graph.distanceDensityCurrentlyHovered = undefined
+            appState.graph.frame.selection = []
+            appState.graph.selectedNodes = []
+
+            appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
+              // if (n !== appState.graph.mapClicked) {
+              appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
+
+              appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
+              // }
+            }
+            );
+            
+            
+          }}
+          key={ci}
+        />)
+        )
+      }
+      
+      else if((appState.graph.scatterplot.x === 'shortest path') && (appState.graph.scatterplot.y === 'pair distance')){
         // const pathkeys = Object.keys(appState.graph.rawGraph.paths)
         renderCircles = appState.graph.rawGraph.paths.map((path,i)=>(
           <circle

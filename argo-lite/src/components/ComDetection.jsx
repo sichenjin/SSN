@@ -203,6 +203,46 @@ class ComDetection extends React.Component {
         );
     }
 
+    density_distance = (group) => {
+
+        // var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
+        //     return edge.source_id
+        // })
+        // var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
+        //     return edge.target_id
+        // })
+        var querydict = {
+            "type": 'edgelist',
+            "message": {
+                'name': 'density_distance'
+            },
+            "group": group,
+            "nodes": appState.graph.rawGraph.nodes, 
+            "edges": appState.graph.rawGraph.edges
+            
+
+        }
+        axios.post('http://127.0.0.1:5000/flask/densitydistance', querydict).then(
+            (response) => {
+                var jsondata = JSON.parse(response.data)
+                // var convexDict = jsondata.message;
+
+                appState.graph.metadata.nodeComputed.push('standard distance')
+                appState.graph.metadata.nodeComputed.push('network density')
+
+                appState.graph.densityDistance = jsondata.density_distance
+                appState.graph.scatterplot.y = 'standard distance'
+                appState.graph.scatterplot.x = 'network density'
+                appState.graph.groupby = group
+
+
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
 
 
 
@@ -212,7 +252,7 @@ class ComDetection extends React.Component {
             <div>
                 <Button
                 className="bp4-button"
-                    style={{ position: 'absolute', top: '55vh', left: '15vw', zIndex: '1000' }}
+                    style={{ position: 'absolute', top: '55vh', left: '5vw', zIndex: '1000' }}
                     onClick={this.runcommunity}>Run Community</Button>
                 {/* {this.modularity? <Tag className="network-tag">{this.modularity}</Tag>: null} */}
                 {/* <Button
@@ -220,8 +260,13 @@ class ComDetection extends React.Component {
                     onClick={this.findcliques}>Find Cliques</Button> */}
                 <Button
                 className="bp4-button"
-                    style={{ position: 'absolute', top: '55vh', left: '30vw', zIndex: '1000' }}
+                    style={{ position: 'absolute', top: '55vh', left: '18vw', zIndex: '1000' }}
                     onClick={() => this.convexhull('community')}>Convex Hull by Group</Button>
+
+                <Button
+                className="bp4-button"
+                    style={{ position: 'absolute', top: '55vh', left: '35vw', zIndex: '1000' }}
+                    onClick={() => this.density_distance('Family')}>Cluster Cluster</Button>
                 
             </div>
 

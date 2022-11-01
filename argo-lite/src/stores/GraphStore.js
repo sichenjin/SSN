@@ -133,6 +133,16 @@ export default class GraphStore {
     snapshotName: "loading..." // Optional: for display in Argo-lite only
   };
 
+  @observable
+  densityDistance = []
+
+  //name of currently hovered family group on the cluster cluster scatterplot 
+  @observable
+  distanceDensityCurrentlyHovered = undefined
+
+  @observable
+  groupby = undefined
+
   // used for listing all the properties, either original or computed
   @computed
   get allPropertiesKeyList() {
