@@ -26,6 +26,7 @@ html {
   height: 100%;
   position: relative;
   overflow: hidden;
+  font-size: 10px;
 }
 
 .app-wrapper {
@@ -69,7 +70,7 @@ html {
 }
 
 .scatter-overlay-card {
-  padding-right: 27px;
+  /* padding-right: 27px; */
   width: 50vw;
   height: 40vh;
   
@@ -116,8 +117,8 @@ html {
 
 #scatter-plot{
  
-  width: 250px;
-  height:250px;
+  /* width: 250px;
+  height:250px; */
   
   right: 0em;
   opacity: 1;
@@ -167,7 +168,8 @@ html {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  /* width: 10px; */
+  display: none;
 }
 
 /* Track */
@@ -277,8 +279,8 @@ html {
 
 .minimal-navbar-left {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 5px;
+  left: 14%;
   z-index: 100;
 }
 
@@ -290,11 +292,11 @@ html {
 }
 
 .leaflet-control-container { 
-  position: absolute;
+  /* position: absolute;
   right: 60px;
   bottom: 0;
   margin-bottom: 200px;
-  right: 60px;
+  right: 60px; */
 }
 
 .leaflet-control-attribution a{
@@ -302,7 +304,7 @@ html {
 }
 
 .leaflet-control-layers{
-  transform: translate(60px,-50px);
+  transform: translate(-35vw,-50px) scale(0.5);
 }
 
 .bottom-status-bar {
@@ -332,12 +334,10 @@ button.pt-fill.text-align-left {
 }
 
 button.pt-fill.text-align-left > .pt-icon-standard.pt-align-right {
-  margin-top: 7px;
+  /* margin-top: 7px; */
 }
 
-div.pt-card.sub-option {
-  line-height: 30px;
-}
+
 
 td {
   max-width: 150px;
@@ -366,6 +366,60 @@ td {
 
 .pt-spinner {
   margin: 200px auto;
+}
+
+.pt-slider{
+  width:90%;
+  height:10px;
+  min-width: 10px !important;
+  left:10px;
+
+}
+
+.pt-slider-handle {
+  width:10px;
+  height:10px;
+  transform: translate(100%, 4px);
+  font-size: 9px;
+}
+
+
+.pt-slider-label {
+  font-size: 9px;
+  transform: translate(-20%, 10px);
+}
+
+.pt-slider-track, .pt-slider-progress{
+width: 80%  ;
+left:10% !important;
+}
+
+.pt-slider-handle {
+  transform: translate(80%, 4px);
+}
+
+div.pt-card.sub-option {
+    line-height: 15px;
+    max-width: 15vw;
+}
+
+.range-slider-container{
+  height:25px;
+  width:100%
+}
+
+.pt-input{
+line-height: 15px;
+}
+
+.pt-input-ghost{
+  height: 15px;
+  width: 100%;
+  font-size: 9px;
+}
+
+.pt-multi-select {
+  height: 15px;
 }
 
 .gradient-preview {
@@ -397,6 +451,7 @@ div.legends .scale-legend .vx-legend-item .vx-legend-label {
   flex: none !important;
 }
 
+
 div.pt-card.sub-option.legend {
   width: 50%;
   overflow: hidden;
@@ -413,7 +468,7 @@ div.pt-card.sub-option.legend {
   max-height: 40vh; */
   font-size: 0.4em;
   pointer-events: all;
-  padding: 0;
+  padding: 0 !important;
 }
 .node-details-table-content {
   table-layout: fixed;
@@ -467,7 +522,7 @@ div.pt-card.sub-option.legend {
   font-size: 20px;
   height: 25px;  
   position:absolute;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .map-tag{
@@ -524,7 +579,7 @@ text-overflow: ellipsis;
   width: 100%;
 }
 .container-up {
-  height: 65%;
+  height: 53%;
 }
 .container-down {
   flex: 1;
@@ -568,16 +623,113 @@ text-overflow: ellipsis;
 /* Nav */
 .pt-navbar {
   display: flex;
+  height: 30px;
 }
+
+.pt-navbar-group{
+  display: flex;
+  height: 30px;
+}
+
 
 /* Sidebar */
 .sidebar-menu {
   display: flex;
-  width: 10%;
+  width: 15%;
 }
 
+.pt-tab{
+  font-size:9px
+}
+
+table.pt-table {
+  border-spacing: 0;
+  font-size: 10px;
+}
+
+.pt-large{
+  font-size:9px
+}
+
+.pt-button{
+  font-size:9px;
+  height:15px;
+  line-height: 15px;
+  min-width: 0px;
+    min-height: 0px;
+}
+
+.pt-button.pt-small {
+  min-width: 0px;
+  min-height: 0px;
+  line-height: 15px;
+  padding: 0 7px;
+}
+
+.pt-button.pt-large{
+  font-size:9px;
+  min-width: 0px;
+    min-height: 0px;
+    padding: 0 6px;
+    line-height: 15px;
+   
+}
+
+.pt-card{
+  font-size: 9px;
+  padding:0 5px;
+}
+
+
+
+.pt-menu{
+  min-width: 0px;
+}
+
+.option-font{
+  font-size: 9px;
+}
+
+.pt-menu-item{
+  padding: 2px;
+  font-size: 9px;
+}
+
+/* .pt-popover-target {
+  width:100%
+} */
+
+
+
+.pt-large.pt-button{
+  font-size:9px;
+  min-width: 0px;
+    min-height: 0px;
+   
+    
+}
+
+.w3-button{
+  font-size:9px;
+  padding: 2px 2px;
+}
+.w3-bar-item-button {
+  padding: 8px 0px !important; 
+  border-style: solid !important;
+  margin: 0px auto;
+    display: inline-block !important;
+    float: none !important;
+}
+
+.w3-black{
+  text-align: center;
+}
+
+
+
+
 .sidebar-container {
-  margin-top: 25%;
+  /* margin-top: 25%; */
   width: 100%;
 }
 

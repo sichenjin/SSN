@@ -360,8 +360,8 @@ class MapView extends React.Component {
         height: "60vh",
         flex: "1 1 50%",
         zIndex: "10",
-        border:'#C0C0C0',
-          borderStyle:'solid',
+        // border:'#C0C0C0',
+        //   borderStyle:'solid',
         // position: "absolute"
       }}
     > <Tag className="map-tag">Map</Tag>
@@ -552,7 +552,7 @@ class MapView extends React.Component {
           }
         </Pane>
 
-        <Switch style={{ position: 'absolute', top: '55vh', left: '40vw', zIndex: '1000' }}
+        <Switch style={{ position: 'absolute', top: '50vh', left: '0vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -560,10 +560,10 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ position: 'absolute', top: '55vh', left: '43vw', zIndex: '1000' }}> show edges</span>
+        <span style={{  position: 'absolute', top: '50vh', left: '3vw',zIndex: '1000' }}> show edges</span>
 
 
-        <Switch style={{ position: 'absolute', top: '55vh', left: '0', zIndex: '1000' }}
+        <Switch style={{position: 'absolute', top: '55vh', left: '0vw',zIndex: '1000' }}
                     defaultChecked={appState.graph.convexPolygonsShow}
                     // checked={!node.isHidden}
                     onChange={(value) => {

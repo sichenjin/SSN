@@ -68,10 +68,10 @@ class SelectionDetail extends React.Component {
             // "transparent-frame"
           )}
           style = {{
-            width: '50vw',
+            width: '45vw',
             height: '40vh',
-            border:'#C0C0C0',
-            borderStyle:'solid',
+            // border:'#C0C0C0',
+            // borderStyle:'solid',
           }}
         >
           <div className={classnames(Classes.CARD, "node-details-table")}>
@@ -119,10 +119,10 @@ class SelectionDetail extends React.Component {
         // "transparent-frame"
       )}
       style = {{
-        width: '50vw',
+        width: '45vw',
         height: '40vh',
-        border:'#C0C0C0',
-        borderStyle:'solid',
+        // border:'#C0C0C0',
+        // borderStyle:'solid',
       }}
     >
       <div className={classnames(Classes.CARD, "node-details-table")}>

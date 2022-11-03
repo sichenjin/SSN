@@ -115,6 +115,7 @@ class NodesFilterPanel extends React.Component {
                   max={20}
                   stepSize={0.1}
                   labelStepSize={5}
+                  className="range-slider-container"
                 // onChange={([a, b]) => {
                 //   runInAction("update scale", () => {
                 //     appState.graph.nodes.size.min = a;

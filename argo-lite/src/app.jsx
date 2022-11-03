@@ -18,6 +18,10 @@ import FloatingCards from "./components/FloatingCards";
 import registerIPC from "./ipc/client";
 import { fetchWorkspaceProjects } from "./ipc/client";
 import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
+import ScatterPlot from "./components/panels/ScatterPlot"
+import SelectionDetail from "./components/panels/SelectionDetail";
+import Sidebar from "./components/Sidebar"
+// import GraphView from "./components/GraphView";
 
 import keydown, { Keys } from "react-keydown";
 import 'leaflet/dist/leaflet.css';
@@ -232,23 +236,24 @@ class App extends React.Component {
           </div>
           <div class="resizer-up" id="dragMeUp"></div>
           <div class="container-down container" id="scatter">
-            <div style={{display:"flex", width:"100%", height:"100%"}}>
-              <div
-              className={classnames(
-                Classes.CARD,
-                Classes.ELEVATION_2,
-                "scatter-overlay-card",
-                
-                "transparent-frame",
-                "filter-option"
-              )}
-              style={appState.preferences.isScatterPlotCardHidden ? this.scatterInvisible : this.scatterVisible}
-              >
-              <div id="scatter-plot"
-              >
-                {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
+            <div  style={{display:"flex",  height:"100%", 
+            // border:'#C0C0C0',
+            // borderStyle:'solid',
+            // flex:"1 1 50%"
+            }}>
+              {/* {appState.graph.hasGraph && <GraphView />} */}
+              <div id="scatter-plot">
+              {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
+
+
               </div>
             </div>
+            <div style={{display:"flex", height:"100%", 
+            // border:'#C0C0C0',
+            // borderStyle:'solid',
+            // flex:"1 1 50%"
+            }}>
+                {<SelectionDetail />}
             </div>
           </div>
         </div>

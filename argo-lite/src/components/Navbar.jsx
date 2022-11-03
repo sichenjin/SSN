@@ -224,6 +224,47 @@ convexhull = (group) => {
         }
     );
 }
+
+
+density_distance = (group) => {
+
+  // var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
+  //     return edge.source_id
+  // })
+  // var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
+  //     return edge.target_id
+  // })
+  var querydict = {
+      "type": 'edgelist',
+      "message": {
+          'name': 'density_distance'
+      },
+      "group": group,
+      "nodes": appState.graph.rawGraph.nodes, 
+      "edges": appState.graph.rawGraph.edges
+      
+
+  }
+  axios.post('http://127.0.0.1:5000/flask/densitydistance', querydict).then(
+      (response) => {
+          var jsondata = JSON.parse(response.data)
+          // var convexDict = jsondata.message;
+
+          appState.graph.metadata.nodeComputed.push('standard distance')
+          appState.graph.metadata.nodeComputed.push('network density')
+
+          appState.graph.densityDistance = jsondata.density_distance
+          appState.graph.scatterplot.y = 'standard distance'
+          appState.graph.scatterplot.x = 'network density'
+          appState.graph.groupby = group
+
+
+      },
+      (error) => {
+          console.log(error);
+      }
+  );
+}
   render() {
     return (
       <nav className={classnames([Classes.NAVBAR], 'navbar-head')}>
@@ -326,11 +367,12 @@ convexhull = (group) => {
                   onClick={() => this.convexhull('community')}
                 />
                 <MenuItem
-                  type="checkbox"
+                  type="import"
                   iconName="pt-icon-document-open"
-                  text="Show convex hull"
-                  onClick={() => { appState.preferences.openSnapshotDialogOpen = true }}
+                  text="Cluster Cluster"
+                  onClick={() => this.density_distance('Family')}
                 />
+                
               </Menu>
             }
             position={Position.BOTTOM}

@@ -36,7 +36,7 @@ class ScatterPlot extends React.Component {
   
   margin = { top: 20, right: 10, bottom: 50, left: 50 }
   // clustermargin = {top: 50, right: 50, bottom: 50, left: 50}
-  width = window.innerWidth/2 - this.margin.left - this.margin.right
+  width = window.innerWidth *0.45 - this.margin.left - this.margin.right
   height = window.innerHeight*0.38 - this.margin.top - this.margin.bottom
   cr = 3
   maxhop = undefined
@@ -311,20 +311,17 @@ class ScatterPlot extends React.Component {
          
           {/* <div style={{ width:'50vw', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}> */}
           
-            <div style={{ position:'absolute' , top:'62vh' , left: '16vw'}}>
+            <div style={{display: "inline", }}>  
               <p className="scatter-plot-font" style={{ display: "inline" }}>X By: </p>
-              <span style={{ float: "right" }}>
+              <span >
                 < XYSelect  className="scatter-plot-font" style={{ display: "inline" }}
                   items={appState.graph.allComputedPropertiesKeyList}
                   onSelect={it => (appState.graph.scatterplot.x = it)}
                   value={appState.graph.scatterplot.x}
                 />
               </span>
-            </div>
-
-            <div style={{position:'absolute' , top:'62vh' , left: '30vw' }}>
               <p className="scatter-plot-font" style={{ display: "inline" }}>Y by: </p>
-              <span style={{ float: "right" }}>
+              <span >
                 <XYSelect 
                 className="scatter-plot-font"
                   items={appState.graph.allComputedPropertiesKeyList}
@@ -332,6 +329,10 @@ class ScatterPlot extends React.Component {
                   value={appState.graph.scatterplot.y}
                 />
               </span>
+            </div>
+
+            <div style={{display: "inline",}}>
+              
             </div>
           {/* </div> */}
           <div>
@@ -351,7 +352,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop ={this.infinityhop}/>}
-                <text style ={{transform: 'translate(10vw, 36vh)'}}  fontSize="13px">{(appState.graph.scatterplot.x === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.x}</text>
+                <text style ={{transform: 'translate(14vw, 33vh)'}}  fontSize="9px">{(appState.graph.scatterplot.x === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.x}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -368,7 +369,7 @@ class ScatterPlot extends React.Component {
                 />
                 <text
                   transform={"translate(-40, 140) rotate(-90)"}
-                  fontSize="13px"
+                  fontSize="9px"
                 >{(appState.graph.scatterplot.y === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.y}</text>
                 <Axis
                   axis="y"
@@ -401,7 +402,7 @@ class ScatterPlot extends React.Component {
           </div>
           <Button 
           className="bp4-button"
-            style={{transform: "translate(38vw, -5vh)", }}
+            style={{transform: "translate(35vw, -5vh)", }}
             onClick={() => {
             var svgsaver = new SvgSaver();                      // creates a new instance
             var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -413,7 +414,7 @@ class ScatterPlot extends React.Component {
         <CSVLink data={this.state.csvarray} onClick = {this.downloadCSV}  asyncOnClick={true} filename="bsedata.csv">
           <Button 
           className="bp4-button"
-            style={{transform: "translate(17vw, -5vh)", }}
+            style={{transform: "translate(15vw, -5vh)", }}
             
             >DownLoad CSV
           </Button>

@@ -62,6 +62,7 @@ export default function AreaSelect() {
       // }
       appState.graph.frame.selection = [...mapselection]
       appState.graph.frame.updateSelectionOpacity()
+      
       // console.log(appState.graph.selectedNodes)
     });
 
