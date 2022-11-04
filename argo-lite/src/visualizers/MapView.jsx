@@ -365,6 +365,7 @@ class MapView extends React.Component {
         // position: "absolute"
       }}
     > <Tag className="map-tag">Map</Tag>
+   
       <MapContainer
         style={{ height: "100%", width: "100%" }}
         zoom={9}
@@ -552,7 +553,7 @@ class MapView extends React.Component {
           }
         </Pane>
 
-        <Switch style={{ position: 'absolute', top: '50vh', left: '0vw', zIndex: '1000' }}
+        <Switch style={{ position: 'absolute', top: '52vh', left: '0vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -560,7 +561,7 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{  position: 'absolute', top: '50vh', left: '3vw',zIndex: '1000' }}> show edges</span>
+        <span style={{  position: 'absolute', top: '52vh', left: '3vw',zIndex: '1000' }}> Show Edges</span>
 
 
         <Switch style={{position: 'absolute', top: '55vh', left: '0vw',zIndex: '1000' }}
@@ -571,7 +572,7 @@ class MapView extends React.Component {
 
                     }}
                 />
-                <span style={{ position: 'absolute', top: '55vh', left: '3vw', zIndex: '1000' }}> show community convex hull</span>
+                <span style={{ position: 'absolute', top: '55vh', left: '3vw', zIndex: '1000' }}> Show Community Convex Hull</span>
                 {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null}
 
 

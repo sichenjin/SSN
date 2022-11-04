@@ -399,9 +399,7 @@ class FloatingCards extends React.Component {
 
 
 
-        <Tag className="network-tag">
-          Network
-        </Tag>
+        
 
 
         {/* {// This menu only shows when there are nodes selected

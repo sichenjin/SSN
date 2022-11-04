@@ -1,5 +1,7 @@
 import React from "react";
 import appState from "../stores";
+import {Tag } from "@blueprintjs/core";
+
 
 export default class ThreeJSVis extends React.Component {
   componentDidMount() {
@@ -18,7 +20,9 @@ export default class ThreeJSVis extends React.Component {
           // borderStyle:'solid',
           // position: "absolute"
         }}
-      />
+      >
+       
+      </div>
     );
   }
 }

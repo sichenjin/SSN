@@ -19,7 +19,7 @@ return (
   }}
     items={items}
     itemRenderer={CommonItemRenderer}
-    filterable={false}
+    // filterable={false}
     onItemSelect={onSelect}
     tagRenderer = {tag}
     selectedItems = {value}

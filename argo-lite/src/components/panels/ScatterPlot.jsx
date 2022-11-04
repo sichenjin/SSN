@@ -402,7 +402,7 @@ class ScatterPlot extends React.Component {
           </div>
           <Button 
           className="bp4-button"
-            style={{transform: "translate(35vw, -5vh)", }}
+            style={{transform: "translate(35vw, -2vh)", }}
             onClick={() => {
             var svgsaver = new SvgSaver();                      // creates a new instance
             var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -414,7 +414,7 @@ class ScatterPlot extends React.Component {
         <CSVLink data={this.state.csvarray} onClick = {this.downloadCSV}  asyncOnClick={true} filename="bsedata.csv">
           <Button 
           className="bp4-button"
-            style={{transform: "translate(15vw, -5vh)", }}
+            style={{transform: "translate(15vw, -2vh)", }}
             
             >DownLoad CSV
           </Button>

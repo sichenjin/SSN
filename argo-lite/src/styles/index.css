@@ -26,7 +26,7 @@ html {
   height: 100%;
   position: relative;
   overflow: hidden;
-  font-size: 10px;
+  font-size: 10px !important;
 }
 
 .app-wrapper {
@@ -398,6 +398,7 @@ left:10% !important;
   transform: translate(80%, 4px);
 }
 
+
 div.pt-card.sub-option {
     line-height: 15px;
     max-width: 15vw;
@@ -420,6 +421,12 @@ line-height: 15px;
 
 .pt-multi-select {
   height: 15px;
+}
+
+.distribution-title{
+position: absolute;
+transform: translate(4vw,0px);
+font-size: 10px;
 }
 
 .gradient-preview {
@@ -517,17 +524,17 @@ div.pt-card.sub-option.legend {
 }
 
 .network-tag{
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 20vw;
   font-size: 20px;
   height: 25px;  
   position:absolute;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .map-tag{
-  margin-top: 10px;
-    margin-left: 25vw;
+  margin-top: 15px;
+    margin-left: 20vw;
     font-size: 20px;
     height: 25px;
     z-index: 1000;
@@ -709,6 +716,16 @@ table.pt-table {
     
 }
 
+
+.pt-tag.pt-tag-removable {
+  padding-right: 20px;
+  font-size: 10px;
+  height: 13px;
+  line-height: 9px;
+}
+.pt-tag-remove {
+  font-size: 10px;
+}
 .w3-button{
   font-size:9px;
   padding: 2px 2px;

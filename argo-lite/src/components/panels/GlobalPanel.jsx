@@ -202,6 +202,10 @@ class GlobalPanel extends React.Component {
               ]}
             />
             </div>
+              <div style = {{height:"15px"}}>
+
+              </div>
+
           </div>
         </Collapsable>
         

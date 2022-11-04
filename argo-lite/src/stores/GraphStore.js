@@ -302,7 +302,7 @@ export default class GraphStore {
           var satisfy = true
           for (const fkey in this.nodes.filter){
             if(this.metadata.nodePropertyTypes[fkey] == 'string'){
-              if(!this.nodes.filter[fkey].includes(n[fkey])){
+              if(this.nodes.filter[fkey].length >0 && (!this.nodes.filter[fkey].includes(n[fkey]))){
                 satisfy = false
               }
             }else{  // number range 
