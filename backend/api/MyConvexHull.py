@@ -22,7 +22,7 @@ class MyConvexHull(Resource):
   def get(self):
     return {
       'resultStatus': 'SUCCESS',
-      'message': "Hello Community Handler"
+      'message': "Hello Community work "
       }
 
   def post(self):

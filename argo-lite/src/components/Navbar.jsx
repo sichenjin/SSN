@@ -247,7 +247,7 @@ density_distance = (group) => {
       
 
   }
-  axios.post('http://127.0.0.1:5000/flask/densitydistance', querydict).then(
+  axios.post('http://snoman.herokuapp.com/flask/densitydistance', querydict).then(
       (response) => {
           var jsondata = JSON.parse(response.data)
           // var convexDict = jsondata.message;
