@@ -32,6 +32,15 @@ import EdgesPanel from "./panels/EdgesPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodesFilterPanel from "./panels/NodesFilterPanel";
 
+import axios from 'axios'
+import { observable, computed, action, runInAction } from "mobx";
+
+import { Tab2, Tabs2, Tag } from "@blueprintjs/core";
+import NodesPanel from "./panels/NodesPanel";
+import EdgesPanel from "./panels/EdgesPanel";
+import LabelsPanel from "./panels/LabelsPanel";
+import NodesFilterPanel from "./panels/NodesFilterPanel";
+
 @observer
 class RegularNavbar extends React.Component {
   @observable modularity = undefined;

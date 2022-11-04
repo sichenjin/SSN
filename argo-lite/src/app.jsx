@@ -30,6 +30,10 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect } from "react";
 import axios from 'axios'
 
+import ScatterPlot from "./components/panels/ScatterPlot";
+
+import Sidebar from "./components/Sidebar"
+
 registerIPC();
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -48,6 +52,7 @@ function respondToResize() {
   if (window.innerWidth < MOBILE_WIDTH_CUTOFF || window.innerHeight < MOBILE_HEIGHT_CUTOFF) {
     appState.preferences.turnOnMinimalMode();
   }
+  appState.graph.setUpFrame();
 }
 
 respondToResize();
