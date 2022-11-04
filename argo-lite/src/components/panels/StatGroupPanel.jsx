@@ -50,7 +50,7 @@ class StatGroupPanel extends React.Component {
             "fromedgelist": fromedgelist,
             "toedgelist": toedgelist
         }
-        axios.post('http://127.0.0.1:5000/flask/community', querydict).then(
+        axios.post('http://snoman.herokuapp.com/flask/community', querydict).then(
         // https://snoman.herokuapp.com/flask/community', querydict).then(
             (response) => {
                 var communityDict = response.data.message;
@@ -158,7 +158,7 @@ class StatGroupPanel extends React.Component {
             "nodes": appState.graph.rawGraph.nodes
 
         }
-        axios.post('http://127.0.0.1:5000/flask/convexhull', querydict).then(
+        axios.post('http://snoman.herokuapp.com/flask/convexhull', querydict).then(
         // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)

@@ -80,7 +80,7 @@ class DensityDistance(Resource):
       subedgelistdict = [edge for edge in edges if (edge["source_id"] in groupnodeid or edge['target_id'] in groupnodeid) ]
       subedgelist = [(edge["source_id"], edge['target_id']) for edge in subedgelistdict]
       subG = nx.Graph(subedgelist) 
-      print(nx.is_directed(subG))
+      # print(nx.is_directed(subG))
       subdensity = nx.density(subG)
 
       # the size of the family 
