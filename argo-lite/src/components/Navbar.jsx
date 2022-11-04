@@ -23,14 +23,7 @@ import argologo_light from '../images/Snoman logo.png';
 import { toaster } from '../notifications/client';
 import { LOGO_URL, GITHUB_URL, SAMPLE_GRAPH_SNAPSHOTS } from '../constants';
 
-import axios from 'axios'
-import { observable, computed, action, runInAction } from "mobx";
 
-import { Tab2, Tabs2, Tag } from "@blueprintjs/core";
-import NodesPanel from "./panels/NodesPanel";
-import EdgesPanel from "./panels/EdgesPanel";
-import LabelsPanel from "./panels/LabelsPanel";
-import NodesFilterPanel from "./panels/NodesFilterPanel";
 
 import axios from 'axios'
 import { observable, computed, action, runInAction } from "mobx";

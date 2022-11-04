@@ -18,9 +18,9 @@ import FloatingCards from "./components/FloatingCards";
 import registerIPC from "./ipc/client";
 import { fetchWorkspaceProjects } from "./ipc/client";
 import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
-import ScatterPlot from "./components/panels/ScatterPlot"
+// import ScatterPlot from "./components/panels/ScatterPlot"
 import SelectionDetail from "./components/panels/SelectionDetail";
-import Sidebar from "./components/Sidebar"
+// import Sidebar from "./components/Sidebar"
 import {Tag } from "@blueprintjs/core";
 // import GraphView from "./components/GraphView";
 
