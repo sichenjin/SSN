@@ -453,7 +453,7 @@ class ScatterPlot extends React.Component {
           <Button 
             style={{transform: "translate(0px, -2vh)"}}
             
-            >DownLoad CSV
+            >Download CSV
           </Button>
         </CSVLink>
       )}
