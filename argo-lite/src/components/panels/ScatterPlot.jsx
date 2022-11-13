@@ -34,10 +34,10 @@ class ScatterPlot extends React.Component {
 
   @observable data = appState.graph.frame.getNodeList().filter(node => !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.x])) && !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.y])))
   
-  margin = { top: 20, right: 10, bottom: 50, left: 50 }
+  margin = { top: 40, right: 10, bottom: 50, left: 50 }
   // clustermargin = {top: 50, right: 50, bottom: 50, left: 50}
-  width = window.innerWidth *0.45 - this.margin.left - this.margin.right
-  height = window.innerHeight*0.38 - this.margin.top - this.margin.bottom
+  width = window.innerWidth *0.48 - this.margin.left - this.margin.right
+  height = window.innerHeight*0.35 - this.margin.top - this.margin.bottom
   cr = 3
   maxhop = undefined
   formatXtext = []
@@ -320,6 +320,7 @@ class ScatterPlot extends React.Component {
                   value={appState.graph.scatterplot.x}
                 />
               </span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <p className="scatter-plot-font" style={{ display: "inline" }}>Y by: </p>
               <span >
                 <XYSelect 
@@ -352,7 +353,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop ={this.infinityhop}/>}
-                <text style ={{transform: 'translate(14vw, 33vh)'}}  fontSize="9px">{(appState.graph.scatterplot.x === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.x}</text>
+                <text style ={{transform: 'translate(12vw, 29vh)'}}  fontSize="9px">{(appState.graph.scatterplot.x === 'standard distance') ? 'standard distance (km)' :appState.graph.scatterplot.x}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -574,11 +575,13 @@ class RenderCircles extends React.Component {
       // let ydata =[]
       if(((appState.graph.scatterplot.x === 'network density') && (appState.graph.scatterplot.y === 'standard distance'))||
       ((appState.graph.scatterplot.x === 'standard distance') && (appState.graph.scatterplot.y === 'network density'))){
-        renderCircles = appState.graph.densityDistance.map((cluster,ci)=>(
+
+        // appState.graph.densityDistance = ;
+        renderCircles = appState.graph.densityDistance.sort((a, b) => b.size - a.size).map((cluster,ci)=>(
           <circle
           cx={this.props.scale.x(cluster[appState.graph.scatterplot.x])}
           cy={this.props.scale.y(cluster[appState.graph.scatterplot.y])}   
-          r={cluster['size']/8}
+          r={cluster['size']>50 ? 25: cluster['size']/2}
           style={this.setScatterStyle(cluster,ci)}
           id={`${cluster.name}`}
           onMouseOver={(e) => {

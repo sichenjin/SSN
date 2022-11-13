@@ -245,7 +245,7 @@ class StatGroupPanel extends React.Component {
 
 
         }
-        axios.post('http://snoman.herokuapp.com/flask/densitydistance', querydict).then(
+        axios.post('http://127.0.0.1:5000/flask/densitydistance', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
                 // var convexDict = jsondata.message;
@@ -261,7 +261,8 @@ class StatGroupPanel extends React.Component {
 
             },
             (error) => {
-                console.log(error);
+                console.log(error)
+                
             }
         );
     }
@@ -282,7 +283,7 @@ class StatGroupPanel extends React.Component {
                     <Button
                     className="bp4-button"
                         style={{zIndex: '1000' }}
-                        onClick={() => this.convexhull('community')}>Convex Hull by Group</Button>
+                        onClick={() => this.convexhull('Family')}>Convex Hull by Group</Button>
     
                     <Button
                     className="bp4-button"
