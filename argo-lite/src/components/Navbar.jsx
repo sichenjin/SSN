@@ -255,6 +255,8 @@ density_distance = (group) => {
           appState.graph.metadata.nodeComputed.push('standard distance')
           appState.graph.metadata.nodeComputed.push('network density')
 
+          
+          
           appState.graph.densityDistance = jsondata.density_distance
           appState.graph.scatterplot.y = 'standard distance'
           appState.graph.scatterplot.x = 'network density'

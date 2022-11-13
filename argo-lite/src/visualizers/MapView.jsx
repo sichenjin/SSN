@@ -1,6 +1,6 @@
 import React from 'react';
 // import L from 'leaflet';
-import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane, LayersControl , GeoJSON} from "react-leaflet";
+import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane, LayersControl, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import appState from '../stores';
 import { observer } from 'mobx-react';
@@ -314,8 +314,8 @@ class MapView extends React.Component {
   }
 
   setPolygonPath = (polygon, pi) => {
-    if (appState.graph.convexPolygonsShow && appState.graph.currentlyHovered) {
-      if (pi === appState.graph.currentlyHovered.data.ref.community) {
+    if (appState.graph.convexPolygonsShow && appState.graph.distanceDensityCurrentlyHovered) {
+      if (pi === appState.graph.distanceDensityCurrentlyHovered) {
         return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0.3, opacity: 0.8 }
       }
       else {
@@ -364,12 +364,15 @@ class MapView extends React.Component {
         //   borderStyle:'solid',
         // position: "absolute"
       }}
-    > <Tag className="map-tag">Map</Tag>
-   
+    >
+
+      <Tag className="map-tag">Map</Tag>
+
+
       <MapContainer
         style={{ height: "100%", width: "100%" }}
-        zoom={9}
-        center={[37.1, -80.5]}
+        zoom={4}
+        center={[37.5, -97.5]}
       >
         <LayersControl position="topright">
           <LayersControl.BaseLayer name="OpenStreetMap" checked="true">
@@ -379,31 +382,31 @@ class MapView extends React.Component {
             <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png" />
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer name="Transport">
-            <TileLayer url="'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=<3e517e9e5dff41bdbfe201c3b1d72e69>"  />
+            <TileLayer url="'https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=<3e517e9e5dff41bdbfe201c3b1d72e69>" />
           </LayersControl.BaseLayer>
           <LayersControl.Overlay name="income">
-          <TileLayer url="https://www.justicemap.org/tile/{size}/income/{z}/{x}/{y}.png" 
-          size= {'county'}/>
+            <TileLayer url="https://www.justicemap.org/tile/{size}/income/{z}/{x}/{y}.png"
+              size={'county'} />
 
           </LayersControl.Overlay>
           <LayersControl.Overlay name="US state">
-          
-          <GeoJSON data={statejsonfile}  /> 
+
+            <GeoJSON data={statejsonfile} />
           </LayersControl.Overlay>
 
           <LayersControl.Overlay name="US county">
-          
-          <GeoJSON data={countyjsonfile}  /> 
+
+            <GeoJSON data={countyjsonfile} />
           </LayersControl.Overlay>
 
           <LayersControl.Overlay name="US Congressional">
-          
-          <GeoJSON data={congressionjsonfile}  /> 
+
+            <GeoJSON data={congressionjsonfile} />
           </LayersControl.Overlay>
         </LayersControl>
-        
+
         <AreaSelect />
-        <ZoomMap />
+        {/* <ZoomMap /> */}
         <MapClick />
 
         <Pane name="edgepane" style={{ zIndex: 10000 }}>
@@ -552,8 +555,7 @@ class MapView extends React.Component {
 
           }
         </Pane>
-
-        <Switch style={{ position: 'absolute', top: '52vh', left: '0vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '55px', left: '98vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -561,19 +563,21 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ fontSize:'9px', position: 'absolute', top: '52vh', left: '3vw',zIndex: '1000' }}> Show Edges</span>
+        <span style={{ fontSize: '9px', position: 'fixed', top: '55px', right: '35px', zIndex: '1000' }}> Show Edges</span>
 
 
-        <Switch style={{position: 'absolute', top: '55vh', left: '0vw',zIndex: '1000' }}
-                    defaultChecked={appState.graph.convexPolygonsShow}
-                    // checked={!node.isHidden}
-                    onChange={(value) => {
-                        appState.graph.convexPolygonsShow = value.target.checked
+        <Switch style={{ position: 'fixed', top: '40px', left: '98vw', zIndex: '1000' }}
+          defaultChecked={appState.graph.convexPolygonsShow}
+          // checked={!node.isHidden}
+          onChange={(value) => {
+            appState.graph.convexPolygonsShow = value.target.checked
 
-                    }}
-                />
-                <span style={{ fontSize:'9px', position: 'absolute', top: '55vh', left: '3vw', zIndex: '1000' }}> Show Community Convex Hull</span>
-                {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null}
+          }}
+        />
+        <span style={{ fontSize: '9px', position: 'fixed', top: '40px', right: '35px', zIndex: '1000' }}> Show Community Convex Hull</span>
+        
+
+        {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null}
 
 
 

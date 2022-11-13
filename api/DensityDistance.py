@@ -77,9 +77,11 @@ class DensityDistance(Resource):
       standard_distance = math.sqrt(sum_of_results) *100
       
       #calculate the network density 
-      subedgelistdict = [edge for edge in edges if (edge["source_id"] in groupnodeid or edge['target_id'] in groupnodeid) ]
+      subedgelistdict = [edge for edge in edges if (edge["source_id"] in groupnodeid and edge['target_id'] in groupnodeid) ]
       subedgelist = [(edge["source_id"], edge['target_id']) for edge in subedgelistdict]
-      subG = nx.Graph(subedgelist) 
+      subG = nx.Graph() 
+      subG.add_nodes_from(groupnodeid)
+      subG.add_edges_from(subedgelist)
       # print(nx.is_directed(subG))
       subdensity = nx.density(subG)
 

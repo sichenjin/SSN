@@ -92,7 +92,7 @@ module.exports = function(self) {
       return;
     }
     self.mapShowing = true;
-    self.element.appendChild(self.minimapRenderer.domElement);
+    // self.element.appendChild(self.minimapRenderer.domElement);
   };
 
   self.hideMiniMap = () => {
@@ -100,7 +100,7 @@ module.exports = function(self) {
       return;
     }
     self.mapShowing = false;
-    self.element.removeChild(self.minimapRenderer.domElement);
+    // self.element.removeChild(self.minimapRenderer.domElement);
   };
 
   // The CSS Renderer for rendering labels is the most expensive

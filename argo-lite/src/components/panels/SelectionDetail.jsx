@@ -47,7 +47,7 @@ class SelectionDetail extends React.Component {
     const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
     if (edgeSelection.length == 0) return 0;
     const nodelength = appState.graph.selectedNodes.length;
-    const selectionDen = 2 * edgeSelection.length / (nodelength * (nodelength - 1))
+    const selectionDen =  edgeSelection.length / (nodelength * (nodelength - 1))
     return selectionDen.toFixed(3)
 
 
@@ -205,7 +205,7 @@ class SelectionDetail extends React.Component {
                 <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'NULL'}`}</td>
               </tr>
               <tr>
-                <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? appState.graph.density.toFixed(3) : 'NULL'}`}</td>
+                <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? (appState.graph.density/2).toFixed(3) : 'NULL'}`}</td>
               </tr>
 
             </tbody>
