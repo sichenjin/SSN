@@ -530,9 +530,9 @@ div.pt-card.sub-option.legend {
   margin-left: 45vw;
   font-size: 10px;
   height: 20px;  
-  position:absolute;
+  position:fixed;
   top:3px;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .map-tag{
@@ -543,6 +543,9 @@ div.pt-card.sub-option.legend {
     z-index: 1000;
     top:3px;
     position:absolute; 
+}
+.vx-axis-label{
+  transform: translate(0px, 10px)
 }
 
 .xaxis text{

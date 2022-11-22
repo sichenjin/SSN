@@ -104,6 +104,7 @@ class ScatterPlot extends React.Component {
   onBrushStart = ({ target, type, selection, sourceEvent }) => {
     appState.graph.frame.selection = []
     appState.graph.selectedNodes = []
+    appState.graph.edgeselection = []
 
   }
   onBrush = ({ target, type, selection, sourceEvent }) => {
@@ -116,8 +117,8 @@ class ScatterPlot extends React.Component {
     const brushBounds = {
       x0: selection[0][0] - this.margin.left,
       x1: selection[1][0] - this.margin.left,
-      y0: selection[0][1] - this.cr,
-      y1: selection[1][1] - this.cr,
+      y0: selection[0][1] - this.margin.top-this.cr,
+      y1: selection[1][1] - this.margin.top-this.cr,
     }
 
     circles.each(function (d, i) {
@@ -150,8 +151,10 @@ class ScatterPlot extends React.Component {
       // Defines the boundary of the brush.
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
+      // transform={"translate(0," + this.margin.top +")"}
+
       extent={
-        [[this.margin.left, this.cr], [this.width + this.margin.left, this.height + this.cr]]
+        [[this.margin.left, this.cr+this.margin.top], [this.width + this.margin.left, this.height + this.margin.top+this.cr]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -501,7 +504,7 @@ class RenderCircles extends React.Component {
               fill: node.renderData.color,
               zIndex: "0",
               stroke: false,
-              fillOpacity: 0.15
+              fillOpacity: 0.02
             }
           }
         } else if (appState.graph.selectedNodes.length > 0) {
@@ -510,7 +513,7 @@ class RenderCircles extends React.Component {
               fill: node.renderData.color,
               zIndex: "0",
               stroke: false,
-              fillOpacity: 0.15
+              fillOpacity: 0.02
             }
           } else {
             return {
@@ -540,7 +543,7 @@ class RenderCircles extends React.Component {
               fill: appState.graph.nodeColorScale(node['name']),
               zIndex: "0",
               stroke: false,
-              fillOpacity: 0.15
+              fillOpacity: 0.02
             }
           }
 
@@ -608,6 +611,7 @@ class RenderCircles extends React.Component {
             appState.graph.distanceDensityCurrentlyHovered = undefined
             appState.graph.frame.selection = []
             appState.graph.selectedNodes = []
+            appState.graph.edgeselection = []
 
             appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
               // if (n !== appState.graph.mapClicked) {

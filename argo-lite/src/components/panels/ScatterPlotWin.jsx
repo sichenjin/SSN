@@ -167,6 +167,7 @@ class ScatterPlot extends React.Component {
   onBrushStart = ({ target, type, selection, sourceEvent }) => {
     appState.graph.frame.selection = []
     appState.graph.selectedNodes = []
+    appState.graph.edgeselection = []
 
   }
   onBrush = ({ target, type, selection, sourceEvent }) => {

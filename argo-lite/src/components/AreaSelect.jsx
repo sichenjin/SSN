@@ -24,6 +24,7 @@ export default function AreaSelect() {
         // })
         appState.graph.frame.selection = []
         appState.graph.selectedNodes = []
+        appState.graph.edgeselection = []
 
 
 

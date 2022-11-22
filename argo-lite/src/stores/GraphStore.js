@@ -136,6 +136,9 @@ export default class GraphStore {
   @observable
   densityDistance = []
 
+  @observable
+  edgeselection = []
+
   //name of currently hovered family group on the cluster cluster scatterplot 
   @observable
   distanceDensityCurrentlyHovered = undefined
