@@ -24,7 +24,9 @@ export default class ImportStore {
       ready: false, // whether the topN is ready to display
       columns: [],
       mapping: {
-        id: "<UNK>"
+        id: "<UNK>",
+        LonX: "<UNK>",
+        LatY: "<UNK>"
       },
       delimiter: ","
     },

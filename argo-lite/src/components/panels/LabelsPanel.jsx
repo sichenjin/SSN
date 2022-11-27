@@ -83,7 +83,7 @@ class LabelsPanel extends React.Component {
         <div style={{height: '20px'}} />
         <text className="option-font">Label By</text>
         <Select
-          items={appState.graph.allPropertiesKeyList}
+          items={appState.graph.filterKeyList}
           itemRenderer={CommonItemRenderer}
           filterable={false}
           onItemSelect={it => (appState.graph.nodes.labelBy = it)}

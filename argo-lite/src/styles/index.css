@@ -41,16 +41,16 @@ html {
 }
 
 .graph{
-  width: 100vw;
-  height: 100vh;
+  width: 40vw;
+  height: 60vh;
   flex: 1 1 50%;
   position:relative
 }
-
+/* 
 .leaflet-container {
   width: 100vw!important;
   height: 100vh !important;
-}
+} */
 
 .app-wrapper.pt-dark {
   background-color: #111010;
@@ -391,7 +391,8 @@ td {
 
 .pt-slider-track, .pt-slider-progress{
 width: 80%  ;
-left:10% !important;
+transform: translate(10px, 0);
+/* left:10% !important; */
 }
 
 .pt-slider-handle {
@@ -527,7 +528,7 @@ div.pt-card.sub-option.legend {
 
 .network-tag{
   /* margin-top: 15px; */
-  margin-left: 45vw;
+  margin-left: 18vw;
   font-size: 10px;
   height: 20px;  
   position:fixed;
@@ -537,12 +538,16 @@ div.pt-card.sub-option.legend {
 
 .map-tag{
   /* margin-top: 15px; */
-    margin-left: 42vw;
+    margin-left: 28vw;
     font-size: 10px;
     height: 20px;
     z-index: 1000;
     top:3px;
     position:absolute; 
+}
+
+.scatterplot-label{
+
 }
 .vx-axis-label{
   transform: translate(0px, 10px)
@@ -593,7 +598,7 @@ text-overflow: ellipsis;
   width: 100%;
 }
 .container-up {
-  height: 42%;
+  height: 50%;
 }
 .container-down {
   flex: 1;
@@ -603,7 +608,7 @@ text-overflow: ellipsis;
 }
 .container__left {
   /* Initially, the left takes 3/4 width */
-  width: 45%;
+  width: 40%;
 
   /* Misc */
   align-items: center;

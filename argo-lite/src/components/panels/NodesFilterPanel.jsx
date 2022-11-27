@@ -10,6 +10,7 @@ import SimpleSelect from "../utils/SimpleSelect";
 import MultiSelects from "../utils/MultiSelects";
 import classnames from "classnames";
 import uniq from "lodash/uniq";
+import { runInAction } from "mobx";
 
 @observer
 class NodesFilterPanel extends React.Component {
@@ -18,7 +19,7 @@ class NodesFilterPanel extends React.Component {
     this.state = {
 
     }
-    appState.graph.allPropertiesKeyList.forEach(it => {
+    appState.graph.filterKeyList.forEach(it => {
       this.state[it + 'isOpen'] = false;
       this.state[it + '_filterlist'] = []
     });
@@ -52,7 +53,7 @@ class NodesFilterPanel extends React.Component {
   render() {
     return (
       <div>
-        {appState.graph.allPropertiesKeyList.map((it, i) => (
+        {appState.graph.filterKeyList.map((it, i) => (
           <Collapsable
             name={it}
             isOpen={this.state[it + 'isOpen']}
@@ -74,7 +75,7 @@ class NodesFilterPanel extends React.Component {
                     appState.graph.nodes.filter[it] ? appState.graph.nodes.filter[it].push(selectit) : appState.graph.nodes.filter[it] = [selectit]
                     appState.graph.filterNodes()
 
-                    console.log(this.state[it + '_filterlist'])
+                    // console.log(this.state[it + '_filterlist'])
                     // return selectit
                     // console.log(appState.graph.nodes.filter[it][0])
                   }}
@@ -111,21 +112,52 @@ class NodesFilterPanel extends React.Component {
                 />
                 :
                 <RangeSlider
-                  min={1}
-                  max={20}
-                  stepSize={0.1}
-                  labelStepSize={5}
+                  min={appState.graph.metadata.uniqueValue[it][0]}   //uniqueValue[it][0] is computed min 
+                  max={appState.graph.metadata.uniqueValue[it][1]} //uniqueValue[it][1] is computed max
+                  stepSize={1}
+                  labelStepSize={10}
                   className="range-slider-container"
-                // onChange={([a, b]) => {
-                //   runInAction("update scale", () => {
-                //     appState.graph.nodes.size.min = a;
-                //     appState.graph.nodes.size.max = b;
-                //   });
-                // }}
-                // value={[
-                //   appState.graph.nodes.size.min,
-                //   appState.graph.nodes.size.max
-                // ]}
+                  onChange={([a, b]) => {
+                    runInAction("update scale", () => {
+                      this.setState({
+                        [it + '_filterlist']: {
+                          "min":a,
+                          "max":b
+                        }
+                      })
+                      appState.graph.nodes.filter[it] ={
+                        "min":a,
+                        "max":b
+                      }
+                    })
+                    
+                  }}
+                  onRelease={([a, b]) => {
+                  this.setState({
+                    [it + '_filterlist']: {
+                      "min":a,
+                      "max":b
+                    }
+                  })
+                  appState.graph.nodes.filter[it] ={
+                    "min":a,
+                    "max":b
+                  }
+                  appState.graph.filterNodes()
+                  
+                
+                 
+                }}
+                value={(appState.graph.nodes.filter[it] && appState.graph.nodes.filter[it]["min"])?
+                [
+                  appState.graph.nodes.filter[it]["min"],
+                  appState.graph.nodes.filter[it]["max"]
+                ]:
+              [
+                appState.graph.metadata.uniqueValue[it][0],
+                appState.graph.metadata.uniqueValue[it][1]
+
+              ]}
                 />
 
               }

@@ -41,242 +41,242 @@ class RegularNavbar extends React.Component {
     appState.graph.convexPolygons = []
 
     var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
-        return edge.source_id
+      return edge.source_id
     })
     var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
-        return edge.target_id
+      return edge.target_id
     })
     var querydict = {
-        "type": 'edgelist',
-        "message": {
-            'name': 'community'
-        },
-        "fromedgelist": fromedgelist,
-        "toedgelist": toedgelist
+      "type": 'edgelist',
+      "message": {
+        'name': 'community'
+      },
+      "fromedgelist": fromedgelist,
+      "toedgelist": toedgelist
     }
     axios.post('https://snoman.herokuapp.com/flask/community', querydict).then(
-        (response) => {
-            var communityDict = response.data.message;
-            this.modularity = response.data.modularity;
-            appState.graph.rawGraph.nodes.forEach((node) => {
-                node.community = communityDict[node.id] ? communityDict[node.id] : -1
-            })
-            const nodesArr = appState.graph.rawGraph.nodes
-            const nodekeyList = Object.keys(nodesArr[1])
-            const nodePropertyTypes = {}
-            nodekeyList.forEach(function (k) {
-                nodePropertyTypes[k] = typeof (nodesArr[1][k])
-            })
-            const uniqueValue = {}
-            nodekeyList.forEach(function (k, i) {
+      (response) => {
+        var communityDict = response.data.message;
+        this.modularity = response.data.modularity;
+        appState.graph.rawGraph.nodes.forEach((node) => {
+          node.community = communityDict[node.id] ? communityDict[node.id] : -1
+        })
+        const nodesArr = appState.graph.rawGraph.nodes
+        const nodekeyList = Object.keys(nodesArr[1])
+        const nodePropertyTypes = {}
+        nodekeyList.forEach(function (k) {
+          nodePropertyTypes[k] = typeof (nodesArr[1][k])
+        })
+        const uniqueValue = {}
+        nodekeyList.forEach(function (k, i) {
 
-                if (nodePropertyTypes[k] == 'string') {
-                    uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
-                } else {
-                    const valuea = nodesArr.map(function (el) { return el[k]; })
-                    const minv = Math.min(...valuea)
-                    const maxv = Math.max(...valuea)
-                    uniqueValue[k] = [minv, maxv]
-                }
-            })
-            appState.graph.metadata.uniqueValue = uniqueValue
-            appState.graph.metadata.nodeProperties = nodekeyList
-            appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
-            appState.graph.nodes.colorBy = "community"
-            appState.graph.nodes.color.scale = "Nominal Scale"
-            // console.log(result);
-        },
-        (error) => {
-            console.log(error);
-        }
+          if (nodePropertyTypes[k] == 'string') {
+            uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+          } else {
+            const valuea = nodesArr.map(function (el) { return el[k]; })
+            const minv = Math.min(...valuea)
+            const maxv = Math.max(...valuea)
+            uniqueValue[k] = [minv, maxv]
+          }
+        })
+        appState.graph.metadata.uniqueValue = uniqueValue
+        appState.graph.metadata.nodeProperties = nodekeyList
+        appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
+        appState.graph.nodes.colorBy = "community"
+        appState.graph.nodes.color.scale = "Nominal Scale"
+        // console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      }
     );
-}
+  }
 
-findcliques = () => {
+  findcliques = () => {
 
     var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
-        return edge.source_id
+      return edge.source_id
     })
     var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
-        return edge.target_id
+      return edge.target_id
     })
     var querydict = {
-        "type": 'edgelist',
-        "message": {
-            'name': 'clique'
-        },
-        "fromedgelist": fromedgelist,
-        "toedgelist": toedgelist
+      "type": 'edgelist',
+      "message": {
+        'name': 'clique'
+      },
+      "fromedgelist": fromedgelist,
+      "toedgelist": toedgelist
     }
     axios.post('https://snoman.herokuapp.com/flask/Cliques', querydict).then(
-        (response) => {
-            var cliques = response.data.message;
-            console.log(cliques)
-            // appState.graph.rawGraph.nodes.forEach((node) => {
-            //     node.community = communityDict[node.id]
-            // })
-            // const nodesArr = appState.graph.rawGraph.nodes
-            // const nodekeyList = Object.keys(nodesArr[1])
-            // const nodePropertyTypes = {}
-            // nodekeyList.forEach(function (k) {
-            //     nodePropertyTypes[k] = typeof (nodesArr[1][k])
-            // })
-            // const uniqueValue = {}
-            // nodekeyList.forEach(function (k, i) {
+      (response) => {
+        var cliques = response.data.message;
+        console.log(cliques)
+        // appState.graph.rawGraph.nodes.forEach((node) => {
+        //     node.community = communityDict[node.id]
+        // })
+        // const nodesArr = appState.graph.rawGraph.nodes
+        // const nodekeyList = Object.keys(nodesArr[1])
+        // const nodePropertyTypes = {}
+        // nodekeyList.forEach(function (k) {
+        //     nodePropertyTypes[k] = typeof (nodesArr[1][k])
+        // })
+        // const uniqueValue = {}
+        // nodekeyList.forEach(function (k, i) {
 
-            //     if (nodePropertyTypes[k] == 'string') {
-            //         uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
-            //     } else {
-            //         const valuea = nodesArr.map(function (el) { return el[k]; })
-            //         const minv = Math.min(...valuea)
-            //         const maxv = Math.max(...valuea)
-            //         uniqueValue[k] = [minv, maxv]
-            //     }
-            // })
-            // appState.graph.metadata.uniqueValue = uniqueValue
-            // appState.graph.metadata.nodeProperties = nodekeyList
-            // appState.graph.metadata.nodePropertyTypes= nodePropertyTypes
-            // console.log(result);
-        },
-        (error) => {
-            console.log(error);
-        }
+        //     if (nodePropertyTypes[k] == 'string') {
+        //         uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+        //     } else {
+        //         const valuea = nodesArr.map(function (el) { return el[k]; })
+        //         const minv = Math.min(...valuea)
+        //         const maxv = Math.max(...valuea)
+        //         uniqueValue[k] = [minv, maxv]
+        //     }
+        // })
+        // appState.graph.metadata.uniqueValue = uniqueValue
+        // appState.graph.metadata.nodeProperties = nodekeyList
+        // appState.graph.metadata.nodePropertyTypes= nodePropertyTypes
+        // console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      }
     );
-}
+  }
 
-convexhull = (group) => {
+  convexhull = (group) => {
 
     var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
-        return edge.source_id
+      return edge.source_id
     })
     var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
-        return edge.target_id
+      return edge.target_id
     })
     var querydict = {
-        "type": 'edgelist',
-        "message": {
-            'name': 'convex'
-        },
-        "group": group,
-        "nodes": appState.graph.rawGraph.nodes
+      "type": 'edgelist',
+      "message": {
+        'name': 'convex'
+      },
+      "group": group,
+      "nodes": appState.graph.rawGraph.nodes
 
     }
     axios.post('https://snoman.herokuapp.com/flask/convexhull', querydict).then(
-        (response) => {
-            var jsondata = JSON.parse(response.data)
-            var convexDict = jsondata.message;
-
-
-            appState.graph.rawGraph.nodes.forEach((node) => {
-                node.isconvex = convexDict[node.id]
-            })
-            const nodesArr = appState.graph.rawGraph.nodes
-            const nodekeyList = Object.keys(nodesArr[1])
-            const nodePropertyTypes = {}
-            nodekeyList.forEach(function (k) {
-                nodePropertyTypes[k] = typeof (nodesArr[1][k])
-            })
-            const uniqueValue = {}
-            nodekeyList.forEach(function (k, i) {
-
-                if (nodePropertyTypes[k] == 'string') {
-                    uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
-                } else {
-                    const valuea = nodesArr.map(function (el) { return el[k]; })
-                    const minv = Math.min(...valuea)
-                    const maxv = Math.max(...valuea)
-                    uniqueValue[k] = [minv, maxv]
-                }
-            })
-            appState.graph.metadata.uniqueValue = uniqueValue
-            appState.graph.metadata.nodeProperties = nodekeyList
-            appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
-
-
-            // const selectionNode = appState.graph.frame.getNodeList().filter(node =>
-            //     // console.log(node)
-            //     node.data.ref.isconvex
-
-            // )
-            // // highlight for the mapview 
-            // appState.graph.convexNodes = selectionNode
-            appState.graph.convexPolygons = jsondata.multipolygon;
-            console.log(appState.graph.convexPolygons)
-            //highlight in the network view 
-            // appState.graph.frame.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
-            //     appState.graph.frame.colorNodeOpacity(n, 0.2);
-
-            // });
-
-            // appState.graph.frame.lineIndices.forEach(function (link) {
-            //     link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
-            //     link.linecolor.g = self.darkMode ? 0.25 : 0.89;
-            //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-            // })
-
-            // for (var i = 0; i < selectionNode.length; i++) {
-            //     appState.graph.frame.colorNodeOpacity(selectionNode[i], 1);
-            //   }
-
-
-
-        },
-        (error) => {
-            console.log(error);
-        }
-    );
-}
-
-
-density_distance = (group) => {
-
-  // var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
-  //     return edge.source_id
-  // })
-  // var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
-  //     return edge.target_id
-  // })
-  var querydict = {
-      "type": 'edgelist',
-      "message": {
-          'name': 'density_distance'
-      },
-      "group": group,
-      "nodes": appState.graph.rawGraph.nodes, 
-      "edges": appState.graph.rawGraph.edges
-      
-
-  }
-  axios.post('http://snoman.herokuapp.com/flask/densitydistance', querydict).then(
       (response) => {
-          var jsondata = JSON.parse(response.data)
-          // var convexDict = jsondata.message;
+        var jsondata = JSON.parse(response.data)
+        var convexDict = jsondata.message;
 
-          appState.graph.metadata.nodeComputed.push('standard distance')
-          appState.graph.metadata.nodeComputed.push('network density')
 
-          
-          
-          appState.graph.densityDistance = jsondata.density_distance
-          appState.graph.scatterplot.y = 'standard distance'
-          appState.graph.scatterplot.x = 'network density'
-          appState.graph.groupby = group
+        appState.graph.rawGraph.nodes.forEach((node) => {
+          node.isconvex = convexDict[node.id]
+        })
+        const nodesArr = appState.graph.rawGraph.nodes
+        const nodekeyList = Object.keys(nodesArr[1])
+        const nodePropertyTypes = {}
+        nodekeyList.forEach(function (k) {
+          nodePropertyTypes[k] = typeof (nodesArr[1][k])
+        })
+        const uniqueValue = {}
+        nodekeyList.forEach(function (k, i) {
+
+          if (nodePropertyTypes[k] == 'string') {
+            uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+          } else {
+            const valuea = nodesArr.map(function (el) { return el[k]; })
+            const minv = Math.min(...valuea)
+            const maxv = Math.max(...valuea)
+            uniqueValue[k] = [minv, maxv]
+          }
+        })
+        appState.graph.metadata.uniqueValue = uniqueValue
+        appState.graph.metadata.nodeProperties = nodekeyList
+        appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
+
+
+        // const selectionNode = appState.graph.frame.getNodeList().filter(node =>
+        //     // console.log(node)
+        //     node.data.ref.isconvex
+
+        // )
+        // // highlight for the mapview 
+        // appState.graph.convexNodes = selectionNode
+        appState.graph.convexPolygons = jsondata.multipolygon;
+        console.log(appState.graph.convexPolygons)
+        //highlight in the network view 
+        // appState.graph.frame.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
+        //     appState.graph.frame.colorNodeOpacity(n, 0.2);
+
+        // });
+
+        // appState.graph.frame.lineIndices.forEach(function (link) {
+        //     link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+        //     link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+        //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        // })
+
+        // for (var i = 0; i < selectionNode.length; i++) {
+        //     appState.graph.frame.colorNodeOpacity(selectionNode[i], 1);
+        //   }
+
 
 
       },
       (error) => {
-          console.log(error);
+        console.log(error);
       }
-  );
-}
+    );
+  }
+
+
+  density_distance = (group) => {
+
+    // var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
+    //     return edge.source_id
+    // })
+    // var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
+    //     return edge.target_id
+    // })
+    var querydict = {
+      "type": 'edgelist',
+      "message": {
+        'name': 'density_distance'
+      },
+      "group": group,
+      "nodes": appState.graph.rawGraph.nodes,
+      "edges": appState.graph.rawGraph.edges
+
+
+    }
+    axios.post('http://snoman.herokuapp.com/flask/densitydistance', querydict).then(
+      (response) => {
+        var jsondata = JSON.parse(response.data)
+        // var convexDict = jsondata.message;
+
+        appState.graph.metadata.nodeComputed.push('standard distance')
+        appState.graph.metadata.nodeComputed.push('network density')
+
+
+
+        appState.graph.densityDistance = jsondata.density_distance
+        appState.graph.scatterplot.y = 'standard distance'
+        appState.graph.scatterplot.x = 'network density'
+        appState.graph.groupby = group
+
+
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
   render() {
     return (
       <nav className={classnames([Classes.NAVBAR], 'navbar-head')}>
         <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])}>
           <a href={LOGO_URL} target="_blank">
-            <img title="Snoman" id="SNoMAN logo" 
-            src={appState.preferences.darkMode ? argologo_dark : argologo_light}
-            height="28"></img>
+            <img title="Snoman" id="SNoMAN logo"
+              src={appState.preferences.darkMode ? argologo_dark : argologo_light}
+              height="28"></img>
           </a>
           <span>SNoMAN</span>
           <div className={classnames([Classes.NAVBAR_HEADING])}></div>
@@ -304,6 +304,7 @@ density_distance = (group) => {
 
                       return (
                         <MenuItem
+                          style={{ width: "200px" }}
                           key={sampleSnapshotTitle}
                           iconName="graph"
                           text={sampleSnapshotTitle}
@@ -376,7 +377,7 @@ density_distance = (group) => {
                   text="Cluster Cluster"
                   onClick={() => this.density_distance('Family')}
                 />
-                
+
               </Menu>
             }
             position={Position.BOTTOM}
@@ -486,26 +487,26 @@ density_distance = (group) => {
           <span className={Classes.NAVBAR_DIVIDER} />
           {appState.graph.hasGraph && appState.graph.frame && (
             <div style={{ display: "inline" }}>
-              
+
               {/** Smart Pause functionality: pauses graph when no interaction */}
               {(() => {
-              let self = this;
-              setInterval(function () {
+                let self = this;
+                setInterval(function () {
                   let timeNow = Date.now();
                   /**stops initial default active layout*/
-                  if(appState.graph.smartPause.defaultActive.isActive) {
-                    if(timeNow - appState.graph.smartPause.defaultActive.startTime > appState.graph.smartPause.defaultActive.duration
+                  if (appState.graph.smartPause.defaultActive.isActive) {
+                    if (timeNow - appState.graph.smartPause.defaultActive.startTime > appState.graph.smartPause.defaultActive.duration
                       || appState.graph.smartPause.interactingWithGraph) {
                       appState.graph.smartPause.defaultActive.isActive = false;
                     }
                   } else {
-                      /**smart pausing*/
-                    if(!appState.graph.frame.paused && 
-                      !appState.graph.smartPause.interactingWithGraph){
-                        appState.graph.frame.pauseLayout();
-                        appState.graph.frame.paused = true;
-                        appState.graph.smartPause.smartPaused = true;
-                        self.forceUpdate();
+                    /**smart pausing*/
+                    if (!appState.graph.frame.paused &&
+                      !appState.graph.smartPause.interactingWithGraph) {
+                      appState.graph.frame.pauseLayout();
+                      appState.graph.frame.paused = true;
+                      appState.graph.smartPause.smartPaused = true;
+                      self.forceUpdate();
                     }
                     /**old code using lastUnpaused:*/
                     /**
@@ -520,16 +521,17 @@ density_distance = (group) => {
                      */
 
                     /**un-smart pausing*/
-                    if(appState.graph.smartPause.smartPaused && appState.graph.smartPause.interactingWithGraph) {
-                        appState.graph.frame.resumeLayout();
-                        appState.graph.frame.paused = false;
-                        appState.graph.smartPause.smartPaused = false;
-                        self.forceUpdate();
+                    if (appState.graph.smartPause.smartPaused && appState.graph.smartPause.interactingWithGraph) {
+                      appState.graph.frame.resumeLayout();
+                      appState.graph.frame.paused = false;
+                      appState.graph.smartPause.smartPaused = false;
+                      self.forceUpdate();
                     }
                   }
-                }, 10)})()}
+                }, 10)
+              })()}
 
-             {<Tooltip
+              {<Tooltip
                 content={(appState.graph.frame.paused) ? "Resume Layout Algorithm" : "Pause Layout Algorithm"}
                 position={Position.BOTTOM}
               >
@@ -540,14 +542,14 @@ density_distance = (group) => {
                   onClick={() => {
                     if (appState.graph.frame.paused && !appState.graph.smartPause.smartPaused) {
                       /**graph is going from "pause layout" mode to "resume layout"*/
-                      
+
                       /** graph runs for default duration when unpaused */
                       appState.graph.runActiveLayout();
 
                       appState.graph.frame.resumeLayout();
                       this.forceUpdate();
                       /**appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused*/
-                    } else if(appState.graph.smartPause.smartPaused) {
+                    } else if (appState.graph.smartPause.smartPaused) {
                       /**graph is going from smart paused "resume layout" mode to "pause layout" mode*/
                       appState.graph.frame.paused = true;
                       appState.graph.smartPause.smartPaused = false;
@@ -559,7 +561,7 @@ density_distance = (group) => {
                   }}
                 />
               </Tooltip>
-          }
+              }
             </div>
           )}
 
@@ -627,21 +629,47 @@ class MinimalNavbar extends React.Component {
             backgroundColor: appState.preferences.darkMode ? '#30404D' : '#FFFFFF',
           }}
         >
-          <div className="pt-button-group">
+          <Tooltip
+            content={(appState.graph.frame.paused) ? "Resume Layout Algorithm" : "Pause Layout Algorithm"}
+            position={Position.BOTTOM}
+          >
+             <div className="pt-button-group">
             <a
-              className={classnames("pt-button pt-icon-maximize", appState.graph.frame.paused ? "pt-icon-play" : "pt-icon-pause")}
+              className={classnames("pt-button pt-icon-maximize", (!appState.graph.smartPause.smartPaused && appState.graph.frame.paused) ? "pt-icon-play" : "pt-icon-pause")}
               role="button"
               onClick={() => {
-                if (appState.graph.frame.paused) {
+                if (appState.graph.frame.paused && !appState.graph.smartPause.smartPaused) {
+                  /**graph is going from "pause layout" mode to "resume layout"*/
+
+                  /** graph runs for default duration when unpaused */
+                  appState.graph.runActiveLayout();
+
                   appState.graph.frame.resumeLayout();
                   this.forceUpdate();
+                  /**appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused*/
+                } else if (appState.graph.smartPause.smartPaused) {
+                  /**graph is going from smart paused "resume layout" mode to "pause layout" mode*/
+                  appState.graph.frame.paused = true;
+                  appState.graph.smartPause.smartPaused = false;
                 } else {
+                  /**graph is going from in "resume layout" mode to "pause layout" mode*/
                   appState.graph.frame.pauseLayout();
                   this.forceUpdate();
                 }
               }}
+            // onClick={() => {
+            //   if (appState.graph.frame.paused) {
+            //     appState.graph.frame.resumeLayout();
+            //     this.forceUpdate();
+            //   } else {
+            //     appState.graph.frame.pauseLayout();
+            //     this.forceUpdate();
+            //   }
+            // }}
             />
           </div>
+          </Tooltip>
+         
         </div>
         <div
           className={classnames("minimal-navbar-right")}

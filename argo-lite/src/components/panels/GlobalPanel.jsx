@@ -42,7 +42,7 @@ class GlobalPanel extends React.Component {
                 <p style={{display: "inline"}}>Color By: </p>
                 <span style={{float:"right"}}>
                   <SimpleSelect  
-                    items={appState.graph.allPropertiesKeyList}
+                    items={appState.graph.filterKeyList}
                     onSelect={it => (appState.graph.nodes.colorBy = it)}
                     value={appState.graph.nodes.colorBy}
                   />
@@ -158,7 +158,7 @@ class GlobalPanel extends React.Component {
                 <p style={{display: "inline"}}>Scale By:</p>
                 <span style={{float:"right"}}>
                   <Select
-                    items={appState.graph.allPropertiesKeyList}
+                    items={appState.graph.filterKeyList}
                     itemRenderer={CommonItemRenderer}
                     filterable={false}
                     onItemSelect={it => (appState.graph.nodes.sizeBy = it)}

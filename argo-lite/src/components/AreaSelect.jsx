@@ -33,24 +33,32 @@ export default function AreaSelect() {
     map.on("areaselected", (e) => {
       console.log(e.bounds.toBBoxString()); // lon, lat, lon, lat
       L.rectangle(e.bounds, { color: "blue", weight: 1 });
-      var mapselection = []
-      if(appState.graph.rawGraph.nodes[0].LatY !== undefined){
-        map.eachLayer((pointLayer) => { 
-            if (pointLayer instanceof L.CircleMarker && e.bounds.contains(pointLayer.getLatLng())) {
-                mapselection.push(pointLayer.options.data)
-                pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
-                // pointLayer.options.data.renderData.draw_object.children[0].visible = true
-                // appState.graph.frame.colorNodeOpacity(pointLayer.options.data,1)
-            }
-            // else if(pointLayer instanceof L.CircleMarker){
-            //   pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(pointLayer.options.data.renderData.hcolor);
-            //   pointLayer.options.data.renderData.draw_object.children[0].visible = false
-            //   appState.graph.frame.colorNodeOpacity(pointLayer.options.data,0.5)
-            // }
-          }
-            )
-      }
-      appState.graph.selectedNodes = [...mapselection]
+      // const mapselection = []
+      // if(appState.graph.rawGraph.nodes[0].LatY !== undefined){
+      //   map.eachLayer((pointLayer) => { 
+      //       if (pointLayer instanceof L.CircleMarker && e.bounds.contains(pointLayer.getLatLng())) {
+      //           mapselection.push(pointLayer.options.data)
+      //           pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+      //           pointLayer.options.data.renderData.draw_object.children[0].visible = true
+      //           appState.graph.frame.colorNodeOpacity(pointLayer.options.data,1)
+      //       }
+      //       // else if(pointLayer instanceof L.CircleMarker){
+      //       //   pointLayer.options.data.renderData.draw_object.children[0].material.color.setHex(pointLayer.options.data.renderData.hcolor);
+      //       //   pointLayer.options.data.renderData.draw_object.children[0].visible = false
+      //       //   appState.graph.frame.colorNodeOpacity(pointLayer.options.data,0.5)
+      //       // }
+      //     }
+      //       )
+      // }
+
+      // const northeast = e.bounds.getNorthEast()
+      // const southwest = e.bounds.getSouthWest()
+
+      const selectionNode = appState.graph.frame.getNodeList().filter(node =>( 
+        e.bounds.contains(L.latLng(node.data.ref.LatY, node.data.ref.LonX)))
+     
+      )
+      
       
       // //highlight selected nodes 
       // if (appState.graph.selectedNodes.length > 0) {
@@ -61,7 +69,8 @@ export default function AreaSelect() {
       //     return { fillColor: node.renderData.color , fillOpacity: 0.9, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
       //   }
       // }
-      appState.graph.frame.selection = [...mapselection]
+      appState.graph.selectedNodes = selectionNode
+      appState.graph.frame.selection = selectionNode
       appState.graph.frame.updateSelectionOpacity()
       
       // console.log(appState.graph.selectedNodes)

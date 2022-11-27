@@ -2,6 +2,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import classnames from "classnames";
+import SimpleSelect from "../utils/SimpleSelect";
 import {
     Button,
     Classes,
@@ -51,12 +52,12 @@ class StatGroupPanel extends React.Component {
             "toedgelist": toedgelist
         }
         axios.post('http://snoman.herokuapp.com/flask/community', querydict).then(
-        // https://snoman.herokuapp.com/flask/community', querydict).then(
+            // https://snoman.herokuapp.com/flask/community', querydict).then(
             (response) => {
                 var communityDict = response.data.message;
                 this.modularity = response.data.modularity;
                 appState.graph.rawGraph.nodes.forEach((node) => {
-                    node.community = communityDict[node.id] ? communityDict[node.id] : -1
+                    node.community = communityDict[node.id] ? String(communityDict[node.id]) : "-1"
                 })
                 const nodesArr = appState.graph.rawGraph.nodes
                 const nodekeyList = Object.keys(nodesArr[1])
@@ -76,11 +77,13 @@ class StatGroupPanel extends React.Component {
                         uniqueValue[k] = [minv, maxv]
                     }
                 })
+                appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
                 appState.graph.metadata.uniqueValue = uniqueValue
                 appState.graph.metadata.nodeProperties = nodekeyList
-                appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
-                appState.graph.nodes.colorBy = "community"
+               
                 appState.graph.nodes.color.scale = "Nominal Scale"
+                appState.graph.nodes.colorBy = "community"
+                
                 // console.log(result);
             },
             (error) => {
@@ -130,9 +133,10 @@ class StatGroupPanel extends React.Component {
                 //         uniqueValue[k] = [minv, maxv]
                 //     }
                 // })
+                // appState.graph.metadata.nodePropertyTypes= nodePropertyTypes
                 // appState.graph.metadata.uniqueValue = uniqueValue
                 // appState.graph.metadata.nodeProperties = nodekeyList
-                // appState.graph.metadata.nodePropertyTypes= nodePropertyTypes
+                
                 // console.log(result);
             },
             (error) => {
@@ -159,7 +163,7 @@ class StatGroupPanel extends React.Component {
 
         }
         axios.post('http://snoman.herokuapp.com/flask/convexhull', querydict).then(
-        // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
+            // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
                 var convexDict = jsondata.message;
@@ -186,11 +190,15 @@ class StatGroupPanel extends React.Component {
                         uniqueValue[k] = [minv, maxv]
                     }
                 })
+                appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
                 appState.graph.metadata.uniqueValue = uniqueValue
                 appState.graph.metadata.nodeProperties = nodekeyList
-                appState.graph.metadata.nodePropertyTypes = nodePropertyTypes
+                
 
-
+                appState.graph.nodes.color.scale = "Nominal Scale"
+                appState.graph.nodes.colorBy = group
+                appState.graph.convexPolygonsShow = true
+                
                 // const selectionNode = appState.graph.frame.getNodeList().filter(node =>
                 //     // console.log(node)
                 //     node.data.ref.isconvex
@@ -257,12 +265,14 @@ class StatGroupPanel extends React.Component {
                 appState.graph.scatterplot.y = 'standard distance'
                 appState.graph.scatterplot.x = 'network density'
                 appState.graph.groupby = group
+                appState.graph.nodes.colorBy = group
+                appState.graph.nodes.color.scale = "Nominal Scale"
 
 
             },
             (error) => {
                 console.log(error)
-                
+
             }
         );
     }
@@ -273,25 +283,52 @@ class StatGroupPanel extends React.Component {
             (
                 <div>
                     <Button
-                    className="bp4-button"
+                        className="bp4-button"
                         style={{ zIndex: '1000' }}
                         onClick={this.runcommunity}>Run Community</Button>
                     {/* {this.modularity? <Tag className="network-tag">{this.modularity}</Tag>: null} */}
                     {/* <Button
                         style={{ position: 'absolute', top: '50px', left: '500px', zIndex: '1000' }}
                         onClick={this.findcliques}>Find Cliques</Button> */}
-                    <Button
-                    className="bp4-button"
-                        style={{zIndex: '1000' }}
-                        onClick={() => this.convexhull('Family')}>Convex Hull by Group</Button>
-    
-                    <Button
-                    className="bp4-button"
+                    {/* <Button
+                        className="bp4-button"
                         style={{ zIndex: '1000' }}
-                        onClick={() => this.density_distance('Family')}>Cluster Cluster</Button>
-                    
+                        onClick={() => this.convexhull('Family')}>Convex Hull by Group</Button>
+
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={() => this.density_distance('Family')}>Cluster Cluster</Button> */}
+
+
+                    <div>
+                        <p style={{ display: "inline" , fontSize:"9px" }}>Convex Hull By: </p>
+                        <span style={{ float: "right" }}>
+                            <SimpleSelect
+                                items={appState.graph.filterKeyList}
+                                onSelect={it => {
+                                    appState.graph.convexhullby = it
+                                    this.convexhull(it)
+                                }}
+                                value={appState.graph.convexhullby}
+                            />
+                        </span>
+                    </div>
+                    <div>
+                        <p style={{ display: "inline" , fontSize:"9px" }}>Cluster By: </p>
+                        <span style={{ float: "right" }}>
+                            <SimpleSelect
+                                items={appState.graph.filterKeyList}
+                                onSelect={it => {
+                                    appState.graph.groupby = it
+                                    this.density_distance(it)
+                                }}
+                                value={appState.graph.groupby}
+                            />
+                        </span>
+                    </div>
                 </div>
-    
+
             )
         );
     }

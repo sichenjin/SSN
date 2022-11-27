@@ -9,7 +9,7 @@ import {
 } from "@blueprintjs/core";
 import Dialogs from "./components/Dialogs";
 import Navbar from "./components/Navbar";
-import ComDetection from './components/ComDetection'
+// import ComDetection from './components/ComDetection'
 import WorkspaceView from "./components/WorkspaceView";
 import appState from "./stores/index";
 import ThreeJSVis from "./visualizers/ThreeJSVis";
@@ -21,7 +21,7 @@ import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
 // import ScatterPlot from "./components/panels/ScatterPlot"
 import SelectionDetail from "./components/panels/SelectionDetail";
 // import Sidebar from "./components/Sidebar"
-import {Tag } from "@blueprintjs/core";
+import { Tag } from "@blueprintjs/core";
 // import GraphView from "./components/GraphView";
 
 import keydown, { Keys } from "react-keydown";
@@ -219,7 +219,7 @@ class App extends React.Component {
               <div class="container-up container">
                 <div class="container__left">
                   <div className="graph">
-                  {appState.graph.hasGraph && <Tag className="network-tag">
+                    {appState.graph.hasGraph && <Tag className="network-tag">
                       Network
                     </Tag>}
                     <main className="main">
@@ -246,6 +246,14 @@ class App extends React.Component {
               <div class="resizer-up" id="dragMeUp"></div>
               <div class="container-down container" id="scatter">
                 <div style={{
+                  display: "flex", height: "100%",width: '40%'
+                  // border:'#C0C0C0',
+                  // borderStyle:'solid',
+                  // flex:"1 1 50%"
+                }}>
+                  {<SelectionDetail />}
+                </div>
+                <div style={{
                   display: "flex", height: "100%",
                   // border:'#C0C0C0',
                   // borderStyle:'solid',
@@ -258,14 +266,7 @@ class App extends React.Component {
 
                   </div>
                 </div>
-                <div style={{
-                  display: "flex", height: "100%",
-                  // border:'#C0C0C0',
-                  // borderStyle:'solid',
-                  // flex:"1 1 50%"
-                }}>
-                  {<SelectionDetail />}
-                </div>
+
               </div>
             </div>
           </div>

@@ -117,6 +117,20 @@ class ImportDialog extends React.Component {
               value={nodeFile.mapping.id}
               onSelect={it => (nodeFile.mapping.id = it)}
             />
+            <p sytle = {{margin: '0 0 0px',padding: '0'}}></p>
+            Column for Node Longitude:
+            <SimpleSelect
+              items={nodeFile.columns}
+              value={nodeFile.mapping.LonX}
+              onSelect={it => (nodeFile.mapping.LonX = it)}
+            />
+            <p sytle = {{margin: '0 0 0px',padding: '0'}}></p>
+            Column for Node Latitude:
+            <SimpleSelect
+              items={nodeFile.columns}
+              value={nodeFile.mapping.LatY}
+              onSelect={it => (nodeFile.mapping.LatY = it)}
+            />
           </div>
         )}
       </Collapsable>

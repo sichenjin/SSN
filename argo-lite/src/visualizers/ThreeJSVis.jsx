@@ -13,8 +13,8 @@ export default class ThreeJSVis extends React.Component {
       <div
         id="graph-container"
         style={{
-          width: "100vw",
-          height: "100vh",
+          width: "40vw",
+          height: "60vh",
           // flex: "1",
           // border:'#C0C0C0',
           // borderStyle:'solid',

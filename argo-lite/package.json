@@ -6,6 +6,7 @@
     "@babel/core": "7.5.5",
     "@blueprintjs/core": "^1.40.0",
     "@blueprintjs/labs": "0.14.3",
+    "@blueprintjs/select": "^4.8.11",
     "@blueprintjs/table": "^1.29.0",
     "@data-ui/histogram": "^0.0.84",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

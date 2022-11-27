@@ -60,6 +60,7 @@ export default class GraphStore {
   @observable convexPolygonsShow = false;
 
   @observable mapEdgeShow = true;
+  @observable autoZoom = true;
 
 
 
@@ -81,7 +82,7 @@ export default class GraphStore {
       duration: 10000, //duration of resumed layout
     },
     //lastUnpaused: undefined, //old code using lastUnpaused
-    smartPaused: false, //true when resumed, but graph layout is paused due to inactivity
+    smartPaused: true, //true when resumed, but graph layout is paused due to inactivity
     interactingWithGraph: false, //true when node is clicked or dragged. TODO: refactor to more understandable name
   }
 
@@ -144,7 +145,10 @@ export default class GraphStore {
   distanceDensityCurrentlyHovered = undefined
 
   @observable
-  groupby = undefined
+  groupby = 'NULL'
+
+  @observable
+  convexhullby = 'NULL'
 
   // used for listing all the properties, either original or computed
   @computed
@@ -156,11 +160,27 @@ export default class GraphStore {
   }
 
   @computed
-  get allComputedPropertiesKeyList() {
+  get filterKeyList() {
+    const removeList = ['isHidden','id','Longitude', 'Latitude','LatY', 'LonX', 'dist to center','dist_to_center','centrality','shortest path', 'pair distance','node_id','standard distance','network density']
     return uniq([
+      ...this.metadata.nodeProperties,
+      ...this.metadata.nodeComputed
+    ]).filter(k =>removeList.indexOf(k)=== -1); // since node_id is already present
+  }
+
+  @computed
+  get allComputedPropertiesKeyList() {
+   
+    const uniq_compute = uniq([
       ...this.metadata.nodeComputed
     ]).filter(k => k !== 'id' ); // since node_id is already present
+    const uppercase_compute = uniq_compute.map((u)=>{
+    return u.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
+    })
+     return uppercase_compute
   }
+
+  
 
   
 
@@ -309,7 +329,9 @@ export default class GraphStore {
                 satisfy = false
               }
             }else{  // number range 
-  
+              if(this.nodes.filter[fkey] && (n[fkey]<this.nodes.filter[fkey]['min'] || n[fkey]>this.nodes.filter[fkey]['max'])){
+                satisfy = false
+              }
             }
           }
           if (satisfy) {

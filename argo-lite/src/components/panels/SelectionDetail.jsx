@@ -20,11 +20,14 @@ import { filter } from "lodash";
 class SelectionDetail extends React.Component {
 
   // 
-  margin = { top: 10, right: 30, bottom: 30, left: 40 }
-  width = 200 - this.margin.left - this.margin.right
-  height = 200 - this.margin.top - this.margin.bottom
-  brushmargin = { left: 64, top:32 }
-  brushwidth = 104
+  margin = { top: 32, right: 30, bottom: 64, left: 30 }
+  // { top: 32, right: 32, bottom: 64, left: 64 }
+  allwidth = 180
+  allheight = 180
+  width = this.allwidth - this.margin.left - this.margin.right
+  height = this.allheight - this.margin.top - this.margin.bottom
+  brushmargin = this.margin
+  brushwidth = this.width
   distBinData = []
   edgeSelection = []
 
@@ -120,8 +123,8 @@ class SelectionDetail extends React.Component {
     
 
     console.log(this.distBinData)
-    const filterDistBin = this.distBinData.filter((d,i)=>i%2 !=1)
-    const filterDistBin2 = filterDistBin.filter((d,i)=>selectionRectID.indexOf(i)!==-1)
+    // const filterDistBin = this.distBinData.filter((d,i)=>i%2 !=1)
+    const filterDistBin2 = this.distBinData.filter((d,i)=>selectionRectID.indexOf(i)!==-1)
     console.log(this.distBinData)
     const distbuffer_min = min(filterDistBin2.map((d)=>d.mind))
     const distbuffer_max = max(filterDistBin2.map((d)=>d.maxd))
@@ -154,7 +157,7 @@ class SelectionDetail extends React.Component {
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
       extent={
-        [[64, 32], [168 , 136]]
+        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right , this.allheight-this.brushmargin.bottom]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -212,7 +215,7 @@ class SelectionDetail extends React.Component {
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
       extent={
-        [[64, 32], [168 , 136]]
+        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right , this.allheight-this.brushmargin.bottom]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -256,7 +259,7 @@ class SelectionDetail extends React.Component {
             // "transparent-frame"
           )}
           style={{
-            width: '45vw',
+            // width: '40vw',
             height: '40vh',
             // border:'#C0C0C0',
             // borderStyle:'solid',
@@ -313,11 +316,12 @@ class SelectionDetail extends React.Component {
               <Histogram
                 ariaLabel="distance_dis"
                 orientation="vertical"
-                height={200}
-                width={200}
+                height={this.allheight}
+                width={this.allwidth}
                 cumulative={false}
                 normalized={true}
                 binCount={25}
+                margin = {this.margin}
                 valueAccessor={(datum) => {
                   
                   return datum
@@ -347,9 +351,9 @@ class SelectionDetail extends React.Component {
                       
                     
 
-                    console.log(this.distBinData)
-                    console.log(i)
-                    console.log(d)
+                    // console.log(this.distBinData)
+                    // console.log(i)
+                    // console.log(d)
                     return "#429bf5"
                   }}
                 />
@@ -379,8 +383,9 @@ class SelectionDetail extends React.Component {
             <Histogram
               ariaLabel="degree_dis"
               orientation="vertical"
-              height={200}
-              width={200}
+              height={this.allheight}
+              width={this.allwidth}
+              margin = {this.margin}
               cumulative={false}
               normalized={true}
               binCount={25}
@@ -415,7 +420,7 @@ class SelectionDetail extends React.Component {
           // "transparent-frame"
         )}
         style={{
-          width: '45vw',
+          // width: '40vw',
           height: '40vh',
           // border:'#C0C0C0',
           // borderStyle:'solid',

@@ -52,7 +52,7 @@ module.exports = function (self) {
 
   //highlight nodes and edges within selection
   self.updateSelectionOpacity = function () {
-    if (self.selection.length !== 0) {
+    if (self.selection.length > 0) {
       self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
         self.colorNodeOpacity(n, 0.2);
         

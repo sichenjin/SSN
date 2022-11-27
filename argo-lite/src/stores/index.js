@@ -152,7 +152,7 @@ window.loadInitialSampleGraph = async () => {
     
   }
   // loadAndDisplaySnapshotFromURL(url)
-  loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[1][1]);
+  loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[0][1]);
 };
 
 window.saveSnapshotToString = () => {
@@ -195,10 +195,10 @@ autorun(() => {
 });
 
 
-// // pause layout by default 
+// // // resume layout by default 
 autorun(() => {
-  appState.graph.frame.paused = true;
-  appState.graph.frame.pauseLayout();
+  appState.graph.frame.paused = false;
+  appState.graph.frame.resumeLayout();
                   // this.forceUpdate();
 }) 
 
@@ -336,6 +336,8 @@ autorun(() => {
         appState.import.importConfig.nodeFile.topN = it;
         appState.import.importConfig.nodeFile.columns = Object.keys(it[0]).map(key => `${key}`);
         appState.import.importConfig.nodeFile.mapping.id = appState.import.importConfig.nodeFile.columns[0];
+        appState.import.importConfig.nodeFile.mapping.LatY = appState.import.importConfig.nodeFile.columns[1];
+        appState.import.importConfig.nodeFile.mapping.LonX = appState.import.importConfig.nodeFile.columns[2];
         appState.import.importConfig.nodeFile.ready = true;
       });
     } catch {

@@ -31,7 +31,11 @@ export function MapClick() {
     const map = useMapEvents({
       click(e) {
         //   console.log(e)
+        appState.graph.frame.selection = []
+        appState.graph.selectedNodes = []
+        appState.graph.edgeselection = []
         // appState.graph.mapClicked = null
+        
       }
     })
     return null;

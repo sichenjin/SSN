@@ -15,11 +15,14 @@ return (
   <MultiSelect
   popoverProps={{
     popoverClassName: "filter-scroll",
+   
     targetTagName: 'div' 
   }}
+//  placeholder={'Search for a country'} 
+  resetOnSelect={true}
     items={items}
     itemRenderer={CommonItemRenderer}
-    // filterable={false}
+    filterable={true}
     onItemSelect={onSelect}
     tagRenderer = {tag}
     selectedItems = {value}

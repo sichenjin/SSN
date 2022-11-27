@@ -569,10 +569,10 @@ async function importGraphFromCSV(config) {
   if (config.hasNodeFile) {
     nodesArr = await readCSV(appState.import.selectedNodeFileFromInput, config.nodes.hasColumns, config.delimiter);
     nodesArr.forEach(node => graph.addNode(node[config.nodes.mapping.id].toString(),
-      { id: node[config.nodes.mapping.id].toString(), degree: 0, ...node }));
+      { id: node[config.nodes.mapping.id].toString(), LatY: parseFloat(node[config.nodes.mapping.LatY]),LonX: parseFloat(node[config.nodes.mapping.LonX]),degree: 0, ...node }));
     nodesArr =
       nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0, centrality: parseFloat(n['centrality']), 'dist to center': parseFloat(n['distance to center']), LonX: parseFloat(n['LonX']), LatY: parseFloat(n['LatY']) }));
+        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0, centrality: parseFloat(n['centrality']), 'dist to center': parseFloat(n['distance to center']), LonX: parseFloat(n[config.nodes.mapping.LonX]), LatY: parseFloat(n[config.nodes.mapping.LatY]) }));
     nodesArr.forEach(n => degreeDict[n.id] = 0);
   }
   const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
@@ -682,8 +682,40 @@ async function importGraphFromCSV(config) {
     }
   }
 
+
+  const calMedianCenter = ()=>{
+    const latlist = nodesArr.map(n => n['LatY'])
+    const lonlist = nodesArr.map(n => n['LonX'])
+    const medianCenter = (values)=>{
+      if(values.length ===0) throw new Error("No inputs");
+    
+      values.sort(function(a,b){
+        return a-b;
+      });
+    
+      var half = Math.floor(values.length / 2);
+      
+      if (values.length % 2)
+        return values[half];
+      
+      return (values[half - 1] + values[half]) / 2.0;
+    }
+
+    if (latlist.length > 0 && lonlist.length > 0) {
+      const medianLat = medianCenter(latlist)
+      const medianLon = medianCenter(lonlist)
+      nodesArr.forEach(function (n, i) {
+        n['distance to center'] = calDistanceFromLatLonInKm(medianLat, medianLon, latlist[i], lonlist[i])
+      })
+    }
+
+
+  }
+
   if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
-    calDIstanceToCenter();
+    // calDIstanceToCenter();
+  calMedianCenter();
+
   }
   const shortestPathPairs = () => {
     let pathFinder = path.aGreedy(graph);
@@ -829,8 +861,38 @@ export async function importGraphFromGexf() {
     }
   }
 
+  const calMedianCenter = ()=>{
+    const latlist = nodesArr.map(n => n['LatY'])
+    const lonlist = nodesArr.map(n => n['LonX'])
+    const medianCenter = (values)=>{
+      if(values.length ===0) throw new Error("No inputs");
+    
+      values.sort(function(a,b){
+        return a-b;
+      });
+    
+      var half = Math.floor(values.length / 2);
+      
+      if (values.length % 2)
+        return values[half];
+      
+      return (values[half - 1] + values[half]) / 2.0;
+    }
+
+    if (latlist.length > 0 && lonlist.length > 0) {
+      const medianLat = medianCenter(latlist)
+      const medianLon = medianCenter(lonlist)
+      nodesArr.forEach(function (n, i) {
+        n['distance to center'] = calDistanceFromLatLonInKm(medianLat, medianLon, latlist[i], lonlist[i])
+      })
+    }
+
+
+  }
+
   if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
-    calDIstanceToCenter();
+    // calDIstanceToCenter();
+    calMedianCenter();
   }
 
   const shortestPathPairs = () => {
