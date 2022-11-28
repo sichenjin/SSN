@@ -36,6 +36,16 @@ class SelectionDetail extends React.Component {
     const selectNodes = appState.graph.selectedNodes;
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
+    if(appState.graph.mapClicked){
+      
+      const edgeSelection = appState.graph.mapClicked.linkObjs
+      if (edgeSelection.length == 0) return [null, []];
+      this.edgeSelection = edgeSelection
+      const edgeDistance = edgeSelection.map(e => e.edgeDist)
+      return [average(edgeDistance).toFixed(3),edgeDistance];
+
+    }
+
     if (selectNodes.length > 1) {
       //// calculate only the connected distance 
       const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
@@ -79,11 +89,13 @@ class SelectionDetail extends React.Component {
 
   SelectionDensity = () => {
 
+    // undirect graph
+
     const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
     if (edgeSelection.length == 0) return 0;
     this.edgeSelection =  [...edgeSelection]
     const nodelength = appState.graph.selectedNodes.length;
-    const selectionDen = edgeSelection.length / (nodelength * (nodelength - 1))
+    const selectionDen = 2*edgeSelection.length / (nodelength * (nodelength - 1))
     return selectionDen.toFixed(3)
 
 
@@ -123,12 +135,13 @@ class SelectionDetail extends React.Component {
     
 
     console.log(this.distBinData)
-    // const filterDistBin = this.distBinData.filter((d,i)=>i%2 !=1)
-    const filterDistBin2 = this.distBinData.filter((d,i)=>selectionRectID.indexOf(i)!==-1)
-    console.log(this.distBinData)
+    console.log(selectionRectID)
+    const filterDistBin = this.distBinData.filter((d,i)=>i%2 !=1)
+    const filterDistBin2 = filterDistBin.filter((d,i)=>selectionRectID.indexOf(i)!==-1)
+    // console.log(this.distBinData)
     const distbuffer_min = min(filterDistBin2.map((d)=>d.mind))
     const distbuffer_max = max(filterDistBin2.map((d)=>d.maxd))
-    console.log(this.edgeSelection)
+    // console.log(this.edgeSelection)
     const filteredge = this.edgeSelection.filter(edge => (edge.edgeDist>= distbuffer_min && edge.edgeDist<=distbuffer_max))
   
 
@@ -243,7 +256,6 @@ class SelectionDetail extends React.Component {
 
     if (appState.graph.selectedNodes.length > 0 && this.SelectionDistanceFromLatLonIn()&&this.SelectionDistanceFromLatLonIn()[0]) {
       // self = this
-      // this.histogram(this.SelectionDistanceFromLatLonIn()[1],self)
 
       // Array(100).fill().map(Math.random);
 
@@ -303,7 +315,6 @@ class SelectionDetail extends React.Component {
 
           <div style={{ height: '20vw' }}>
             <text className="distribution-title" >The Distance Distribution</text>
-            {/* <Histogram data = {this.SelectionDistanceFromLatLonIn()[1]} id = "edge_hist"  /> */}
 
             <svg
               width={this.width + this.margin.right + this.margin.left}

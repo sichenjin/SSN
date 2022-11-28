@@ -688,17 +688,19 @@ async function importGraphFromCSV(config) {
     const lonlist = nodesArr.map(n => n['LonX'])
     const medianCenter = (values)=>{
       if(values.length ===0) throw new Error("No inputs");
+
+      const result1 = [...values].sort((a, b) => a - b)
     
-      values.sort(function(a,b){
-        return a-b;
-      });
+      // values.sort(function(a,b){
+      //   return a-b;
+      // });
     
-      var half = Math.floor(values.length / 2);
+      var half = Math.floor(result1.length / 2);
       
-      if (values.length % 2)
-        return values[half];
+      if (result1.length % 2)
+        return result1[half];
       
-      return (values[half - 1] + values[half]) / 2.0;
+      return (result1[half - 1] + result1[half]) / 2.0;
     }
 
     if (latlist.length > 0 && lonlist.length > 0) {

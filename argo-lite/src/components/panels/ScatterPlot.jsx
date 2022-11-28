@@ -707,6 +707,8 @@ class RenderCircles extends React.Component {
             onMouseOver={(e) => {
               // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
               const [sourceid, targetid] = e.target.getAttribute('id').split('👉')
+              
+              e.target.style.fill = 'rgba(255, 1, 1, .9)'
               // const source = appState.graph.frame.getNode(sourceid)
               // const target = appState.graph.frame.getNode(targetid)
               const thepath = pathFinder.find(sourceid, targetid)
