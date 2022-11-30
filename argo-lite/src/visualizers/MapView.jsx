@@ -90,12 +90,12 @@ class MapView extends React.Component {
   @computed
   get edgeSelectionID() {
     var edgeselectionID = []
-    if (appState.graph.selectedNodes.length > 0) {
+    // if (appState.graph.selectedNodes.length > 0) {
 
       edgeselectionID = appState.graph.edgeselection.map(function (edge) {
         return `${edge.source.id}👉 ${edge.target.id}`
       })
-    }
+    // }
     // console.log(edgeselectionID)
     return edgeselectionID
   }
@@ -203,7 +203,7 @@ class MapView extends React.Component {
 
 
 
-    if (appState.graph.edgeselection.length !== 0 && appState.graph.selectedNodes.length !== 0) {
+    if (appState.graph.edgeselection.length !== 0) {  // && appState.graph.selectedNodes.length !== 0
       const tempedgelist = this.edgeSelectionID
       if (tempedgelist.indexOf(edge.id) !== -1) {
         return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
@@ -213,7 +213,7 @@ class MapView extends React.Component {
       //   return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
       // } 
       else {
-        return { color: appState.graph.edges.color, weight: '0.05', opacity: '0' }
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
 
 
@@ -223,7 +223,7 @@ class MapView extends React.Component {
       if (edge.fromId == appState.graph.mapClicked.id || edge.toId == appState.graph.mapClicked.id) {
         return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
       } else {
-        return { color: appState.graph.edges.color, weight: '0.05', opacity: '0' }
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
     }
 
@@ -241,7 +241,7 @@ class MapView extends React.Component {
       } else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
       } else {
-        return { color: appState.graph.edges.color, weight: '0.05', opacity: '0' }
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
     }
 
@@ -253,7 +253,7 @@ class MapView extends React.Component {
       if (edge.fromId == appState.graph.currentlyHovered.id || edge.toId == appState.graph.currentlyHovered.id) {
         return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
       } else {
-        return { color: appState.graph.edges.color, weight: '0.05', opacity: '0' }
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
     }
 
@@ -264,7 +264,7 @@ class MapView extends React.Component {
           return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
         }
       }
-      return { color: appState.graph.edges.color, weight: '0.05', opacity: '0' }
+      return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
     }
 
 
@@ -289,10 +289,10 @@ class MapView extends React.Component {
 
     if (appState.graph.convexNodes.length > 0) {
       if (appState.graph.convexNodes.indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       } else {
 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'orange', zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       }
     }
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
@@ -304,22 +304,22 @@ class MapView extends React.Component {
     if (appState.graph.currentlyHovered) {
       // currently node
       if (node.id === appState.graph.currentlyHovered.id) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'orange', zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, zIndex: '10000' }
       } else { //others 
-        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       }
     }
 
     if (appState.graph.mapClicked) {
       // currently node
       if (node.id === appState.graph.mapClicked.id) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'orange', zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'orange', zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       } else { //others 
-        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       }
     }
 
@@ -329,10 +329,10 @@ class MapView extends React.Component {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'green', zIndex: '10000' }
       }
       else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
       } else {
 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'orange', zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       }
     }
 
@@ -340,11 +340,17 @@ class MapView extends React.Component {
 
     // select area highlight 
     if (appState.graph.selectedNodes.length > 0) {
-      if (this.nodesSelectedID.indexOf(node.id) === -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
-      } else {
+      const neighborIDs = appState.graph.selectedNeighborIDs
+      if (this.nodesSelectedID.indexOf(node.id) !== -1) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'orange', zIndex: '10000' }
+      } else if(neighborIDs.indexOf(node.id) !== -1){
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, color: 'orange', zIndex: '10000' }
+
+      }
+      else {
+        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
+
       }
     }
 
@@ -598,7 +604,7 @@ class MapView extends React.Component {
 
           }
         </Pane>
-        <Switch style={{ position: 'fixed', top: '55px', left: '98vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '55px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -609,7 +615,7 @@ class MapView extends React.Component {
         <span style={{ fontSize: '9px', position: 'fixed', top: '55px', right: '35px', zIndex: '1000' }}> Show Edges</span>
 
 
-        <Switch style={{ position: 'fixed', top: '40px', left: '98vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '40px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.convexPolygonsShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -619,7 +625,7 @@ class MapView extends React.Component {
         />
         <span style={{ fontSize: '9px', position: 'fixed', top: '40px', right: '35px', zIndex: '1000' }}> Show Community Convex Hull</span>
 
-        <Switch style={{ position: 'fixed', top: '70px', left: '98vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '70px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.autoZoom}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -630,7 +636,7 @@ class MapView extends React.Component {
         <span style={{ fontSize: '9px', position: 'fixed', top: '70px', right: '35px', zIndex: '1000' }}> Automatic Zoom</span>
 
 
-        {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null}
+        {/* {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null} */}
 
 
 

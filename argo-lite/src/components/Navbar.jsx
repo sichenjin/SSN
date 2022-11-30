@@ -278,7 +278,7 @@ class RegularNavbar extends React.Component {
               src={appState.preferences.darkMode ? argologo_dark : argologo_light}
               height="28"></img>
           </a>
-          <span>SNoMAN</span>
+          <span>SNoMaN</span>
           <div className={classnames([Classes.NAVBAR_HEADING])}></div>
           {/* <a
             href="https://poloclub.github.io/argo-graph/"

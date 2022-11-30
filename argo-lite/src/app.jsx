@@ -251,7 +251,7 @@ class App extends React.Component {
                   // borderStyle:'solid',
                   // flex:"1 1 50%"
                 }}>
-                  {<SelectionDetail />}
+                  {appState.graph.frame && <SelectionDetail />}
                 </div>
                 <div style={{
                   display: "flex", height: "100%",

@@ -25,12 +25,14 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   //change back to no shortest path snapshot for foodsharing "ab19b31c-efe1-4b77-ba03-4656ef1bd4bc"
   // https://poloclub.github.io/argo-graph-lite/#c1295995-f0c4-4350-9ea0-c97c8a134a34 //shortest path for food sharing 
   // https://poloclub.github.io/argo-graph-lite/#ae71bf2c-0b47-43bd-8955-c64a53734341  
-  // "c1295995-f0c4-4350-9ea0-c97c8a134a34" 
+  // "" 
+  
+  // https://poloclub.github.io/argo-graph-lite/#82ffaa24-1d0f-402d-8d5c-9e6595827bc8
   ["Food Sharing", "c1295995-f0c4-4350-9ea0-c97c8a134a34"
   ],   //without -degree nodes snapshot 
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
   ["Mafia Family", "ea3fa573-78e0-465a-98ff-f6a02d9884c2"],
-  ["US flight Network", '43277da7-5338-411b-8456-0bed85a7ba7c']
+  ["US flight Network", '946e933d-81f5-4ade-a8f7-a02941aae953']
   
 ];
 

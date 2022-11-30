@@ -12,18 +12,9 @@ class LabelsPanel extends React.Component {
       <div>
         <span style={{display: "inline-block"}}>
         <Button
-          style={{}}
-          id="hideAll"
-          iconName="eye-off"
-          className={Classes.FILL}
-          onClick={() => appState.graph.frame.hideAllLabels()}
-        >
-          Hide All
-        </Button>
-        <Button
           style={{
             // width:"100px",
-            display:"none"}}
+            display:"inline"}}
           id="showAll"
           iconName="eye-on"
           className={Classes.FILL}
@@ -31,6 +22,16 @@ class LabelsPanel extends React.Component {
         >
           Show All
         </Button>
+        <Button
+          style={{display:"none"}}
+          id="hideAll"
+          iconName="eye-off"
+          className={Classes.FILL}
+          onClick={() => appState.graph.frame.hideAllLabels()}
+        >
+          Hide All
+        </Button>
+        
         <Button
           style={{
             // width:"140px"

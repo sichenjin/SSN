@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import uniq from "lodash/uniq";
+
 import { Classes } from "@blueprintjs/core";
 import appState from "../../stores";
 import { observer } from "mobx-react/index";
@@ -12,7 +13,7 @@ import SVGBrush from 'react-svg-brush';
 import { min, max, scaleLinear, map, range, select } from "d3"
 import { bin } from "d3-array"
 import * as d3 from "d3"
-import { filter } from "lodash";
+import { filter, forEach } from "lodash";
 // import { min } from "lodash";
 
 
@@ -36,13 +37,20 @@ class SelectionDetail extends React.Component {
     const selectNodes = appState.graph.selectedNodes;
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
 
-    if(appState.graph.mapClicked){
-      
+    if (appState.graph.mapClicked) {
+
       const edgeSelection = appState.graph.mapClicked.linkObjs
       if (edgeSelection.length == 0) return [null, []];
       this.edgeSelection = edgeSelection
-      const edgeDistance = edgeSelection.map(e => e.edgeDist)
-      return [average(edgeDistance).toFixed(3),edgeDistance];
+      const edgeDistance = edgeSelection.map(e => {
+        if(e.edgeDist >0){
+          return e.edgeDist
+        }else {
+          return 0
+        }
+       
+      })
+      return [average(edgeDistance).toFixed(3), edgeDistance];
 
     }
 
@@ -51,8 +59,15 @@ class SelectionDetail extends React.Component {
       const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
       if (edgeSelection.length == 0) return [null, []];
       this.edgeSelection = edgeSelection
-      const edgeDistance = edgeSelection.map(e => e.edgeDist)
-      return [average(edgeDistance).toFixed(3),edgeDistance];
+      const edgeDistance = edgeSelection.map(e => {
+        if(e.edgeDist >0){
+          return e.edgeDist
+        }else {
+          return 0
+        }
+       
+      })
+      return [average(edgeDistance).toFixed(3), edgeDistance];
 
       //// calculate average distance between all selected nodes 
       // const edgeDistance = []
@@ -78,11 +93,44 @@ class SelectionDetail extends React.Component {
       //     edgeDistance.push(edgeDist)
       //   }
       // }
-      
-      
 
-    } else {
-      return null
+
+
+    } else {   // when no node is selected, return the distribution of the whole network 
+
+      let edgeSelection = []
+      appState.graph.frame.getNodeList().forEach(node => {
+        if(node.linkObjs && node.linkObjs.length>0){
+          edgeSelection.push(...node.linkObjs)
+        }
+        
+      })
+
+      if (edgeSelection.length > 0) {
+        let uniqEdgeSelection = uniq(edgeSelection)
+        this.edgeSelection = uniqEdgeSelection
+        if (uniqEdgeSelection.length > 0) {
+          let edgeDistance = uniqEdgeSelection.map(e=>{
+            if(e.edgeDist >0){
+              return e.edgeDist
+            }else {
+              return 0
+            }
+           
+          })
+          // console.log(edgeDistance)
+          return [average(edgeDistance).toFixed(3), edgeDistance];
+
+        } else {
+          return [null, []]
+        }
+
+      } else {
+        return [null, []]
+      }
+
+
+      // return null
     }
 
   }
@@ -93,9 +141,9 @@ class SelectionDetail extends React.Component {
 
     const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
     if (edgeSelection.length == 0) return 0;
-    this.edgeSelection =  [...edgeSelection]
+    this.edgeSelection = [...edgeSelection]
     const nodelength = appState.graph.selectedNodes.length;
-    const selectionDen = 2*edgeSelection.length / (nodelength * (nodelength - 1))
+    const selectionDen = 2 * edgeSelection.length / (nodelength * (nodelength - 1))
     return selectionDen.toFixed(3)
 
 
@@ -132,20 +180,20 @@ class SelectionDetail extends React.Component {
 
     })
 
-    
+
 
     console.log(this.distBinData)
     console.log(selectionRectID)
-    const filterDistBin = this.distBinData.filter((d,i)=>i%2 !=1)
-    const filterDistBin2 = filterDistBin.filter((d,i)=>selectionRectID.indexOf(i)!==-1)
+    // const filterDistBin = this.distBinData.filter((d, i) => i % 2 != 1)
+    const filterDistBin2 = this.distBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
     // console.log(this.distBinData)
-    const distbuffer_min = min(filterDistBin2.map((d)=>d.mind))
-    const distbuffer_max = max(filterDistBin2.map((d)=>d.maxd))
+    const distbuffer_min = min(filterDistBin2.map((d) => d.mind))
+    const distbuffer_max = max(filterDistBin2.map((d) => d.maxd))
     // console.log(this.edgeSelection)
-    const filteredge = this.edgeSelection.filter(edge => (edge.edgeDist>= distbuffer_min && edge.edgeDist<=distbuffer_max))
-  
+    const filteredge = this.edgeSelection.filter(edge => (edge.edgeDist >= distbuffer_min && edge.edgeDist <= distbuffer_max))
 
-    appState.graph.edgeselection = [...filteredge]
+
+    appState.graph.edgeselection = filteredge
     // this.distBinData = []
     // const selectionNode = appState.graph.frame.getNodeList().filter(node =>
     //   // console.log(node)
@@ -158,7 +206,7 @@ class SelectionDetail extends React.Component {
 
     // // console.log(selectionNode)
     // appState.graph.frame.updateSelectionOpacity()
-    console.log( appState.graph.edgeselection)
+    console.log(appState.graph.edgeselection)
     // console.log(selection)
     // console.log(selectionRectID)
 
@@ -170,7 +218,7 @@ class SelectionDetail extends React.Component {
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
       extent={
-        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right , this.allheight-this.brushmargin.bottom]]
+        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right, this.allheight - this.brushmargin.bottom]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -228,7 +276,7 @@ class SelectionDetail extends React.Component {
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
       extent={
-        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right , this.allheight-this.brushmargin.bottom]]
+        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right, this.allheight - this.brushmargin.bottom]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -254,7 +302,7 @@ class SelectionDetail extends React.Component {
 
 
 
-    if (appState.graph.selectedNodes.length > 0 && this.SelectionDistanceFromLatLonIn()&&this.SelectionDistanceFromLatLonIn()[0]) {
+    if (appState.graph.selectedNodes.length > 1 && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {
       // self = this
 
       // Array(100).fill().map(Math.random);
@@ -317,8 +365,8 @@ class SelectionDetail extends React.Component {
             <text className="distribution-title" >The Distance Distribution</text>
 
             <svg
-              width={this.width + this.margin.right + this.margin.left}
-              height={this.height + this.margin.top + this.margin.bottom}
+              width={180}
+              height={180}
               // className="hist"
               id="edgesvg"
               ref={input => (this.edgesvg = input)}
@@ -332,35 +380,35 @@ class SelectionDetail extends React.Component {
                 cumulative={false}
                 normalized={true}
                 binCount={25}
-                margin = {this.margin}
+                margin={this.margin}
                 valueAccessor={(datum) => {
-                  
+
                   return datum
                 }}
                 binType="numeric"
-                
+
               >
                 <BarSeries
-                  animated
+                  animated={false}
                   rawData={this.SelectionDistanceFromLatLonIn()[1]}
-                  fill={(d,i)=>{
-                    if(i===0){
+                  fill={(d, i) => {
+                    if (i === 0) {
                       this.distBinData = []
                     }
-                    
-                      if(d.data.length>0){
-                        this.distBinData.push({
-                          mind:min(d.data),
-                          maxd:max(d.data)
-                        })
-                      }else{
-                        this.distBinData.push({
-                          mind:Infinity,
-                          maxd:-1
-                        })
-                      }
-                      
-                    
+
+                    if (d.data.length > 0) {
+                      this.distBinData.push({
+                        mind: min(d.data),
+                        maxd: max(d.data)
+                      })
+                    } else {
+                      this.distBinData.push({
+                        mind: Infinity,
+                        maxd: -1
+                      })
+                    }
+
+
 
                     // console.log(this.distBinData)
                     // console.log(i)
@@ -368,13 +416,13 @@ class SelectionDetail extends React.Component {
                     return "#429bf5"
                   }}
                 />
-                <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })}/>
-                <YAxis label="Frequency" tickFormat ={
-                  (tick, ti)=>{
-                    return parseInt(tick*this.SelectionDistanceFromLatLonIn()[1].length).toString()
-                }}/>
+                <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                <YAxis label="Frequency" tickFormat={
+                  (tick, ti) => {
+                    return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                  }} />
 
-                
+
               </Histogram>
               {this.renderEdgeBrush()}
             </svg>
@@ -382,48 +430,52 @@ class SelectionDetail extends React.Component {
 
             <text className="distribution-title">The Degree Distribution</text>
             <svg
-                  width={this.width + this.margin.right + this.margin.left}
-                  height={this.height + this.margin.top + this.margin.bottom}
-                  // className="hist"
-                  id="degreesvg"
-                  ref={input => (this.degreesvg = input)}
-                // ref = {ref}
-                >
-
-               
-            <Histogram
-              ariaLabel="degree_dis"
-              orientation="vertical"
-              height={this.allheight}
-              width={this.allwidth}
-              margin = {this.margin}
-              cumulative={false}
-              normalized={true}
-              binCount={25}
-              valueAccessor={(datum) => datum}
-              binType="numeric"
+              width={180}
+              height={180}
+              // className="hist"
+              id="degreesvg"
+              ref={input => (this.degreesvg = input)}
+            // ref = {ref}
             >
-              <BarSeries
-                fill="#429bf5"
-                animated
-                rawData={appState.graph.selectedNodes.map((node) => {
-                  return node.data.ref.degree
-                })}
-              />
-              <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })}/>
-              <YAxis label="Frequency" 
-              tickFormat ={
-                  (tick, ti)=>{
-                    return parseInt(tick*appState.graph.selectedNodes.length).toString()
-                }}/>
-            </Histogram>
+
+
+              <Histogram
+                ariaLabel="degree_dis"
+                orientation="vertical"
+                height={this.allheight}
+                width={this.allwidth}
+                margin={this.margin}
+                cumulative={false}
+                normalized={true}
+                binCount={25}
+                valueAccessor={(datum) => datum}
+                binType="numeric"
+              >
+                <BarSeries
+                  fill="#429bf5"
+                  animated={false}
+                  rawData={appState.graph.selectedNodes.map((node) => {
+                    if(node.data.ref.degree>0){
+                      return node.data.ref.degree
+                    }else{
+                      return 0
+                    }
+                  })}
+                />
+                <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                <YAxis label="Frequency"
+                  tickFormat={
+                    (tick, ti) => {
+                      return parseInt(tick * appState.graph.selectedNodes.length).toString()
+                    }} />
+              </Histogram>
             </svg>
           </div>
 
 
         </div>
       );
-    } else {
+    }else if( this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {  // when no node is selected, show the result of the whole network 
       return <div
         className={classnames(
           // 'overlay-card',
@@ -465,8 +517,127 @@ class SelectionDetail extends React.Component {
             </tbody>
           </table>
         </div>
+
+        <div style={{ height: '20vw' }}>
+            <text className="distribution-title" >The Distance Distribution</text>
+
+            <svg
+              width={180}
+              height={180}
+              // className="hist"
+              id="edgesvg"
+              ref={input => (this.edgesvg = input)}
+            // ref = {ref}
+            >
+              <Histogram
+                ariaLabel="distance_dis"
+                orientation="vertical"
+                height={this.allheight}
+                width={this.allwidth}
+                cumulative={false}
+                normalized={true}
+                binCount={25}
+                margin={this.margin}
+                valueAccessor={(datum) => {
+
+                  return datum
+                }}
+                binType="numeric"
+
+              >
+                <BarSeries
+                  animated={false}
+                  rawData={this.SelectionDistanceFromLatLonIn()[1]}
+                  fill={(d, i) => {
+                    if (i === 0) {
+                      this.distBinData = []
+                    }
+
+                    if (d.data.length > 0) {
+                      this.distBinData.push({
+                        mind: min(d.data),
+                        maxd: max(d.data)
+                      })
+                    } else {
+                      this.distBinData.push({
+                        mind: Infinity,
+                        maxd: -1
+                      })
+                    }
+
+
+
+                    // console.log(this.distBinData)
+                    // console.log(i)
+                    // console.log(d)
+                    return "#429bf5"
+                  }}
+                />
+                <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                <YAxis label="Frequency" tickFormat={
+                  (tick, ti) => {
+                    return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                  }} />
+
+
+              </Histogram>
+              {this.renderEdgeBrush()}
+            </svg>
+
+
+            <text className="distribution-title">The Degree Distribution</text>
+            <svg
+              width={180}
+              height={180}
+              // className="hist"
+              id="degreesvg"
+              ref={input => (this.degreesvg = input)}
+            // ref = {ref}
+            >
+
+
+              <Histogram
+                ariaLabel="degree_dis"
+                orientation="vertical"
+                height={this.allheight}
+                width={this.allwidth}
+                margin={this.margin}
+                cumulative={false}
+                normalized={true}
+                binCount={25}
+                valueAccessor={(datum) => datum}
+                binType="numeric"
+              >
+                <BarSeries
+                  fill="#429bf5"
+                  animated={false}
+                  rawData={appState.graph.frame.getNodeList().map((node) => {
+                    if(node.data.ref.degree>0){
+                      return node.data.ref.degree
+                    }else{
+                      return 0
+                    }
+                    
+                  })}
+                />
+                <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                <YAxis label="Frequency"
+                  tickFormat={
+                    (tick, ti) => {
+                      return parseInt(tick * appState.graph.frame.getNodeList().length).toString()
+                    }} />
+              </Histogram>
+            </svg>
+          </div>
       </div>
+    } 
+    else {
+      return <div></div>
     }
+
+    ///
+    
+    ///
 
   }
 }

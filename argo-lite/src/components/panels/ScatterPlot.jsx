@@ -154,7 +154,7 @@ class ScatterPlot extends React.Component {
       // transform={"translate(0," + this.margin.top +")"}
 
       extent={
-        [[this.margin.left, this.cr + this.margin.top], [this.width + this.margin.left, this.height + this.margin.top + this.cr]]
+        [[this.margin.left,  this.margin.top], [this.width + this.margin.left, this.height + this.margin.top ]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -356,7 +356,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(12vw, 28vh)' }} fontSize="9px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
+                <text style={{ transform: 'translate(12vw, 27vh)' }} fontSize="9px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -372,7 +372,7 @@ class ScatterPlot extends React.Component {
                   }
                 />
                 <text
-                  transform={"translate(-40, 120) rotate(-90)"}
+                  transform={"translate(-40, 110) rotate(-90)"}
                   fontSize="9px"
                 >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis
@@ -406,7 +406,7 @@ class ScatterPlot extends React.Component {
           </div>
           <Button
             className="bp4-button"
-            style={{ transform: "translate(35vw, -2vh)", }}
+            style={{ transform: "translate(38vw, -2vh)", }}
             onClick={() => {
               var svgsaver = new SvgSaver();                      // creates a new instance
               var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -418,7 +418,7 @@ class ScatterPlot extends React.Component {
             <CSVLink data={this.state.csvarray} onClick={this.downloadCSV} asyncOnClick={true} filename="bsedata.csv">
               <Button
                 className="bp4-button"
-                style={{ transform: "translate(15vw, -2vh)", }}
+                style={{ transform: "translate(20vw, -2vh)", }}
 
               >Download CSV
               </Button>
@@ -560,7 +560,8 @@ class RenderCircles extends React.Component {
     }
     else { //path node style 
       return {
-        fill: "rgba(25, 158, 199, .9)",
+        
+        fill: appState.graph.edges.color,
         zIndex: "0",
         stroke: false,
         fillOpacity: 0.8
@@ -675,7 +676,7 @@ class RenderCircles extends React.Component {
             }}
             onMouseLeave={(e) => {
               // if (appState.graph.mapClicked) return;
-              e.target.style.fill = 'rgba(25, 158, 199, .9)'
+              e.target.style.fill = appState.graph.edges.color
 
               appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
                 // if (n !== appState.graph.mapClicked) {
@@ -729,7 +730,7 @@ class RenderCircles extends React.Component {
             }}
             onMouseLeave={(e) => {
               // if (appState.graph.mapClicked) return;
-
+              e.target.style.fill = appState.graph.edges.color
               appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
                 // if (n !== appState.graph.mapClicked) {
                 appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1

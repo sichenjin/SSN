@@ -124,6 +124,7 @@ html {
   opacity: 1;
   /* background-color: white; */
   transition: right 0.3s;
+  margin-left: 20px
 }
 
 .scatter-plot-font{
@@ -428,7 +429,7 @@ line-height: 15px;
 
 .distribution-title{
 position: absolute;
-transform: translate(4vw,0px);
+transform: translate(3vw,0px);
 font-size: 10px;
 }
 

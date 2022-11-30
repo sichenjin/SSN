@@ -27,7 +27,7 @@ export default class GraphStore {
       shape: "circle",
       labelSize: 0.6,
       labelLength: 10,
-      filter:{}
+      // filter:{}
     },
     edges: {
       color: "#7f7f7f",
@@ -54,6 +54,9 @@ export default class GraphStore {
 
   // Updated by frame event
   @observable selectedNodes = [];
+
+  @observable filter = {}
+
 
   @observable convexNodes = [];
   @observable convexPolygons = [];
@@ -178,6 +181,35 @@ export default class GraphStore {
     return u.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
     })
      return uppercase_compute
+  }
+
+  @computed
+  get selectedNeighborIDs(){
+
+   
+ 
+    if (this.selectedNodes.length>0) {
+      const neighborIDs = []
+      for (var j = 0; j < this.selectedNodes.length; j++) {
+        this.selectedNodes[j].links.forEach((link)=>{
+        neighborIDs.push(link.fromId);
+        neighborIDs.push(link.toId);
+        })
+        
+      }
+      if (neighborIDs.length>0){
+        const uniqNeighborIDs = uniq([
+        ...neighborIDs
+      ])
+      return uniqNeighborIDs
+    }else{
+      return []
+    }
+    }else{ 
+      return []
+    }
+    
+
   }
 
   
@@ -318,18 +350,18 @@ export default class GraphStore {
 
   filterNodes() { 
     runInAction('filter nodes', () => {
-    if(Object.keys(this.nodes.filter).length !== 0  ){
+    if(Object.keys(this.filter).length !== 0  ){
       
       
         this.rawGraph.nodes = this.rawGraph.nodes.map(n => {
           var satisfy = true
-          for (const fkey in this.nodes.filter){
+          for (const fkey in this.filter){
             if(this.metadata.nodePropertyTypes[fkey] == 'string'){
-              if(this.nodes.filter[fkey].length >0 && (!this.nodes.filter[fkey].includes(n[fkey]))){
+              if(this.filter[fkey].length >0 && (!this.filter[fkey].includes(n[fkey]))){
                 satisfy = false
               }
             }else{  // number range 
-              if(this.nodes.filter[fkey] && (n[fkey]<this.nodes.filter[fkey]['min'] || n[fkey]>this.nodes.filter[fkey]['max'])){
+              if(this.filter[fkey] && (n[fkey]<this.filter[fkey]['min'] || n[fkey]>this.filter[fkey]['max'])){
                 satisfy = false
               }
             }

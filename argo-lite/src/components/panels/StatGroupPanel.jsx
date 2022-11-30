@@ -51,7 +51,7 @@ class StatGroupPanel extends React.Component {
             "fromedgelist": fromedgelist,
             "toedgelist": toedgelist
         }
-        axios.post('http://snoman.herokuapp.com/flask/community', querydict).then(
+        axios.post('http://127.0.0.1:5000/flask/community', querydict).then(
             // https://snoman.herokuapp.com/flask/community', querydict).then(
             (response) => {
                 var communityDict = response.data.message;
@@ -108,7 +108,7 @@ class StatGroupPanel extends React.Component {
             "fromedgelist": fromedgelist,
             "toedgelist": toedgelist
         }
-        axios.post('https://snoman.herokuapp.com/flask/Cliques', querydict).then(
+        axios.post('http://127.0.0.1:5000/flask/Cliques', querydict).then(
             (response) => {
                 var cliques = response.data.message;
                 console.log(cliques)
@@ -162,7 +162,7 @@ class StatGroupPanel extends React.Component {
             "nodes": appState.graph.rawGraph.nodes
 
         }
-        axios.post('http://snoman.herokuapp.com/flask/convexhull', querydict).then(
+        axios.post('http://127.0.0.1:5000/flask/convexhull', querydict).then(
             // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
@@ -286,7 +286,7 @@ class StatGroupPanel extends React.Component {
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
                         onClick={this.runcommunity}>Run Community</Button>
-                    {/* {this.modularity? <Tag className="network-tag">{this.modularity}</Tag>: null} */}
+                    {this.modularity? <text className="modularity-tag" style={{fontSize: "8px"} } >{"Q value: " + parseFloat(this.modularity).toFixed(3)}</text>: null}
                     {/* <Button
                         style={{ position: 'absolute', top: '50px', left: '500px', zIndex: '1000' }}
                         onClick={this.findcliques}>Find Cliques</Button> */}
@@ -303,7 +303,7 @@ class StatGroupPanel extends React.Component {
 
                     <div>
                         <p style={{ display: "inline" , fontSize:"9px" }}>Convex Hull By: </p>
-                        <span style={{ float: "right" }}>
+                        <span style={{ }}>
                             <SimpleSelect
                                 items={appState.graph.filterKeyList}
                                 onSelect={it => {
@@ -316,7 +316,7 @@ class StatGroupPanel extends React.Component {
                     </div>
                     <div>
                         <p style={{ display: "inline" , fontSize:"9px" }}>Cluster By: </p>
-                        <span style={{ float: "right" }}>
+                        <span style={{  }}>
                             <SimpleSelect
                                 items={appState.graph.filterKeyList}
                                 onSelect={it => {
