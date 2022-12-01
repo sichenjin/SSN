@@ -51,7 +51,7 @@ class StatGroupPanel extends React.Component {
             "fromedgelist": fromedgelist,
             "toedgelist": toedgelist
         }
-        axios.post('http://snoman.herokuapp.com/flask/community', querydict).then(
+        axios.post('https://snoman.herokuapp.com/flask/community', querydict).then(
             // https://snoman.herokuapp.com/flask/community', querydict).then(
             (response) => {
                 var communityDict = response.data.message;
@@ -108,7 +108,7 @@ class StatGroupPanel extends React.Component {
             "fromedgelist": fromedgelist,
             "toedgelist": toedgelist
         }
-        axios.post('http://snoman.herokuapp.com/flask/Cliques', querydict).then(
+        axios.post('https://snoman.herokuapp.com/flask/Cliques', querydict).then(
             (response) => {
                 var cliques = response.data.message;
                 console.log(cliques)
@@ -162,7 +162,7 @@ class StatGroupPanel extends React.Component {
             "nodes": appState.graph.rawGraph.nodes
 
         }
-        axios.post('http://snoman.herokuapp.com/flask/convexhull', querydict).then(
+        axios.post('https://snoman.herokuapp.com/flask/convexhull', querydict).then(
             // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
@@ -253,7 +253,7 @@ class StatGroupPanel extends React.Component {
 
 
         }
-        axios.post('http://snoman.herokuapp.com/flask/densitydistance', querydict).then(
+        axios.post('https://snoman.herokuapp.com/flask/densitydistance', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
                 // var convexDict = jsondata.message;
