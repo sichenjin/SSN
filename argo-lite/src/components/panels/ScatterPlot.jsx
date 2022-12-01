@@ -504,7 +504,7 @@ class RenderCircles extends React.Component {
             fill: node.renderData.color,
             zIndex: "0",
             stroke: false,
-            fillOpacity: 0.02
+            fillOpacity: 0.1
           }
         }
       } else if (appState.graph.selectedNodes.length > 0) {
@@ -513,7 +513,7 @@ class RenderCircles extends React.Component {
             fill: node.renderData.color,
             zIndex: "0",
             stroke: false,
-            fillOpacity: 0.02
+            fillOpacity: 0.1
           }
         } else {
           return {
@@ -543,7 +543,7 @@ class RenderCircles extends React.Component {
             fill: appState.graph.nodeColorScale(node['name']),
             zIndex: "0",
             stroke: false,
-            fillOpacity: 0.02
+            fillOpacity: 0.1
           }
         }
 

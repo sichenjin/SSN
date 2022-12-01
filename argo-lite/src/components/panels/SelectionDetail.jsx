@@ -362,7 +362,7 @@ class SelectionDetail extends React.Component {
           </div>
 
           <div style={{ height: '20vw' }}>
-            <text className="distribution-title" >The Distance Distribution</text>
+            <text className="distribution-title" >Distance Distribution</text>
 
             <svg
               width={180}
@@ -428,7 +428,7 @@ class SelectionDetail extends React.Component {
             </svg>
 
 
-            <text className="distribution-title">The Degree Distribution</text>
+            <text className="distribution-title">Degree Distribution</text>
             <svg
               width={180}
               height={180}
@@ -519,7 +519,7 @@ class SelectionDetail extends React.Component {
         </div>
 
         <div style={{ height: '20vw' }}>
-            <text className="distribution-title" >The Distance Distribution</text>
+            <text className="distribution-title" >Distance Distribution</text>
 
             <svg
               width={180}
@@ -585,7 +585,7 @@ class SelectionDetail extends React.Component {
             </svg>
 
 
-            <text className="distribution-title">The Degree Distribution</text>
+            <text className="distribution-title">Degree Distribution</text>
             <svg
               width={180}
               height={180}

@@ -49,13 +49,13 @@ class StatisticsDialog extends React.Component {
                     <tr>
                         <td>Average Degree</td>
                         <td>
-                          {appState.graph.hasGraph ? appState.graph.degree : 'loading graph'}
+                          {appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'loading graph'}
                         </td>
                     </tr>
                     <tr>
                         <td>Graph Density</td>
                         <td>
-                          {appState.graph.hasGraph ? appState.graph.density : 'loading graph'}
+                          {appState.graph.hasGraph ? appState.graph.density.toFixed(3) : 'loading graph'}
                         </td>
                     </tr>
                     <tr>
@@ -66,7 +66,7 @@ class StatisticsDialog extends React.Component {
                     </tr>
                     <tr>
                         <td>Clustering Coefficient</td>
-                        <td>{(appState.graph.hasGraph & appState.preferences.statisticsDialogOpen) ? appState.graph.averageClustering : 'loading graph'}</td>
+                        <td>{(appState.graph.hasGraph & appState.preferences.statisticsDialogOpen) ? appState.graph.averageClustering.toFixed(3) : 'loading graph'}</td>
                     </tr>
                     <tr>
                         <td>Connected Component</td>
