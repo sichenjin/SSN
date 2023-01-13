@@ -304,7 +304,7 @@ class RegularNavbar extends React.Component {
 
                       return (
                         <MenuItem
-                          style={{ width: "200px" }}
+                          style={{ width: "300px" }}
                           key={sampleSnapshotTitle}
                           iconName="graph"
                           text={sampleSnapshotTitle}

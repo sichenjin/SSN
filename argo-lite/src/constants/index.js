@@ -8,8 +8,8 @@ import * as scale from "d3-scale";
 export const IS_IFRAME_WIDGET = window.location !== window.parent.location;
 
 export const FRONTEND_URL = "https://poloclub.github.io/argo-graph-lite";
-export const LOGO_URL = "https://github.com/poloclub/argo-graph-lite";
-export const GITHUB_URL = "https://github.com/poloclub/argo-graph-lite";
+export const LOGO_URL = "https://sites.gatech.edu/snoman/";
+export const GITHUB_URL = "https://github.com/sichenjin/SSN";
 // Argo-lite Graph Sharing backend Strapi Server:
 export const BACKEND_URL = "https://argo-share.herokuapp.com"; // for production
 // export const BACKEND_URL = "https://sleepy-brushlands-57948.herokuapp.com"; // for free heroku

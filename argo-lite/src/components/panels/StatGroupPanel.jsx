@@ -163,7 +163,8 @@ class StatGroupPanel extends React.Component {
 
         }
         axios.post('https://snoman.herokuapp.com/flask/convexhull', querydict).then(
-            // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
+          
+        // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
                 var convexDict = jsondata.message;
