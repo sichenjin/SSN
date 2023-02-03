@@ -8,7 +8,17 @@ export function ZoomMap() {
     const map = useMap();
 
     const bounds = useMemo(() => {
-        if (appState.graph.frame.selection.length ==0) return;  //no selection 
+        if (appState.graph.frame.selection.length ==0) {
+          const nodeLoc = appState.graph.frame.getNodeList().map(function(node){
+            return [parseFloat(node.data.ref.LatY) , parseFloat(node.data.ref.LonX)]
+          })
+          const b = latLngBounds() // seemed to work without having to pass init arg
+          nodeLoc.forEach(coords => {
+              b.extend(coords)
+          })
+          map.flyToBounds(b)
+          return null;
+        }   //no selection 
         if (appState.graph.frame.selection.length ==1) return;  // only one node is selected 
 
         const nodeLoc = appState.graph.frame.selection.map(function(node){

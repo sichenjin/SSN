@@ -355,45 +355,14 @@ class RegularNavbar extends React.Component {
               className={classnames([Classes.BUTTON, Classes.MINIMAL])}
               iconName="document"
             >
-              Graph
+              File
             </Button>
           </Popover>
           <Popover
             content={
               <Menu>
                 <MenuItem
-                  iconName="import"
-                  text="Run Community"
-                  onClick={this.runcommunity}
-                />
-                <MenuItem
-                  iconName="import"
-                  text="Convex Hull By Group"
-                  onClick={() => this.convexhull('community')}
-                />
-                <MenuItem
-                  type="import"
-                  iconName="pt-icon-document-open"
-                  text="Cluster Cluster"
-                  onClick={() => this.density_distance('Family')}
-                />
-
-              </Menu>
-            }
-            position={Position.BOTTOM}
-          >
-            <Button
-              className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-              iconName="document"
-            >
-              Nodes
-            </Button>
-          </Popover>
-          <Popover
-            content={
-              <Menu>
-                <MenuItem
-                  text="Data Sheet"
+                  text="View Table"
                   iconName="pt-icon-database"
                   onClick={() => {
                     appState.graph.frame.pauseLayout();
@@ -405,21 +374,6 @@ class RegularNavbar extends React.Component {
                   text="Statistics"
                   iconName="pt-icon-timeline-bar-chart"
                   onClick={() => { appState.preferences.statisticsDialogOpen = true }}
-                />
-                <MenuItem
-                  text="Scatterplot"
-                  iconName="pt-icon-timeline-bar-chart"
-                  onClick={() => { appState.preferences.isScatterPlotDialogOpen = true }}
-                />
-                <MenuItem
-                  text="Run Community"
-                  iconName="graph"
-                  onClick={() => { appState.preferences.filterDialogOpen = true }}
-                />
-                <MenuItem
-                  text="Convex Hull"
-                  iconName="graph"
-                  onClick={() => { appState.preferences.filterDialogOpen = true }}
                 />
                 {/* <MenuItem text="Community Detection" iconName="graph">
                   <MenuItem
@@ -479,7 +433,7 @@ class RegularNavbar extends React.Component {
               className={classnames([Classes.BUTTON, Classes.MINIMAL])}
               iconName="pt-icon-wrench"
             >
-              Tools
+              View
             </Button>
           </Popover>
         </div>

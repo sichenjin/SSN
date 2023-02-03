@@ -111,39 +111,45 @@ class ScatterPlot extends React.Component {
 
   }
   onBrushEnd = ({ target, type, selection, sourceEvent }) => {
+    appState.graph.selectedNodes = []
     const selectionNodeID = []
     const svgElement = select(this.svg)
     const circles = svgElement.selectAll("circle")
-    const brushBounds = {
-      x0: selection[0][0] - this.margin.left,
-      x1: selection[1][0] - this.margin.left,
-      y0: selection[0][1] - this.margin.top - this.cr,
-      y1: selection[1][1] - this.margin.top - this.cr,
-    }
-
-    circles.each(function (d, i) {
-      const nodecx = parseFloat(select(this).attr("cx"))
-      const nodecy = parseFloat(select(this).attr("cy"))
-      if (nodecx >= brushBounds.x0 && nodecx <= brushBounds.x1 && nodecy >= brushBounds.y0 && nodecy <= brushBounds.y1) {
-        selectionNodeID.push(select(this).attr("id"))
+    if(selection != null) {
+      const brushBounds = {
+        x0: selection[0][0] - this.margin.left,
+        x1: selection[1][0] - this.margin.left,
+        y0: selection[0][1] - this.margin.top - this.cr,
+        y1: selection[1][1] - this.margin.top - this.cr,
       }
-
-
-
-    })
-
-
-    const selectionNode = appState.graph.frame.getNodeList().filter(node =>
-      // console.log(node)
-      selectionNodeID.includes(node.id)
-
-    )
-    appState.graph.frame.selection = selectionNode
-    appState.graph.selectedNodes = selectionNode
-
-
-    // console.log(selectionNode)
-    appState.graph.frame.updateSelectionOpacity()
+      console.log(selection[0][1], selection[1][1],brushBounds.y1, brushBounds.y0);
+  
+      circles.each(function (d, i) {
+        const nodecx = parseFloat(select(this).attr("cx"))
+        const nodecy = parseFloat(select(this).attr("cy"))
+        console.log(nodecx, nodecy);
+        if (nodecx >= brushBounds.x0 && nodecx <= brushBounds.x1 && nodecy >= brushBounds.y0 && nodecy <= brushBounds.y1) {
+          selectionNodeID.push(select(this).attr("id"))
+        }
+  
+  
+  
+      })
+  
+  
+      const selectionNode = appState.graph.frame.getNodeList().filter(node =>
+        // console.log(node)
+        selectionNodeID.includes(node.id)
+  
+      )
+      appState.graph.frame.selection = selectionNode
+      appState.graph.selectedNodes = selectionNode
+  
+  
+      // console.log(selectionNode)
+      appState.graph.frame.updateSelectionOpacity()
+    }
+    
 
   }
   renderBrush = () => (

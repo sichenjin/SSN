@@ -145,7 +145,7 @@ class ImportDialog extends React.Component {
         isOpen={this.state.edgesOpen}
         onToggle={() => this.setState({ edgesOpen: !this.state.edgesOpen })}
       >
-        <div className={classnames(Classes.CONTROL_GROUP)}>
+        <div className={classnames(Classes.CONTROL_GROUP)} style={{margin: "10px"}}>
           <div className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
             <input
               type="file"

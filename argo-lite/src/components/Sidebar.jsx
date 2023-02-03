@@ -1,12 +1,15 @@
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import React from "react";
 
-import { Tab2, Tabs2, Tag } from "@blueprintjs/core";
+import { Tab2, Tabs2, Tag, Classes } from "@blueprintjs/core";
 import NodesPanel from "./panels/NodesPanel";
 import EdgesPanel from "./panels/EdgesPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodesFilterPanel from "./panels/NodesFilterPanel";
 import StatGroupPanel from "./panels/StatGroupPanel"
+import appState from "../stores/index";
+import classnames from "classnames";
+
 
 class Sidebar extends React.Component {
     openCity(cityName) {
@@ -54,6 +57,53 @@ class Sidebar extends React.Component {
                     <Tab2 id="s_layout" title="Groups" panel={<StatGroupPanel />} />
                     <Tabs2.Expander />
                     </Tabs2>
+                </div>
+                <div className={classnames(Classes.DIALOG_BODY)}>
+                    <table className={Classes.TABLE} style={{width: '100%'}}>
+                        <thead>
+                            <tr>
+                                <th>Statistics</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td># Nodes</td>
+                                <td>{appState.graph.metadata.fullNodes}</td>
+                            </tr>
+                            <tr>
+                                <td># Edges</td>
+                                <td>{appState.graph.metadata.fullEdges}</td>
+                            </tr>
+                            <tr>
+                                <td>Average Degree</td>
+                                <td>
+                                {appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'loading graph'}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Graph Density</td>
+                                <td>
+                                {appState.graph.hasGraph ? appState.graph.density.toFixed(3) : 'loading graph'}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Graph Diameter</td>
+                                <td>
+                                {appState.graph.hasGraph ? appState.graph.diameter : 'loading graph'}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Clustering Coefficient</td>
+                                <td>{(appState.graph.hasGraph) ? appState.graph.averageClustering.toFixed(3) : 'loading graph'}</td>
+                            </tr>
+                            <tr>
+                                <td>Connected Component</td>
+                                <td>{(appState.graph.hasGraph) ? appState.graph.components : 'loading graph'}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </SidebarMenu>

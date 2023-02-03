@@ -10,15 +10,15 @@ module.exports = function (self) {
    *  Change color of node edges
    */
   self.highlightNode = function (node, toggle, color = def.NODE_HIGHLIGHT) {
-    if (toggle) {
-      node.renderData.draw_object.children[0].material.color.setHex(color);
-      node.renderData.draw_object.children[0].visible = true;
-    } else {
-      node.renderData.draw_object.children[0].material.color.set(
-        node.renderData.hcolor
-      );
-      node.renderData.draw_object.children[0].visible = false;
-    }
+    // if (toggle) {
+    //   node.renderData.draw_object.children[0].material.color.setHex(color);
+    //   node.renderData.draw_object.children[0].visible = false;
+    // } else {
+    //   node.renderData.draw_object.children[0].material.color.set(
+    //     node.renderData.hcolor
+    //   );
+    //   node.renderData.draw_object.children[0].visible = false;
+    // }
   };
 
   /**
@@ -204,12 +204,12 @@ module.exports = function (self) {
     //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
     //   })
 
-    //   // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
-    //   // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
-    //   // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
-    // }
+      // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
+      // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
+    }
 
-  };
+  // };
 
 
 

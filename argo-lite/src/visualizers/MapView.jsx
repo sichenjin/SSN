@@ -1,6 +1,7 @@
 import React from 'react';
 // import L from 'leaflet';
-import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane, LayersControl, GeoJSON } from "react-leaflet";
+import { MapContainer, CircleMarker, TileLayer, Tooltip, Polyline, Polygon, Pane, LayersControl, GeoJSON, FeatureGroup, Circle } from "react-leaflet";
+import { EditControl } from "react-leaflet-draw"
 import "leaflet/dist/leaflet.css";
 import appState from '../stores';
 import { observer } from 'mobx-react';
@@ -14,6 +15,10 @@ import * as turf from '@turf/turf'
 import statejsonfile from "../layerdata/us-state.json"
 import countyjsonfile from "../layerdata/county_0_5m.json"
 import congressionjsonfile from "../layerdata/congressional_5m.json"
+
+import "../../node_modules/leaflet/dist/leaflet.css"
+import "../../node_modules/leaflet-draw/dist/leaflet.draw.css"
+
 
 
 // import { Button, Classes, Switch, Tag } from "@blueprintjs/core";
@@ -400,7 +405,7 @@ class MapView extends React.Component {
     return <div id="map"
       style={{
         width: "45vw",
-        height: "60vh",
+        height: "100%",
         flex: "1 1 50%",
         zIndex: "10",
         // border:'#C0C0C0',
@@ -417,6 +422,7 @@ class MapView extends React.Component {
         zoom={4}
         center={[37.5, -97.5]}
       >
+        
         <LayersControl position="topright">
           <LayersControl.BaseLayer name="OpenStreetMap" checked="true">
             <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=8f6a7e18-709d-4fe8-9dc9-fcce7bfa30d8" />
@@ -634,6 +640,18 @@ class MapView extends React.Component {
           }}
         />
         <span style={{ fontSize: '9px', position: 'fixed', top: '70px', right: '35px', zIndex: '1000' }}> Automatic Zoom</span>
+        <FeatureGroup>
+        <EditControl
+          position='bottomleft'
+          onEdited={this._onEditPath}
+          onCreated={this._onCreate}
+          onDeleted={this._onDeleted}
+          draw={{
+            rectangle: false
+          }}
+        />
+        <Circle center={[51.51, -0.06]} radius={200} />
+        </FeatureGroup>
 
 
         {/* {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null} */}
