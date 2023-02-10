@@ -611,7 +611,7 @@ class MapView extends React.Component {
           }
         </Pane>
         <div>
-        <Switch style={{ position: 'fixed', top: '55px', left: '97vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '40px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -619,10 +619,10 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ fontSize: '9px', position: 'fixed', top: '55px', right: '35px', zIndex: '1000' }}> Show Edges</span>
+        <span style={{ fontSize: '9px', position: 'fixed', top: '40px', right: '100px', zIndex: '1000' }}> Show Edges</span>
 
 
-        <Switch style={{ position: 'fixed', top: '40px', left: '97vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '75px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.convexPolygonsShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -630,9 +630,9 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ fontSize: '9px', position: 'fixed', top: '40px', right: '35px', zIndex: '1000' }}> Show Community Convex Hull</span>
+        <span style={{ fontSize: '9px', position: 'fixed', top: '75px', right: '100px', zIndex: '1000' }}> Show Community Convex Hull</span>
 
-        <Switch style={{ position: 'fixed', top: '70px', left: '97vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '110px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.autoZoom}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -640,7 +640,7 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ fontSize: '9px', position: 'fixed', top: '70px', right: '35px', zIndex: '1000' }}> Automatic Zoom</span>
+        <span style={{ fontSize: '9px', position: 'fixed', top: '110px', right: '100px', zIndex: '1000' }}> Automatic Zoom</span>
         </div>
         <FeatureGroup>
         <EditControl
