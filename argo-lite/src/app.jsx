@@ -52,7 +52,7 @@ function respondToResize() {
   if (window.innerWidth < MOBILE_WIDTH_CUTOFF || window.innerHeight < MOBILE_HEIGHT_CUTOFF) {
     appState.preferences.turnOnMinimalMode();
   }
-  appState.graph.setUpFrame();
+  // appState.graph.setUpFrame();
 }
 
 respondToResize();
