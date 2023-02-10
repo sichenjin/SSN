@@ -610,6 +610,7 @@ class MapView extends React.Component {
 
           }
         </Pane>
+        <div>
         <Switch style={{ position: 'fixed', top: '55px', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.mapEdgeShow}
           // checked={!node.isHidden}
@@ -640,6 +641,7 @@ class MapView extends React.Component {
           }}
         />
         <span style={{ fontSize: '9px', position: 'fixed', top: '70px', right: '35px', zIndex: '1000' }}> Automatic Zoom</span>
+        </div>
         <FeatureGroup>
         <EditControl
           position='bottomleft'

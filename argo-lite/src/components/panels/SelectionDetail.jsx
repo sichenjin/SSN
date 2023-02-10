@@ -23,7 +23,7 @@ class SelectionDetail extends React.Component {
   // 
   margin = { top: 32, right: 30, bottom: 64, left: 30 }
   // { top: 32, right: 32, bottom: 64, left: 64 }
-  allwidth = 180
+  allwidth = 500
   allheight = 180
   width = this.allwidth - this.margin.left - this.margin.right
   height = this.allheight - this.margin.top - this.margin.bottom
@@ -361,115 +361,113 @@ class SelectionDetail extends React.Component {
             </table>
           </div>
 
-          <div style={{ height: '20vw' }}>
-            <text className="distribution-title" >Distance Distribution</text>
+          <div style={{ height: '100%' }}>
+            <text className="distribution-title" >Distonce Distribution</text>
 
-            <svg
-              width={180}
-              height={180}
-              // className="hist"
-              id="edgesvg"
-              ref={input => (this.edgesvg = input)}
-            // ref = {ref}
-            >
-              <Histogram
-                ariaLabel="distance_dis"
-                orientation="vertical"
-                height={this.allheight}
-                width={this.allwidth}
-                cumulative={false}
-                normalized={true}
-                binCount={25}
-                margin={this.margin}
-                valueAccessor={(datum) => {
-
-                  return datum
-                }}
-                binType="numeric"
-
+              <svg
+                width={400}
+                height={180}
+                // className="hist"
+                id="edgesvg"
+                ref={input => (this.edgesvg = input)}
+              // ref = {ref}
               >
-                <BarSeries
-                  animated={false}
-                  rawData={this.SelectionDistanceFromLatLonIn()[1]}
-                  fill={(d, i) => {
-                    if (i === 0) {
-                      this.distBinData = []
-                    }
+                <Histogram
+                  ariaLabel="distance_dis"
+                  orientation="vertical"
+                  height={this.allheight}
+                  width={this.allwidth}
+                  cumulative={false}
+                  normalized={true}
+                  binCount={25}
+                  margin={this.margin}
+                  valueAccessor={(datum) => {
 
-                    if (d.data.length > 0) {
-                      this.distBinData.push({
-                        mind: min(d.data),
-                        maxd: max(d.data)
-                      })
-                    } else {
-                      this.distBinData.push({
-                        mind: Infinity,
-                        maxd: -1
-                      })
-                    }
-
-
-
-                    // console.log(this.distBinData)
-                    // console.log(i)
-                    // console.log(d)
-                    return "#429bf5"
+                    return datum
                   }}
-                />
-                <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                <YAxis label="Frequency" tickFormat={
-                  (tick, ti) => {
-                    return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
-                  }} />
+                  binType="numeric"
+
+                >
+                  <BarSeries
+                    animated={false}
+                    rawData={this.SelectionDistanceFromLatLonIn()[1]}
+                    fill={(d, i) => {
+                      if (i === 0) {
+                        this.distBinData = []
+                      }
+
+                      if (d.data.length > 0) {
+                        this.distBinData.push({
+                          mind: min(d.data),
+                          maxd: max(d.data)
+                        })
+                      } else {
+                        this.distBinData.push({
+                          mind: Infinity,
+                          maxd: -1
+                        })
+                      }
 
 
-              </Histogram>
-              {this.renderEdgeBrush()}
-            </svg>
 
-
-            <text className="distribution-title">Degree Distribution</text>
-            <svg
-              width={180}
-              height={180}
-              // className="hist"
-              id="degreesvg"
-              ref={input => (this.degreesvg = input)}
-            // ref = {ref}
-            >
-
-
-              <Histogram
-                ariaLabel="degree_dis"
-                orientation="vertical"
-                height={this.allheight}
-                width={this.allwidth}
-                margin={this.margin}
-                cumulative={false}
-                normalized={true}
-                binCount={25}
-                valueAccessor={(datum) => datum}
-                binType="numeric"
-              >
-                <BarSeries
-                  fill="#429bf5"
-                  animated={false}
-                  rawData={appState.graph.selectedNodes.map((node) => {
-                    if(node.data.ref.degree>0){
-                      return node.data.ref.degree
-                    }else{
-                      return 0
-                    }
-                  })}
-                />
-                <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                <YAxis label="Frequency"
-                  tickFormat={
+                      // console.log(this.distBinData)
+                      // console.log(i)
+                      // console.log(d)
+                      return "#429bf5"
+                    }}
+                  />
+                  <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                  <YAxis label="Frequency" tickFormat={
                     (tick, ti) => {
-                      return parseInt(tick * appState.graph.selectedNodes.length).toString()
+                      return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                     }} />
-              </Histogram>
-            </svg>
+
+
+                </Histogram>
+                {this.renderEdgeBrush()}
+              </svg>
+              <text className="distribution-title">Degree Distribution</text>
+              <svg
+                width={400}
+                height={180}
+                // className="hist"
+                id="degreesvg"
+                ref={input => (this.degreesvg = input)}
+              // ref = {ref}
+              >
+
+
+                <Histogram
+                  ariaLabel="degree_dis"
+                  orientation="vertical"
+                  height={this.allheight}
+                  width={this.allwidth}
+                  margin={this.margin}
+                  cumulative={false}
+                  normalized={true}
+                  binCount={25}
+                  valueAccessor={(datum) => datum}
+                  binType="numeric"
+                >
+                  <BarSeries
+                    fill="#429bf5"
+                    animated={false}
+                    rawData={appState.graph.selectedNodes.map((node) => {
+                      if(node.data.ref.degree>0){
+                        return node.data.ref.degree
+                      }else{
+                        return 0
+                      }
+                    })}
+                  />
+                  <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                  <YAxis label="Frequency"
+                    tickFormat={
+                      (tick, ti) => {
+                        return parseInt(tick * appState.graph.selectedNodes.length).toString()
+                      }} />
+                </Histogram>
+              </svg>
           </div>
 
 
@@ -522,7 +520,7 @@ class SelectionDetail extends React.Component {
             <text className="distribution-title" >Distance Distribution</text>
 
             <svg
-              width={180}
+              width={400}
               height={180}
               // className="hist"
               id="edgesvg"
@@ -587,7 +585,7 @@ class SelectionDetail extends React.Component {
 
             <text className="distribution-title">Degree Distribution</text>
             <svg
-              width={180}
+              width={400}
               height={180}
               // className="hist"
               id="degreesvg"

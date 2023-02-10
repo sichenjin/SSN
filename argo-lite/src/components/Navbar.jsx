@@ -523,7 +523,7 @@ class RegularNavbar extends React.Component {
         <div
           className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_RIGHT])}
         >
-          <Button
+          {/* <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
             iconName="graph"
             onClick={() => {
@@ -531,15 +531,15 @@ class RegularNavbar extends React.Component {
             }}
           >
             {appState.graph.metadata.snapshotName || "Untitled Graph"}
-          </Button>
+          </Button> */}
           <span className={Classes.NAVBAR_DIVIDER} />
-          <Button
+          {/* <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
             iconName="cog"
             onClick={() => {
               appState.preferences.dialogOpen = true;
             }}
-          />
+          /> */}
           <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
             iconName="help"
