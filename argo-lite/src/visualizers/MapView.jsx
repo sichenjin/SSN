@@ -8,6 +8,7 @@ import { observer } from 'mobx-react';
 import { observable, computed, action, runInAction } from "mobx";
 import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect"
+import ReactLeafletToolbar from "../components/ReactLeafletToolbar"
 import { ZoomMap, MapClick } from "../components/ZoomMap"
 import { useMap } from "react-leaflet";
 import { Tag, Switch } from "@blueprintjs/core";
@@ -19,6 +20,7 @@ import congressionjsonfile from "../layerdata/congressional_5m.json"
 import "../../node_modules/leaflet/dist/leaflet.css"
 import "../../node_modules/leaflet-draw/dist/leaflet.draw.css"
 
+import { GeodesicLine } from 'react-leaflet-geodesic'
 
 
 // import { Button, Classes, Switch, Tag } from "@blueprintjs/core";
@@ -277,6 +279,7 @@ class MapView extends React.Component {
 
   }
 
+
   setNodeCircle = (node) => {
     if (appState.graph.frame && appState.graph.nodes.size.max) {
       // appState.graph.frame.updateGraph(appState.graph.computedGraph);
@@ -397,10 +400,14 @@ class MapView extends React.Component {
 
 
   // }
-
+  onCreate = (e) => {
+    console.log(e);
+  }
 
 
   render() {
+
+    
 
     return <div id="map"
       style={{
@@ -453,7 +460,9 @@ class MapView extends React.Component {
             <GeoJSON data={congressionjsonfile} />
           </LayersControl.Overlay>
         </LayersControl>
+        
 
+        <ReactLeafletToolbar />
         <AreaSelect />
         {appState.graph.autoZoom ? <ZoomMap /> : <div></div>}
         <MapClick />
@@ -465,7 +474,6 @@ class MapView extends React.Component {
               // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
 
               var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
-
               return (
                 <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
                   data={edge}
@@ -474,6 +482,8 @@ class MapView extends React.Component {
                 //     console.log(e.target.options.data)
                 //   }}}
                 />
+                
+                
 
               );
 
@@ -642,18 +652,7 @@ class MapView extends React.Component {
         />
         <span style={{ fontSize: '9px', position: 'fixed', top: '110px', right: '100px', zIndex: '1000' }}> Automatic Zoom</span>
         </div>
-        <FeatureGroup>
-        <EditControl
-          position='bottomleft'
-          onEdited={this._onEditPath}
-          onCreated={this._onCreate}
-          onDeleted={this._onDeleted}
-          draw={{
-            rectangle: false
-          }}
-        />
-        <Circle center={[51.51, -0.06]} radius={200} />
-        </FeatureGroup>
+        
 
 
         {/* {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null} */}

@@ -54,11 +54,10 @@ export default function AreaSelect() {
       // const northeast = e.bounds.getNorthEast()
       // const southwest = e.bounds.getSouthWest()
 
+
       const selectionNode = appState.graph.frame.getNodeList().filter(node =>( 
         e.bounds.contains(L.latLng(node.data.ref.LatY, node.data.ref.LonX)))
-     
       )
-      
       
       // //highlight selected nodes 
       // if (appState.graph.selectedNodes.length > 0) {
@@ -76,6 +75,8 @@ export default function AreaSelect() {
       
       // console.log(appState.graph.selectedNodes)
     });
+
+    
 
     // You can restrict selection area like this:
     const bounds = map.getBounds().pad(-0.25); // save current map bounds as restriction area

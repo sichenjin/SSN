@@ -102,6 +102,7 @@
     "react-leaflet": "^3.2.2",
     "react-leaflet-d3": "^2.0.0",
     "react-leaflet-draw": "^0.20.4",
+    "react-leaflet-geodesic": "^1.0.3",
     "react-rnd": "^10.3.7",
     "react-svg-brush": "^1.0.0",
     "resolve": "1.12.0",

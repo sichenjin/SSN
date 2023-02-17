@@ -40,11 +40,17 @@ export function MapClick() {
     
     const map = useMapEvents({
       click(e) {
-        //   console.log(e)
-        appState.graph.frame.selection = []
+          console.log(e, "Test map click")
+          if (appState.useToolbartoSelect) {
+            appState.useToolbartoSelect = false
+          } else {
+            appState.graph.frame.selection = []
         appState.graph.selectedNodes = []
         appState.graph.edgeselection = []
+        appState.graph.frame.updateSelectionOpacity()
         // appState.graph.mapClicked = null
+          }
+        
         
       }
     })

@@ -45,6 +45,8 @@ const appState = new AppState();
 
 window.appState = appState;
 
+appState.useToolbartoSelect = false
+
 const loadSnapshotFromURL = (url) => {
   return fetch(url, {
     method: 'GET',
