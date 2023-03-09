@@ -528,6 +528,7 @@ div.pt-card.sub-option.legend {
 }
 
 .network-tag{
+  display: none;
   /* margin-top: 15px; */
   margin-left: 18vw;
   font-size: 10px;
@@ -539,6 +540,7 @@ div.pt-card.sub-option.legend {
 
 .map-tag{
   /* margin-top: 15px; */
+  display: none;
     margin-left: 28vw;
     font-size: 10px;
     height: 20px;
@@ -597,6 +599,7 @@ text-overflow: ellipsis;
   /* Misc */
   border: 1px solid #cbd5e0;
   width: 100%;
+  max-width: none;
 }
 .container-up {
   height: 50%;
@@ -653,6 +656,9 @@ text-overflow: ellipsis;
 
 
 /* Sidebar */
+.sidebarButton {
+  width: 33.3% !important;
+}
 .sidebar-menu {
   display: flex;
   width: 15%;

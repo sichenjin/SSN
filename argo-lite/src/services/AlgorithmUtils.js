@@ -105,6 +105,7 @@ export function averageDegree(snapshot) {
     return sum / snapshot.rawGraph.nodes.length;
 }
 
+
 /**
  * Calculate the diameter of a graph
  * @param {*} rawGraph the rawGraph inside appState

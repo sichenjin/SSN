@@ -8,7 +8,7 @@ import {
   NonIdealState
 } from "@blueprintjs/core";
 import Dialogs from "./components/Dialogs";
-import Navbar from "./components/Navbar";
+import NavbarSelector from "./components/Navbar";
 // import ComDetection from './components/ComDetection'
 import WorkspaceView from "./components/WorkspaceView";
 import appState from "./stores/index";
@@ -208,20 +208,18 @@ class App extends React.Component {
     return (
       <div className={classnames({
         "app-wrapper": true,
-        [Classes.DARK]: appState.preferences.darkMode
-      })}>
-        <div class="container">
-          <Navbar />
+      })} style={{display: "flex"}}>
+        <div>
+        <NavbarSelector />
+        </div>
+        <div class="container" style={{paddingTop:"5vh", maxWidth:"100vw"}}>
           <div class="container">
             <Sidebar />
             {/* {appState.graph.hasGraph && <ComDetection />} */}
             <div class="outer-container">
               <div class="container-up container">
                 <div class="container__left">
-                  <div className="graph">
-                    {appState.graph.hasGraph && <Tag className="network-tag">
-                      Network
-                    </Tag>}
+                    {appState.graph.hasGraph && <Tag className="network-tag">Network</Tag>}
                     <main className="main">
                       {appState.graph.hasGraph ? (
                         <ThreeJSVis />
@@ -231,7 +229,6 @@ class App extends React.Component {
                     </main>
                     {/* {appState.graph.hasGraph && <FloatingCards />} */}
                     <Dialogs />
-                  </div>
                 </div>
                 <div class="resizer" id="dragMe"></div>
                 <div class="container__right">
@@ -262,13 +259,11 @@ class App extends React.Component {
                   {/* {appState.graph.hasGraph && <GraphView />} */}
                   <div id="scatter-plot">
                     {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
-
-
                   </div>
                 </div>
-
               </div>
             </div>
+            
           </div>
         </div>
       </div>

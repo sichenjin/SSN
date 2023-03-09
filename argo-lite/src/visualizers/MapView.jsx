@@ -20,12 +20,13 @@ import congressionjsonfile from "../layerdata/congressional_5m.json"
 import "../../node_modules/leaflet/dist/leaflet.css"
 import "../../node_modules/leaflet-draw/dist/leaflet.draw.css"
 
-import { GeodesicLine } from 'react-leaflet-geodesic'
-
+import Curve from "../components/Curve"
 
 // import { Button, Classes, Switch, Tag } from "@blueprintjs/core";
 var def = require("../graph-frontend/src/imports").default;
 var d3 = def.d3;
+
+
 
 
 // import LocationFilter from "../components/LocationFilter"
@@ -403,7 +404,7 @@ class MapView extends React.Component {
   onCreate = (e) => {
     console.log(e);
   }
-
+  
 
   render() {
 
@@ -422,7 +423,6 @@ class MapView extends React.Component {
     >
 
       <Tag className="map-tag">Map</Tag>
-
 
       <MapContainer
         style={{ height: "100%", width: "100%" }}
@@ -463,11 +463,16 @@ class MapView extends React.Component {
         
 
         <ReactLeafletToolbar />
+        
         <AreaSelect />
         {appState.graph.autoZoom ? <ZoomMap /> : <div></div>}
         <MapClick />
 
+
         <Pane name="edgepane" style={{ zIndex: 10000 }}>
+            <Curve path={["M", [50, 14], "Q", [53, 20], [49, 25]]}
+          options={{color:'red',fill:false}}
+            />
           {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
 
             appState.graph.frame && appState.graph.frame.getEdgeList().map((edge, i) => {
@@ -475,13 +480,16 @@ class MapView extends React.Component {
 
               var edgepositions = [[edge.data.fromlocLatY, edge.data.fromlocLonX], [edge.data.tolocLatY, edge.data.tolocLonX]]
               return (
-                <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
-                  data={edge}
-                // eventHandlers={{
-                //   click: (e) => {
-                //     console.log(e.target.options.data)
-                //   }}}
-                />
+                // <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
+                //   data={edge}
+                // // eventHandlers={{
+                // //   click: (e) => {
+                // //     console.log(e.target.options.data)
+                // //   }}}
+                // />
+                <Curve path={["M", edgepositions[0], "T", edgepositions[1]]}
+          options={this.setEdgePathOption(edge)}
+            />
                 
                 
 
@@ -664,7 +672,7 @@ class MapView extends React.Component {
 
 
       </MapContainer>
-
+      
     </div>
   }
 }

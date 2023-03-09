@@ -132,7 +132,7 @@ export default class GraphStore {
     nodeProperties: [],
     nodePropertyTypes:[],
     uniqueValue:{},
-    nodeComputed: ["pagerank", "degree",'centrality', 'distance to center'],
+    nodeComputed: ["pagerank", "degree",'centrality', 'distance to center','betweeness centrality','closeness centrality', 'distance to group center'],
     edgeProperties: [],
     snapshotName: "loading..." // Optional: for display in Argo-lite only
   };

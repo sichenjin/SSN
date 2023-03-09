@@ -23,7 +23,7 @@ class SelectionDetail extends React.Component {
   // 
   margin = { top: 32, right: 30, bottom: 64, left: 30 }
   // { top: 32, right: 32, bottom: 64, left: 64 }
-  allwidth = 500
+  allwidth = 200
   allheight = 180
   width = this.allwidth - this.margin.left - this.margin.right
   height = this.allheight - this.margin.top - this.margin.bottom
@@ -362,19 +362,21 @@ class SelectionDetail extends React.Component {
           </div>
 
           <div style={{ height: '100%' }}>
-            <text className="distribution-title" >Distonce Distribution</text>
-
+              <div>
+              {/* <text className="distribution-title" >Distance Distribution</text> */}
               <svg
-                width={400}
+                width={"50%"}
                 height={180}
                 // className="hist"
                 id="edgesvg"
                 ref={input => (this.edgesvg = input)}
               // ref = {ref}
               >
+                <text x="0" y="15">Distance Distribution</text>
                 <Histogram
                   ariaLabel="distance_dis"
                   orientation="vertical"
+                  label="Distance Distribution"
                   height={this.allheight}
                   width={this.allwidth}
                   cumulative={false}
@@ -426,7 +428,8 @@ class SelectionDetail extends React.Component {
                 </Histogram>
                 {this.renderEdgeBrush()}
               </svg>
-              <text className="distribution-title">Degree Distribution</text>
+              </div>
+              <div>
               <svg
                 width={400}
                 height={180}
@@ -436,7 +439,7 @@ class SelectionDetail extends React.Component {
               // ref = {ref}
               >
 
-
+                <text x="0" y="15">Degree Distribution</text>
                 <Histogram
                   ariaLabel="degree_dis"
                   orientation="vertical"
@@ -468,6 +471,7 @@ class SelectionDetail extends React.Component {
                       }} />
                 </Histogram>
               </svg>
+              </div>
           </div>
 
 
@@ -517,16 +521,17 @@ class SelectionDetail extends React.Component {
         </div>
 
         <div style={{ height: '20vw' }}>
-            <text className="distribution-title" >Distance Distribution</text>
+            
 
             <svg
-              width={400}
+              width={"50%"}
               height={180}
               // className="hist"
               id="edgesvg"
               ref={input => (this.edgesvg = input)}
             // ref = {ref}
             >
+              <text x="0" y="15">Distance Distribution</text>
               <Histogram
                 ariaLabel="distance_dis"
                 orientation="vertical"
@@ -583,9 +588,9 @@ class SelectionDetail extends React.Component {
             </svg>
 
 
-            <text className="distribution-title">Degree Distribution</text>
+            {/* <text className="distribution-title">Degree Distribution</text> */}
             <svg
-              width={400}
+              width={"50%"}
               height={180}
               // className="hist"
               id="degreesvg"
@@ -593,7 +598,7 @@ class SelectionDetail extends React.Component {
             // ref = {ref}
             >
 
-
+              <text x="0" y="15">Degree Distribution</text>
               <Histogram
                 ariaLabel="degree_dis"
                 orientation="vertical"

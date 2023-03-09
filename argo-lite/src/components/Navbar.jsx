@@ -10,8 +10,14 @@ import {
   Popover,
   Menu,
   MenuItem,
-  MenuDivider
+  MenuDivider,
+  Navbar
 } from "@blueprintjs/core";
+
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
 import { observer } from "mobx-react";
 
 import appState from "../stores/index";
@@ -271,15 +277,15 @@ class RegularNavbar extends React.Component {
   }
   render() {
     return (
-      <nav className={classnames([Classes.NAVBAR], 'navbar-head')}>
-        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])}>
+      <nav className={classnames([Classes.NAVBAR], 'navbar-head')} style={{display:"block", height:"5vh"}}>
+        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])} style={{height:"100%"}}>
           <a href={LOGO_URL} target="_blank">
             <img title="Snoman" id="SNoMAN logo"
               src={appState.preferences.darkMode ? argologo_dark : argologo_light}
-              height="28"></img>
+              height="28px"></img>
           </a>
           <span>SNoMaN</span>
-          <div className={classnames([Classes.NAVBAR_HEADING])}></div>
+          <div className={classnames([Classes.NAVBAR_HEADING])} style={{height:"100%"}}></div>
           {/* <a
             href="https://poloclub.github.io/argo-graph/"
             target='_blank'
@@ -350,9 +356,11 @@ class RegularNavbar extends React.Component {
               </Menu>
             }
             position={Position.BOTTOM}
+            style={{height:"100%"}}
           >
             <Button
               className={classnames([Classes.BUTTON, Classes.MINIMAL])}
+              style={{height:"100%"}}
               iconName="document"
             >
               File
@@ -437,8 +445,8 @@ class RegularNavbar extends React.Component {
             </Button>
           </Popover>
         </div>
-        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])}>
-          <span className={Classes.NAVBAR_DIVIDER} />
+        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT]) } style={{height:"100%"}}>
+          <span className={Classes.NAVBAR_DIVIDER} style={{height:"100%"}}/>
           {appState.graph.hasGraph && appState.graph.frame && (
             <div style={{ display: "inline" }}>
 
@@ -542,6 +550,7 @@ class RegularNavbar extends React.Component {
           /> */}
           <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
+            style={{height:"100%"}}
             iconName="help"
             onClick={() => {
               appState.preferences.helpDialogOpen = true;
@@ -549,12 +558,13 @@ class RegularNavbar extends React.Component {
           />
           <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
+            style={{height:"100%"}}
             iconName="minimize"
             onClick={() => {
               appState.preferences.turnOnMinimalMode()
             }}
           />
-          <span className={Classes.NAVBAR_DIVIDER} />
+          <span className={Classes.NAVBAR_DIVIDER} style={{height:"100%"}}/>
           <a
             href={GITHUB_URL}
             target='_blank'
@@ -643,10 +653,10 @@ class MinimalNavbar extends React.Component {
 }
 
 @observer
-class Navbar extends React.Component {
+class NavbarSelector extends React.Component {
   render() {
     return appState.preferences.isNavbarInMinimalMode ? <MinimalNavbar /> : <RegularNavbar />;
   }
 }
 
-export default Navbar;
+export default NavbarSelector;

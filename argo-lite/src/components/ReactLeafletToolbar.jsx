@@ -3,7 +3,7 @@ import appState, { AppState } from "../stores/index";
 
 import { useMap } from "react-leaflet";
 
-import { Map, TileLayer, FeatureGroup, Circle } from 'react-leaflet';
+import { FeatureGroup, Circle } from 'react-leaflet';
 import { EditControl } from "react-leaflet-draw"
 
 

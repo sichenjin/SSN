@@ -619,7 +619,7 @@ class RenderCircles extends React.Component {
               }}
               onMouseLeave={(e) => {
 
-                // if (appState.graph.mapClicked) return;
+                if (appState.graph.mapClicked) return;
                 appState.graph.distanceDensityCurrentlyHovered = undefined
                 appState.graph.frame.selection = []
                 appState.graph.selectedNodes = []

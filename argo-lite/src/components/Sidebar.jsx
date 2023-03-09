@@ -26,9 +26,9 @@ class Sidebar extends React.Component {
         <SidebarMenu>
             <div class="sidebar-container">
                 <div class="w3-bar w3-black">
-                    <button class=" w3-bar-item-button w3-bar-item w3-button " onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
-                    <button class="w3-bar-item-button w3-bar-item w3-button " onClick={this.openCity.bind(this, "Filter")}>Filter</button>
-                    <button class="w3-bar-item-button w3-bar-item w3-button " onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
+                    <button class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
+                    <button class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Filter")}>Filter</button>
+                    <button class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
                 </div> 
                 <div id="Appearance" class="city">
                     <text style={{fontSize: "10px"}}>Appearance </text>
