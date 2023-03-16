@@ -31,7 +31,7 @@ class Sidebar extends React.Component {
                     <button class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
                 </div> 
                 <div id="Appearance" class="city">
-                    <text style={{fontSize: "10px"}}>Appearance </text>
+                    <text style={{fontSize: "12px"}}>Appearance </text>
                     <Tabs2 animate id="graph-options">
                     <Tab2 id="a_nodes" title="Nodes" panel={<NodesPanel />} />
                     <Tab2 id="a_edges" title="Edges" panel={<EdgesPanel />} />
@@ -41,7 +41,7 @@ class Sidebar extends React.Component {
                     </Tabs2>
                 </div>
                 <div id="Filter" class="city" style={{display:"None"}}>
-                <text style={{fontSize: "10px"}}>Filter Options</text>
+                <text style={{fontSize: "12px"}}>Filter Options</text>
                     <Tabs2 animate id="filter-options">
                     <Tab2 id="f_nodes" title="Nodes" panel={<NodesFilterPanel />} />
                     <Tab2 id="f_edges" title="Edges" panel={<EdgesPanel />} />
@@ -50,7 +50,7 @@ class Sidebar extends React.Component {
                     </Tabs2>
                 </div>
                 <div id="Statistics" class="city" style={{display:"None"}}>
-                <text style={{fontSize: "10px"}}>Statistics</text>
+                <text style={{fontSize: "12px"}}>Statistics</text>
                     <Tabs2 animate id="filter-options">
                     <Tab2 id="s_nodes" title="Nodes"  />
                     <Tab2 id="s_edges" title="Edges"  />
@@ -58,7 +58,7 @@ class Sidebar extends React.Component {
                     <Tabs2.Expander />
                     </Tabs2>
                 </div>
-                <div className={classnames(Classes.DIALOG_BODY)}>
+                <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
                     <table className={Classes.TABLE} style={{width: '100%'}}>
                         <thead>
                             <tr>
@@ -94,11 +94,11 @@ class Sidebar extends React.Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td>Clustering Coefficient</td>
+                                <td>Clustering<br></br>Coefficient</td>
                                 <td>{(appState.graph.hasGraph) ? appState.graph.averageClustering.toFixed(3) : 'loading graph'}</td>
                             </tr>
                             <tr>
-                                <td>Connected Component</td>
+                                <td>Connected <br></br>Component</td>
                                 <td>{(appState.graph.hasGraph) ? appState.graph.components : 'loading graph'}</td>
 
                             </tr>

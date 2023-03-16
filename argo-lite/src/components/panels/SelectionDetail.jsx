@@ -23,8 +23,9 @@ class SelectionDetail extends React.Component {
   // 
   margin = { top: 32, right: 30, bottom: 64, left: 30 }
   // { top: 32, right: 32, bottom: 64, left: 64 }
-  allwidth = 200
-  allheight = 180
+  containerDiv = document.querySelector("#graph-container");
+  allwidth = this.containerDiv.offsetWidth / 2;
+  allheight = this.containerDiv.offsetHeight/ 2;
   width = this.allwidth - this.margin.left - this.margin.right
   height = this.allheight - this.margin.top - this.margin.bottom
   brushmargin = this.margin
@@ -331,6 +332,7 @@ class SelectionDetail extends React.Component {
               style={{
                 width: "100%",
                 padding: '0',
+                fontSize: "12px"
               }}
             >
 
@@ -366,13 +368,13 @@ class SelectionDetail extends React.Component {
               {/* <text className="distribution-title" >Distance Distribution</text> */}
               <svg
                 width={"50%"}
-                height={180}
+                height={"30vh"}
                 // className="hist"
                 id="edgesvg"
                 ref={input => (this.edgesvg = input)}
               // ref = {ref}
               >
-                <text x="0" y="15">Distance Distribution</text>
+                <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Distance Distribution</text>
                 <Histogram
                   ariaLabel="distance_dis"
                   orientation="vertical"
@@ -418,8 +420,8 @@ class SelectionDetail extends React.Component {
                       return "#429bf5"
                     }}
                   />
-                  <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                  <YAxis label="Frequency" tickFormat={
+                  <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                  <YAxis label="Frequency" fontSize="12px" tickFormat={
                     (tick, ti) => {
                       return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                     }} />
@@ -431,15 +433,15 @@ class SelectionDetail extends React.Component {
               </div>
               <div>
               <svg
-                width={400}
-                height={180}
+                width={"50%"}
+                height={"30vh"}
                 // className="hist"
                 id="degreesvg"
                 ref={input => (this.degreesvg = input)}
               // ref = {ref}
               >
 
-                <text x="0" y="15">Degree Distribution</text>
+                <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Degree Distribution</text>
                 <Histogram
                   ariaLabel="degree_dis"
                   orientation="vertical"
@@ -463,8 +465,8 @@ class SelectionDetail extends React.Component {
                       }
                     })}
                   />
-                  <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                  <YAxis label="Frequency"
+                  <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                  <YAxis label="Frequency" fontSize="12px"
                     tickFormat={
                       (tick, ti) => {
                         return parseInt(tick * appState.graph.selectedNodes.length).toString()
@@ -497,6 +499,7 @@ class SelectionDetail extends React.Component {
             style={{
               width: "100%",
               padding: '0',
+              fontSize: "12px"
             }}
           >
 
@@ -525,13 +528,13 @@ class SelectionDetail extends React.Component {
 
             <svg
               width={"50%"}
-              height={180}
+              height={"30vh"}
               // className="hist"
               id="edgesvg"
               ref={input => (this.edgesvg = input)}
             // ref = {ref}
             >
-              <text x="0" y="15">Distance Distribution</text>
+              <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Distance Distribution</text>
               <Histogram
                 ariaLabel="distance_dis"
                 orientation="vertical"
@@ -576,8 +579,8 @@ class SelectionDetail extends React.Component {
                     return "#429bf5"
                   }}
                 />
-                <XAxis numTicks={5} label="Edge Distance (km)" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                <YAxis label="Frequency" tickFormat={
+                <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                <YAxis label="Frequency" fontSize="12px" tickFormat={
                   (tick, ti) => {
                     return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                   }} />
@@ -591,14 +594,14 @@ class SelectionDetail extends React.Component {
             {/* <text className="distribution-title">Degree Distribution</text> */}
             <svg
               width={"50%"}
-              height={180}
+              height={"30vh"}
               // className="hist"
               id="degreesvg"
               ref={input => (this.degreesvg = input)}
             // ref = {ref}
             >
 
-              <text x="0" y="15">Degree Distribution</text>
+              <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Degree Distribution</text>
               <Histogram
                 ariaLabel="degree_dis"
                 orientation="vertical"
@@ -623,8 +626,8 @@ class SelectionDetail extends React.Component {
                     
                   })}
                 />
-                <XAxis numTicks={5} label="Degree" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                <YAxis label="Frequency"
+                <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                <YAxis label="Frequency" fontSize="12px"
                   tickFormat={
                     (tick, ti) => {
                       return parseInt(tick * appState.graph.frame.getNodeList().length).toString()

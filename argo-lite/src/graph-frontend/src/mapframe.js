@@ -148,6 +148,14 @@ var MapFrame = function(graph, options) {
         },
         false
       );
+      window.addEventListener(
+        "load",
+        function(e) {
+          e.preventDefault();
+          self.onWindowResize();
+        },
+        false
+      );
     };
   
     /**

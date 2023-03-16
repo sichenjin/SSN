@@ -7,6 +7,11 @@
 }
 
 .main {
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
   flex: 1;
   position: relative;
 }
@@ -381,12 +386,12 @@ td {
   width:10px;
   height:10px;
   transform: translate(100%, 4px);
-  font-size: 9px;
+  font-size: 12px !important;
 }
 
 
 .pt-slider-label {
-  font-size: 9px;
+  font-size: 12px !important;
   transform: translate(-20%, 10px);
 }
 
@@ -528,21 +533,22 @@ div.pt-card.sub-option.legend {
 }
 
 .network-tag{
-  display: none;
-  /* margin-top: 15px; */
-  margin-left: 18vw;
-  font-size: 10px;
+  /* display: none; */
+  display: inline-block;
+  margin-top: 5vh;
+  /* margin-left: 18vw; */
+  font-size: 12px;
   height: 20px;  
-  position:fixed;
+  position:absolute;
   top:3px;
   z-index: 10;
 }
 
 .map-tag{
-  /* margin-top: 15px; */
-  display: none;
-    margin-left: 28vw;
-    font-size: 10px;
+    margin-top: 5vh;
+    display: inline-block;
+  /* display: none; */
+    font-size: 12px;
     height: 20px;
     z-index: 1000;
     top:3px;
@@ -600,9 +606,11 @@ text-overflow: ellipsis;
   border: 1px solid #cbd5e0;
   width: 100%;
   max-width: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 .container-up {
-  height: 50%;
+  height: 55%;
 }
 .container-down {
   flex: 1;
@@ -612,7 +620,7 @@ text-overflow: ellipsis;
 }
 .container__left {
   /* Initially, the left takes 3/4 width */
-  width: 40%;
+  width: 40vw;
 
   /* Misc */
   align-items: center;
@@ -641,6 +649,7 @@ text-overflow: ellipsis;
   display: flex;
   justify-content: center;
   overflow: auto;
+  text-align: center;
 }
 
 /* Nav */
@@ -657,6 +666,7 @@ text-overflow: ellipsis;
 
 /* Sidebar */
 .sidebarButton {
+  font-size: 10px !important;
   width: 33.3% !important;
 }
 .sidebar-menu {
@@ -678,7 +688,7 @@ table.pt-table {
 }
 
 .pt-button{
-  font-size:9px;
+  font-size:12px !important;
   height:15px;
   line-height: 15px;
   min-width: 0px;
@@ -702,8 +712,8 @@ table.pt-table {
 }
 
 .pt-card{
-  font-size: 9px;
-  padding:0 5px;
+  font-size: 12px;
+  padding:5 5px;
 }
 
 
@@ -713,12 +723,12 @@ table.pt-table {
 }
 
 .option-font{
-  font-size: 9px;
+  font-size: 12px !important;
 }
 
 .pt-menu-item{
   padding: 2px;
-  font-size: 9px;
+  font-size: 12px !important;
 }
 
 /* .pt-popover-target {
@@ -802,9 +812,40 @@ table.pt-table {
 }
 .tg-pt-dialog-resizable-draggable .pt-dialog-body {
   height: 50%;
+  margin: 0px !important;
   width: -webkit-fill-available;
   overflow: auto;
 }
 .tg-pt-dialog-resizable-draggable .pt-overlay-backdrop {
   display: none;
+}
+
+#statTable {
+  margin: 0px !important;
+}
+
+
+/* selection */
+.vx-axis-label {
+  font-size: 12px !important;
+  font-family: Verdana !important;
+}
+
+/* table */
+.pt-table {
+  font-size: 12px !important;
+}
+/* sidebar */
+.pt-tab {
+  font-size: 12px !important;
+}
+
+.pt-navbar-divider {
+  height: 100%;
+}
+.pt-button{
+  padding: 5 !important;
+}
+#edgesvg {
+  padding-left: 5;
 }

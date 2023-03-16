@@ -243,7 +243,7 @@ class GlobalPanel extends React.Component {
           </div>
         </Collapsable>
         <br/>
-        <text style={{fontSize: "9px"}}>
+        <text style={{fontSize: "12px"}}>
           
           {pluralize("node", appState.graph.overrides.size, true)}<span> </span>
           have override styles.  &nbsp;  

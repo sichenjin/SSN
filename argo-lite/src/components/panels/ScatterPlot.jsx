@@ -321,7 +321,7 @@ class ScatterPlot extends React.Component {
           {/* <div style={{ width:'50vw', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}> */}
 
           <div style={{ display: "inline", }}>
-            <p className="scatter-plot-font" style={{ display: "inline" }}>X By: </p>
+            <p className="scatter-plot-font" style={{ display: "inline", fontSize:"12px"}}>X By: </p>
             <span >
               < XYSelect className="scatter-plot-font" style={{ display: "inline" }}
                 items={appState.graph.allComputedPropertiesKeyList}
@@ -330,7 +330,7 @@ class ScatterPlot extends React.Component {
               />
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <p className="scatter-plot-font" style={{ display: "inline" }}>Y by: </p>
+            <p className="scatter-plot-font" style={{ display: "inline", fontSize:"12px" }}>Y by: </p>
             <span >
               <XYSelect
                 className="scatter-plot-font"
@@ -362,7 +362,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(12vw, 27vh)' }} fontSize="9px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
+                <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -378,8 +378,8 @@ class ScatterPlot extends React.Component {
                   }
                 />
                 <text
-                  transform={"translate(-40, 110) rotate(-90)"}
-                  fontSize="9px"
+                  transform={"translate(-40, 150) rotate(-90)"}
+                  fontSize="12px"
                 >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis
                   axis="y"
@@ -412,7 +412,7 @@ class ScatterPlot extends React.Component {
           </div>
           <Button
             className="bp4-button"
-            style={{ transform: "translate(38vw, -2vh)", }}
+            style={{ transform: "translate(35vw, -1vh)", }}
             onClick={() => {
               var svgsaver = new SvgSaver();                      // creates a new instance
               var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -424,7 +424,7 @@ class ScatterPlot extends React.Component {
             <CSVLink data={this.state.csvarray} onClick={this.downloadCSV} asyncOnClick={true} filename="bsedata.csv">
               <Button
                 className="bp4-button"
-                style={{ transform: "translate(20vw, -2vh)", }}
+                style={{ transform: "translate(15vw, -1vh)", }}
 
               >Download CSV
               </Button>

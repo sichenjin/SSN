@@ -35,6 +35,7 @@ class NodeDetail extends React.Component {
             style={{
               width: "100%",
               padding: '0',
+              fontSize: "12px"
             }}
           >
             

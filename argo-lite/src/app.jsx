@@ -243,7 +243,7 @@ class App extends React.Component {
               <div class="resizer-up" id="dragMeUp"></div>
               <div class="container-down container" id="scatter">
                 <div style={{
-                  display: "flex", height: "100%",width: '40%'
+                  display: "flex", height: "100%",width: '40vw'
                   // border:'#C0C0C0',
                   // borderStyle:'solid',
                   // flex:"1 1 50%"

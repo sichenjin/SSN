@@ -11,7 +11,7 @@ class NodesPanel extends React.Component {
     if (appState.graph.selectedNodes.length === 0) {
       return (
         <div>
-          <text style={{fontSize:"9px"}}>Modifying All Nodes</text>
+          <text style={{fontSize:"12px"}}>Modifying All Nodes</text>
         </div>
       );
     }

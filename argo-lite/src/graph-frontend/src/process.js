@@ -41,7 +41,7 @@ var Frame = function(graph, options) {
   this.renderWidth = 1000;
   this.renderHeight = 1000;
   this.maxZoom = 1000;
-  this.paused = false;
+  this.paused = true;
   this.mouseDown = false;
   this.ee = ee({});
   this.layoutInit = true;
@@ -152,6 +152,14 @@ var Frame = function(graph, options) {
       },
       false
     );
+    window.addEventListener(
+      "load",
+      function(e) {
+        e.preventDefault();
+        self.onWindowResize();
+      },
+      false
+    );
   };
 
   /**
@@ -180,6 +188,7 @@ var Frame = function(graph, options) {
   this.render = function() {
     self.updateCamera();
     self.updateNodes();
+    self.paused = true;
     if (stage == 1) {
       self.updateLabels();
       self.updateEdges();

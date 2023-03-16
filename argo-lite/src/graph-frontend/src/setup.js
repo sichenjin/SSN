@@ -61,9 +61,10 @@ module.exports = function(self) {
 
   self.setDisplayParams = function() {
     self.element = document.getElementById("graph-container");
+    self.containerDiv = document.querySelector("#graph-container");
     self.clientRect = self.element.getBoundingClientRect();
-    self.width = self.clientRect.width;
-    self.height = self.clientRect.height;
+    self.width = self.containerDiv.offsetWidth;
+    self.height = self.containerDiv.offsetHeight;
     self.aspect = self.width / self.height;
     self.resolution = new THREE.Vector2(self.width, self.height);
   };
