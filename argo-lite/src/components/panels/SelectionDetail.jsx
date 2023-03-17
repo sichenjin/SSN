@@ -364,7 +364,6 @@ class SelectionDetail extends React.Component {
           </div>
 
           <div style={{ height: '100%' }}>
-              <div>
               {/* <text className="distribution-title" >Distance Distribution</text> */}
               <svg
                 width={"50%"}
@@ -430,8 +429,6 @@ class SelectionDetail extends React.Component {
                 </Histogram>
                 {this.renderEdgeBrush()}
               </svg>
-              </div>
-              <div>
               <svg
                 width={"50%"}
                 height={"30vh"}
@@ -473,7 +470,6 @@ class SelectionDetail extends React.Component {
                       }} />
                 </Histogram>
               </svg>
-              </div>
           </div>
 
 
