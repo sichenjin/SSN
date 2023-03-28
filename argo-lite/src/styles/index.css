@@ -408,7 +408,8 @@ transform: translate(10px, 0);
 
 div.pt-card.sub-option {
     line-height: 15px;
-    max-width: 15vw;
+    /* max-width: 15vw; */
+    padding: auto;
 }
 
 .range-slider-container{
@@ -597,7 +598,7 @@ text-overflow: ellipsis;
 .outer-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80vw;
 }
 /* Slider */
 .container {
@@ -671,7 +672,7 @@ text-overflow: ellipsis;
 }
 .sidebar-menu {
   display: flex;
-  width: 15%;
+  width: 20vw;
 }
 
 .pt-tab{
@@ -776,6 +777,8 @@ table.pt-table {
 
 .sidebar-container {
   /* margin-top: 25%; */
+  height: 100%;
+  overflow: scroll;
   width: 100%;
 }
 

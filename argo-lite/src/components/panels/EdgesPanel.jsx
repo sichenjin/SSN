@@ -128,7 +128,7 @@ class EdgesPanel extends React.Component {
                      </section>
                  </div> */}
 
-                <Collapsable
+                {/* <Collapsable
                     name="Thickness"
                     isOpen={this.state.thicknessOptionOpen}
                     onToggle={() =>
@@ -154,7 +154,7 @@ class EdgesPanel extends React.Component {
                             </span>
                         </section>
                     </div>
-                </Collapsable>
+                </Collapsable> */}
             </div>
         );
     }

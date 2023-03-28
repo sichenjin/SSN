@@ -206,7 +206,7 @@ class ImportDialog extends React.Component {
   renderDelimiterSelection() {
     return (
       <div className="column-selection">
-        Selected Delimiter
+        Selected Delimiter: 
         <SimpleSelect
           items={[",", "\\t", ";"]}
           value={this.state.delimiter}

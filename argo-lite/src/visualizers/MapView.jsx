@@ -643,7 +643,7 @@ class MapView extends React.Component {
         <span style={{ fontSize: '12px', position: 'fixed', top: '8vh', right: '4vw', zIndex: '1000' }}> Show Edges</span>
 
 
-        <Switch style={{ position: 'fixed', top: '10vh', left: '97vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '12vh', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.convexPolygonsShow}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -651,9 +651,9 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ fontSize: '12px', position: 'fixed', top: '10vh', right: '4vw', zIndex: '1000' }}> Show Community Convex Hull</span>
+        <span style={{ fontSize: '12px', position: 'fixed', top: '12vh', right: '4vw', zIndex: '1000' }}> Show Community Convex Hull</span>
 
-        <Switch style={{ position: 'fixed', top: '12vh', left: '97vw', zIndex: '1000' }}
+        <Switch style={{ position: 'fixed', top: '16vh', left: '97vw', zIndex: '1000' }}
           defaultChecked={appState.graph.autoZoom}
           // checked={!node.isHidden}
           onChange={(value) => {
@@ -661,7 +661,7 @@ class MapView extends React.Component {
 
           }}
         />
-        <span style={{ fontSize: '12px', position: 'fixed', top: '12vh', right: '4vw', zIndex: '1000' }}> Automatic Zoom</span>
+        <span style={{ fontSize: '12px', position: 'fixed', top: '16vh', right: '4vw', zIndex: '1000' }}> Automatic Zoom</span>
         </div>
         
 

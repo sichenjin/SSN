@@ -493,37 +493,7 @@ class RegularNavbar extends React.Component {
                 }, 10)
               })()}
 
-              {<Tooltip
-                content={(appState.graph.frame.paused) ? "Resume Layout Algorithm" : "Pause Layout Algorithm"}
-                position={Position.BOTTOM}
-              >
-                <Button
-                  className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-                  iconName={(!appState.graph.smartPause.smartPaused && appState.graph.frame.paused) ? "play" : "pause"}
-                  text={(!appState.graph.smartPause.smartPaused && appState.graph.frame.paused) ? "Resume Layout" : "Pause Layout"}
-                  onClick={() => {
-                    if (appState.graph.frame.paused && !appState.graph.smartPause.smartPaused) {
-                      /**graph is going from "pause layout" mode to "resume layout"*/
-
-                      /** graph runs for default duration when unpaused */
-                      appState.graph.runActiveLayout();
-
-                      appState.graph.frame.resumeLayout();
-                      this.forceUpdate();
-                      /**appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused*/
-                    } else if (appState.graph.smartPause.smartPaused) {
-                      /**graph is going from smart paused "resume layout" mode to "pause layout" mode*/
-                      appState.graph.frame.paused = true;
-                      appState.graph.smartPause.smartPaused = false;
-                    } else {
-                      /**graph is going from in "resume layout" mode to "pause layout" mode*/
-                      appState.graph.frame.pauseLayout();
-                      this.forceUpdate();
-                    }
-                  }}
-                />
-              </Tooltip>
-              }
+                
             </div>
           )}
 

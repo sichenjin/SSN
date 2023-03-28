@@ -348,7 +348,7 @@ class ScatterPlot extends React.Component {
           <div>
 
             <svg
-              width={this.width + this.margin.right + this.margin.left}
+              width={this.width + this.margin.right + this.margin.left + 50}
               height={this.height + this.margin.top + this.margin.bottom}
               className="scatterchart"
               id="scatterplot"
@@ -412,7 +412,7 @@ class ScatterPlot extends React.Component {
           </div>
           <Button
             className="bp4-button"
-            style={{ transform: "translate(35vw, -1vh)", }}
+            style={{ transform: "translate(35vw, -0.5vh)", }}
             onClick={() => {
               var svgsaver = new SvgSaver();                      // creates a new instance
               var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -424,7 +424,7 @@ class ScatterPlot extends React.Component {
             <CSVLink data={this.state.csvarray} onClick={this.downloadCSV} asyncOnClick={true} filename="bsedata.csv">
               <Button
                 className="bp4-button"
-                style={{ transform: "translate(15vw, -1vh)", }}
+                style={{ transform: "translate(15vw, -0.5vh)", }}
 
               >Download CSV
               </Button>

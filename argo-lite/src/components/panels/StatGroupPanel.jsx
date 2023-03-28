@@ -286,10 +286,13 @@ class StatGroupPanel extends React.Component {
         return (
             (
                 <div>
-                    <Button
+                    {/* <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
-                        onClick={this.runcommunity}>Run Community</Button>
+                        >Run Community</Button> */}
+                        <button style={{height: "100%"}} onClick={this.runcommunity} type="button">
+                            Run Community
+                        </button>
                     {this.modularity? <text className="modularity-tag" style={{fontSize: "8px"} } >{"Q value: " + parseFloat(this.modularity).toFixed(3)}</text>: null}
                     {/* <Button
                         style={{ position: 'absolute', top: '50px', left: '500px', zIndex: '1000' }}

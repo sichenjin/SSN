@@ -10,7 +10,7 @@ export default ({ items, onSelect, value, fill = false }) => (
     filterable={false}
     onItemSelect={onSelect}
   >
-        <button style={{height: "100%"}} type="button">
+        <button style={{height: "100%" ,marginLeft: "2px"}} type="button">
           {value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
         </button>
         {/* <Button className={fill ? Classes.FILL : null} text={value} /> */}

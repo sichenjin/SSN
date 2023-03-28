@@ -212,8 +212,8 @@ class App extends React.Component {
         <div>
         <NavbarSelector />
         </div>
-        <div class="container" style={{paddingTop:"5vh", maxWidth:"100vw"}}>
-          <div class="container">
+        <div class="container" style={{paddingTop:"5vh", maxWidth:"100vw", height:"100%"}}>
+          <div class="container" style={{height:"100%"}}>
             <Sidebar />
             {/* {appState.graph.hasGraph && <ComDetection />} */}
             <div class="outer-container">
