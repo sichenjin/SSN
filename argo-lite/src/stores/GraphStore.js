@@ -95,6 +95,9 @@ export default class GraphStore {
   // Edge thickness based on 
   @observable edgeThicknessByDistance = false;
 
+  // Color by distance
+  @observable colorByDistance = false;
+
   // Cache the single node that's been selected last time
   // and will not update unless exactly one node is selected again
   // useful for NeighborDialog

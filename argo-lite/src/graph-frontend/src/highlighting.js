@@ -219,4 +219,7 @@ module.exports = function (self) {
   self.colorNodeOpacity = function (node, op) {
     node.renderData.draw_object.material.opacity = op;
   };
+  self.colorNode = function (node, op) {
+    node.renderData.draw_object.material.color.setHex(op);
+  }
 };

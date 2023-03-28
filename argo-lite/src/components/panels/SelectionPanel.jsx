@@ -8,6 +8,7 @@ import { observer } from "mobx-react";
 import appState from "../../stores";
 import SwitchCollapsable from "../utils/SwitchCollapsable";
 import CommonItemRenderer from "../utils/CommonItemRenderer";
+import Collapsable from "../utils/Collapsable";
 
 @observer
 class SelectionPanel extends React.Component {
@@ -162,6 +163,34 @@ class SelectionPanel extends React.Component {
           </div>
         </SwitchCollapsable>
         <br/>
+        <Collapsable
+                    name="Color By Distance"
+                    isOpen={this.state.colorByDistance}
+                    onToggle={() =>
+                        this.setState({
+                          colorByDistance: !this.state.colorByDistance
+                        })
+                    }
+                    >
+                    <div className={classnames(Classes.CARD, "sub-option")}>
+                        <section>
+                            <p>Node Color by Distance: </p>
+                            <span>
+                            <label class=".pt-large">
+                            <input 
+                                 type="checkbox"
+                                 onChange={it => {
+                                     console.log(appState.graph.colorByDistance);
+                                     appState.graph.colorByDistance = !appState.graph.colorByDistance;
+                                 }
+                                 }
+                               />
+                            </label>
+                            </span>
+                        </section>
+                    </div>
+                </Collapsable>
+                <br />
         <SwitchCollapsable
           name="Override Label"
           isOpen={this.state.labelOptionOpen}
