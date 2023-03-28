@@ -20,7 +20,7 @@ class EdgesPanel extends React.Component {
           colorOptionOpen:false,
           directionOptionOpen:false,
         //   colorOptionOpen:false,
-        //   thicknessOptionOpen: false,
+          thicknessOptionOpen: false,
         };
       }
 
@@ -83,7 +83,7 @@ class EdgesPanel extends React.Component {
                     </div>
                 </Collapsable>
             
-                <Collapsable
+                {/* <Collapsable
                     name="Direction"
                     isOpen={this.state.directionOptionOpen}
                     onToggle={() =>
@@ -110,7 +110,7 @@ class EdgesPanel extends React.Component {
                             </div>
                         
                     </div>
-                </Collapsable>
+                </Collapsable> */}
 {/* 
                 <div>
                      <section style = {{marginTop: "15px"}}>
@@ -128,8 +128,7 @@ class EdgesPanel extends React.Component {
                      </section>
                  </div> */}
 
-                {/* Collapsable Option: Thickness */}
-                {/* <Collapsable
+                <Collapsable
                     name="Thickness"
                     isOpen={this.state.thicknessOptionOpen}
                     onToggle={() =>
@@ -140,13 +139,22 @@ class EdgesPanel extends React.Component {
                     >
                     <div className={classnames(Classes.CARD, "sub-option")}>
                         <section>
-                            <p>Select Edge Thickness: </p>
-                            <div style={{display: "inline", float: "right"}}>
-                               
-                            </div>
+                            <p>Edge Thickness by distance: </p>
+                            <span style={{float:"right"}}>
+                            <label class=".pt-large">
+                            <input 
+                                 type="checkbox"
+                                 onChange={it => {
+                                     console.log(appState.graph.edgeThicknessByDistance);
+                                     appState.graph.edgeThicknessByDistance = !appState.graph.edgeThicknessByDistance;
+                                 }
+                                 }
+                               />
+                            </label>
+                            </span>
                         </section>
                     </div>
-                </Collapsable> */}
+                </Collapsable>
             </div>
         );
     }

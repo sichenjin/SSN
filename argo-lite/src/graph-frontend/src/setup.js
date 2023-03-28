@@ -2,10 +2,16 @@ var def = require("./imports").default;
 var THREE = def.THREE;
 var Edge = def.Edge;
 var Node = def.Node;
+var MeshLine = def.MeshLine;
+var MeshLineMaterial = def.MeshLineMaterial;
 var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
 const { default: appState } = require("../../stores");
+
+// import { Line2 } from '../src/lines/Line2.js';
+// import { LineMaterial } from '../src/lines/LineMaterial.js';
+// import { LineGeometry } from '../src/lines/LineGeometry.js';
 
 
 module.exports = function(self) {
@@ -191,8 +197,38 @@ module.exports = function(self) {
    * Setup data structures for fancy edges
    */
   self.setupFancyEdges = function() {
-    self.edges = [];
-    self.edgeCount = 0;
+    self.edges = new THREE.BufferGeometry();
+    var positions = new THREE.BufferAttribute(
+      new Float32Array(self.MAX_LINES * 3),
+      3
+    );
+    var colors = new THREE.BufferAttribute(
+      new Float32Array(self.MAX_LINES * 3),
+      3
+    );
+
+    self.edges.addAttribute("position", positions);
+    self.edges.addAttribute("color", colors);
+    const geometry = new LineGeometry();
+    geometry.setPositions( self.edges.attributes.positions );
+    geometry.setColors( self.edges.attributes.colors );
+
+    matLine = new LineMaterial( {
+
+      color: 0xffffff,
+      linewidth: 5, // in world units with size attenuation, pixels otherwise
+      vertexColors: true,
+
+      //resolution:  // to be set by renderer, eventually
+      dashed: false,
+      alphaToCoverage: true,
+
+    } );
+
+    var line = new Line2( geometry, matLine );
+    line.computeLineDistances();
+    line.scale.set( 1, 1, 1 );
+    scene.add( line );
   };
 
   /**

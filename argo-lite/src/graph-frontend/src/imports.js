@@ -4,6 +4,9 @@ window.THREE = THREE;
 require("../include/QuickHull");
 require("../include/ConvexGeometry");
 require("../include/CSS3DRenderer");
+// var Line2 = require("../src/lines/Line2");
+// var LineGeometry = require("../src/lines/LineGeometry");
+// var LineMaterial = require("../src/lines/LineMaterial");
 var Edge = require("./structure/node").Edge;
 var Node = require("./structure/node").Node;
 var OrbitControls = require("../include/OrbitControls")(THREE); //'three-orbit-controls')(THREE);
@@ -15,6 +18,11 @@ var IS_IFRAME_WIDGET = require("../../constants").IS_IFRAME_WIDGET;
 
 exports.default = {
   THREE: THREE,
+  MeshLine: THREE.MeshLine,
+  MeshLineMaterial: THREE.MeshLineMaterial,
+  // Line2: Line2,
+  // LineGeometry: LineGeometry,
+  // LineMaterial: LineMaterial,
   STATS: STATS, // stats.js panel for showing fps and other stats.
   STATS_SHOW: false,
   Edge: Edge,
@@ -40,7 +48,7 @@ exports.default = {
   NODE_SIZE: 5,
   HIGHLIGHT_SIZE: 1.0,
   LAYOUT: "d3",
-  LINES: "notfancy",
+  LINES: "nofancy",
   MAP: false,
   MAP_RENDER_PER_NUMBER_OF_FRAME: 10,
   TEXT_SCALE: true,

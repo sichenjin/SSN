@@ -15,6 +15,7 @@ module.exports = function(self) {
     var total = self.drawCount + 6;
     var positions = self.edges.attributes.position.array;
     var colors = self.edges.attributes.color.array;
+    // var width = self.edges.attributes.width.array;
 
      //directed arrows
      self.directedArrows.attributes.position.array = new Float32Array(self.MAX_LINES * 3);
@@ -51,6 +52,12 @@ module.exports = function(self) {
           colors[i * 3 + 3] = v2color.r;
           colors[i * 3 + 4] = v2color.g;
           colors[i * 3 + 5] = v2color.b;
+          // width[i * 3] = 5;
+          // width[i * 3 + 1] = 5;
+          // width[i * 3 + 2] = 5;
+          // width[i * 3 + 3] = 5;
+          // width[i * 3 + 4] = 5;
+          // width[i * 3 + 5] = 5;
 
           //directed edges
           if (appState.graph.directedOrNot) {

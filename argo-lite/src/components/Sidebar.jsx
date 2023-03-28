@@ -52,8 +52,6 @@ class Sidebar extends React.Component {
                 <div id="Statistics" class="city" style={{display:"None"}}>
                 <text style={{fontSize: "12px"}}>Statistics</text>
                     <Tabs2 animate id="filter-options">
-                    <Tab2 id="s_nodes" title="Nodes"  />
-                    <Tab2 id="s_edges" title="Edges"  />
                     <Tab2 id="s_layout" title="Groups" panel={<StatGroupPanel />} />
                     <Tabs2.Expander />
                     </Tabs2>

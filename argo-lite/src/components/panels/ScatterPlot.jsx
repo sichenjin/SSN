@@ -534,17 +534,46 @@ class RenderCircles extends React.Component {
       ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))) {  // density distance node style
       // density distance node style
 
-      //hover on one group 
-      if (appState.graph.distanceDensityCurrentlyHovered) {
+      // //hover on one group 
+      // if (appState.graph.distanceDensityCurrentlyHovered) {
 
-        if (String(node['name']) === String(appState.graph.distanceDensityCurrentlyHovered)) {
+      //   if (String(node['name']) === String(appState.graph.distanceDensityCurrentlyHovered)) {
+      //     return {
+      //       fill: appState.graph.nodeColorScale(node['name']),
+      //       zIndex: "10000",
+      //       stroke: def.NODE_HIGHLIGHT,
+      //       fillOpacity: 0.8
+      //     }
+      //   } else {
+      //     return {
+      //       fill: appState.graph.nodeColorScale(node['name']),
+      //       zIndex: "0",
+      //       stroke: false,
+      //       fillOpacity: 0.1
+      //     }
+      //   }
+
+      // } else {// no hover 
+      //   return {
+      //     fill: appState.graph.nodeColorScale(node['name']),
+      //     zIndex: "0",
+      //     stroke: false,
+      //     fillOpacity: 0.8
+      //   }
+
+      // }
+      
+      //Click
+      if (appState.graph.distanceDensityCurrentlyClicked.length !== 0) {
+        if (appState.graph.distanceDensityCurrentlyClicked.includes(String(node['name']))) {
           return {
             fill: appState.graph.nodeColorScale(node['name']),
             zIndex: "10000",
             stroke: def.NODE_HIGHLIGHT,
             fillOpacity: 0.8
           }
-        } else {
+        } 
+        else {
           return {
             fill: appState.graph.nodeColorScale(node['name']),
             zIndex: "0",
@@ -552,17 +581,16 @@ class RenderCircles extends React.Component {
             fillOpacity: 0.1
           }
         }
-
-      } else {// no hover 
-        return {
-          fill: appState.graph.nodeColorScale(node['name']),
-          zIndex: "0",
-          stroke: false,
-          fillOpacity: 0.8
-        }
-
       }
-
+      else {
+        // no click 
+          return {
+            fill: appState.graph.nodeColorScale(node['name']),
+            zIndex: "0",
+            stroke: false,
+            fillOpacity: 0.8
+          }
+      }
     }
     else { //path node style 
       return {
@@ -599,12 +627,56 @@ class RenderCircles extends React.Component {
               r={cluster['size'] > 50 ? 25 : cluster['size'] / 2}
               style={this.setScatterStyle(cluster, ci)}
               id={`${cluster.name}`}
-              onMouseOver={(e) => {
-                appState.graph.distanceDensityCurrentlyHovered = e.target.getAttribute('id')
+              // onMouseOver={(e) => {
+              //   appState.graph.distanceDensityCurrentlyHovered = e.target.getAttribute('id')
+
+              //   const selectionNode = appState.graph.frame.getNodeList().filter(node =>
+              //     // console.log(node)
+              //     String(node.data.ref[appState.graph.groupby]) == appState.graph.distanceDensityCurrentlyHovered
+
+              //   )
+              //   appState.graph.frame.selection = selectionNode
+              //   appState.graph.selectedNodes = selectionNode
+
+
+              //   // console.log(selectionNode)
+              //   appState.graph.frame.updateSelectionOpacity()
+
+
+
+              // }}
+              // onMouseLeave={(e) => {
+
+              //   if (appState.graph.mapClicked) return;
+              //   appState.graph.distanceDensityCurrentlyHovered = undefined
+              //   appState.graph.frame.selection = []
+              //   appState.graph.selectedNodes = []
+              //   appState.graph.edgeselection = []
+
+              //   appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
+              //     // if (n !== appState.graph.mapClicked) {
+              //     appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
+
+              //     appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
+              //     // }
+              //   }
+              //   );
+
+
+              // }}
+              onClick={(e) => {
+                if (appState.graph.distanceDensityCurrentlyClicked.includes(e.target.getAttribute('id'))) {
+                  appState.graph.distanceDensityCurrentlyClicked = appState.graph.distanceDensityCurrentlyClicked.filter(node => 
+                    node !==  e.target.getAttribute('id')
+                  )
+                }
+                else {
+                  appState.graph.distanceDensityCurrentlyClicked.push(e.target.getAttribute('id'));
+                }
 
                 const selectionNode = appState.graph.frame.getNodeList().filter(node =>
                   // console.log(node)
-                  String(node.data.ref[appState.graph.groupby]) == appState.graph.distanceDensityCurrentlyHovered
+                  appState.graph.distanceDensityCurrentlyClicked.includes(String(node.data.ref[appState.graph.groupby]))
 
                 )
                 appState.graph.frame.selection = selectionNode
@@ -613,28 +685,6 @@ class RenderCircles extends React.Component {
 
                 // console.log(selectionNode)
                 appState.graph.frame.updateSelectionOpacity()
-
-
-
-              }}
-              onMouseLeave={(e) => {
-
-                if (appState.graph.mapClicked) return;
-                appState.graph.distanceDensityCurrentlyHovered = undefined
-                appState.graph.frame.selection = []
-                appState.graph.selectedNodes = []
-                appState.graph.edgeselection = []
-
-                appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
-                  // if (n !== appState.graph.mapClicked) {
-                  appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
-
-                  appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
-                  // }
-                }
-                );
-
-
               }}
               key={ci}
             />

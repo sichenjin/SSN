@@ -157,28 +157,26 @@ class GlobalPanel extends React.Component {
             <div> 
                 <p style={{display: "inline"}}>Scale By:</p>
                 <span style={{float:"right"}}>
-                  <Select
+                  <SimpleSelect
                     items={appState.graph.filterKeyList}
-                    itemRenderer={CommonItemRenderer}
-                    filterable={false}
+                    // itemRenderer={CommonItemRenderer}
+                    // filterable={false}
                     onItemSelect={it => (appState.graph.nodes.sizeBy = it)}
-                  >
-                    <Button text={appState.graph.nodes.sizeBy} />
-                  </Select>
+                    value={appState.graph.nodes.sizeBy}
+                    />
                 </span>
               
             </div>
             <div style={{marginTop:"10px"}}> 
                 <p style={{display: "inline"}}>Scale Type:</p>
                 <span style={{float:"right"}}>
-                  <Select
+                  <SimpleSelect
                   items={Object.keys(scales)}
                   itemRenderer={CommonItemRenderer}
                   filterable={false}
                   onItemSelect={it => (appState.graph.nodes.size.scale = it)}
-                  >
-                    <Button text={appState.graph.nodes.size.scale} />
-                  </Select>
+                  value={appState.graph.nodes.size.scale}
+                  />
                 </span>
             </div>
          

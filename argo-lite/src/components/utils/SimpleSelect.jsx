@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Classes } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/labs";
 import CommonItemRenderer from "./CommonItemRenderer";
-
+import { Icon } from "@blueprintjs/core";
 export default ({ items, onSelect, value, fill = false }) => (
   <Select
     items={items}
@@ -10,7 +10,10 @@ export default ({ items, onSelect, value, fill = false }) => (
     filterable={false}
     onItemSelect={onSelect}
   >
-        <Button className={fill ? Classes.FILL : null} text={value} />
+        <button style={{height: "100%"}} type="button">
+          {value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()}
+        </button>
+        {/* <Button className={fill ? Classes.FILL : null} text={value} /> */}
 
   </Select>
 );

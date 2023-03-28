@@ -23,6 +23,8 @@ const runImport = (config, nodesArr, edges) => {
           LonX: parseFloat(node[config.nodes.mapping.LonX]),
           degree: 0,
           pagerank: 0,
+          closeness: 0,
+          betweeness: 0,
         }));
         nodesArr.forEach(n => (degreeDict[n.id] = 0));
       }

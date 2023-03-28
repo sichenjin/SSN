@@ -713,7 +713,7 @@ table.pt-table {
 
 .pt-card{
   font-size: 12px;
-  padding:5 5px;
+  padding:5px;
 }
 
 
@@ -848,4 +848,8 @@ table.pt-table {
 }
 #edgesvg {
   padding-left: 5;
+}
+
+#fileButton {
+  line-height: 10px;
 }

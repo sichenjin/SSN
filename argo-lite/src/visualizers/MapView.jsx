@@ -362,12 +362,15 @@ class MapView extends React.Component {
 
       }
     }
+    else {
+      return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+    }
 
   }
 
   setPolygonPath = (polygon, pi) => {
-    if (appState.graph.convexPolygonsShow && appState.graph.distanceDensityCurrentlyHovered) {
-      if (pi === appState.graph.distanceDensityCurrentlyHovered) {
+    if (appState.graph.convexPolygonsShow && appState.graph.distanceDensityCurrentlyClicked.length > 0) {
+      if (appState.graph.distanceDensityCurrentlyClicked.includes(pi)) {
         return { fillColor: appState.graph.nodeColorScale(pi), fillOpacity: 0.3, opacity: 0.8 }
       }
       else {

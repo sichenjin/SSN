@@ -90,7 +90,7 @@ class ImportDialog extends React.Component {
         onToggle={() => this.setState({ nodesOpen: !this.state.nodesOpen })}
       >
         <div className={classnames(Classes.CONTROL_GROUP)}>
-          <div className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
+          <div style={{lineHeight:"10px"}} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
             <input
               type="file"
               className={classnames(Classes.DISABLED)}
@@ -146,7 +146,7 @@ class ImportDialog extends React.Component {
         onToggle={() => this.setState({ edgesOpen: !this.state.edgesOpen })}
       >
         <div className={classnames(Classes.CONTROL_GROUP)} style={{margin: "10px"}}>
-          <div className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
+          <div style={{lineHeight:"10px"}} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
             <input
               type="file"
               className={classnames(Classes.DISABLED)}

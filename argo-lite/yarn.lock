@@ -1242,7 +1242,7 @@
   resolved "https://registry.yarnpkg.com/@blueprintjs/colors/-/colors-4.1.19.tgz#364d4d5d23ecee48002d6b29c71a8a24af5512ae"
   integrity sha512-x5mDo4Ue9rAdbMHvOm0dNru9MSZqgs9Dd/l/2rgjzottthjsq1XjkiVae6evX4EGNM0I/bZKjTT8ccvqCqn4yw==
 
-"@blueprintjs/core@^1.34.0", "@blueprintjs/core@^1.36.1", "@blueprintjs/core@^1.40.0":
+"@blueprintjs/core@1.40.0", "@blueprintjs/core@^1.34.0", "@blueprintjs/core@^1.36.1":
   version "1.40.0"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.40.0.tgz#72db1bc2f161d34b7f4ab270bd84979b25f703ca"
   integrity sha512-5qXiFLOZwKzKZFi+IVgiMictOfZPpkclgdpzte2BpZ4ptlNitFiK79aRmDu1O7rnA1iiR0EJRrE8p9gr95USRw==

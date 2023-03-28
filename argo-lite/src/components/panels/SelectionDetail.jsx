@@ -506,7 +506,7 @@ class SelectionDetail extends React.Component {
 
 
               <tr>
-                <td style={{ padding: '5px 10px' }}> {'No node is selected'} | {`Scaling by ${appState.graph.hasGraph ? appState.graph.nodes.sizeBy : 'NULL'}`} | {`Coloring by ${appState.graph.hasGraph ? appState.graph.nodes.colorBy : 'NULL'}`}</td>
+                <td style={{ padding: '5px 10px' }}> {'No node is selected'} | {`Size by ${appState.graph.hasGraph ? appState.graph.nodes.sizeBy : 'NULL'}`} | {`Coloring by ${appState.graph.hasGraph ? appState.graph.nodes.colorBy : 'NULL'}`}</td>
               </tr>
               <tr>
                 <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'NULL'}`}</td>

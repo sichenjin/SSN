@@ -83,6 +83,9 @@ class StatGroupPanel extends React.Component {
                
                 appState.graph.nodes.color.scale = "Nominal Scale"
                 appState.graph.nodes.colorBy = "community"
+
+                appState.graph.nodes.convexhullby = "community"
+                appState.graph.nodes.groupby = "community"
                 
                 // console.log(result);
             },
@@ -303,7 +306,7 @@ class StatGroupPanel extends React.Component {
 
 
                     <div>
-                        <p style={{ display: "inline" , fontSize:"9px" }}>Convex Hull By: </p>
+                        <p style={{ display: "inline" , fontSize:"12px" }}>Convex Hull By: </p>
                         <span style={{ }}>
                             <SimpleSelect
                                 items={appState.graph.filterKeyList}
@@ -316,7 +319,7 @@ class StatGroupPanel extends React.Component {
                         </span>
                     </div>
                     <div>
-                        <p style={{ display: "inline" , fontSize:"9px" }}>Cluster By: </p>
+                        <p style={{ display: "inline" , fontSize:"12px" }}>Cluster By: </p>
                         <span style={{  }}>
                             <SimpleSelect
                                 items={appState.graph.filterKeyList}

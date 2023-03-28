@@ -92,6 +92,9 @@ export default class GraphStore {
   // Directed or not
   @observable directedOrNot = false;
 
+  // Edge thickness based on 
+  @observable edgeThicknessByDistance = false;
+
   // Cache the single node that's been selected last time
   // and will not update unless exactly one node is selected again
   // useful for NeighborDialog
@@ -146,6 +149,9 @@ export default class GraphStore {
   //name of currently hovered family group on the cluster cluster scatterplot 
   @observable
   distanceDensityCurrentlyHovered = undefined
+
+  @observable
+  distanceDensityCurrentlyClicked = []
 
   @observable
   groupby = 'NULL'
