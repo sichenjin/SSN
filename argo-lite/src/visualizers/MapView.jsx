@@ -473,9 +473,9 @@ class MapView extends React.Component {
 
 
         <Pane name="edgepane" style={{ zIndex: 10000 }}>
-            <Curve path={["M", [50, 14], "Q", [53, 20], [49, 25]]}
+            {/* <Curve path={["M", [50, 14], "Q", [53, 20], [49, 25]]}
           options={{color:'red',fill:false}}
-            />
+            /> */}
           {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
 
             appState.graph.frame && appState.graph.frame.getEdgeList().map((edge, i) => {
