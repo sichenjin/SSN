@@ -410,7 +410,7 @@ class ScatterPlot extends React.Component {
                   }
                 />
                 <text
-                  transform={"translate(-40, 140) rotate(-90)"}
+                  transform={"translate(-40, 130) rotate(-90)"}
                   fontSize="13px"
                 >{appState.graph.scatterplot.y}</text>
                 <Axis

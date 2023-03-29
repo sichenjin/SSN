@@ -89,6 +89,7 @@ class ImportDialog extends React.Component {
         isOpen={this.state.nodesOpen}
         onToggle={() => this.setState({ nodesOpen: !this.state.nodesOpen })}
       >
+        <div className={classnames(Classes.CONTROL_GROUP)} style={{margin: "10px"}}>
         <div className={classnames(Classes.CONTROL_GROUP)}>
           <div style={{lineHeight:"10px"}} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
             <input
@@ -102,6 +103,7 @@ class ImportDialog extends React.Component {
               }}
             />
           </div>
+        </div>
         </div>
         <Switch
           label="Has Headers"

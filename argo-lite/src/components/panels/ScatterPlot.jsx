@@ -348,7 +348,7 @@ class ScatterPlot extends React.Component {
           <div>
 
             <svg
-              width={this.width + this.margin.right + this.margin.left + 50}
+              width={this.width + this.margin.right + this.margin.left + 10}
               height={this.height + this.margin.top + this.margin.bottom}
               className="scatterchart"
               id="scatterplot"
@@ -378,7 +378,7 @@ class ScatterPlot extends React.Component {
                   }
                 />
                 <text
-                  transform={"translate(-40, 150) rotate(-90)"}
+                  transform={"translate(-40, 130) rotate(-90)"}
                   fontSize="12px"
                 >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis

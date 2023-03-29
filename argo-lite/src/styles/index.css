@@ -285,8 +285,8 @@ html {
 
 .minimal-navbar-left {
   position: absolute;
-  top: 5px;
-  left: 14%;
+  top: 35px;
+  left: 15vw;
   z-index: 100;
 }
 
@@ -598,7 +598,7 @@ text-overflow: ellipsis;
 .outer-container {
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  width: 83vw;
 }
 /* Slider */
 .container {
@@ -621,7 +621,7 @@ text-overflow: ellipsis;
 }
 .container__left {
   /* Initially, the left takes 3/4 width */
-  width: 40vw;
+  width: 32.5vw;
 
   /* Misc */
   align-items: center;
@@ -672,7 +672,7 @@ text-overflow: ellipsis;
 }
 .sidebar-menu {
   display: flex;
-  width: 20vw;
+  width: 17vw;
 }
 
 .pt-tab{

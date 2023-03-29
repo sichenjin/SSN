@@ -41,7 +41,7 @@ var Frame = function(graph, options) {
   this.renderWidth = 1000;
   this.renderHeight = 1000;
   this.maxZoom = 1000;
-  this.paused = true;
+  this.paused = false;
   this.mouseDown = false;
   this.ee = ee({});
   this.layoutInit = true;
@@ -188,7 +188,7 @@ var Frame = function(graph, options) {
   this.render = function() {
     self.updateCamera();
     self.updateNodes();
-    self.paused = true;
+    // self.paused = true;
     if (stage == 1) {
       self.updateLabels();
       self.updateEdges();
