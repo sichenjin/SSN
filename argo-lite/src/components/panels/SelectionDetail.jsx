@@ -302,6 +302,9 @@ class SelectionDetail extends React.Component {
 
 
     this.prevTick = "";
+    this.maxDegreeDict = {};
+    this.maxDegreeCount = 0;
+    this.maxDistanceCount= 0;
 
     if (appState.graph.selectedNodes.length > 1 && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {
       // self = this
@@ -396,9 +399,12 @@ class SelectionDetail extends React.Component {
                     rawData={this.SelectionDistanceFromLatLonIn()[1]}
                     fill={(d, i) => {
                       if (i === 0) {
+                        this.maxDistanceCount = 0;
                         this.distBinData = []
                       }
-
+                      if (d.data.length > this.maxDistanceCount) {
+                        this.maxDistanceCount = d.data.length;
+                      }
                       if (d.data.length > 0) {
                         this.distBinData.push({
                           mind: min(d.data),
@@ -423,13 +429,13 @@ class SelectionDetail extends React.Component {
                   {this.SelectionDistanceFromLatLonIn()[1].length < 10 ?
                     <YAxis label="Frequency" fontSize="12px" tickFormat={
                       (tick, ti) => {
-                        console.log(tick, this.SelectionDistanceFromLatLonIn()[1].length);
-                        if (parseInt(tick * (this.SelectionDistanceFromLatLonIn()[1].length)).toString() == this.prevTick) {
+                        console.log(tick, this.maxDistanceCount/2);
+                        if (parseInt(tick).toString() == this.prevTick) {
                           return "";
                         } 
                         else {
-                          this.prevTick = parseInt(tick * (this.SelectionDistanceFromLatLonIn()[1].length)).toString();
-                          return parseInt(tick * (this.SelectionDistanceFromLatLonIn()[1].length)).toString();
+                          this.prevTick = parseInt(tick).toString();
+                          return parseInt(tick).toString();
                         }
                           
   
@@ -438,7 +444,7 @@ class SelectionDetail extends React.Component {
                     :
                     <YAxis label="Frequency" fontSize="12px" tickFormat={
                       (tick, ti) => {
-                          return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                          return parseInt(tick).toString()
   
                         // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                       }} />
@@ -474,8 +480,22 @@ class SelectionDetail extends React.Component {
                   <BarSeries
                     fill="#429bf5"
                     animated={false}
-                    rawData={appState.graph.selectedNodes.map((node) => {
-                      console.log(node, node.data.ref.degree);
+                    rawData={appState.graph.selectedNodes.map((node, i) => {
+                      if (i == 0) {
+                        this.maxDegreeCount = 0;
+                      }
+                      if (node.data.ref.degree in this.maxDegreeDict) {
+                        this.maxDegreeDict[node.data.ref.degree] += 1;
+                        if (this.maxDegreeDict[node.data.ref.degree] > this.maxDegreeCount) {
+                          this.maxDegreeCount = this.maxDegreeDict[node.data.ref.degree]
+                        }
+                      } else {
+                        this.maxDegreeDict[node.data.ref.degree] = 1;
+                        if (this.maxDegreeDict[node.data.ref.degree] > this.maxDegreeCount) {
+                          this.maxDegreeCount = this.maxDegreeDict[node.data.ref.degree]
+                        }
+                      }
+                      console.log(this.maxDegreeCount, node.data.ref.degree);
                       if(node.data.ref.degree>0){
                         return node.data.ref.degree
                       }else{
@@ -487,13 +507,13 @@ class SelectionDetail extends React.Component {
                   {this.SelectionDistanceFromLatLonIn()[1].length < 10 ?
                     <YAxis label="Frequency" fontSize="12px" tickFormat={
                       (tick, ti) => {
-                        console.log(tick, appState.graph.selectedNodes.length);
-                        if (parseInt(tick * (appState.graph.selectedNodes.length)).toString() == this.prevTick) {
+                        console.log(tick, this.prevTick);
+                        if (parseInt(tick).toString() == this.prevTick) {
                           return "";
                         } 
                         else {
-                          this.prevTick = parseInt(tick * (appState.graph.selectedNodes.length)).toString();
-                          return parseInt(tick * (appState.graph.selectedNodes.length)).toString();
+                          this.prevTick = parseInt(tick).toString();
+                          return parseInt(tick).toString();
                         }
                           
   
@@ -502,7 +522,14 @@ class SelectionDetail extends React.Component {
                     :
                     <YAxis label="Frequency" fontSize="12px" tickFormat={
                       (tick, ti) => {
-                          return parseInt(tick * appState.graph.selectedNodes.length).toString()
+                          console.log(tick);
+                          if (parseInt(tick).toString() == this.prevTick) {
+                            return "";
+                          } 
+                          else {
+                            this.prevTick = parseInt(tick).toString();
+                            return parseInt(tick).toString();
+                          }
   
                         // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                       }} />
