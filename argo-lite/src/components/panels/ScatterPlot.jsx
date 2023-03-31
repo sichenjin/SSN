@@ -688,7 +688,7 @@ class RenderCircles extends React.Component {
               }}
               key={ci}
             />
-            <text className="scatterplot-label"
+            <text className="scatterplot-label" 
               x={this.props.scale.x(cluster[appState.graph.scatterplot.x])}
               y={this.props.scale.y(cluster[appState.graph.scatterplot.y])}>
               {cluster.name}
