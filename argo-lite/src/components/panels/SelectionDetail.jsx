@@ -463,10 +463,10 @@ class SelectionDetail extends React.Component {
                     })}
                   />
                   <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                  <YAxis label="Frequency" fontSize="12px"
+                  <YAxis numTicks={3} label="Frequency" fontSize="12px"
                     tickFormat={
                       (tick, ti) => {
-                        return parseInt(tick * appState.graph.selectedNodes.length).toString()
+                        return parseInt(tick * appState.graph.selectedNodes.length).toString() 
                       }} />
                 </Histogram>
               </svg>
@@ -623,7 +623,7 @@ class SelectionDetail extends React.Component {
                   })}
                 />
                 <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                <YAxis label="Frequency" fontSize="12px"
+                <YAxis numTicks={5} label="Frequency" fontSize="12px"
                   tickFormat={
                     (tick, ti) => {
                       return parseInt(tick * appState.graph.frame.getNodeList().length).toString()
