@@ -301,7 +301,7 @@ class SelectionDetail extends React.Component {
 
 
 
-
+    this.prevTick = "";
 
     if (appState.graph.selectedNodes.length > 1 && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {
       // self = this
@@ -381,7 +381,7 @@ class SelectionDetail extends React.Component {
                   height={this.allheight}
                   width={this.allwidth}
                   cumulative={false}
-                  normalized={true}
+                  normalized={false}
                   binCount={25}
                   margin={this.margin}
                   valueAccessor={(datum) => {
@@ -420,10 +420,30 @@ class SelectionDetail extends React.Component {
                     }}
                   />
                   <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                  <YAxis label="Frequency" fontSize="12px" tickFormat={
-                    (tick, ti) => {
-                      return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
-                    }} />
+                  {this.SelectionDistanceFromLatLonIn()[1].length < 10 ?
+                    <YAxis label="Frequency" fontSize="12px" tickFormat={
+                      (tick, ti) => {
+                        console.log(tick, this.SelectionDistanceFromLatLonIn()[1].length);
+                        if (parseInt(tick * (this.SelectionDistanceFromLatLonIn()[1].length)).toString() == this.prevTick) {
+                          return "";
+                        } 
+                        else {
+                          this.prevTick = parseInt(tick * (this.SelectionDistanceFromLatLonIn()[1].length)).toString();
+                          return parseInt(tick * (this.SelectionDistanceFromLatLonIn()[1].length)).toString();
+                        }
+                          
+  
+                        // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                      }} />
+                    :
+                    <YAxis label="Frequency" fontSize="12px" tickFormat={
+                      (tick, ti) => {
+                          return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+  
+                        // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                      }} />
+                  }
+                  
 
 
                 </Histogram>
@@ -446,7 +466,7 @@ class SelectionDetail extends React.Component {
                   width={this.allwidth}
                   margin={this.margin}
                   cumulative={false}
-                  normalized={true}
+                  normalized={false}
                   binCount={25}
                   valueAccessor={(datum) => datum}
                   binType="numeric"
@@ -455,6 +475,7 @@ class SelectionDetail extends React.Component {
                     fill="#429bf5"
                     animated={false}
                     rawData={appState.graph.selectedNodes.map((node) => {
+                      console.log(node, node.data.ref.degree);
                       if(node.data.ref.degree>0){
                         return node.data.ref.degree
                       }else{
@@ -463,11 +484,29 @@ class SelectionDetail extends React.Component {
                     })}
                   />
                   <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                  <YAxis numTicks={3} label="Frequency" fontSize="12px"
-                    tickFormat={
+                  {this.SelectionDistanceFromLatLonIn()[1].length < 10 ?
+                    <YAxis label="Frequency" fontSize="12px" tickFormat={
                       (tick, ti) => {
-                        return parseInt(tick * appState.graph.selectedNodes.length).toString() 
+                        console.log(tick, appState.graph.selectedNodes.length);
+                        if (parseInt(tick * (appState.graph.selectedNodes.length)).toString() == this.prevTick) {
+                          return "";
+                        } 
+                        else {
+                          this.prevTick = parseInt(tick * (appState.graph.selectedNodes.length)).toString();
+                          return parseInt(tick * (appState.graph.selectedNodes.length)).toString();
+                        }
+                          
+  
+                        // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                       }} />
+                    :
+                    <YAxis label="Frequency" fontSize="12px" tickFormat={
+                      (tick, ti) => {
+                          return parseInt(tick * appState.graph.selectedNodes.length).toString()
+  
+                        // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                      }} />
+                  }
                 </Histogram>
               </svg>
           </div>
@@ -578,6 +617,7 @@ class SelectionDetail extends React.Component {
                 <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
                 <YAxis label="Frequency" fontSize="12px" tickFormat={
                   (tick, ti) => {
+                    console.log(tick, this.SelectionDistanceFromLatLonIn()[1].length);
                     return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                   }} />
 
@@ -603,12 +643,15 @@ class SelectionDetail extends React.Component {
                 orientation="vertical"
                 height={this.allheight}
                 width={this.allwidth}
-                margin={this.margin}
                 cumulative={false}
                 normalized={true}
                 binCount={25}
-                valueAccessor={(datum) => datum}
+                margin={this.margin}
+                valueAccessor={(datum) => {
+                  return datum
+                }}
                 binType="numeric"
+                
               >
                 <BarSeries
                   fill="#429bf5"
@@ -623,11 +666,13 @@ class SelectionDetail extends React.Component {
                   })}
                 />
                 <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                {/* <YAxis fontSize="12px" /> */}
                 <YAxis numTicks={5} label="Frequency" fontSize="12px"
                   tickFormat={
                     (tick, ti) => {
                       return parseInt(tick * appState.graph.frame.getNodeList().length).toString()
                     }} />
+
               </Histogram>
             </svg>
           </div>
