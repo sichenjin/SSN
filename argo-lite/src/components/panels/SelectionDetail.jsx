@@ -57,7 +57,7 @@ class SelectionDetail extends React.Component {
 
     if (selectNodes.length > 1) {
       //// calculate only the connected distance 
-      const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
+      const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
       if (edgeSelection.length == 0) return [null, []];
       this.edgeSelection = edgeSelection
       const edgeDistance = edgeSelection.map(e => {
@@ -140,11 +140,11 @@ class SelectionDetail extends React.Component {
 
     // undirect graph
 
-    const edgeSelection = appState.graph.frame.getEdgeWithinSelection(appState.graph.selectedNodes)
+    const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
     if (edgeSelection.length == 0) return 0;
-    this.edgeSelection = [...edgeSelection]
+    // this.edgeSelection = [...edgeSelection]
     const nodelength = appState.graph.selectedNodes.length;
-    const selectionDen = 2 * edgeSelection.length / (nodelength * (nodelength - 1))
+    const selectionDen = edgeSelection.length / (nodelength * (nodelength - 1))
     return selectionDen.toFixed(3)
 
 
