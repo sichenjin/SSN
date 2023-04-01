@@ -21,7 +21,7 @@ import { filter, forEach } from "lodash";
 class SelectionDetail extends React.Component {
 
   // 
-  margin = { top: 32, right: 30, bottom: 64, left: 30 }
+  margin = { top: 32, right: 30, bottom: 64, left: 40 }
   // { top: 32, right: 32, bottom: 64, left: 64 }
   containerDiv = document.querySelector("#graph-container");
   allwidth = this.containerDiv.offsetWidth / 2;
@@ -416,7 +416,7 @@ class SelectionDetail extends React.Component {
                       // console.log(this.distBinData)
                       // console.log(i)
                       // console.log(d)
-                      return "#429bf5"
+                      return "#4478ff"
                     }}
                   />
                   <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
@@ -452,7 +452,7 @@ class SelectionDetail extends React.Component {
                   binType="numeric"
                 >
                   <BarSeries
-                    fill="#429bf5"
+                    fill="#4478ff"
                     animated={false}
                     rawData={appState.graph.selectedNodes.map((node) => {
                       if(node.data.ref.degree>0){
@@ -463,7 +463,7 @@ class SelectionDetail extends React.Component {
                     })}
                   />
                   <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                  <YAxis label="Frequency" fontSize="12px"
+                  <YAxis numTicks={3} label="Frequency" fontSize="12px"
                     tickFormat={
                       (tick, ti) => {
                         return parseInt(tick * appState.graph.selectedNodes.length).toString()
@@ -572,7 +572,7 @@ class SelectionDetail extends React.Component {
                     // console.log(this.distBinData)
                     // console.log(i)
                     // console.log(d)
-                    return "#429bf5"
+                    return "#4478ff"
                   }}
                 />
                 <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
@@ -611,7 +611,7 @@ class SelectionDetail extends React.Component {
                 binType="numeric"
               >
                 <BarSeries
-                  fill="#429bf5"
+                  fill="#4478ff"
                   animated={false}
                   rawData={appState.graph.frame.getNodeList().map((node) => {
                     if(node.data.ref.degree>0){
@@ -623,7 +623,7 @@ class SelectionDetail extends React.Component {
                   })}
                 />
                 <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
-                <YAxis label="Frequency" fontSize="12px"
+                <YAxis numTicks={5} label="Frequency" fontSize="12px"
                   tickFormat={
                     (tick, ti) => {
                       return parseInt(tick * appState.graph.frame.getNodeList().length).toString()

@@ -557,7 +557,8 @@ div.pt-card.sub-option.legend {
 }
 
 .scatterplot-label{
-
+  transform: translate(-16px, 0px);
+  font-size: 8px;
 }
 .vx-axis-label{
   transform: translate(0px, 10px)
