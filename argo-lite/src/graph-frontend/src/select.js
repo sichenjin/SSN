@@ -49,6 +49,20 @@ module.exports = function (self) {
     return withinEdges;
   }
 
+  self.getEdgeWithinSelectionForDensity = function (selection) {
+    const withinEdges = []
+    for (var i = 0; i < selection.length; i++) {
+      if(selection[i].linkObjs){
+        selection[i].linkObjs.forEach(function (link) {
+          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1 )&& link.source!==link.target && withinEdges.indexOf(link) == -1) {
+            withinEdges.push(link)
+          }
+        })
+      }
+    }
+    return withinEdges;
+  }
+
 
 
 
