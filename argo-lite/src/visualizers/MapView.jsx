@@ -296,6 +296,7 @@ class MapView extends React.Component {
 
     // //no hover and selection 
 
+
     if (appState.graph.convexNodes.length > 0) {
       if (appState.graph.convexNodes.indexOf(node) == -1) {
         return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }

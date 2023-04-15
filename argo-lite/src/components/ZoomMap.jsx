@@ -40,7 +40,6 @@ export function MapClick() {
     
     const map = useMapEvents({
       click(e) {
-          console.log(e, "Test map click")
           if (appState.useToolbartoSelect) {
             appState.useToolbartoSelect = false
           } else {

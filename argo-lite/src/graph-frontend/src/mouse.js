@@ -123,6 +123,7 @@ module.exports = function (self) {
    * Mouse down event to start a selection box or start dragging a node
    */
   self.onMouseDown = function (selection, mouseX, mouseY, button, ctrl) {
+    // console.log("triggered")
     // if mouse is in minimap, do nothing else
     if (self.isMouseCoordinatesOnMinimap && self.mapShowing) {
       self.mouseDown = true;

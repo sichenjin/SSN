@@ -141,10 +141,11 @@ class SelectionDetail extends React.Component {
     // undirect graph
 
     const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
+    console.log(edgeSelection.length);
     if (edgeSelection.length == 0) return 0;
     // this.edgeSelection = [...edgeSelection]
     const nodelength = appState.graph.selectedNodes.length;
-    const selectionDen = edgeSelection.length / (nodelength * (nodelength - 1))
+    const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
     return selectionDen.toFixed(3)
 
 
@@ -227,9 +228,13 @@ class SelectionDetail extends React.Component {
         const { clientX, clientY } = event;
         const { left, top } = this.edgesvg.getBoundingClientRect();
         // console.log([clientX - left, clientY - top])
+        if ((clientX - left) < 0) {
+          console.log("Here");
+          return [0, clientY - top];
+        }
         return [clientX - left, clientY - top];
       }}
-      brushType="x" // "x"
+      brushType="2d" // "x"
       onBrushStart={this.onEdgeBrushStart}
       onBrush={this.onEdgeBrush}
       onBrushEnd={this.onEdgeBrushEnd}
@@ -287,7 +292,7 @@ class SelectionDetail extends React.Component {
         // console.log([clientX - left, clientY - top])
         return [clientX - left, clientY - top];
       }}
-      brushType="x" // "x"
+      brushType="2d" // "x"
       onBrushStart={this.onDegreeBrushStart}
       onBrush={this.onDegreeBrush}
       onBrushEnd={this.onDegreeBrushEnd}
@@ -535,6 +540,7 @@ class SelectionDetail extends React.Component {
                       }} />
                   }
                 </Histogram>
+                {this.renderDegreeBrush()}
               </svg>
           </div>
 
@@ -644,7 +650,7 @@ class SelectionDetail extends React.Component {
                 <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
                 <YAxis label="Frequency" fontSize="12px" tickFormat={
                   (tick, ti) => {
-                    console.log(tick, this.SelectionDistanceFromLatLonIn()[1].length);
+                    // console.log(tick, this.SelectionDistanceFromLatLonIn()[1].length);
                     return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
                   }} />
 
@@ -701,6 +707,7 @@ class SelectionDetail extends React.Component {
                     }} />
 
               </Histogram>
+              {this.renderDegreeBrush()}
             </svg>
           </div>
       </div>

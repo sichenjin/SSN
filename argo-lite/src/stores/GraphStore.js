@@ -5,6 +5,7 @@ import uniq from "lodash/uniq";
 import { averageClusteringCoefficient, connectedComponents, graphDensity, averageDegree, exactGraphDiameter } from "../services/AlgorithmUtils";
 import { ContextMenu, MenuFactory, MenuItemFactory } from "@blueprintjs/core";
 import { Frame } from "../graph-frontend";
+import appState from '../stores';
 
 export default class GraphStore {
 

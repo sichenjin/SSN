@@ -114,7 +114,7 @@ class NodesFilterPanel extends React.Component {
                 <RangeSlider
                   min={Math.min(... appState.graph.rawGraph.nodes.map(n => n[it]))}   //uniqueValue[it][0] is computed min 
                   max={Math.max(... appState.graph.rawGraph.nodes.map(n => n[it]))} //uniqueValue[it][1] is computed max
-                  stepSize={1}
+                  stepSize={0.01}
                   labelStepSize={10}
                   className="range-slider-container"
                   onChange={([a, b]) => {
@@ -133,6 +133,7 @@ class NodesFilterPanel extends React.Component {
                     
                   }}
                   onRelease={([a, b]) => {
+                  console.log(Math.max(... appState.graph.rawGraph.nodes.map(n => n[it])));
                   this.setState({
                     [it + '_filterlist']: {
                       "min":a,

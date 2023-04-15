@@ -138,6 +138,7 @@ module.exports = function(self) {
    *  Update the position and color of the edges
    */
   self.updateNodes = function() {
+    // console.log("triggered");
     if (self.options.layout == "ngraph") {
       self.graph.forEachNode(function(node) {
         if (node.renderData) {
