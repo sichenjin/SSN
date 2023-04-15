@@ -44,8 +44,8 @@ class Sidebar extends React.Component {
                 <text style={{fontSize: "12px"}}>Filter Options</text>
                     <Tabs2 animate id="filter-options">
                     <Tab2 id="f_nodes" title="Nodes" panel={<NodesFilterPanel />} />
-                    <Tab2 id="f_edges" title="Edges" panel={<EdgesPanel />} />
-                    <Tab2 id="f_layout" title="Layout" panel={<EdgesPanel />} />
+                    {/* <Tab2 id="f_edges" title="Edges" panel={<EdgesPanel />} /> */}
+                    {/* <Tab2 id="f_layout" title="Layout" panel={<EdgesPanel />} /> */}
                     <Tabs2.Expander />
                     </Tabs2>
                 </div>
