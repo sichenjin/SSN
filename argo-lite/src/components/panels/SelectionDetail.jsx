@@ -422,7 +422,7 @@ class SelectionDetail extends React.Component {
                       // console.log(this.distBinData)
                       // console.log(i)
                       // console.log(d)
-                      return "#4478ff"
+                      return "#08519c"
                     }}
                   />
                   <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
@@ -478,7 +478,7 @@ class SelectionDetail extends React.Component {
                   binType="numeric"
                 >
                   <BarSeries
-                    fill="#4478ff"
+                    fill="#08519c"
                     animated={false}
                     rawData={appState.graph.selectedNodes.map((node, i) => {
                       if (i == 0) {
@@ -572,7 +572,7 @@ class SelectionDetail extends React.Component {
 
 
               <tr>
-                <td style={{ padding: '5px 10px' }}> {'No node is selected'} | {`Size by ${appState.graph.hasGraph ? appState.graph.nodes.sizeBy : 'NULL'}`} | {`Coloring by ${appState.graph.hasGraph ? appState.graph.nodes.colorBy : 'NULL'}`}</td>
+                <td style={{ padding: '5px 10px' }}> {'No node is selected'} | {`Size by ${appState.graph.hasGraph ? appState.graph.nodes.sizeBy : 'NULL'}`} | {`Color by ${appState.graph.hasGraph ? appState.graph.nodes.colorBy : 'NULL'}`}</td>
               </tr>
               <tr>
                 <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'NULL'}`}</td>
@@ -638,7 +638,7 @@ class SelectionDetail extends React.Component {
                     // console.log(this.distBinData)
                     // console.log(i)
                     // console.log(d)
-                    return "#4478ff"
+                    return "#08519c"
                   }}
                 />
                 <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
@@ -681,7 +681,7 @@ class SelectionDetail extends React.Component {
                 
               >
                 <BarSeries
-                  fill="#4478ff"
+                  fill="#08519c"
                   animated={false}
                   rawData={appState.graph.frame.getNodeList().map((node) => {
                     if(node.data.ref.degree>0){
