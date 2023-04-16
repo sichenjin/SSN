@@ -31,6 +31,7 @@ class SelectionDetail extends React.Component {
   brushmargin = this.margin
   brushwidth = this.width
   distBinData = []
+  degreeBinData = []
   edgeSelection = []
 
 
@@ -184,8 +185,8 @@ class SelectionDetail extends React.Component {
 
 
 
-    console.log(this.distBinData)
-    console.log(selectionRectID)
+    // console.log(this.distBinData)
+    // console.log(selectionRectID)
     // const filterDistBin = this.distBinData.filter((d, i) => i % 2 != 1)
     const filterDistBin2 = this.distBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
     // console.log(this.distBinData)
@@ -234,7 +235,7 @@ class SelectionDetail extends React.Component {
         }
         return [clientX - left, clientY - top];
       }}
-      brushType="2d" // "x"
+      brushType="x" // "x"
       onBrushStart={this.onEdgeBrushStart}
       onBrush={this.onEdgeBrush}
       onBrushEnd={this.onEdgeBrushEnd}
@@ -271,9 +272,17 @@ class SelectionDetail extends React.Component {
 
     })
 
-    console.log(selection)
-    console.log(selectionRectID)
+    
+    // const filterDistBin2 = this.distBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
+    // const distbuffer_min = min(filterDistBin2.map((d) => d.mind))
+    // const distbuffer_max = max(filterDistBin2.map((d) => d.maxd))
+    // // console.log(this.edgeSelection)
+    // const filteredge = this.edgeSelection.filter(edge => (edge.edgeDist >= distbuffer_min && edge.edgeDist <= distbuffer_max))
 
+
+    // appState.graph.edgeselection = filteredge
+
+   
   }
 
   renderDegreeBrush = () => (
@@ -292,7 +301,7 @@ class SelectionDetail extends React.Component {
         // console.log([clientX - left, clientY - top])
         return [clientX - left, clientY - top];
       }}
-      brushType="2d" // "x"
+      brushType="x" // "x"
       onBrushStart={this.onDegreeBrushStart}
       onBrush={this.onDegreeBrush}
       onBrushEnd={this.onDegreeBrushEnd}
@@ -584,7 +593,7 @@ class SelectionDetail extends React.Component {
                 <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'NULL'}`}</td>
               </tr>
               <tr>
-                <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? (appState.graph.density / 2).toFixed(3) : 'NULL'}`}</td>
+                <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? (appState.graph.density ).toFixed(3) : 'NULL'}`}</td>
               </tr>
 
             </tbody>
@@ -638,12 +647,6 @@ class SelectionDetail extends React.Component {
                         maxd: -1
                       })
                     }
-
-
-
-                    // console.log(this.distBinData)
-                    // console.log(i)
-                    // console.log(d)
                     return "#08519c"
                   }}
                 />
