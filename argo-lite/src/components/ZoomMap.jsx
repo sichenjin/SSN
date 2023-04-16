@@ -16,7 +16,7 @@ export function ZoomMap() {
           nodeLoc.forEach(coords => {
               b.extend(coords)
           })
-          map.flyToBounds(b)
+          map.fitBounds(b)
           return null;
         }   //no selection 
         if (appState.graph.frame.selection.length ==1) return;  // only one node is selected 
@@ -29,7 +29,7 @@ export function ZoomMap() {
         nodeLoc.forEach(coords => {
             b.extend(coords)
         })
-        map.flyToBounds(b)
+        map.fitBounds(b)
     }, [appState.graph.frame.selection])
 
     return null;

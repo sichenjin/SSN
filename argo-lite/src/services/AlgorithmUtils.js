@@ -88,7 +88,7 @@ export function connectedComponents(snapshot) {
  */
 export function graphDensity(snapshot) {
     const nodeCount = snapshot.rawGraph.nodes.length;
-    const edgeCount = snapshot.rawGraph.edges.length / 2;
+    const edgeCount = snapshot.rawGraph.edges.length ;
     return (2 * edgeCount) / ((nodeCount) * (nodeCount - 1));
 }
 

@@ -51,11 +51,17 @@ module.exports = function (self) {
 
   self.getEdgeWithinSelectionForDensity = function (selection) {
     const withinEdges = []
+    const edgekeys = []
     for (var i = 0; i < selection.length; i++) {
       if(selection[i].linkObjs){
         selection[i].linkObjs.forEach(function (link) {
-          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1 )&& link.source!==link.target && withinEdges.indexOf(link) == -1) {
+          const key1 = `${link.source.id}👉 ${link.target.id}`
+          const key2 = `${link.target.id}👉 ${link.source.id}`
+          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1 )&& link.source!==link.target && edgekeys.indexOf(key1) == -1) {
             withinEdges.push(link)
+            edgekeys.push(key1)
+            edgekeys.push(key2)
+            // edgecount = edgecount+1
           }
         })
       }

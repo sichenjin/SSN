@@ -32,7 +32,7 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   ],   //without -degree nodes snapshot 
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
   ["Mafia Family", "ea3fa573-78e0-465a-98ff-f6a02d9884c2"],
-  ["US flight Network", '946e933d-81f5-4ade-a8f7-a02941aae953']
+  // ["US flight Network", '946e933d-81f5-4ade-a8f7-a02941aae953']
   
 ];
 

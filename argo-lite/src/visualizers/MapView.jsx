@@ -469,7 +469,7 @@ class MapView extends React.Component {
         {/* <ReactLeafletToolbar /> */}
         
         <AreaSelect />
-        {appState.graph.autoZoom ? <ZoomMap /> : <div></div>}
+        <ZoomMap /> 
         <MapClick />
 
 
