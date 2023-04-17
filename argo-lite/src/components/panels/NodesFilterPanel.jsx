@@ -133,7 +133,7 @@ class NodesFilterPanel extends React.Component {
                     
                   }}
                   onRelease={([a, b]) => {
-                  console.log(Math.max(... appState.graph.rawGraph.nodes.map(n => n[it])));
+                  // console.log(Math.max(... appState.graph.rawGraph.nodes.map(n => n[it])));
                   this.setState({
                     [it + '_filterlist']: {
                       "min":a,

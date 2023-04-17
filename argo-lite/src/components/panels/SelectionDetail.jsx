@@ -245,15 +245,85 @@ class SelectionDetail extends React.Component {
   onDegreeBrushStart = ({ target, type, selection, sourceEvent }) => {
     // appState.graph.frame.selection = []
     // appState.graph.selectedNodes = []
+    // appState.graph.filter['degree'] ={
+    //   "min":-1,
+    //   "max":Infinity
+    // }
+
+    // appState.graph.filterNodes()
 
   }
   onDegreeBrush = ({ target, type, selection, sourceEvent }) => {
 
   }
-  onDegreeBrushEnd = ({ target, type, selection, sourceEvent }) => {
+  onNoNodeDegreeBrushEnd = ({ target, type, selection, sourceEvent }) => {
     const selectionRectID = []
     const svgElement = select(this.degreesvg)
     const rects = svgElement.selectAll(".vx-bar")
+    if (selection){
+      const brushBounds = {
+        x0: selection[0][0] - this.margin.left,
+        x1: selection[1][0] - this.margin.left,
+        y0: selection[0][1],
+        y1: selection[1][1],
+      }
+  
+      rects.each(function (d, i) {
+        const rectx = parseFloat(select(this).attr("x"))
+        // const recty = parseFloat(select(this).attr("y"))
+        if (rectx >= brushBounds.x0 && rectx <= brushBounds.x1) {
+          selectionRectID.push(i)
+        }
+  
+  
+      })
+  
+      
+    //  if(selectionRectID.length>0){
+      const filterdegreeBin2 = this.degreeBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
+      const degreebuffer_min = min(filterdegreeBin2.map((d) => d.mind))
+      const degreebuffer_max = max(filterdegreeBin2.map((d) => d.maxd))
+      
+      const selectionNode = appState.graph.frame.getNodeList().filter(node =>( 
+        node.data.ref.degree>=degreebuffer_min && node.data.ref.degree<=degreebuffer_max)
+      )
+
+      // when no node statisfy, should dehighlight 
+      appState.graph.frame.degreehighlight = selectionNode
+      appState.graph.frame.updateDegreeHistOpacity()
+    }else{       // click on brush should clear 
+      appState.graph.frame.selection = []
+      appState.graph.frame.updateSelectionOpacity()
+    }
+    
+    // appState.graph.frame.degreehighlight = selectionNode
+    // appState.graph.frame.updateDegreeHistOpacity()
+
+    // appState.graph.filter['degree'] ={
+    //   "min":degreebuffer_min,
+    //   "max":degreebuffer_max
+    // }
+
+    // appState.graph.filterNodes()
+  //  }
+  //  else{
+  //   appState.graph.filter['degree'] ={
+  //     "min":-1,
+  //     "max":Infinity
+  //   }
+
+  //   appState.graph.filterNodes()
+  //  }
+    
+  
+
+  }
+
+  onSelectDegreeBrushEnd = ({ target, type, selection, sourceEvent }) => {
+    const selectionRectID = []
+    const svgElement = select(this.degreesvg)
+    const rects = svgElement.selectAll(".vx-bar")
+    if (selection){
     const brushBounds = {
       x0: selection[0][0] - this.margin.left,
       x1: selection[1][0] - this.margin.left,
@@ -269,23 +339,52 @@ class SelectionDetail extends React.Component {
       }
 
 
-
     })
 
     
-    // const filterDistBin2 = this.distBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
-    // const distbuffer_min = min(filterDistBin2.map((d) => d.mind))
-    // const distbuffer_max = max(filterDistBin2.map((d) => d.maxd))
-    // // console.log(this.edgeSelection)
-    // const filteredge = this.edgeSelection.filter(edge => (edge.edgeDist >= distbuffer_min && edge.edgeDist <= distbuffer_max))
+  //  if(selectionRectID.length>0){
+    const filterdegreeBin2 = this.degreeBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
+    const degreebuffer_min = min(filterdegreeBin2.map((d) => d.mind))
+    const degreebuffer_max = max(filterdegreeBin2.map((d) => d.maxd))
+    
+    
 
+    const selectionNode = appState.graph.selectedNodes.filter(node =>( 
+      node.data.ref.degree>=degreebuffer_min && node.data.ref.degree<=degreebuffer_max)
+    )
+    appState.graph.frame.degreehighlight = selectionNode
+      appState.graph.frame.updateDegreeHistOpacity()
+  }
+    else{
+      
+      appState.graph.frame.selection = appState.graph.selectedNodes
+      appState.graph.frame.updateSelectionOpacity()
 
-    // appState.graph.edgeselection = filteredge
+    }
+    // appState.graph.frame.degreehighlight = selectionNode
+    // appState.graph.frame.updateDegreeHistOpacity()
 
-   
+    // appState.graph.filter['degree'] ={
+    //   "min":degreebuffer_min,
+    //   "max":degreebuffer_max
+    // }
+
+    // appState.graph.filterNodes()
+  //  }
+  //  else{
+  //   appState.graph.filter['degree'] ={
+  //     "min":-1,
+  //     "max":Infinity
+  //   }
+
+  //   appState.graph.filterNodes()
+  //  }
+    
+  
+
   }
 
-  renderDegreeBrush = () => (
+  renderNoNodeDegreeBrush = () => (
     <SVGBrush
       // Defines the boundary of the brush.
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
@@ -304,9 +403,33 @@ class SelectionDetail extends React.Component {
       brushType="x" // "x"
       onBrushStart={this.onDegreeBrushStart}
       onBrush={this.onDegreeBrush}
-      onBrushEnd={this.onDegreeBrushEnd}
+      onBrushEnd={this.onNoNodeDegreeBrushEnd}
     />
   )
+
+  renderSelectDegreeBrush = () => (
+    <SVGBrush
+      // Defines the boundary of the brush.
+      // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
+      // Note: d3 allows the format [x, y] for 1d brush.
+      extent={
+        [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right, this.allheight - this.brushmargin.bottom]]
+      }
+      // Obtain mouse positions relative to the current svg during mouse events.
+      // By default, getEventMouse returns [event.clientX, event.clientY]
+      getEventMouse={event => {
+        const { clientX, clientY } = event;
+        const { left, top } = this.degreesvg.getBoundingClientRect();
+        // console.log([clientX - left, clientY - top])
+        return [clientX - left, clientY - top];
+      }}
+      brushType="x" // "x"
+      onBrushStart={this.onDegreeBrushStart}
+      onBrush={this.onDegreeBrush}
+      onBrushEnd={this.onSelectDegreeBrushEnd}
+    />
+  )
+
 
 
 
@@ -492,7 +615,33 @@ class SelectionDetail extends React.Component {
                   binType="numeric"
                 >
                   <BarSeries
-                    fill="#08519c"
+                    fill={(d, i) => {
+                      if (i === 0) {
+                        this.maxDistanceCount = 0;
+                        this.degreeBinData = []
+                      }
+                      if (d.data.length > this.maxDistanceCount) {
+                        this.maxDistanceCount = d.data.length;
+                      }
+                      if (d.data.length > 0) {
+                        this.degreeBinData.push({
+                          mind: min(d.data),
+                          maxd: max(d.data)
+                        })
+                      } else {
+                        this.degreeBinData.push({
+                          mind: Infinity,
+                          maxd: -1
+                        })
+                      }
+
+
+
+                      // console.log(this.distBinData)
+                      // console.log(i)
+                      // console.log(d)
+                      return "#08519c"
+                    }}
                     animated={false}
                     rawData={appState.graph.selectedNodes.map((node, i) => {
                       if (i == 0) {
@@ -549,7 +698,7 @@ class SelectionDetail extends React.Component {
                       }} />
                   }
                 </Histogram>
-                {this.renderDegreeBrush()}
+                {this.renderSelectDegreeBrush()}
               </svg>
           </div>
 
@@ -690,7 +839,24 @@ class SelectionDetail extends React.Component {
                 
               >
                 <BarSeries
-                  fill="#08519c"
+                  fill={(d, i) => {
+                    if (i === 0) {
+                      this.degreeBinData = []
+                    }
+
+                    if (d.data.length > 0) {
+                      this.degreeBinData.push({
+                        mind: min(d.data),
+                        maxd: max(d.data)
+                      })
+                    } else {
+                      this.degreeBinData.push({
+                        mind: Infinity,
+                        maxd: -1
+                      })
+                    }
+                    return "#08519c"
+                  }}
                   animated={false}
                   rawData={appState.graph.frame.getNodeList().map((node) => {
                     if(node.data.ref.degree>0){
@@ -710,7 +876,7 @@ class SelectionDetail extends React.Component {
                     }} />
 
               </Histogram>
-              {this.renderDegreeBrush()}
+              {this.renderNoNodeDegreeBrush()}
             </svg>
           </div>
       </div>

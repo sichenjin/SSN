@@ -27,6 +27,7 @@ var MapFrame = function(graph, options) {
     this.textureLoader.crossOrigin = true;
     this.oldIntersect = -1;
     this.selection = [];
+    this.degreehighlight = [];
     this.fov = 60;
     this.near = 1;
     this.far = 5000;

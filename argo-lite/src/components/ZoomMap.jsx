@@ -9,14 +9,16 @@ export function ZoomMap() {
 
     const bounds = useMemo(() => {
         if (appState.graph.frame.selection.length ==0) {
-          const nodeLoc = appState.graph.frame.getNodeList().map(function(node){
-            return [parseFloat(node.data.ref.LatY) , parseFloat(node.data.ref.LonX)]
-          })
-          const b = latLngBounds() // seemed to work without having to pass init arg
-          nodeLoc.forEach(coords => {
-              b.extend(coords)
-          })
-          map.fitBounds(b)
+          // if (appState.graph.frame.getNodeList() >0){
+            const nodeLoc = appState.graph.frame.getNodeList().map(function(node){
+              return [parseFloat(node.data.ref.LatY) , parseFloat(node.data.ref.LonX)]
+            })
+            const b = latLngBounds() // seemed to work without having to pass init arg
+            nodeLoc.forEach(coords => {
+                b.extend(coords)
+            })
+            map.fitBounds(b)
+          // }
           return null;
         }   //no selection 
         if (appState.graph.frame.selection.length ==1) return;  // only one node is selected 
