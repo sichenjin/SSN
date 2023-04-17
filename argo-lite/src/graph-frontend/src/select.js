@@ -158,6 +158,7 @@ module.exports = function (self) {
 
   //highlight nodes and edges within selection
   self.updateSelectionOpacity = function () {
+    // if()
     if (self.selection.length > 0) {
       if (self.selection.length == 1 && appState.graph.colorByDistance) {
         const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
@@ -232,7 +233,8 @@ module.exports = function (self) {
       }
 
     } 
-    }else {        //when no nodes are selected, all 1 opacity 
+    }
+    else {        //when no nodes are selected, all 1 opacity 
       self.graph.forEachNode(n => {
         self.colorNodeOpacity(n, 1);
         
