@@ -8,6 +8,7 @@ export function ZoomMap() {
     const map = useMap();
 
     const bounds = useMemo(() => {
+        if(!appState.graph.autoZoom) return;
         if (appState.graph.frame.selection.length ==0) {
           // if (appState.graph.frame.getNodeList() >0){
             const nodeLoc = appState.graph.frame.getNodeList().map(function(node){

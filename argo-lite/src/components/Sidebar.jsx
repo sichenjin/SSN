@@ -60,8 +60,8 @@ class Sidebar extends React.Component {
                     <table className={Classes.TABLE} style={{width: '100%'}}>
                         <thead>
                             <tr>
-                                <th>Statistics</th>
-                                <th>Value</th>
+                                <th colspan="2" style={{textAlign: "center"}}><Tag>Statistics</Tag></th>
+
                             </tr>
                         </thead>
                         <tbody>

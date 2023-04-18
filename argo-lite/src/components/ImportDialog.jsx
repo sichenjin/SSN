@@ -52,7 +52,7 @@ class ImportDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      available: ONLY_EDGE_FILE,
+      available: NODE_AND_EDGE_FILE,
       nodesOpen: true,
       edgesOpen: true,
       delimiter: ','
