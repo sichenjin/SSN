@@ -291,9 +291,13 @@ class SelectionDetail extends React.Component {
       // when no node statisfy, should dehighlight 
       appState.graph.frame.degreehighlight = selectionNode
       appState.graph.frame.updateDegreeHistOpacity()
+      appState.graph.degreeselection = selectionNode
+      appState.graph.degreebrushed = true
     }else{       // click on brush should clear 
       appState.graph.frame.selection = []
       appState.graph.frame.updateSelectionOpacity()
+      appState.graph.degreeselection = []
+      appState.graph.degreebrushed = false
     }
     
     
@@ -336,12 +340,15 @@ class SelectionDetail extends React.Component {
     )
     appState.graph.frame.degreehighlight = selectionNode
       appState.graph.frame.updateDegreeHistOpacity()
+      appState.graph.degreeselection = selectionNode
+      appState.graph.degreebrushed = true
   }
     else{
       
       appState.graph.frame.selection = appState.graph.selectedNodes
       appState.graph.frame.updateSelectionOpacity()
-
+      appState.graph.degreeselection = []
+      appState.graph.degreebrushed = false
     }
 
   }

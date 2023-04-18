@@ -296,6 +296,19 @@ class MapView extends React.Component {
 
     // //no hover and selection 
 
+    if(appState.graph.degreeselection.length>0){
+      if (appState.graph.degreeselection.indexOf(node) == -1) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+      } else {
+
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+      }
+    }
+
+    if(appState.graph.degreebrushed && appState.graph.degreeselection.length==0){
+      return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+    }
+
 
     if (appState.graph.convexNodes.length > 0) {
       if (appState.graph.convexNodes.indexOf(node) == -1) {

@@ -150,6 +150,12 @@ export default class GraphStore {
   @observable
   edgeselection = []
 
+  @observable
+  degreeselection = []
+
+  @observable
+  degreebrushed = false
+
   //name of currently hovered family group on the cluster cluster scatterplot 
   @observable
   distanceDensityCurrentlyHovered = undefined
