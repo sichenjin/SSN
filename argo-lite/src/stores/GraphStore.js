@@ -74,6 +74,9 @@ export default class GraphStore {
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
 
+  //  // Currently Clicked to frozen node on network
+  //  @observable networkClicked = undefined;
+
   // Currently hovered path in the scatterplot view 
   @observable pathHovered = undefined;
   /**

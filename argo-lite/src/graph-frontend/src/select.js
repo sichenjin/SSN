@@ -340,6 +340,7 @@ module.exports = function (self) {
       clickedNode.pinnedx = false;
       clickedNode.pinnedy = false;
       appState.graph.mapClicked = null
+      
       self.selection = []
     }
 

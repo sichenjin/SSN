@@ -245,12 +245,15 @@ class MapView extends React.Component {
     if (appState.graph.selectedNodes.length > 0) {
       //highlight within selection edges , &&
       if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
-        return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
-      } else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
-        return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
+        return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
       } else {
         return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
+
+
+      //else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+        // return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
+      // } 
     }
 
 
@@ -559,7 +562,7 @@ class MapView extends React.Component {
                         // appState.graph.currentlyHovered = null
                         // appState.graph.frame.highlightNode(thenode, true);   //control socio update 
                         // appState.graph.frame.highlightEdges(thenode, true);
-                        appState.graph.frame.selection = appState.graph.frame.getNeighborNodesFromGraph(thenode);
+                        // appState.graph.frame.selection = appState.graph.frame.getNeighborNodesFromGraph(thenode);
                         appState.graph.selectedNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode);
                         appState.graph.frame.highlightClickNode(thenode);
                       } else {  // click again to unselect 

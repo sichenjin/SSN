@@ -20,11 +20,15 @@ module.exports = function (self) {
     self.mouseX = mouseX;
     self.mouseY = mouseY;
     if (self.leftMouseDown && self.mouseDown) {
+      appState.graph.mapClicked = null
+      // appState.graph.networkClicked = null
       
       // left-clicked empty space (i.e., not clicking a node)
       if (!self.dragging && self.selection.indexOf(selection) == -1 && !ctrl) {
         self.clearSelection();
+        appState.graph.mapClicked = null
       }
+      
 
 
       if (!self.dragging) {
@@ -193,8 +197,10 @@ module.exports = function (self) {
 
       //sets whether or not last click was 
       //double click or not
-      if (clickDifference < 225) {
+      // console.log(clickDifference)
+      if (clickDifference < 500) {
         self.doubleClicked = true;
+        
       } else {
         self.doubleClicked = false;
       }
@@ -221,7 +227,8 @@ module.exports = function (self) {
         //only pins node if double-clicked
         if (self.doubleClicked) {
           //passing in 'selection' node to pass information for node to pin
-          self.updateSelection(self.dragging.x, self.dragging.y, selection);
+          // self.updateSelection(self.dragging.x, self.dragging.y, selection);
+
         } else if (ctrl) {
           self.selection.splice(self.selection.indexOf(selection), 1);
           selection.renderData.isSelected = false;
@@ -258,12 +265,22 @@ module.exports = function (self) {
 
     
     self.updateSelectionOpacity();
+
     if(self.selection.length == 1){
       const thenode = self.selection[0]
       self.highlightClickNode(thenode)
-      self.selection = self.getNeighborNodesFromGraph(thenode);
-      appState.graph.selectedNodes = self.getNeighborNodesFromGraph(thenode);  
+      appState.graph.mapClicked = thenode
+      // self.selection = self.getNeighborNodesFromGraph(thenode);
+      appState.graph.selectedNodes = self.getNeighborNodesFromGraph(thenode);
+        
+      
+      // appState.graph.networkClicked = thenode
     }
+
+    if(self.selection.length == 0){
+      appState.graph.mapClicked = null
+    }
+    
   
     // Left or right mouse button
     if (true) {

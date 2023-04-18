@@ -42,7 +42,7 @@ class SelectionDetail extends React.Component {
     if (appState.graph.mapClicked) {
 
       const edgeSelection = appState.graph.mapClicked.linkObjs
-      if (edgeSelection.length == 0) return [null, []];
+      if (!edgeSelection || edgeSelection.length == 0) return [null, []];
       this.edgeSelection = edgeSelection
       const edgeDistance = edgeSelection.map(e => {
         if(e.edgeDist >0){
@@ -654,7 +654,7 @@ class SelectionDetail extends React.Component {
                     :
                     <YAxis label="Frequency" fontSize="12px" tickFormat={
                       (tick, ti) => {
-                          console.log(tick);
+                          // console.log(tick);
                           if (parseInt(tick).toString() == this.prevTick) {
                             return "";
                           } 
