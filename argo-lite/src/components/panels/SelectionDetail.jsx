@@ -296,24 +296,6 @@ class SelectionDetail extends React.Component {
       appState.graph.frame.updateSelectionOpacity()
     }
     
-    // appState.graph.frame.degreehighlight = selectionNode
-    // appState.graph.frame.updateDegreeHistOpacity()
-
-    // appState.graph.filter['degree'] ={
-    //   "min":degreebuffer_min,
-    //   "max":degreebuffer_max
-    // }
-
-    // appState.graph.filterNodes()
-  //  }
-  //  else{
-  //   appState.graph.filter['degree'] ={
-  //     "min":-1,
-  //     "max":Infinity
-  //   }
-
-  //   appState.graph.filterNodes()
-  //  }
     
   
 
@@ -361,26 +343,6 @@ class SelectionDetail extends React.Component {
       appState.graph.frame.updateSelectionOpacity()
 
     }
-    // appState.graph.frame.degreehighlight = selectionNode
-    // appState.graph.frame.updateDegreeHistOpacity()
-
-    // appState.graph.filter['degree'] ={
-    //   "min":degreebuffer_min,
-    //   "max":degreebuffer_max
-    // }
-
-    // appState.graph.filterNodes()
-  //  }
-  //  else{
-  //   appState.graph.filter['degree'] ={
-  //     "min":-1,
-  //     "max":Infinity
-  //   }
-
-  //   appState.graph.filterNodes()
-  //  }
-    
-  
 
   }
 

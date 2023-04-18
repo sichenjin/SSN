@@ -194,6 +194,7 @@ autorun(() => {
     appState.graph.frame.setLabelRelativeSize(appState.graph.nodes.labelSize);
     appState.graph.frame.setLabelLength(appState.graph.nodes.labelLength);
     appState.graph.frame.updateSelectionOpacity();
+    appState.graph.frame.clearSelection();
   }
 
   //pins nodes only after nodes are loaded

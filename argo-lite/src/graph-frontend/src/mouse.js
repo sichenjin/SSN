@@ -90,9 +90,10 @@ module.exports = function (self) {
     }
     self.lastHover = node;
     if (node) {
-      self.highlightNode(node, true);
-      node.renderData.textHolder.children[0].element.hideme = false;
-      self.highlightEdges(node, true);
+      // self.highlightNode(node, true);
+      // node.renderData.textHolder.children[0].element.hideme = false;
+      // self.highlightEdges(node, true);
+      self.highlightClickNode(node)
       //set currently hovered node
       appState.graph.currentlyHovered = node;
     } else if (self.selection.length == 0) {
@@ -140,6 +141,9 @@ module.exports = function (self) {
       if (button == 0 && !self.dragging) {
         self.showBox = true;
       }
+
+      
+      
       if (self.selection.indexOf(selection) == -1 && !ctrl) {
         for (var i = 0; i < self.selection.length; i++) {
           self.selection[i].renderData.isSelected = false;
@@ -171,7 +175,13 @@ module.exports = function (self) {
         //appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused
         appState.graph.smartPause.interactingWithGraph = true;
         
+        
+        
       }
+
+
+
+      
 
 
       //captures click times to measure time distance between clicks
@@ -246,8 +256,14 @@ module.exports = function (self) {
     //when not clicking, nodes aren't being interacted with
     appState.graph.smartPause.interactingWithGraph = false;
 
-
+    
     self.updateSelectionOpacity();
+    if(self.selection.length == 1){
+      const thenode = self.selection[0]
+      self.highlightClickNode(thenode)
+      self.selection = self.getNeighborNodesFromGraph(thenode);
+      appState.graph.selectedNodes = self.getNeighborNodesFromGraph(thenode);  
+    }
   
     // Left or right mouse button
     if (true) {
