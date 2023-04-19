@@ -237,6 +237,12 @@ autorun(() => {
   }
 });
 
+// autorun(() => {
+//   if (appState.graph.selectedNodes.length >0 ){
+//     appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
+//   }
+// })
+
 // Argo-lite specific: extract CSV from File object and update related fields.
 autorun(() => {
   const file = appState.import.selectedEdgeFileFromInput;

@@ -29,6 +29,7 @@ module.exports = function (self) {
     const tos = [];
     for (var i = 0; i < self.selection.length; i++) {
       for (var j = 0; j < self.selection[i].links.length; j++) {
+        if(!self.selection[i]) continue
         froms.push(self.selection[i].links[j].fromId);
         tos.push(self.selection[i].links[j].toId);
       }

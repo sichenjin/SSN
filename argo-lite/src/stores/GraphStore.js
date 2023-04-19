@@ -210,6 +210,7 @@ export default class GraphStore {
     if (this.selectedNodes.length>0) {
       const neighborIDs = []
       for (var j = 0; j < this.selectedNodes.length; j++) {
+        if(!this.selectedNodes[j]) continue
         this.selectedNodes[j].links.forEach((link)=>{
         neighborIDs.push(link.fromId);
         neighborIDs.push(link.toId);

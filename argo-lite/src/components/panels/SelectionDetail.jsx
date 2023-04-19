@@ -150,7 +150,7 @@ if(appState.graph.selectedNodes.length > 1){
     const nodelength = appState.graph.selectedNodes.length;
     const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
     return selectionDen.toFixed(3)
-}else if (appState.graph.selectedNodes.length == 1){
+}else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
   const thenode = appState.graph.selectedNodes[0]
   const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
   const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(selectneighbors)
@@ -353,7 +353,7 @@ if(appState.graph.selectedNodes.length > 1){
       selectionNode = appState.graph.selectedNodes.filter(node =>( 
         node.data.ref.degree>=degreebuffer_min && node.data.ref.degree<=degreebuffer_max)
       )
-    }else if (appState.graph.selectedNodes.length == 1){
+    }else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
       const thenode = appState.graph.selectedNodes[0]
       const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
       selectionNode = selectneighbors.filter(node =>( 
@@ -373,7 +373,7 @@ if(appState.graph.selectedNodes.length > 1){
       appState.graph.frame.updateSelectionOpacity()
       appState.graph.degreeselection = []
       appState.graph.degreebrushed = false}
-      else if (appState.graph.selectedNodes.length == 1){
+      else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
         const thenode = appState.graph.selectedNodes[0]
         const selectionNode = appState.graph.frame.getNeighborNodesFromGraph(thenode)
         appState.graph.frame.degreehighlight = selectionNode
@@ -706,7 +706,7 @@ if(appState.graph.selectedNodes.length > 1){
         </div>
       );
     }
-    else if(appState.graph.selectedNodes.length ==1 && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]){
+    else if(appState.graph.selectedNodes.length ==1 && appState.graph.selectedNodes[0] && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]){
       const thenode = appState.graph.selectedNodes[0]
       const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
       // appState.graph.selectedNodes = selectneighbors

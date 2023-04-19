@@ -27,6 +27,8 @@ module.exports = function (self) {
       if (!self.dragging && self.selection.indexOf(selection) == -1 && !ctrl) {
         self.clearSelection();
         appState.graph.mapClicked = null
+        appState.graph.degreeselection = []
+        appState.graph.degreebrushed = false
       }
       
 
@@ -262,7 +264,9 @@ module.exports = function (self) {
 
     //when not clicking, nodes aren't being interacted with
     appState.graph.smartPause.interactingWithGraph = false;
-
+    appState.graph.mapClicked = null
+    appState.graph.degreeselection = []
+    appState.graph.degreebrushed = false
     
     self.updateSelectionOpacity();
 

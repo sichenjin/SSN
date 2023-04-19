@@ -329,7 +329,7 @@ class RegularNavbar extends React.Component {
                   text="Import from CSV..."
                   onClick={() => (appState.import.dialogOpen = true)}
                 />
-                <MenuItem
+                {/* <MenuItem
                   iconName="import"
                   text="Import from GEXF..."
                   onClick={() => (appState.import.gexfDialogOpen = true)}
@@ -352,7 +352,7 @@ class RegularNavbar extends React.Component {
                   iconName="pt-icon-document-share"
                   text="Publish and Share Snapshot"
                   onClick={() => { appState.preferences.shareDialogOpen = true }}
-                />
+                /> */}
               </Menu>
             }
             position={Position.BOTTOM}

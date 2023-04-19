@@ -53,7 +53,7 @@ module.exports = function (self) {
     const withinEdges = []
     const edgekeys = []
     for (var i = 0; i < selection.length; i++) {
-      if(selection[i].linkObjs){
+      if(selection[i] && selection[i].linkObjs){
         selection[i].linkObjs.forEach(function (link) {
           const key1 = `${link.source.id}👉 ${link.target.id}`
           const key2 = `${link.target.id}👉 ${link.source.id}`
@@ -300,6 +300,7 @@ module.exports = function (self) {
     const nodeNeighbor = []
     const froms = []
     const tos = []
+    if (!node) return 
     for (var i = 0; i < node.links.length; i++) {
       froms.push(node.links[i].fromId);
       tos.push(node.links[i].toId);

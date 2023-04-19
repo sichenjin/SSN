@@ -34,6 +34,11 @@ class HelpDialog extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <td>Clear Selection</td>
+                    <td>Click blank area in the Network or Map View</td>
+                    <td>Tap blank area in the Network or Map View</td>
+                  </tr>
                   <tr>
                     <td>Zoom</td>
                     <td>Mouse wheel</td>
@@ -41,24 +46,35 @@ class HelpDialog extends React.Component {
                   </tr>
                   <tr>
                     <td>Pan</td>
-                    <td>Drag with right mouse button down OR Move mouse with space key pressed</td>
+                    <td>In the Network: drag with right mouse button down OR Move mouse with space key pressed; in the Map: drag the map</td>
                     <td>Drag with 3 finger</td>
                   </tr>
                   <tr>
-                    <td>Select single node (view details)</td>
-                    <td>Single Click</td>
-                    <td>Tap with 1 finger</td>
+                    <td>Adjust view Size</td>
+                    <td>Drag the view borders between the left and right view and between the top and bottom view. </td>
+                    <td>Not supported</td>
                   </tr>
                   <tr>
-                    <td>Select multiple nodes</td>
-                    <td>Drag left mouse button from empty area</td>
-                    <td>Drag 1 finger from empty area</td>
+                    <td>Select single node to view details and highlight its eco-centric network</td>
+                    <td>Single click or drag to select one node in the Network or Map view</td>
+                    <td>Tap or drag with 1 finger to select one node</td>
                   </tr>
                   <tr>
-                    <td>Drag nodes</td>
-                    <td>Drag with left mouse button down</td>
+                    <td>Select multiple nodes to view details</td>
+                    <td>In the Network: Drag left mouse button from empty area; in the map: move mouse with CTRL key pressed;</td>
+                    <td>Drag 1 finger from empty area; </td>
+                  </tr>
+                  <tr>
+                    <td>Move and pin a node</td>
+                    <td>Click one node and drag with left mouse button down in the Network view</td>
                     <td>Drag with 1 finger</td>
                   </tr>
+                  <tr>
+                    <td>Move and pin a set of nodes</td>
+                    <td>Drag left mouse button from empty area to select, then click one of the hilighted nodes and drag to move in the Network view</td>
+                    <td>Drag with 1 finger</td>
+                  </tr>
+                  
                 </tbody>
               </table>
             </div>
