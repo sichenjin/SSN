@@ -70,6 +70,12 @@ export function averageClusteringCoefficient(snapshot) {
     const jsnxGraph = convertToJsnx(snapshot);
     const result = jsnx.averageClustering(jsnxGraph);
     console.log('Computing Clustering Coefficient');
+    if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
+      appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
+    }
+    if (appState.graph.frame.selection.length > 0) {
+        appState.graph.frame.selection = appState.graph.frame.selection.filter(x => x !== undefined)
+    }
     return result;
 }
 

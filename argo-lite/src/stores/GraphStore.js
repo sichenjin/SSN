@@ -16,7 +16,7 @@ export default class GraphStore {
         scale: "Linear Scale",
         from: "#448AFF",
         to: "#E91E63",
-        nominalColor:  ["#e377c2","#98df8a" , "#ff7f0e", "#a55194" , "#2ca02c",  "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94","#1f77b4" , "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5","#9c9ede","#8c6d31", "#ffbb78","#bd9e39"]
+        nominalColor: ["#e377c2", "#98df8a", "#ff7f0e", "#a55194", "#2ca02c", "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#1f77b4", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#9c9ede", "#8c6d31", "#ffbb78", "#bd9e39"]
       },
       sizeBy: "degree",
       size: {
@@ -34,9 +34,9 @@ export default class GraphStore {
       color: "#7f7f7f",
       crossColor: "#0055aa"
     },
-    scatterplot:{
+    scatterplot: {
       x: 'degree',
-      y:'distance to center'
+      y: 'distance to center'
     }
   }
 
@@ -140,9 +140,9 @@ export default class GraphStore {
     fullNodes: 0,
     fullEdges: 0,
     nodeProperties: [],
-    nodePropertyTypes:[],
-    uniqueValue:{},
-    nodeComputed: ["pagerank", "degree",'centrality', 'distance to center','betweeness centrality','closeness centrality', 'distance to group center'],
+    nodePropertyTypes: [],
+    uniqueValue: {},
+    nodeComputed: ["pagerank", "degree", 'centrality', 'distance to center', 'betweeness centrality', 'closeness centrality', 'distance to group center'],
     edgeProperties: [],
     snapshotName: "loading..." // Optional: for display in Argo-lite only
   };
@@ -183,58 +183,58 @@ export default class GraphStore {
 
   @computed
   get filterKeyList() {
-    const removeList = ['isHidden','id','Longitude', 'Latitude','LatY', 'LonX', 'dist to center','dist_to_center','centrality','shortest path', 'pair distance','node_id','standard distance','network density']
+    const removeList = ['isHidden', 'id', 'Longitude', 'Latitude', 'LatY', 'LonX', 'dist to center', 'dist_to_center', 'centrality', 'shortest path', 'pair distance', 'node_id', 'standard distance', 'network density']
     return uniq([
       ...this.metadata.nodeProperties,
       ...this.metadata.nodeComputed
-    ]).filter(k =>removeList.indexOf(k)=== -1); // since node_id is already present
+    ]).filter(k => removeList.indexOf(k) === -1); // since node_id is already present
   }
 
   @computed
   get allComputedPropertiesKeyList() {
-   
+
     const uniq_compute = uniq([
       ...this.metadata.nodeComputed
-    ]).filter(k => k !== 'id' ); // since node_id is already present
-    const uppercase_compute = uniq_compute.map((u)=>{
-    return u.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
+    ]).filter(k => k !== 'id'); // since node_id is already present
+    const uppercase_compute = uniq_compute.map((u) => {
+      return u.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
     })
-     return uppercase_compute
+    return uppercase_compute
   }
 
   @computed
-  get selectedNeighborIDs(){
+  get selectedNeighborIDs() {
 
-   
- 
-    if (this.selectedNodes.length>0) {
+
+
+    if (this.selectedNodes.length > 0) {
       const neighborIDs = []
       for (var j = 0; j < this.selectedNodes.length; j++) {
-        if(!this.selectedNodes[j]) continue
-        this.selectedNodes[j].links.forEach((link)=>{
-        neighborIDs.push(link.fromId);
-        neighborIDs.push(link.toId);
+        if (!this.selectedNodes[j]) continue
+        this.selectedNodes[j].links.forEach((link) => {
+          neighborIDs.push(link.fromId);
+          neighborIDs.push(link.toId);
         })
-        
+
       }
-      if (neighborIDs.length>0){
+      if (neighborIDs.length > 0) {
         const uniqNeighborIDs = uniq([
-        ...neighborIDs
-      ])
-      return uniqNeighborIDs
-    }else{
+          ...neighborIDs
+        ])
+        return uniqNeighborIDs
+      } else {
+        return []
+      }
+    } else {
       return []
     }
-    }else{ 
-      return []
-    }
-    
+
 
   }
 
-  
 
-  
+
+
 
   @observable.ref frame = null;
   @observable.ref positions = null;
@@ -288,16 +288,16 @@ export default class GraphStore {
 
   @computed
   get nodeColorScale() {
-    if(this.nodes.color.scale == "Nominal Scale"){ //nominal scale 
+    if (this.nodes.color.scale == "Nominal Scale") { //nominal scale 
       return scales[this.nodes.color.scale]()
-      .domain([...new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))])
-      .range(this.nodes.color.nominalColor);
-    }else{ //linear and log scale 
+        .domain([...new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))])
+        .range(this.nodes.color.nominalColor);
+    } else { //linear and log scale 
       return scales[this.nodes.color.scale]()
-      .domain(this.minMax[this.nodes.colorBy])
-      .range([this.nodes.color.from, this.nodes.color.to]);
+        .domain(this.minMax[this.nodes.colorBy])
+        .range([this.nodes.color.from, this.nodes.color.to]);
     }
-    
+
   }
 
 
@@ -327,7 +327,7 @@ export default class GraphStore {
     return this.rawGraph.nodes.filter(node => setOfNeighborIds.has(node.id.toString()));
   }
 
-  
+
 
   // Triggers autorun in stores/index.js to sent computedGraph to graph-frontend.
   @computed
@@ -356,7 +356,7 @@ export default class GraphStore {
       // If isHidden flag is defined and true on an associated node,
       // leave out its related edges.
       if (graph.hasNode(e.source_id.toString()) && graph.hasNode(e.target_id.toString())) {
-        graph.addLink(e.source_id.toString(), e.target_id.toString(),e);
+        graph.addLink(e.source_id.toString(), e.target_id.toString(), e);
       }
     });
 
@@ -368,20 +368,20 @@ export default class GraphStore {
     return this.rawGraph.nodes.filter(n => n.isHidden).length;
   }
 
-  filterNodes() { 
+  filterNodes() {
     runInAction('filter nodes', () => {
-    if(Object.keys(this.filter).length !== 0  ){
-      
-      
+      if (Object.keys(this.filter).length !== 0) {
+
+
         this.rawGraph.nodes = this.rawGraph.nodes.map(n => {
           var satisfy = true
-          for (const fkey in this.filter){
-            if(this.metadata.nodePropertyTypes[fkey] == 'string'){
-              if(this.filter[fkey].length >0 && (!this.filter[fkey].includes(n[fkey]))){
+          for (const fkey in this.filter) {
+            if (this.metadata.nodePropertyTypes[fkey] == 'string') {
+              if (this.filter[fkey].length > 0 && (!this.filter[fkey].includes(n[fkey]))) {
                 satisfy = false
               }
-            }else{  // number range 
-              if(this.filter[fkey] && (n[fkey]<this.filter[fkey]['min'] || n[fkey]>this.filter[fkey]['max'])){
+            } else {  // number range 
+              if (this.filter[fkey] && (n[fkey] < this.filter[fkey]['min'] || n[fkey] > this.filter[fkey]['max'])) {
                 satisfy = false
               }
             }
@@ -389,11 +389,26 @@ export default class GraphStore {
           if (satisfy) {
             return { ...n, isHidden: false };
           }
-          return {...n, isHidden: true};
+          return { ...n, isHidden: true };
         });
-      
-    }
+
+      }
+      if (this.selectedNodes.length > 0) {
+        this.selectedNodes = this.selectedNodes.filter(x => x !== undefined)
+      }
+
+      if (this.frame.selection.length > 0) {
+        this.frame.selection = this.frame.selection.filter(x => x !== undefined)
+      }
+
     });
+    if (this.selectedNodes.length > 0) {
+      this.selectedNodes = this.selectedNodes.filter(x => x !== undefined)
+    }
+
+    if (this.frame.selection.length > 0) {
+      this.frame.selection = this.frame.selection.filter(x => x !== undefined)
+    }
   }
 
   showNodes(nodeids) {
@@ -518,9 +533,9 @@ export default class GraphStore {
 
   //resumes graph layout for a set duration before smart-pausing
   runActiveLayout() {
-    if(this.frame) {
+    if (this.frame) {
       this.frame.paused = false;
-    } 
+    }
     this.smartPause.defaultActive.isActive = true;
     this.smartPause.defaultActive.startTime = Date.now();
     this.smartPause.smartPaused = false;
