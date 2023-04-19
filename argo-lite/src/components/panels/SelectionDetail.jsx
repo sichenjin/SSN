@@ -141,14 +141,29 @@ class SelectionDetail extends React.Component {
 
     // undirect graph
 
-    const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
-    console.log(edgeSelection.length);
+if(appState.graph.selectedNodes.length > 1){
+  const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
+    // console.log(edgeSelection.length);
     if (edgeSelection.length == 0) return 0;
     // this.edgeSelection = [...edgeSelection]
+    
     const nodelength = appState.graph.selectedNodes.length;
     const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
     return selectionDen.toFixed(3)
+}else if (appState.graph.selectedNodes.length == 1){
+  const thenode = appState.graph.selectedNodes[0]
+  const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
+  const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(selectneighbors)
+    // console.log(edgeSelection.length);
+    if (edgeSelection.length == 0) return 0;
+    // this.edgeSelection = [...edgeSelection]
+    
+    const nodelength = selectneighbors.length;
+    const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
+    return selectionDen.toFixed(3)
 
+}
+    
 
   }
   // margin = 
@@ -328,27 +343,46 @@ class SelectionDetail extends React.Component {
     })
 
     
-  //  if(selectionRectID.length>0){
+  
     const filterdegreeBin2 = this.degreeBinData.filter((d, i) => selectionRectID.indexOf(i) !== -1)
     const degreebuffer_min = min(filterdegreeBin2.map((d) => d.mind))
     const degreebuffer_max = max(filterdegreeBin2.map((d) => d.maxd))
     
-    
+    var selectionNode
+    if(appState.graph.selectedNodes.length >1){
+      selectionNode = appState.graph.selectedNodes.filter(node =>( 
+        node.data.ref.degree>=degreebuffer_min && node.data.ref.degree<=degreebuffer_max)
+      )
+    }else if (appState.graph.selectedNodes.length == 1){
+      const thenode = appState.graph.selectedNodes[0]
+      const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
+      selectionNode = selectneighbors.filter(node =>( 
+        node.data.ref.degree>=degreebuffer_min && node.data.ref.degree<=degreebuffer_max)
+      )
+    }
 
-    const selectionNode = appState.graph.selectedNodes.filter(node =>( 
-      node.data.ref.degree>=degreebuffer_min && node.data.ref.degree<=degreebuffer_max)
-    )
+    
     appState.graph.frame.degreehighlight = selectionNode
       appState.graph.frame.updateDegreeHistOpacity()
       appState.graph.degreeselection = selectionNode
       appState.graph.degreebrushed = true
   }
     else{
-      
+      if(appState.graph.selectedNodes.length >1){
       appState.graph.frame.selection = appState.graph.selectedNodes
       appState.graph.frame.updateSelectionOpacity()
       appState.graph.degreeselection = []
-      appState.graph.degreebrushed = false
+      appState.graph.degreebrushed = false}
+      else if (appState.graph.selectedNodes.length == 1){
+        const thenode = appState.graph.selectedNodes[0]
+        const selectionNode = appState.graph.frame.getNeighborNodesFromGraph(thenode)
+        appState.graph.frame.degreehighlight = selectionNode
+        appState.graph.frame.updateDegreeHistOpacity()
+        appState.graph.degreeselection = selectionNode
+        appState.graph.degreebrushed = true
+      }
+
+      
     }
 
   }
@@ -416,9 +450,6 @@ class SelectionDetail extends React.Component {
       // self = this
 
       // Array(100).fill().map(Math.random);
-
-
-
 
 
       return (
@@ -627,7 +658,7 @@ class SelectionDetail extends React.Component {
                           this.maxDegreeCount = this.maxDegreeDict[node.data.ref.degree]
                         }
                       }
-                      console.log(this.maxDegreeCount, node.data.ref.degree);
+                      // console.log(this.maxDegreeCount, node.data.ref.degree);
                       if(node.data.ref.degree>0){
                         return node.data.ref.degree
                       }else{
@@ -674,7 +705,272 @@ class SelectionDetail extends React.Component {
 
         </div>
       );
-    }else if( this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {  // when no node is selected, show the result of the whole network 
+    }
+    else if(appState.graph.selectedNodes.length ==1 && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]){
+      const thenode = appState.graph.selectedNodes[0]
+      const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
+      // appState.graph.selectedNodes = selectneighbors
+      if(selectneighbors.length >1 ){
+        return (
+          //
+          <div
+            className={classnames(
+              // 'overlay-card',
+              // "right-overlay-card",
+              // "transparent-frame"
+            )}
+            style={{
+              // width: '40vw',
+              height: '40vh',
+              // border:'#C0C0C0',
+              // borderStyle:'solid',
+            }}
+          >
+            <div className={classnames(Classes.CARD, "node-details-table")}>
+              <table
+                className={classnames(Classes.TABLE, Classes.TABLE_STRIPED, "node-details-table-content")}
+                style={{
+                  width: "100%",
+                  padding: '0',
+                  fontSize: "12px"
+                }}
+              >
+  
+                <thead>
+                  {/* <tr>
+                    <th></th>
+                    <th></th>
+                   
+                  </tr> */}
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: '5px 10px' }}> {selectneighbors.length + ' nodes are selected'}</td>
+                    {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '5px 10px' }}> {'The average distance is ' + this.SelectionDistanceFromLatLonIn()[0] + ' km'}</td>
+                    {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '5px 10px' }}> {'The network density (undirected network) is ' + this.SelectionDensity()}</td>
+                    {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+                  </tr>
+                  {/* {appState.graph.allPropertiesKeyList.map((it, i) => (
+                    
+                  ))} */}
+                </tbody>
+              </table>
+            </div>
+  
+            <div style={{ height: '100%' }}>
+                {/* <text className="distribution-title" >Distance Distribution</text> */}
+                <svg
+                  width={"50%"}
+                  height={"30vh"}
+                  // className="hist"
+                  id="edgesvg"
+                  ref={input => (this.edgesvg = input)}
+                // ref = {ref}
+                >
+                  <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Distance Distribution</text>
+                  <Histogram
+                    ariaLabel="distance_dis"
+                    orientation="vertical"
+                    label="Distance Distribution"
+                    height={this.allheight}
+                    width={this.allwidth}
+                    cumulative={false}
+                    normalized={false}
+                    binCount={25}
+                    margin={this.margin}
+                    valueAccessor={(datum) => {
+  
+                      return datum
+                    }}
+                    binType="numeric"
+  
+                  >
+                    <BarSeries
+                      animated={false}
+                      rawData={this.SelectionDistanceFromLatLonIn()[1]}
+                      fill={(d, i) => {
+                        if (i === 0) {
+                          this.maxDistanceCount = 0;
+                          this.distBinData = []
+                        }
+                        if (d.data.length > this.maxDistanceCount) {
+                          this.maxDistanceCount = d.data.length;
+                        }
+                        if (d.data.length > 0) {
+                          this.distBinData.push({
+                            mind: min(d.data),
+                            maxd: max(d.data)
+                          })
+                        } else {
+                          this.distBinData.push({
+                            mind: Infinity,
+                            maxd: -1
+                          })
+                        }
+  
+  
+  
+                        // console.log(this.distBinData)
+                        // console.log(i)
+                        // console.log(d)
+                        return "#08519c"
+                      }}
+                    />
+                    <XAxis numTicks={5} label="Edge Distance (km)" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                    {this.SelectionDistanceFromLatLonIn()[1].length < 10 ?
+                      <YAxis label="Frequency" fontSize="12px" tickFormat={
+                        (tick, ti) => {
+                          console.log(tick, this.maxDistanceCount/2);
+                          if (parseInt(tick).toString() == this.prevTick) {
+                            return "";
+                          } 
+                          else {
+                            this.prevTick = parseInt(tick).toString();
+                            return parseInt(tick).toString();
+                          }
+                            
+    
+                          // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                        }} />
+                      :
+                      <YAxis label="Frequency" fontSize="12px" tickFormat={
+                        (tick, ti) => {
+                            return parseInt(tick).toString()
+    
+                          // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                        }} />
+                    }
+                    
+  
+  
+                  </Histogram>
+                  {this.renderEdgeBrush()}
+                </svg>
+                <svg
+                  width={"50%"}
+                  height={"30vh"}
+                  // className="hist"
+                  id="degreesvg"
+                  ref={input => (this.degreesvg = input)}
+                // ref = {ref}
+                >
+  
+                  <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Degree Distribution</text>
+                  <Histogram
+                    ariaLabel="degree_dis"
+                    orientation="vertical"
+                    height={this.allheight}
+                    width={this.allwidth}
+                    margin={this.margin}
+                    cumulative={false}
+                    normalized={false}
+                    binCount={25}
+                    valueAccessor={(datum) => datum}
+                    binType="numeric"
+                  >
+                    <BarSeries
+                      fill={(d, i) => {
+                        if (i === 0) {
+                          this.maxDistanceCount = 0;
+                          this.degreeBinData = []
+                        }
+                        if (d.data.length > this.maxDistanceCount) {
+                          this.maxDistanceCount = d.data.length;
+                        }
+                        if (d.data.length > 0) {
+                          this.degreeBinData.push({
+                            mind: min(d.data),
+                            maxd: max(d.data)
+                          })
+                        } else {
+                          this.degreeBinData.push({
+                            mind: Infinity,
+                            maxd: -1
+                          })
+                        }
+  
+  
+  
+                        // console.log(this.distBinData)
+                        // console.log(i)
+                        // console.log(d)
+                        return "#08519c"
+                      }}
+                      animated={false}
+                      rawData={selectneighbors.map((node, i) => {
+                        if (i == 0) {
+                          this.maxDegreeCount = 0;
+                        }
+                        if (node.data.ref.degree in this.maxDegreeDict) {
+                          this.maxDegreeDict[node.data.ref.degree] += 1;
+                          if (this.maxDegreeDict[node.data.ref.degree] > this.maxDegreeCount) {
+                            this.maxDegreeCount = this.maxDegreeDict[node.data.ref.degree]
+                          }
+                        } else {
+                          this.maxDegreeDict[node.data.ref.degree] = 1;
+                          if (this.maxDegreeDict[node.data.ref.degree] > this.maxDegreeCount) {
+                            this.maxDegreeCount = this.maxDegreeDict[node.data.ref.degree]
+                          }
+                        }
+                        // console.log(this.maxDegreeCount, node.data.ref.degree);
+                        if(node.data.ref.degree>0){
+                          return node.data.ref.degree
+                        }else{
+                          return 0
+                        }
+                      })}
+                    />
+                    <XAxis numTicks={5} label="Degree" fontSize="12px" tickLabelProps={(d, i) => ({ angle: 45 })} />
+                    {this.SelectionDistanceFromLatLonIn()[1].length < 10 ?
+                      <YAxis label="Frequency" fontSize="12px" tickFormat={
+                        (tick, ti) => {
+                          // console.log(tick, this.prevTick);
+                          if (parseInt(tick).toString() == this.prevTick) {
+                            return "";
+                          } 
+                          else {
+                            this.prevTick = parseInt(tick).toString();
+                            return parseInt(tick).toString();
+                          }
+                            
+    
+                          // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                        }} />
+                      :
+                      <YAxis label="Frequency" fontSize="12px" tickFormat={
+                        (tick, ti) => {
+                            // console.log(tick);
+                            if (parseInt(tick).toString() == this.prevTick) {
+                              return "";
+                            } 
+                            else {
+                              this.prevTick = parseInt(tick).toString();
+                              return parseInt(tick).toString();
+                            }
+    
+                          // return parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString() == "0" ? "" : parseInt(tick * this.SelectionDistanceFromLatLonIn()[1].length).toString()
+                        }} />
+                    }
+                  </Histogram>
+                  {this.renderSelectDegreeBrush()}
+                </svg>
+            </div>
+  
+  
+          </div>
+        );
+      }else {
+        return <div></div>
+      }
+     
+    }
+    else if( this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {  // when no node is selected, show the result of the whole network 
       return <div
         className={classnames(
           // 'overlay-card',

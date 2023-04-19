@@ -80,13 +80,13 @@ class Sidebar extends React.Component {
                                 </td>
                             </tr>
                             <tr>
-                                <td>Graph Density</td>
+                                <td>Network Density</td>
                                 <td>
                                 {appState.graph.hasGraph ? appState.graph.density.toFixed(3) : 'loading graph'}
                                 </td>
                             </tr>
                             <tr>
-                                <td>Graph Diameter</td>
+                                <td>Network Diameter</td>
                                 <td>
                                 {appState.graph.hasGraph ? appState.graph.diameter : 'loading graph'}
                                 </td>

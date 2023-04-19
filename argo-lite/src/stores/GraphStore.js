@@ -61,7 +61,7 @@ export default class GraphStore {
 
   @observable convexNodes = [];
   @observable convexPolygons = [];
-  @observable convexPolygonsShow = false;
+  @observable convexPolygonsShow = true;
 
   @observable mapEdgeShow = true;
   @observable autoZoom = true;

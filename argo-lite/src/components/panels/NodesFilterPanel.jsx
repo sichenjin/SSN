@@ -114,7 +114,7 @@ class NodesFilterPanel extends React.Component {
                 <RangeSlider
                   min={Math.min(... appState.graph.rawGraph.nodes.map(n => n[it]))}   //uniqueValue[it][0] is computed min 
                   max={Math.max(... appState.graph.rawGraph.nodes.map(n => n[it]))} //uniqueValue[it][1] is computed max
-                  stepSize={0.01}
+                  stepSize={1}
                   labelStepSize={10}
                   className="range-slider-container"
                   onChange={([a, b]) => {

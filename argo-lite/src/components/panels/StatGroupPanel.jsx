@@ -316,6 +316,7 @@ class StatGroupPanel extends React.Component {
                                 onSelect={it => {
                                     appState.graph.convexhullby = it
                                     this.convexhull(it)
+                                    appState.graph.convexPolygonsShow = true
                                 }}
                                 value={appState.graph.convexhullby}
                             />
