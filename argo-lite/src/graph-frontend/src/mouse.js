@@ -26,9 +26,9 @@ module.exports = function (self) {
       // left-clicked empty space (i.e., not clicking a node)
       if (!self.dragging && self.selection.indexOf(selection) == -1 && !ctrl) {
         self.clearSelection();
-        appState.graph.mapClicked = null
-        appState.graph.degreeselection = []
-        appState.graph.degreebrushed = false
+        // appState.graph.mapClicked = null
+        // appState.graph.degreeselection = []
+        // appState.graph.degreebrushed = false
       }
       
 
