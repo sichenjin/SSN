@@ -18,7 +18,10 @@ export function ZoomMap() {
             nodeLoc.forEach(coords => {
                 b.extend(coords)
             })
-            map.fitBounds(b)
+            if(Object.keys(b).length > 0){
+              map.fitBounds(b)
+            }
+            
           // }
           return null;
         }   //no selection 
@@ -32,7 +35,9 @@ export function ZoomMap() {
         nodeLoc.forEach(coords => {
             b.extend(coords)
         })
-        map.fitBounds(b)
+        if(Object.keys(b).length > 0){
+          map.fitBounds(b)
+        }
     }, [appState.graph.frame.selection])
 
     return null;
