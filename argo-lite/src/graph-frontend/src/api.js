@@ -397,22 +397,22 @@ module.exports = function(self) {
     if (nodeids.length > 0 && Array.isArray(nodeids[0])) {
       nodeids = nodeids[0];
     }
-    if (self.prevHighlights) {
-      for (var i = 0; i < self.prevHighlights.length; i++) {
-        self.highlightNode(
-          self.prevHighlights[i],
-          !toggle,
-          def.SEARCH_HIGHLIGHT
-        );
-      }
-    }
+    // if (self.prevHighlights) {
+    //   for (var i = 0; i < self.prevHighlights.length; i++) {
+    //     self.highlightNode(
+    //       self.prevHighlights[i],
+    //       !toggle,
+    //       def.SEARCH_HIGHLIGHT
+    //     );
+    //   }
+    // }
     self.prevHighlights = [];
-    self.graph.forEachNode(function(node) {
-      if (nodeids.indexOf(node.id) != -1) {
-        self.highlightNode(node, toggle, def.SEARCH_HIGHLIGHT);
-        self.prevHighlights.push(node);
-      }
-    });
+    // self.graph.forEachNode(function(node) {
+    //   if (nodeids.indexOf(node.id) != -1) {
+    //     self.highlightNode(node, toggle, def.SEARCH_HIGHLIGHT);
+    //     self.prevHighlights.push(node);
+    //   }
+    // });
   };
 
   self.removeSelected = function() {

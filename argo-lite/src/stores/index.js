@@ -86,11 +86,32 @@ const loadAndDisplaySnapshotFromURL = (url) => {
 
 const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.convexPolygons =[]
+  appState.graph.modularity = undefined
+  appState.graph.convexhullby = "NULL"
+  appState.graph.groupby = "NULL"
+  appState.graph.mapClicked = undefined;
+  appState.graph.selectedNodes = [];
+  appState.graph.filter = {}
+  appState.graph.currentlyHovered = undefined;
+  appState.graph.mapClicked = undefined;
+  appState.graph.convexNodes = [];
+  appState.graph.convexPolygons = [];
+  appState.graph.pathHovered = undefined;
+  appState.graph.initialNodesShowingLabels = [];
+  appState.graph.densityDistance = [];
+  appState.graph.edgeselection = [];
+  appState.graph.degreeselection = [];
+  appState.graph.degreebrushed = false;
+  appState.graph.distanceDensityCurrentlyHovered = undefined;
+  appState.graph.distanceDensityCurrentlyClicked = [];
+  appState.graph.pinnedNodes = null;
+  appState.import.loading = true
  
   loadSnapshotFromStrapi(uuid).then(snapshotString => {
     // TODO: use more sensible snapshot name
     appState.graph.metadata.snapshotName = 'Shared';
     appState.graph.loadImmediateStates(snapshotString);
+    appState.import.loading = false;
   });
 };
 
@@ -210,7 +231,10 @@ autorun(() => {
 
 // // // resume layout by default 
 autorun(() => {
-  appState.graph.frame.paused = true;
+  
+  appState.graph.runActiveLayout();
+  setTimeout(function(){appState.graph.frame.paused = true},9000);
+  // appState.graph.frame.paused = true;
   // appState.graph.frame.resumeLayout();
                   // this.forceUpdate();
 }) 
@@ -227,6 +251,10 @@ autorun(() => {
   if (appState.graph.frame && appState.graph.initialNodesShowingLabels) {
     appState.graph.frame.showLabels(appState.graph.initialNodesShowingLabels);
     appState.graph.initialNodesShowingLabels = null;
+  }
+
+  if (appState.graph.frame && appState.graph.frame.getNodeList().length>0){  //dehilight border when innitially load 
+    appState.graph.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
   }
 });
 
@@ -247,7 +275,7 @@ autorun(() => {
   if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
     appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
   }
-  if (appState.graph.frame.selection.length > 0) {
+  if (appState.graph && appState.graph.frame && appState.graph.frame.selection.length > 0) {
     this.frame.selection = this.frame.selection.filter(x => x !== undefined)
   }
 })

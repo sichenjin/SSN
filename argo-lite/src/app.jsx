@@ -221,7 +221,7 @@ class App extends React.Component {
                 <div class="container__left">
                     {appState.graph.hasGraph && <Tag className="network-tag">Network</Tag>}
                     <main className="main">
-                      {appState.graph.hasGraph ? (
+                      {(appState.graph.hasGraph && (!appState.import.loading)) ? (
                         <ThreeJSVis />
                       ) : (
                         <WorkspaceView />
@@ -232,7 +232,7 @@ class App extends React.Component {
                 </div>
                 <div class="resizer" id="dragMe"></div>
                 <div class="container__right">
-                  {appState.graph.hasGraph ? (
+                  {(appState.graph.hasGraph && (!appState.import.loading)) ? (
                     <MapView />
                   ) : (
                     <WorkspaceView />
@@ -248,7 +248,7 @@ class App extends React.Component {
                   // borderStyle:'solid',
                   // flex:"1 1 50%"
                 }}>
-                  {appState.graph.frame && <SelectionDetail />}
+                  {appState.graph.frame &&  <SelectionDetail />}
                 </div>
                 <div style={{
                   display: "flex", height: "100%",
@@ -258,7 +258,7 @@ class App extends React.Component {
                 }}>
                   {/* {appState.graph.hasGraph && <GraphView />} */}
                   <div id="scatter-plot">
-                    {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
+                    {appState.graph.hasGraph && appState.graph.frame  && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
                   </div>
                 </div>
               </div>

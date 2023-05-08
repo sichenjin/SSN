@@ -352,6 +352,27 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
     newProjectName = 'Test Project';
   }
   appState.import.loading = true;
+  appState.graph.convexPolygons =[]
+  appState.graph.modularity = undefined
+  appState.graph.convexhullby = "NULL"
+  appState.graph.groupby = "NULL"
+  appState.graph.mapClicked = undefined;
+  appState.graph.selectedNodes = [];
+  appState.graph.filter = {}
+  appState.graph.currentlyHovered = undefined;
+  appState.graph.mapClicked = undefined;
+  appState.graph.convexNodes = [];
+  appState.graph.convexPolygons = [];
+  appState.graph.pathHovered = undefined;
+  appState.graph.initialNodesShowingLabels = [];
+  appState.graph.densityDistance = [];
+  appState.graph.edgeselection = [];
+  appState.graph.degreeselection = [];
+  appState.graph.degreebrushed = false;
+  appState.graph.distanceDensityCurrentlyHovered = undefined;
+  appState.graph.distanceDensityCurrentlyClicked = [];
+  appState.graph.pinnedNodes = null;
+
   const importConfig = {
     hasNodeFile,
     nodes: {
@@ -399,7 +420,9 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
     }
     // Newly imported graph shouldn't have label showing
     appState.graph.frame.turnOffLabelCSSRenderer();
+    // appState.import.loading = false;
   });
+  // appState.import.loading = false;
 }
 
 export function requestImportGraphFromGexf() {
@@ -470,8 +493,10 @@ async function readCSV(fileObject, hasHeader, delimiter) {
           intent: Intent.DANGER,
           timeout: -1
         });
-        appState.import.loading = false;
+        
       }
+      appState.import.loading = false;
+      appState.import.dialogOpen = false;
     }
   });
 }
@@ -599,10 +624,12 @@ async function importGraphFromCSV(config) {
 
   const addEdge = (from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily) => {
     const edgeKey = `${from}👉${to}`;
-    if (edgesSet.has(edgeKey)) {
+    const edgeKey2 = `${to}👉${from}`;
+    if (edgesSet.has(edgeKey) || edgesSet.has(edgeKey2)) {
       return;
     }
     edgesSet.add(edgeKey);
+    edgesSet.add(edgeKey2);
     var data = {
       fromlocLatY: fromlocLatY,
       fromlocLonX: fromlocLonX,
@@ -760,7 +787,7 @@ async function importGraphFromCSV(config) {
   const pathsArr = shortestPathPairs();
   const rank = pageRank(graph);
 
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] ) }));
   const nodekeyList = Object.keys(nodesArr[0])
   const nodePropertyTypes = {}
   nodekeyList.forEach(function (k) {

@@ -513,11 +513,11 @@ if(appState.graph.selectedNodes.length > 1){
                 ref={input => (this.edgesvg = input)}
               // ref = {ref}
               >
-                <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Distance Distribution</text>
+                <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Edge Distance Distribution</text>
                 <Histogram
                   ariaLabel="distance_dis"
                   orientation="vertical"
-                  label="Distance Distribution"
+                  label="Edge Distance Distribution"
                   height={this.allheight}
                   width={this.allwidth}
                   cumulative={false}
@@ -601,7 +601,7 @@ if(appState.graph.selectedNodes.length > 1){
               // ref = {ref}
               >
 
-                <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Degree Distribution</text>
+                <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Node Degree Distribution</text>
                 <Histogram
                   ariaLabel="degree_dis"
                   orientation="vertical"
@@ -773,11 +773,11 @@ if(appState.graph.selectedNodes.length > 1){
                   ref={input => (this.edgesvg = input)}
                 // ref = {ref}
                 >
-                  <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Distance Distribution</text>
+                  <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Edge Distance Distribution</text>
                   <Histogram
                     ariaLabel="distance_dis"
                     orientation="vertical"
-                    label="Distance Distribution"
+                    label="Edge Distance Distribution"
                     height={this.allheight}
                     width={this.allwidth}
                     cumulative={false}
@@ -861,7 +861,7 @@ if(appState.graph.selectedNodes.length > 1){
                 // ref = {ref}
                 >
   
-                  <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Degree Distribution</text>
+                  <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Node Degree Distribution</text>
                   <Histogram
                     ariaLabel="degree_dis"
                     orientation="vertical"
@@ -1025,7 +1025,7 @@ if(appState.graph.selectedNodes.length > 1){
               ref={input => (this.edgesvg = input)}
             // ref = {ref}
             >
-              <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Distance Distribution</text>
+              <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Edge Distance Distribution</text>
               <Histogram
                 ariaLabel="distance_dis"
                 orientation="vertical"
@@ -1087,7 +1087,7 @@ if(appState.graph.selectedNodes.length > 1){
             // ref = {ref}
             >
 
-              <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Degree Distribution</text>
+              <text x="50%" y="10%" text-anchor="middle" fontSize="12px" fontSizeAdjust="inherit">Node Degree Distribution</text>
               <Histogram
                 ariaLabel="degree_dis"
                 orientation="vertical"

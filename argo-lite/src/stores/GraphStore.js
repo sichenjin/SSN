@@ -5,10 +5,11 @@ import uniq from "lodash/uniq";
 import { averageClusteringCoefficient, connectedComponents, graphDensity, averageDegree, exactGraphDiameter } from "../services/AlgorithmUtils";
 import { ContextMenu, MenuFactory, MenuItemFactory } from "@blueprintjs/core";
 import { Frame } from "../graph-frontend";
-import appState from '../stores';
+// import appState from '../stores';
 
 export default class GraphStore {
 
+  // @observable
   initialGlobalConfig = {
     nodes: {
       colorBy: "degree",
@@ -26,7 +27,7 @@ export default class GraphStore {
       },
       labelBy: "node_id",
       shape: "circle",
-      labelSize: 0.6,
+      labelSize: 1,
       labelLength: 10,
       // filter:{}
     },
@@ -40,6 +41,7 @@ export default class GraphStore {
     }
   }
 
+  @observable watchAppearance = 1;
   @observable nodes = this.initialGlobalConfig.nodes;
   @observable edges = this.initialGlobalConfig.edges;
   @observable scatterplot = this.initialGlobalConfig.scatterplot;
@@ -49,6 +51,7 @@ export default class GraphStore {
   @observable enableDiameter = false;
   @observable enableCoefficient = true;
   @observable enableComponent = true;
+  @observable modularity = undefined;
 
   //access to process.js "self"
   @observable process = undefined;
@@ -289,9 +292,11 @@ export default class GraphStore {
   @computed
   get nodeColorScale() {
     if (this.nodes.color.scale == "Nominal Scale") { //nominal scale 
+      const nominalColor =  ["#e377c2", "#98df8a", "#ff7f0e", "#a55194", "#2ca02c", "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#1f77b4", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#9c9ede", "#8c6d31", "#ffbb78", "#bd9e39"]
+
       return scales[this.nodes.color.scale]()
         .domain([...new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))])
-        .range(this.nodes.color.nominalColor);
+        .range(nominalColor);
     } else { //linear and log scale 
       return scales[this.nodes.color.scale]()
         .domain(this.minMax[this.nodes.colorBy])
@@ -409,6 +414,10 @@ export default class GraphStore {
     if (this.frame.selection.length > 0) {
       this.frame.selection = this.frame.selection.filter(x => x !== undefined)
     }
+
+    this.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
+    this.runActiveLayout()
+
   }
 
   showNodes(nodeids) {
@@ -488,8 +497,261 @@ export default class GraphStore {
     return JSON.stringify(snapshot);
   }
 
+
+  recalculateRawgraph(initialgraph) {
+    // Since the CSV lib we use uses int index when there's not header/column names specified
+    // but the frontend selector always convert int to string values, we need to
+    // manually convert the user-selected fromId and toId values back to int.
+    // Note that this should only be done when there's no header provided on the CSV (hasColumns == false).
+    //hardcode
+    const fromId = "source_id"
+    const toId = "target_id"
+    const mapId = "ID"
+    const mapLon = "LonX"
+    const mapLat = "LatY"
+    // Create temporary data structures.
+    // rawGraph: { nodes: nodesArr, edges: edgesArr, paths: pathsArr },
+    let nodesArr =
+    initialgraph.rawGraph.nodes.map(
+        n => ({ ...n, LonX: parseFloat(n["LonX"]), LatY: parseFloat(n["LatY"]) }));
+    // let nodesArr = initialgraph.rawGraph.nodes;
+    let edgesArr = initialgraph.rawGraph.edges;
+    // let pathsDict = {};
+  
+    // const graph = createGraph();
+    // const degreeDict = {};
+    // if (config.hasNodeFile) {
+    //   // nodesArr = await readCSV(appState.import.selectedNodeFileFromInput, config.nodes.hasColumns, config.delimiter);
+    //   nodesArr = initialgraph.nodes;
+    //   nodesArr.forEach(node => graph.addNode(node[mapId].toString(),
+    //     { id: node[mapId].toString(), LatY: parseFloat(node[config.nodes.mapping.LatY]),LonX: parseFloat(node[config.nodes.mapping.LonX]),degree: 0, ...node }));
+    //   nodesArr =
+    //     nodesArr.map(
+    //       n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0, centrality: parseFloat(n['centrality']), 'dist to center': parseFloat(n['distance to center']), LonX: parseFloat(n[config.nodes.mapping.LonX]), LatY: parseFloat(n[config.nodes.mapping.LatY]) }));
+    //   nodesArr.forEach(n => degreeDict[n.id] = 0);
+    // }
+    // const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
+    // if (config.edges.createMissing) {
+    //   edges.forEach((it) => {
+    //     const from = it[fromId].toString();
+    //     const to = it[toId].toString();
+    //     if (!graph.hasNode(from)) {
+    //       graph.addNode(from, { id: from, degree: 0 });
+    //       nodesArr.push({ id: from, degree: 0, pagerank: 0 });
+    //       degreeDict[from] = 0;
+    //     }
+    //     if (!graph.hasNode(to)) {
+    //       graph.addNode(to, { id: to, degree: 0 });
+    //       nodesArr.push({ id: to, degree: 0, pagerank: 0 });
+    //       degreeDict[to] = 0;
+    //     }
+    //   });
+    // }
+  
+    // const edgesSet = new Set();
+  
+    // const edgesArr = [];
+  
+    // const addEdge = (from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily) => {
+    //   const edgeKey = `${from}👉${to}`;
+    //   if (edgesSet.has(edgeKey)) {
+    //     return;
+    //   }
+    //   edgesSet.add(edgeKey);
+    //   var data = {
+    //     fromlocLatY: fromlocLatY,
+    //     fromlocLonX: fromlocLonX,
+    //     tolocLatY: tolocLatY,
+    //     tolocLonX: tolocLonX,
+    //     withinState: withinState,
+    //     withinFamily: withinFamily,
+  
+    //   }
+    //   graph.addLink(from, to, data);
+  
+    //   degreeDict[from] += 1;
+    //   degreeDict[to] += 1;
+    //   edgesArr.push({
+    //     source_id: from,
+    //     target_id: to,
+    //     fromlocLatY: fromlocLatY,
+    //     fromlocLonX: fromlocLonX,
+    //     tolocLatY: tolocLatY,
+    //     tolocLonX: tolocLonX,
+    //     withinState: withinState,
+    //     withinFamily: withinFamily
+    //   });
+    // };
+  
+    if (nodesArr[0].LatY !== undefined && nodesArr[0].LonX !== undefined) {  //node has spatial location info
+      edgesArr.forEach(it => {
+        const fromnode = nodesArr.filter((node)=>{return node.id === it[fromId].toString()})
+        const tonode = nodesArr.filter((node)=>{return node.id === it[toId].toString()})
+        const Nonloc = 360
+        if(fromnode.length > 0 && tonode.length >0){
+        it.fromlocLatY = parseFloat(fromnode[0].LatY)
+        it.fromlocLonX = parseFloat(fromnode[0].LonX)
+        it.tolocLatY = parseFloat(tonode[0].LatY)
+        it.tolocLonX = parseFloat(tonode[0].LonX) }
+        else{
+        it.fromlocLatY = Nonloc
+        it.fromlocLonX = Nonloc
+        it.tolocLatY = Nonloc
+        it.tolocLonX = Nonloc
+        }// observable array???
+        it.withinState = true
+        it.withinFamily = true
+        
+        // addEdge(from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily);
+        
+      });
+    } 
+
+    const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+      var p = 0.017453292519943295;    // Math.PI / 180
+      var c = Math.cos;
+      var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) *
+        (1 - c((lon2 - lon1) * p)) / 2;
+  
+      return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+    }
+  
+    // calculate the diatance to centern/ average lat/lon
+    // const calDIstanceToCenter = () => {
+    //   const latlist = nodesArr.map(n => n['LatY'])
+    //   const lonlist = nodesArr.map(n => n['LonX'])
+    //   const average = (array) => array.reduce((a, b) => a + b) / array.length;
+    //   var avgLat
+    //   var avgLon
+    //   if (latlist.length > 0 && lonlist.length > 0) {
+    //     avgLat = average(latlist)
+    //     avgLon = average(lonlist)
+    //     nodesArr.forEach(function (n, i) {
+    //       n['distance to center'] = calDistanceFromLatLonInKm(avgLat, avgLon, latlist[i], lonlist[i])
+    //     })
+    //   }
+    // }
+  
+  
+    const calMedianCenter = ()=>{
+      const latlist = nodesArr.map(n => parseFloat(n['LatY']))
+      const lonlist = nodesArr.map(n => parseFloat(n['LonX']))
+      const medianCenter = (values)=>{
+        if(values.length ===0) throw new Error("No inputs");
+  
+        const result1 = [...values].sort((a, b) => a - b)
+      
+        // values.sort(function(a,b){
+        //   return a-b;
+        // });
+      
+        var half = Math.floor(result1.length / 2);
+        
+        if (result1.length % 2)
+          return result1[half];
+        
+        return (result1[half - 1] + result1[half]) / 2.0;
+      }
+  
+      if (latlist.length > 0 && lonlist.length > 0) {
+        const medianLat = medianCenter(latlist)
+        const medianLon = medianCenter(lonlist)
+        nodesArr.forEach(function (n, i) {
+          n['distance to center'] = calDistanceFromLatLonInKm(medianLat, medianLon, latlist[i], lonlist[i])
+        })
+      }
+  
+  
+    }
+  
+    if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
+      // calDIstanceToCenter();
+    calMedianCenter();
+  
+    }
+
+    // const shortestPathPairs = () => {
+    //   let pathFinder = path.aGreedy(graph);
+      // const pathsArr = []
+    //   const pathsSet = new Set();
+  
+  
+  
+    //   graph.forEachNode(function (fromnode) {
+  
+    //     graph.forEachNode(function (tonode) {
+    //       if (fromnode.id !== tonode.id) {
+    //         const pathKey1 = `${fromnode.id}👉${tonode.id}`;
+    //         const pathKey2 = `${tonode.id}👉${fromnode.id}`;
+    //         // undirected graph:
+    //         // only add once for undirected graph 
+    //         if (!(pathsSet.has(pathKey1)) && !(pathsSet.has(pathKey2)) ) {
+    //           pathsSet.add(pathKey1);
+    //           pathsSet.add(pathKey2);
+    //           pathsArr.push({
+    //            "source":fromnode.id,
+    //            "target":tonode.id,
+    //           "path": pathFinder.find(fromnode.id, tonode.id),
+    //           "distance": calDistanceFromLatLonInKm(fromnode.data.LatY, fromnode.data.LonX, tonode.data.LatY, tonode.data.LonX)
+            
+    //          })
+    //         }
+             
+    //         //directed graph: 
+    //       }
+  
+    //     })
+  
+    //   })
+    //   // console.log(nodesArr.length)
+    //   // console.log(pathsArr.length)
+    //   return pathsArr
+  
+    // }
+    // const pathsArr = shortestPathPairs();
+    // const rank = pageRank(graph);
+  
+    // nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
+    const nodekeyList = Object.keys(nodesArr[0])
+    const nodePropertyTypes = {}
+    nodekeyList.forEach(function (k) {
+      nodePropertyTypes[k] = typeof (nodesArr[0][k])
+    })
+    const uniqueValue = {}
+    nodekeyList.forEach(function (k, i) {
+  
+      if (nodePropertyTypes[k] == 'string') {
+        uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+      } else {
+        const valuea = nodesArr.map(function (el) { return el[k]; })
+        const minv = Math.min(...valuea)
+        const maxv = Math.max(...valuea)
+        uniqueValue[k] = [minv, maxv]
+      }
+    })
+    return {
+      rawGraph: { nodes: nodesArr, edges: edgesArr, paths: [] },
+      metadata: {
+        snapshotName: 'Untitled Graph',
+        fullNodes: nodesArr.length,
+        fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
+        nodeProperties: nodekeyList,
+        nodePropertyTypes: nodePropertyTypes,
+        uniqueValue: uniqueValue,
+        nodeComputed: ['pagerank', 'degree', 'distance to center'],
+        edgeProperties: ['source_id', 'target_id'],
+       
+      },
+    }
+
+  }
+
+
+
   @action
   loadImmediateStates(savedStatesStr) {
+    this.runActiveLayout();
     const savedStates = JSON.parse(savedStatesStr);
     this.savedStates = savedStates;
     if (!savedStates) {
@@ -504,15 +766,24 @@ export default class GraphStore {
     this.overrides.clear();
     this.overrides.merge(savedOverrides);
 
-    if (savedStates.metadata) {
-      this.metadata = savedStates.metadata;
-    }
+    
     if (savedStates.global) {
       this.nodes = savedStates.global.nodes;
       this.edges = savedStates.global.edges ? savedStates.global.edges : this.edges;
     }
     // The following lines trigger autoruns.
-    this.rawGraph = savedStates.rawGraph;
+    // recalculate rawgraph 
+    const recalculateGraph = this.recalculateRawgraph(savedStates);
+    this.rawGraph = recalculateGraph.rawGraph;
+    this.metadata = recalculateGraph.metadata;
+    // this.rawGraph = savedStates.rawGraph;
+    // if (savedStates.metadata) {
+    //   this.metadata = savedStates.metadata;
+    // }
+    
+  
+    // appState.import.loading = false;
+    //
     if (savedStates.positions) {
       this.positions = savedStates.positions;
     }
@@ -526,24 +797,37 @@ export default class GraphStore {
       this.pinnedNodes = new Set(savedStates.pinnedNodes);
     }
 
+    this.scatterplot.x = 'degree';
+    this.scatterplot.y = 'distance to center';
 
-    this.runActiveLayout();
+
+    // this.runActiveLayout();
+    // appState.graph.frame.paused = true;
+  //   appState.graph.frame.paused = false;
+  // appState.graph.frame.resumeLayout();
+  //                 this.forceUpdate();
+  
+
+                      // this.frame.resumeLayout();
+                      // this.forceUpdate();
   }
 
 
   //resumes graph layout for a set duration before smart-pausing
-  runActiveLayout() {
+  runActiveLayout  () {
     if (this.frame) {
       this.frame.paused = false;
     }
     this.smartPause.defaultActive.isActive = true;
     this.smartPause.defaultActive.startTime = Date.now();
     this.smartPause.smartPaused = false;
+    // this.frame.paused = true;
+    
   }
 
   //selects which nodes should be pinned based on saved state of loaded snapshot
   pinNodes() {
-    if (this.pinnedNodes) {
+    if (this.pinnedNodes && this.pinnedNodes.size >0) {
       let nodesToPin = [];
       let that = this; //"this" will not work inside of forEach, so it needs to be stored
       this.process.graph.forEachNode(function (n) {

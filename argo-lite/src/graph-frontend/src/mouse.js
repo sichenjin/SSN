@@ -111,12 +111,12 @@ module.exports = function (self) {
       self.colorNodeEdge(null);
       appState.graph.currentlyHovered = null;
     }
-    if (self.prevHighlights != undefined) {
-      for (var i = 0; i < self.prevHighlights.length; i++) {
-        self.colorNodeOpacity(self.prevHighlights[i], 1);
-        self.highlightNode(self.prevHighlights[i], true, def.SEARCH_HIGHLIGHT);
-      }
-    }
+    // if (self.prevHighlights != undefined) {
+    //   for (var i = 0; i < self.prevHighlights.length; i++) {
+    //     self.colorNodeOpacity(self.prevHighlights[i], 1);
+    //     self.highlightNode(self.prevHighlights[i], true, def.SEARCH_HIGHLIGHT);
+    //   }
+    // }
   };
   
 

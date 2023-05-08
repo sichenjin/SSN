@@ -17,6 +17,8 @@ import {
 } from "@blueprintjs/core";
 
 import appState from "../../stores";
+import createGraph from 'ngraph.graph';
+import path from 'ngraph.path';
 
 
 import axios from 'axios'
@@ -33,7 +35,7 @@ class StatGroupPanel extends React.Component {
         };
     }
 
-    @observable modularity = undefined;
+    
     runcommunity = () => {
         appState.graph.convexPolygons = []
 
@@ -55,7 +57,7 @@ class StatGroupPanel extends React.Component {
             // https://snoman.herokuapp.com/flask/community', querydict).then(
             (response) => {
                 var communityDict = response.data.message;
-                this.modularity = response.data.modularity;
+                appState.graph.modularity = response.data.modularity;
                 appState.graph.rawGraph.nodes.forEach((node) => {
                     node.community = communityDict[node.id] ? String.fromCharCode(communityDict[node.id] + 97)  : 'a'
                 })
@@ -86,6 +88,8 @@ class StatGroupPanel extends React.Component {
 
                 appState.graph.nodes.convexhullby = "community"
                 appState.graph.nodes.groupby = "community"
+                appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+
                 
                 // console.log(result);
             },
@@ -93,6 +97,78 @@ class StatGroupPanel extends React.Component {
                 console.log(error);
             }
         );
+    }
+
+    runShortestPath = () =>{
+        
+
+        const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+            var p = 0.017453292519943295;    // Math.PI / 180
+            var c = Math.cos;
+            var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+              c(lat1 * p) * c(lat2 * p) *
+              (1 - c((lon2 - lon1) * p)) / 2;
+        
+            return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+          }
+        
+        const graph = createGraph();
+        
+        // hardcode LatY and LonX for sample dataset 
+        appState.graph.rawGraph.nodes.forEach(node => graph.addNode(node["id"].toString(),  { LatY: parseFloat(node["LatY"]),LonX: parseFloat(node["LonX"]) }))
+        appState.graph.rawGraph.edges.forEach(edge => graph.addLink(edge["source_id"], edge["target_id"]));
+
+        const shortestPathPairs = () => {
+            let pathFinder = path.aGreedy(graph);
+            const pathsArr = []
+            const pathsSet = new Set();
+        
+        
+        
+            graph.forEachNode(function (fromnode) {
+        
+              graph.forEachNode(function (tonode) {
+                if (fromnode.id !== tonode.id) {
+                  const pathKey1 = `${fromnode.id}👉${tonode.id}`;
+                  const pathKey2 = `${tonode.id}👉${fromnode.id}`;
+                  const edgeinfo = appState.graph.rawGraph.edges.filter((edge)=>{
+                    return (edge.source_id === fromnode.id && edge.target_id === tonode.id)
+                  })
+                  let pairdist = calDistanceFromLatLonInKm(fromnode.data.LatY, fromnode.data.LonX, tonode.data.LatY, tonode.data.LonX)
+                  
+                  
+                  
+                  // undirected graph:
+                  // only add once for undirected graph 
+                  if (!(pathsSet.has(pathKey1)) && !(pathsSet.has(pathKey2)) ) {
+                    pathsSet.add(pathKey1);
+                    pathsSet.add(pathKey2);
+                    pathsArr.push({
+                     "source":fromnode.id,
+                     "target":tonode.id,
+                    "path": pathFinder.find(fromnode.id, tonode.id),
+                    "distance": pairdist
+                  
+                   })
+                  }
+                   
+                  //directed graph: 
+                }
+                
+              })
+        
+            })
+            // console.log(nodesArr.length)
+            // console.log(pathsArr.length)
+            return pathsArr
+        
+          }
+          appState.graph.rawGraph.paths = shortestPathPairs();
+          appState.graph.metadata.nodeComputed.push('shortest path')
+            appState.graph.metadata.nodeComputed.push('pair distance')
+            appState.graph.scatterplot.x = 'pair distance'
+            appState.graph.scatterplot.y = 'shortest path'
+
     }
 
     findcliques = () => {
@@ -202,6 +278,7 @@ class StatGroupPanel extends React.Component {
                 appState.graph.nodes.color.scale = "Nominal Scale"
                 appState.graph.nodes.colorBy = group
                 appState.graph.convexPolygonsShow = true
+                appState.graph.watchAppearance = appState.graph.watchAppearance + 1
                 
                 // const selectionNode = appState.graph.frame.getNodeList().filter(node =>
                 //     // console.log(node)
@@ -271,6 +348,7 @@ class StatGroupPanel extends React.Component {
                 appState.graph.groupby = group
                 appState.graph.nodes.colorBy = group
                 appState.graph.nodes.color.scale = "Nominal Scale"
+                appState.graph.watchAppearance = appState.graph.watchAppearance + 1
 
 
             },
@@ -289,11 +367,15 @@ class StatGroupPanel extends React.Component {
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
+                        onClick={this.runShortestPath}>Run Shortest Path</Button>
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
                         onClick={this.runcommunity}>Run Community</Button>
                         {/* <button style={{height: "100%"}} onClick={this.runcommunity} type="button">
                             Run Community
                         </button> */}
-                    {this.modularity? <text className="modularity-tag" style={{fontSize: "8px"} } >{"Q value: " + parseFloat(this.modularity).toFixed(3)}</text>: null}
+                    {appState.graph.modularity? <text className="modularity-tag" style={{fontSize: "8px"} } >{"Q value: " + parseFloat(appState.graph.modularity).toFixed(3)}</text>: null}
                     {/* <Button
                         style={{ position: 'absolute', top: '50px', left: '500px', zIndex: '1000' }}
                         onClick={this.findcliques}>Find Cliques</Button> */}

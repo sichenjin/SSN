@@ -50,7 +50,7 @@ class HelpDialog extends React.Component {
                     <td>Drag with 3 finger</td>
                   </tr>
                   <tr>
-                    <td>Adjust view Size</td>
+                    <td>Adjust view size</td>
                     <td>Drag the view borders between the left and right view and between the top and bottom view. </td>
                     <td>Not supported</td>
                   </tr>

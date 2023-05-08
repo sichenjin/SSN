@@ -43,7 +43,8 @@ class GlobalPanel extends React.Component {
                 <span style={{float:"right"}}>
                   <SimpleSelect  
                     items={appState.graph.filterKeyList}
-                    onSelect={it => (appState.graph.nodes.colorBy = it)}
+                    onSelect={it => {appState.graph.nodes.colorBy = it
+                      appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
                     value={appState.graph.nodes.colorBy}
                   />
                 </span>
@@ -54,7 +55,8 @@ class GlobalPanel extends React.Component {
                 <span style={{float:"right"}}>
                   <SimpleSelect
                     items={Object.keys(scales)}
-                    onSelect={it => (appState.graph.nodes.color.scale = it)}
+                    onSelect={it => {appState.graph.nodes.color.scale = it
+                      appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
                     value={appState.graph.nodes.color.scale}
                   />
                 </span>
@@ -81,7 +83,8 @@ class GlobalPanel extends React.Component {
                       />
                       <SketchPicker
                         color={appState.graph.nodes.color.from}
-                        onChange={it => (appState.graph.nodes.color.from = it.hex)}
+                        onChange={it => {appState.graph.nodes.color.from = it.hex
+                          appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
                       />
                     </Popover2>
                     &nbsp; &#8594; &nbsp;
@@ -102,7 +105,8 @@ class GlobalPanel extends React.Component {
                     />
                     <SketchPicker
                       color={appState.graph.nodes.color.to}
-                      onChange={it => (appState.graph.nodes.color.to = it.hex)}
+                      onChange={it => {appState.graph.nodes.color.to = it.hex
+                        appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
                     />
                   </Popover2>
                 </span>

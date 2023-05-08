@@ -32,7 +32,7 @@ import { LOGO_URL, GITHUB_URL, SAMPLE_GRAPH_SNAPSHOTS } from '../constants';
 
 
 import axios from 'axios'
-import { observable, computed, action, runInAction } from "mobx";
+import { observable, computed,reaction, action, runInAction } from "mobx";
 
 import { Tab2, Tabs2, Tag } from "@blueprintjs/core";
 import NodesPanel from "./panels/NodesPanel";
@@ -43,6 +43,16 @@ import NodesFilterPanel from "./panels/NodesFilterPanel";
 @observer
 class RegularNavbar extends React.Component {
   @observable modularity = undefined;
+
+  // reaction(
+  //   () => appState.graph.smartPause.smartPaused,
+  //   () => {
+  //       this.forceUpdate()
+  //     }
+    
+  // );
+
+  
   runcommunity = () => {
     appState.graph.convexPolygons = []
 
@@ -329,7 +339,7 @@ class RegularNavbar extends React.Component {
                   text="Import from CSV..."
                   onClick={() => (appState.import.dialogOpen = true)}
                 />
-                {/* <MenuItem
+                <MenuItem
                   iconName="import"
                   text="Import from GEXF..."
                   onClick={() => (appState.import.gexfDialogOpen = true)}
@@ -352,7 +362,7 @@ class RegularNavbar extends React.Component {
                   iconName="pt-icon-document-share"
                   text="Publish and Share Snapshot"
                   onClick={() => { appState.preferences.shareDialogOpen = true }}
-                /> */}
+                />
               </Menu>
             }
             position={Position.BOTTOM}
@@ -526,7 +536,7 @@ class RegularNavbar extends React.Component {
               }
             </div>
           )}
-
+          {/* {!appState.graph.smartPause.smartPaused && this.forceUpdate()} */}
         </div>
         <div
           className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_RIGHT])} style={{height:"100%"}}

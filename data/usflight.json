@@ -8622,7 +8622,8 @@
         ],
         "nodeComputed": [
             "pagerank",
-            "degree"
+            "degree",
+            "distance to center"
         ],
         "edgeProperties": [
             "source_id",
@@ -8631,13 +8632,13 @@
     },
     "global": {
         "nodes": {
-            "colorBy": "pagerank",
+            "colorBy": "degree",
             "color": {
                 "scale": "Linear Scale",
                 "from": "#448AFF",
                 "to": "#E91E63"
             },
-            "sizeBy": "pagerank",
+            "sizeBy": "degree",
             "size": {
                 "min": 2,
                 "max": 10,
@@ -8646,10 +8647,12 @@
             "labelBy": "node_id",
             "shape": "circle",
             "labelSize": 1,
-            "labelLength": 10
+            "labelLength": 8,
+            "filter": {}
         },
         "edges": {
-            "color": "#7f7f7f"
+            "color": "#7f7f7f",
+            "crossColor": "#0055aa"
         }
     }
 }

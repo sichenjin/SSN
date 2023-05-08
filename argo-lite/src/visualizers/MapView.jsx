@@ -66,7 +66,7 @@ class MapView extends React.Component {
   get neighborNodesID() {
     const neighborIDs = []
     // const neighborTosID = []
-    if (appState.graph.currentlyHovered) {
+    if (appState.graph.currentlyHovered && appState.graph.currentlyHovered.links) {
       for (var j = 0; j < appState.graph.currentlyHovered.links.length; j++) {
         neighborIDs.push(appState.graph.currentlyHovered.links[j].fromId);
         neighborIDs.push(appState.graph.currentlyHovered.links[j].toId);
@@ -298,6 +298,8 @@ class MapView extends React.Component {
     // return {fillColor: node.renderData.color , fillOpacity: node.renderData.draw_object.material.opacity, stroke: node.renderData.draw_object.children[0].material.color}
 
     // //no hover and selection 
+    console.log(appState.graph.watchAppearance)
+    // appState.graph.frame.paused = true;
 
     if(appState.graph.degreeselection.length>0){
       if (appState.graph.degreeselection.indexOf(node) == -1) {

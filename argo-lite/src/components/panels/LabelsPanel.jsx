@@ -58,8 +58,8 @@ class LabelsPanel extends React.Component {
         <text className="option-font">Label Size</text>
         <Slider
         style ={{left:"10%", width:"80%"}}
-          min={0.1}
-          max={1}
+          min={1}
+          max={2}
           stepSize={0.1}
           labelStepSize={0.5}
           onChange={value => {
@@ -72,10 +72,10 @@ class LabelsPanel extends React.Component {
         <Slider
         style ={{left:"10%", width:"80%"}}
           min={1}
-          max={32}
+          max={20}
           
-          stepSize={0.1}
-          labelStepSize={10}
+          stepSize={1}
+          labelStepSize={5}
           onChange={value => {
             appState.graph.nodes.labelLength = value;
           }}
