@@ -1,21 +1,20 @@
-# Argo Lite
+# SNoMaN 
 
-[![Build Status](https://travis-ci.org/poloclub/argo-graph-lite.svg?branch=master)](https://travis-ci.org/poloclub/argo-graph-lite)
+<!-- [![Build Status](https://travis-ci.org/poloclub/argo-graph-lite.svg?branch=master)](https://travis-ci.org/poloclub/argo-graph-lite) -->
 
 An interactive graph visualization system that runs in your web browsers. No installation needed.
 
-[**Live Demo** - Launch Argo Lite in your browser](https://poloclub.github.io/argo-graph-lite/)
+[**Live Demo** - Launch SNoMaN in your browser](https://snoman.herokuapp.com/)
 
-<img src="img/new_readme-logo.png" width=60% alt="Argo Lite logo">
+<!-- <img src="img/Snoman title.png" width=60% alt="Argo Lite logo"> -->
 
 ## Documentations
 
-- [Quick Start (Visualization, Saving and Sharing Snapshots)](quickstart.md)
-- [Tutorial - Visualizing a citation graph of COVID-19 publications (Import Data, Incremental Exploration)](tutorial.md)
-- [Develop Argo Lite](development.md)
-- [Deploy Argo Lite (and custom sharing service with access)](deploy.md)
+- [Quick Start (Import spatial social network)](https://docs.google.com/document/d/1dNOX6mqdQYL2O7WKM9ZTJuhzN-5-mlHCHYu-2zEL5Pc/edit?usp=sharing)
+- [Demo Video (A story of the 1960's US Mafia families)](https://drive.google.com/file/d/1aiDzOnBjJfKchTmAyoUm8jQl7qfd9Mz0/view?usp=sharing)
 
-## Feature Highlights
+
+<!-- ## Feature Highlights
 
 ### Interactive Graph Visualization
 
@@ -55,4 +54,4 @@ Argo Lite allows you to embed your interactive graph visualization snapshots int
 
 ---
 
-♥ Developed and maintained by [Polo Club of Data Science](https://poloclub.github.io/). [MIT License](LICENSE).
+♥ Developed and maintained by [Polo Club of Data Science](https://poloclub.github.io/). [MIT License](LICENSE). -->
