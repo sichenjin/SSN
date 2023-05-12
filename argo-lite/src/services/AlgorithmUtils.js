@@ -67,8 +67,9 @@ export function convertToGexf(snapshot) {
  * @param {*} snapshot Argo-lite Snapshot Object exported by GraphStore
  */
 export function averageClusteringCoefficient(snapshot) {
-    const jsnxGraph = convertToJsnx(snapshot);
-    const result = jsnx.averageClustering(jsnxGraph);
+    // const jsnxGraph = convertToJsnx(snapshot);
+    // const result = jsnx.averageClustering(jsnxGraph);
+    const result = 0
     console.log('Computing Clustering Coefficient');
     if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
       appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
@@ -84,9 +85,10 @@ export function averageClusteringCoefficient(snapshot) {
  * @param {*} rawGraph the rawGraph inside appState
  */
 export function connectedComponents(snapshot) {
-    var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
-    console.log('compute connected copoenent')
-    return cc.componentCount();
+    // var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
+    // console.log('compute connected copoenent')
+    // return cc.componentCount();
+    return 0;
 }
 
 /**

@@ -116,7 +116,7 @@ class ScatterPlot extends React.Component {
     const selectionNodeID = []
     const svgElement = select(this.svg)
     const circles = svgElement.selectAll("circle")
-    if(selection != null) {
+    if(selection ) {
       const brushBounds = {
         x0: selection[0][0] - this.margin.left,
         x1: selection[1][0] - this.margin.left,
@@ -149,6 +149,10 @@ class ScatterPlot extends React.Component {
   
       // console.log(selectionNode)
       appState.graph.frame.updateSelectionOpacity()
+    }else{   //click to clear selection 
+      appState.graph.frame.selection = []
+      appState.graph.frame.updateSelectionOpacity()
+      
     }
     
 

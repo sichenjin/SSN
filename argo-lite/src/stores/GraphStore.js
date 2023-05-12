@@ -59,7 +59,7 @@ export default class GraphStore {
   // Updated by frame event
   @observable selectedNodes = [];
 
-  @observable filter = {}
+  filter = {}
 
 
   @observable convexNodes = [];
@@ -376,6 +376,16 @@ export default class GraphStore {
 
   filterNodes() {
     runInAction('filter nodes', () => {
+      if (this.selectedNodes.length > 0) {
+      this.selectedNodes = this.selectedNodes.filter(x => x !== undefined)
+    }
+
+    if (this.frame.selection.length > 0) {
+      this.frame.selection = this.frame.selection.filter(x => x !== undefined)
+    }
+
+    this.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
+   
       if (Object.keys(this.filter).length === 0){
         this.rawGraph.nodes = this.rawGraph.nodes.map(n => {return { ...n, isHidden: false }});
       }
@@ -412,16 +422,7 @@ export default class GraphStore {
       }
 
     });
-    if (this.selectedNodes.length > 0) {
-      this.selectedNodes = this.selectedNodes.filter(x => x !== undefined)
-    }
-
-    if (this.frame.selection.length > 0) {
-      this.frame.selection = this.frame.selection.filter(x => x !== undefined)
-    }
-
-    this.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
-    // this.runActiveLayout()
+     // this.runActiveLayout()
 
   }
 

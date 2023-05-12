@@ -210,7 +210,7 @@ autorun(() => {
 autorun(() => {
   if (appState.graph.frame) {
     console.log("Triggered");
-    appState.graph.frame.selection = []
+    // appState.graph.frame.selection = []
     appState.graph.frame.updateGraph(appState.graph.computedGraph); //loads nodes on screen when snapshot loaded
     appState.graph.frame.setAllNodesShapeWithOverride(appState.graph.nodes.shape, appState.graph.overrides);
     appState.graph.frame.setLabelRelativeSize(appState.graph.nodes.labelSize);
