@@ -18,7 +18,7 @@ import appState from "../../stores";
 import GlobalPanel from "./GlobalPanel";
 import SelectionPanel from "./SelectionPanel";
 import uniq from "lodash/uniq";
-import { averageClusteringCoefficient } from "../../services/AlgorithmUtils";
+// import { averageClusteringCoefficient } from "../../services/AlgorithmUtils";
 
 
 @observer

@@ -64,6 +64,7 @@ class LabelsPanel extends React.Component {
           labelStepSize={0.5}
           onChange={value => {
             appState.graph.nodes.labelSize = value;
+            appState.graph.watchAppearance = appState.graph.watchAppearance +1;
           }}
           value={appState.graph.nodes.labelSize}
         />
@@ -78,6 +79,7 @@ class LabelsPanel extends React.Component {
           labelStepSize={5}
           onChange={value => {
             appState.graph.nodes.labelLength = value;
+            appState.graph.watchAppearance = appState.graph.watchAppearance +1
           }}
           value={appState.graph.nodes.labelLength}
         />
@@ -87,7 +89,8 @@ class LabelsPanel extends React.Component {
           items={appState.graph.filterKeyList}
           itemRenderer={CommonItemRenderer}
           filterable={false}
-          onItemSelect={it => (appState.graph.nodes.labelBy = it)}
+          onItemSelect={it => {appState.graph.nodes.labelBy = it; appState.graph.watchAppearance = appState.graph.watchAppearance +1
+          }}
         >
           <Button text={appState.graph.nodes.labelBy} />
         </Select>

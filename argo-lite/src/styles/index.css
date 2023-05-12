@@ -286,7 +286,7 @@ html {
 .minimal-navbar-left {
   position: absolute;
   top: 35px;
-  left: 15vw;
+  left: 17vw;
   z-index: 100;
 }
 
@@ -359,6 +359,14 @@ td {
 
 .import-dialog {
   line-height: 30px;
+}
+
+#exampleNodeTable{
+font-size: 9px !important;
+}
+
+#exampleEdgeTable{
+  font-size: 9px !important;
 }
 
 .pt-non-ideal-state {

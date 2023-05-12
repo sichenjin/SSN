@@ -93,7 +93,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.selectedNodes = [];
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
-  appState.graph.mapClicked = undefined;
+  // appState.graph.mapClicked = undefined;
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -106,6 +106,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.distanceDensityCurrentlyClicked = [];
   appState.graph.pinnedNodes = null;
   appState.import.loading = true
+  appState.graph.clearBrush = false;
  
   loadSnapshotFromStrapi(uuid).then(snapshotString => {
     // TODO: use more sensible snapshot name
@@ -232,9 +233,9 @@ autorun(() => {
 // // // resume layout by default 
 autorun(() => {
   
-  appState.graph.runActiveLayout();
-  setTimeout(function(){appState.graph.frame.paused = true},9000);
-  // appState.graph.frame.paused = true;
+  // appState.graph.runActiveLayout();
+  // setTimeout(function(){appState.graph.frame.paused = true},9000);
+  appState.graph.frame.paused = true;
   // appState.graph.frame.resumeLayout();
                   // this.forceUpdate();
 }) 

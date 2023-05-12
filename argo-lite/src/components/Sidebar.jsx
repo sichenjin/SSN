@@ -76,28 +76,28 @@ class Sidebar extends React.Component {
                             <tr>
                                 <td>Average Degree</td>
                                 <td>
-                                {appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'loading graph'}
+                                {appState.graph.hasGraph ? appState.graph.degree().toFixed(3) : 'loading graph'}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Network Density</td>
                                 <td>
-                                {appState.graph.hasGraph ? appState.graph.density.toFixed(3) : 'loading graph'}
+                                {appState.graph.hasGraph ? appState.graph.density().toFixed(3) : 'loading graph'}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Network Diameter</td>
                                 <td>
-                                {appState.graph.hasGraph ? appState.graph.diameter : 'loading graph'}
+                                {appState.graph.hasGraph ? appState.graph.diameter() : 'loading graph'}
                                 </td>
                             </tr>
                             <tr>
                                 <td>Clustering<br></br>Coefficient</td>
-                                <td>{(appState.graph.hasGraph) ? appState.graph.averageClustering.toFixed(3) : 'loading graph'}</td>
+                                <td>{(appState.graph.hasGraph) ? appState.graph.averageClustering().toFixed(3) : 'loading graph'}</td>
                             </tr>
                             <tr>
                                 <td>Connected <br></br>Component</td>
-                                <td>{(appState.graph.hasGraph) ? appState.graph.components : 'loading graph'}</td>
+                                <td>{(appState.graph.hasGraph) ? appState.graph.components() : 'loading graph'}</td>
 
                             </tr>
                         </tbody>

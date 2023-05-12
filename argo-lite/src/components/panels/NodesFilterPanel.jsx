@@ -80,9 +80,11 @@ class NodesFilterPanel extends React.Component {
                     // console.log(appState.graph.filter[it][0])
                   }}
                   tag={selectit => { return selectit }}
-                  value={this.state[it + '_filterlist']}
+                  value={(Object.keys(appState.graph.filter).length === 0) ? []:this.state[it + '_filterlist']}
+
                   tagprops={{
                     fill:true ,
+                    placeholder: '  ',
                     onRemove: selectit => {
                       var self = this
                       var deselectIndex0 = this.state[it + '_filterlist'].indexOf(selectit)

@@ -105,6 +105,7 @@ class ScatterPlot extends React.Component {
     appState.graph.frame.selection = []
     appState.graph.selectedNodes = []
     appState.graph.edgeselection = []
+    appState.graph.clearBrush = false;
 
   }
   onBrush = ({ target, type, selection, sourceEvent }) => {
@@ -158,7 +159,7 @@ class ScatterPlot extends React.Component {
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
       // transform={"translate(0," + this.margin.top +")"}
-
+      selection = {appState.graph.clearBrush? null:undefined}
       extent={
         [[this.margin.left,  this.margin.top], [this.width + this.margin.left, this.height + this.margin.top ]]
       }
@@ -362,7 +363,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(20vw, 27vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
+                <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -377,8 +378,9 @@ class ScatterPlot extends React.Component {
                     }) : axisBottom().scale(x)
                   }
                 />
-                <text
-                  transform={"translate(-40, 120) rotate(-90)"}
+                <text 
+                 style={{ transform: "translate(-3vw, 21vh) rotate(-90deg)", }}
+                  // transform={"translate(-3vw, 21vh) rotate(-90deg)"}
                   fontSize="12px"
                 >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
                 <Axis
@@ -412,7 +414,7 @@ class ScatterPlot extends React.Component {
           </div>
           <Button
             className="bp4-button"
-            style={{ transform: "translate(35vw, -0.5vh)", }}
+            style={{ transform: "translate(35vw, 1vh)", }}
             onClick={() => {
               var svgsaver = new SvgSaver();                      // creates a new instance
               var svg = document.querySelector('#scatterplot');         // find the SVG element
@@ -424,7 +426,7 @@ class ScatterPlot extends React.Component {
             <CSVLink data={this.state.csvarray} onClick={this.downloadCSV} asyncOnClick={true} filename="bsedata.csv">
               <Button
                 className="bp4-button"
-                style={{ transform: "translate(12vw, -0.5vh)", }}
+                style={{ transform: "translate(12vw, 1.0vh)", }}
 
               >Download CSV
               </Button>

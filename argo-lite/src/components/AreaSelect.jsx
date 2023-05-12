@@ -68,7 +68,7 @@ export default function AreaSelect() {
       //     return { fillColor: node.renderData.color , fillOpacity: 0.9, stroke: def.NODE_HIGHLIGHT, zIndex:'10000' }
       //   }
       // }
-      appState.graph.selectedNodes = []
+      // appState.graph.selectedNodes = []
       appState.graph.selectedNodes = selectionNode
       appState.graph.frame.selection = selectionNode
       appState.graph.frame.updateSelectionOpacity()

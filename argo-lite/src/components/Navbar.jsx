@@ -339,30 +339,30 @@ class RegularNavbar extends React.Component {
                   text="Import from CSV..."
                   onClick={() => (appState.import.dialogOpen = true)}
                 />
-                <MenuItem
+                {/* <MenuItem
                   iconName="import"
                   text="Import from GEXF..."
                   onClick={() => (appState.import.gexfDialogOpen = true)}
-                />
-                <MenuItem
+                /> */}
+                {/* <MenuItem
                   iconName="pt-icon-document-open"
                   text="Open Snapshot"
                   onClick={() => { appState.preferences.openSnapshotDialogOpen = true }}
                 />
-                <MenuDivider />
-                <MenuItem
+                <MenuDivider /> */}
+                {/* <MenuItem
                   iconName="download"
                   text="Save Snapshot"
                   onClick={() => {
                     appState.project.stringCopyOfSnapshot = appState.graph.saveImmediateStates();
                     appState.project.isSaveSnapshotDialogOpen = true
                   }}
-                />
-                <MenuItem
+                /> */}
+                {/* <MenuItem
                   iconName="pt-icon-document-share"
                   text="Publish and Share Snapshot"
                   onClick={() => { appState.preferences.shareDialogOpen = true }}
-                />
+                /> */}
               </Menu>
             }
             position={Position.BOTTOM}
@@ -534,6 +534,26 @@ class RegularNavbar extends React.Component {
                 />
               </Tooltip>
               }
+              {/* {                    {appState.graph.hasGraph && <Button className={"pt-small"} text="Clear Selection and Filter" onClick={() => (appState.graph.overrides = new Map())} />}} */}
+              <div className="pt-button-group">
+              <a className="pt-button pt-icon-refresh"  role="button" onClick={() => {
+                appState.graph.mapClicked = undefined;
+                appState.graph.selectedNodes = [];
+                appState.graph.frame.selection = []
+                appState.graph.filter  = {}
+                appState.graph.currentlyHovered = undefined;
+                // appState.graph.mapClicked = undefined;
+                appState.graph.edgeselection = [];
+                appState.graph.degreeselection = [];
+                appState.graph.degreebrushed = false;
+                appState.graph.distanceDensityCurrentlyHovered = undefined;
+                appState.graph.distanceDensityCurrentlyClicked = [];
+                appState.graph.clearBrush = true;
+                appState.graph.filterNodes()
+                appState.graph.frame.updateSelectionOpacity()
+                // this.forceUpdate();
+              }}> Clear All Selections and Filters</a>
+              </div>
             </div>
           )}
           {/* {!appState.graph.smartPause.smartPaused && this.forceUpdate()} */}

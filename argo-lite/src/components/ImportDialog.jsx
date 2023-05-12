@@ -166,12 +166,12 @@ class ImportDialog extends React.Component {
           checked={edgeFile.hasColumns}
           onChange={() => (edgeFile.hasColumns = !edgeFile.hasColumns)}
         />
-        <Switch
+        {/* <Switch
           label="Create Missing Nodes"
           checked={edgeFile.createMissing}
           disabled={this.state.available === ONLY_EDGE_FILE}
           onChange={() => (edgeFile.createMissing = !edgeFile.createMissing)}
-        />
+        /> */}
         {edgeFile.ready && (
           <div className="column-selection">
             <PreviewTable file={edgeFile} />
@@ -218,6 +218,52 @@ class ImportDialog extends React.Component {
     )
   }
 
+  renderExampleDataset(){
+    return(
+      <div id="exampleTable" className={classnames(Classes.DIALOG_BODY)}>
+        <p>Required attributes for nodelist.csv. Each row of the node table should represent attributes of a node, including at least a unique node ID and the node's longitude and latitude. </p>
+                    <table id="exampleNodeTable" className={Classes.TABLE} style={{width: '100%' }}>
+                        <thead >
+                            <tr>
+                                <th > ID (unique node ID field) </th>
+                                <th> LonX (node longitude ) </th>
+                                <th> LatY (node latitude ) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"APL"</td>
+                                <td>67.2391</td>
+                                <td>-102.3472</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    <p>Required attributes for edgelist.csv. Each row of the edge table should represent attributes of an edge, including at least a source and target column corresponding to the node ID. </p>
+                    <table id = "exampleEdgeTable" className={Classes.TABLE} style={{width: '100%' }}>
+                        <thead>
+                            <tr>
+                                <th > Source </th>
+                                <th> Target </th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"APL"</td>
+                                <td>"FWL"</td>
+                
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    <p>Example Dateset:</p>
+                    <a className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1_OIDSbUyM9gTqziVdcqU_NsGxkk6HMTo/view?usp=share_link"> US_airport_nodelist.csv</a>
+                    <a className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1cvOUir8gKDlS_hhNGL0qQOn2eNHCDsOU/view?usp=share_link"> US_airport_edgelist.csv</a>
+                </div>
+    )
+  }
+
   render() {
     return (
       <Dialog
@@ -238,12 +284,13 @@ class ImportDialog extends React.Component {
             <div className={classnames(Classes.DIALOG_BODY, "import-dialog")}>
               I have:
               <SimpleSelect
-                items={[ONLY_EDGE_FILE, NODE_AND_EDGE_FILE]}
+                items={[ NODE_AND_EDGE_FILE]}
                 value={this.state.available}
                 onSelect={this.changeAvailable}
               />
               {this.renderNodesSelection()}
               {this.renderEdgesSelection()}
+              {this.renderExampleDataset()}
               {this.renderDelimiterSelection()}
               <hr />
               <PostImportOptions />

@@ -64,7 +64,7 @@ class FilterDialog extends React.Component {
                           {appState.graph.hasGraph ? appState.graph.diameter : 'loading graph'}
                         </td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>Clustering Coefficient</td>
                         <td>{(appState.graph.hasGraph & appState.preferences.filterDialogOpen) ? appState.graph.averageClustering : 'loading graph'}</td>
                     </tr>
@@ -72,7 +72,7 @@ class FilterDialog extends React.Component {
                         <td>Connected Component</td>
                         <td>{(appState.graph.hasGraph & appState.preferences.filterDialogOpen) ? appState.graph.components : 'loading graph'}</td>
 
-                    </tr>
+                    </tr> */}
                 </tbody>
             </table>
           </div>

@@ -76,6 +76,7 @@ export default class GraphStore {
 
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
+  @observable clearBrush = false;
 
   //  // Currently Clicked to frozen node on network
   //  @observable networkClicked = undefined;
@@ -213,7 +214,7 @@ export default class GraphStore {
     if (this.selectedNodes.length > 0) {
       const neighborIDs = []
       for (var j = 0; j < this.selectedNodes.length; j++) {
-        if (!this.selectedNodes[j]) continue
+        if (!this.selectedNodes[j] || !this.selectedNodes[j].links) continue
         this.selectedNodes[j].links.forEach((link) => {
           neighborIDs.push(link.fromId);
           neighborIDs.push(link.toId);
@@ -375,6 +376,10 @@ export default class GraphStore {
 
   filterNodes() {
     runInAction('filter nodes', () => {
+      if (Object.keys(this.filter).length === 0){
+        this.rawGraph.nodes = this.rawGraph.nodes.map(n => {return { ...n, isHidden: false }});
+      }
+
       if (Object.keys(this.filter).length !== 0) {
 
 
@@ -416,7 +421,7 @@ export default class GraphStore {
     }
 
     this.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
-    this.runActiveLayout()
+    // this.runActiveLayout()
 
   }
 
@@ -908,7 +913,7 @@ export default class GraphStore {
    * Graph algorithms used in StatisticsDialog.
    */
 
-  get averageClustering() {
+  averageClustering() {
     const snapshot = {
       rawGraph: this.rawGraph,
     };
@@ -916,31 +921,31 @@ export default class GraphStore {
   }
 
 
-  get components() {
+  components() {
     const snapshot = {
       rawGraph: this.rawGraph,
     };
     return connectedComponents(snapshot);
   }
 
-  @computed
-  get density() {
+ 
+  density() {
     const snapshot = {
       rawGraph: this.rawGraph,
     };
     return graphDensity(snapshot);
   }
 
-  @computed
-  get degree() {
+ 
+  degree() {
     const snapshot = {
       rawGraph: this.rawGraph,
     };
     return averageDegree(snapshot);
   }
 
-  @computed
-  get diameter() {
+
+  diameter() {
     const snapshot = {
       rawGraph: this.rawGraph,
     };

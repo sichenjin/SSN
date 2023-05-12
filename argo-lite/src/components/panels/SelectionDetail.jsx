@@ -173,6 +173,7 @@ if(appState.graph.selectedNodes.length > 1){
     // appState.graph.frame.selection = []
     // appState.graph.selectedNodes = []
     appState.graph.edgeselection = []
+    appState.graph.clearBrush = false
 
   }
   onEdgeBrush = ({ target, type, selection, sourceEvent }) => {
@@ -235,6 +236,7 @@ if(appState.graph.selectedNodes.length > 1){
       // Defines the boundary of the brush.
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
+      selection = {appState.graph.clearBrush? null:undefined}
       extent={
         [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right, this.allheight - this.brushmargin.bottom]]
       }
@@ -266,6 +268,7 @@ if(appState.graph.selectedNodes.length > 1){
     // }
 
     // appState.graph.filterNodes()
+    appState.graph.clearBrush = false
 
   }
   onDegreeBrush = ({ target, type, selection, sourceEvent }) => {
@@ -392,6 +395,7 @@ if(appState.graph.selectedNodes.length > 1){
       // Defines the boundary of the brush.
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
+      selection = {appState.graph.clearBrush? null:undefined}
       extent={
         [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right, this.allheight - this.brushmargin.bottom]]
       }
@@ -415,6 +419,7 @@ if(appState.graph.selectedNodes.length > 1){
       // Defines the boundary of the brush.
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
+      selection = {appState.graph.clearBrush? null:undefined}
       extent={
         [[this.margin.left, this.brushmargin.top], [this.allwidth - this.brushmargin.right, this.allheight - this.brushmargin.bottom]]
       }
@@ -1004,10 +1009,10 @@ if(appState.graph.selectedNodes.length > 1){
                 <td style={{ padding: '5px 10px' }}> {'No node is selected'} | {`Size by ${appState.graph.hasGraph ? appState.graph.nodes.sizeBy : 'NULL'}`} | {`Color by ${appState.graph.hasGraph ? appState.graph.nodes.colorBy : 'NULL'}`}</td>
               </tr>
               <tr>
-                <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree.toFixed(3) : 'NULL'}`}</td>
+                <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree().toFixed(3) : 'NULL'}`}</td>
               </tr>
               <tr>
-                <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? (appState.graph.density ).toFixed(3) : 'NULL'}`}</td>
+                <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? (appState.graph.density() ).toFixed(3) : 'NULL'}`}</td>
               </tr>
 
             </tbody>

@@ -360,7 +360,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.selectedNodes = [];
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
-  appState.graph.mapClicked = undefined;
+  // appState.graph.mapClicked = undefined;
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -372,6 +372,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.distanceDensityCurrentlyHovered = undefined;
   appState.graph.distanceDensityCurrentlyClicked = [];
   appState.graph.pinnedNodes = null;
+  appState.graph.clearBrush = false;
 
   const importConfig = {
     hasNodeFile,

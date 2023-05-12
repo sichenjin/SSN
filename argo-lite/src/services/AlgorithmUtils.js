@@ -85,6 +85,7 @@ export function averageClusteringCoefficient(snapshot) {
  */
 export function connectedComponents(snapshot) {
     var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
+    console.log('compute connected copoenent')
     return cc.componentCount();
 }
 
