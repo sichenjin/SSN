@@ -69,6 +69,7 @@ export default function AreaSelect() {
       //   }
       // }
       // appState.graph.selectedNodes = []
+      if (selectionNode.length === 0) return 
       appState.graph.selectedNodes = selectionNode
       appState.graph.frame.selection = selectionNode
       appState.graph.frame.updateSelectionOpacity()

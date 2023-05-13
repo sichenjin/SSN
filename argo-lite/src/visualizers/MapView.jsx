@@ -9,7 +9,7 @@ import { observable, computed, action, runInAction } from "mobx";
 import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect"
 import ReactLeafletToolbar from "../components/ReactLeafletToolbar"
-import { ZoomMap, MapClick } from "../components/ZoomMap"
+import { ZoomMap, MapClick, DetectKeyPress } from "../components/ZoomMap"
 import { useMap } from "react-leaflet";
 import { Tag, Switch } from "@blueprintjs/core";
 import * as turf from '@turf/turf'
@@ -489,6 +489,7 @@ class MapView extends React.Component {
         <AreaSelect />
         <ZoomMap /> 
         <MapClick />
+        <DetectKeyPress />
 
 
         <Pane name="edgepane" style={{ zIndex: 10000 }}>

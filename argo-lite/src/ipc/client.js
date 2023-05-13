@@ -373,6 +373,13 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.distanceDensityCurrentlyClicked = [];
   appState.graph.pinnedNodes = null;
   appState.graph.clearBrush = false;
+  
+  appState.graph.mapEdgeShow = true;
+  appState.graph.autoZoom = true;
+  appState.graph.keydown = false;
+  appState.graph.clusteringco = 0;
+  appState.graph.graphDiameter = 0;
+  appState.graph.connectcom = 0;
 
   const importConfig = {
     hasNodeFile,

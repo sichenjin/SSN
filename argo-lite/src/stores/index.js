@@ -107,6 +107,14 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.pinnedNodes = null;
   appState.import.loading = true
   appState.graph.clearBrush = false;
+  
+  appState.graph.mapEdgeShow = true;
+  appState.graph.autoZoom = true;
+  appState.graph.keydown = false;
+  appState.graph.clusteringco = 0;
+  appState.graph.graphDiameter = 0;
+  appState.graph.connectcom = 0;
+
  
   loadSnapshotFromStrapi(uuid).then(snapshotString => {
     // TODO: use more sensible snapshot name

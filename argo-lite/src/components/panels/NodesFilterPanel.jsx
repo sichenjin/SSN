@@ -68,34 +68,27 @@ class NodesFilterPanel extends React.Component {
                 <MultiSelects
                   items={[...new Set(appState.graph.rawGraph.nodes.map(n => n[it]))]}
                   onSelect={selectit => {
-
-                    this.setState({
-                      [it + '_filterlist']: this.state[it + '_filterlist'] ? [...this.state[it + '_filterlist'], selectit] : [selectit]
-                    })
                     appState.graph.filter[it] ? appState.graph.filter[it].push(selectit) : appState.graph.filter[it] = [selectit]
                     appState.graph.filterNodes()
+
+                    this.setState({
+                      [it + '_filterlist']: appState.graph.filter[it]
+                    })
+                    
 
                     // console.log(this.state[it + '_filterlist'])
                     // return selectit
                     // console.log(appState.graph.filter[it][0])
                   }}
                   tag={selectit => { return selectit }}
-                  value={(Object.keys(appState.graph.filter).length === 0) ? []:this.state[it + '_filterlist']}
+                  value={(Object.keys(appState.graph.filter).length === 0) ? []:appState.graph.filter[it]}
 
                   tagprops={{
                     fill:true ,
                     placeholder: '  ',
                     onRemove: selectit => {
                       var self = this
-                      var deselectIndex0 = this.state[it + '_filterlist'].indexOf(selectit)
-                      if (deselectIndex0 > -1) {
-                        this.setState({
-                          [it + '_filterlist']:this.state[it + '_filterlist'].filter(item => item !== selectit)
-                          //  this.state[it + '_filterlist'].splice(deselectIndex0, 1)
-                        })
-                       
-                      }
-                      
+                      // var deselectIndex0 = this.state[it + '_filterlist'].indexOf(selectit)
                       var deselectIndex1 = appState.graph.filter[it].indexOf(selectit)
                       if (deselectIndex1 > -1) {
                         appState.graph.filter[it] = appState.graph.filter[it].filter(item => item !== selectit)
@@ -103,6 +96,21 @@ class NodesFilterPanel extends React.Component {
                         // appState.graph.filter[it].splice(deselectIndex1, 1)
                         appState.graph.filterNodes()
                       }
+                      if (deselectIndex1 > -1) {
+                        this.setState({
+                          [it + '_filterlist']:appState.graph.filter[it]
+                          //  this.state[it + '_filterlist'].splice(deselectIndex0, 1)
+                        })
+                       
+                      }
+                      
+                      // var deselectIndex1 = appState.graph.filter[it].indexOf(selectit)
+                      // if (deselectIndex1 > -1) {
+                      //   appState.graph.filter[it] = appState.graph.filter[it].filter(item => item !== selectit)
+
+                      //   // appState.graph.filter[it].splice(deselectIndex1, 1)
+                      //   appState.graph.filterNodes()
+                      // }
 
 
                       console.log(this.state[it + '_filterlist'])

@@ -66,5 +66,15 @@ export function MapClick() {
     return null;
   }
 
+export function DetectKeyPress(){
+  document.addEventListener('keydown', (event) => {
+    appState.graph.keydown = true
+  }, false);
+  document.addEventListener('keyup', (event) => {
+    appState.graph.keydown = false
+  }, false);
+  return null;
+}
+
 
   

@@ -38,7 +38,7 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   // mafia: 6f4e03f4-1de3-485b-96a8-8c3e513b6e54//// 732a9a88-9123-46b4-a271-3616675eab3d
   ["Mafia Family Network", "c43890f8-1cfb-4599-a0d3-8f47303691fc"],
   ["US flight Network", '9cf82a47-e5b6-4d45-87aa-fae9e4ca66fa'],
-  ['US 117th House Vote Network',"1b34e961-34d6-4482-b8da-cf5fd2dc9d65"]
+  ['US 117th House Vote Network',"5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1"]
 ];
 
 // When resizing window or running on mobile,

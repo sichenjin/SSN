@@ -1,3 +1,5 @@
+import appState from '../stores';
+
 const jsnx = require('jsnetworkx');
 const jsgraphs = require('js-graph-algorithms');
 
@@ -67,9 +69,10 @@ export function convertToGexf(snapshot) {
  * @param {*} snapshot Argo-lite Snapshot Object exported by GraphStore
  */
 export function averageClusteringCoefficient(snapshot) {
-    // const jsnxGraph = convertToJsnx(snapshot);
-    // const result = jsnx.averageClustering(jsnxGraph);
-    const result = 0
+    if(appState.graph.keydown) return appState.graph.clusteringco
+    const jsnxGraph = convertToJsnx(snapshot);
+    appState.graph.clusteringco = jsnx.averageClustering(jsnxGraph);
+    // const result = 0
     console.log('Computing Clustering Coefficient');
     if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
       appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
@@ -77,7 +80,7 @@ export function averageClusteringCoefficient(snapshot) {
     if (appState.graph.frame.selection.length > 0) {
         appState.graph.frame.selection = appState.graph.frame.selection.filter(x => x !== undefined)
     }
-    return result;
+    return appState.graph.clusteringco;
 }
 
 /**
@@ -85,10 +88,12 @@ export function averageClusteringCoefficient(snapshot) {
  * @param {*} rawGraph the rawGraph inside appState
  */
 export function connectedComponents(snapshot) {
-    // var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
-    // console.log('compute connected copoenent')
-    // return cc.componentCount();
-    return 0;
+    if(appState.graph.keydown) return appState.graph.connectcom
+    var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
+    console.log('compute connected copoenent')
+    appState.graph.connectcom = cc.componentCount()
+    return appState.graph.connectcom;
+   
 }
 
 /**
@@ -120,6 +125,7 @@ export function averageDegree(snapshot) {
  * @param {*} rawGraph the rawGraph inside appState
  */
 export function exactGraphDiameter(snapshot) {
+    if(appState.graph.keydown) return appState.graph.graphDiameter
     let temp = convertToJSGraphWeightedDi(snapshot);
     let jsg = temp[0];
     let idDict = temp[1]
@@ -133,6 +139,7 @@ export function exactGraphDiameter(snapshot) {
             }
         })
     });
+    appState.graph.graphDiameter = dia
     return dia;
 }
  
