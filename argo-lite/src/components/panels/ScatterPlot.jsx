@@ -367,7 +367,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
+                {/* <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text> */}
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -382,11 +382,11 @@ class ScatterPlot extends React.Component {
                     }) : axisBottom().scale(x)
                   }
                 />
-                <text 
+                {/* <text 
                  style={{ transform: "translate(-3vw, 21vh) rotate(-90deg)", }}
                   // transform={"translate(-3vw, 21vh) rotate(-90deg)"}
                   fontSize="12px"
-                >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text>
+                >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text> */}
                 <Axis
                   axis="y"
                   transform="translate(0,0)"
