@@ -80,6 +80,8 @@ export function averageClusteringCoefficient(snapshot) {
     if (appState.graph.frame.selection.length > 0) {
         appState.graph.frame.selection = appState.graph.frame.selection.filter(x => x !== undefined)
     }
+    appState.graph.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
+
     return appState.graph.clusteringco;
 }
 

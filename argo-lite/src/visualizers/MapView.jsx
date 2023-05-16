@@ -682,6 +682,9 @@ class MapView extends React.Component {
           }}
         />
         <span style={{ fontSize: '12px', position: 'fixed', top: '11vh', right: '4vw', zIndex: '1000' }}> Automatic Zoom</span>
+        
+        <span style={{ fontSize: '12px', position: 'fixed', top: '14vh', right: '1vw', zIndex: '1000' }}> press CTRL key to select nodes on the map</span>
+
         </div>
         
 

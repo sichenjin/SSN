@@ -159,7 +159,7 @@ class NodesFilterPanel extends React.Component {
                 
                  
                 }}
-                value={(appState.graph.filter[it] && appState.graph.filter[it]["min"])?
+                value={(appState.graph.filter[it])?
                 [
                   appState.graph.filter[it]["min"],
                   appState.graph.filter[it]["max"]

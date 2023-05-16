@@ -344,12 +344,12 @@ class RegularNavbar extends React.Component {
                   text="Import from GEXF..."
                   onClick={() => (appState.import.gexfDialogOpen = true)}
                 /> */}
-                <MenuItem
+                {/* <MenuItem
                   iconName="pt-icon-document-open"
                   text="Open Snapshot"
                   onClick={() => { appState.preferences.openSnapshotDialogOpen = true }}
-                />
-                <MenuDivider />
+                /> */}
+                {/* <MenuDivider /> */}
                 {/* <MenuItem
                   iconName="download"
                   text="Save Snapshot"
@@ -358,11 +358,11 @@ class RegularNavbar extends React.Component {
                     appState.project.isSaveSnapshotDialogOpen = true
                   }}
                 /> */}
-                <MenuItem
+                {/* <MenuItem
                   iconName="pt-icon-document-share"
                   text="Publish and Share Snapshot"
                   onClick={() => { appState.preferences.shareDialogOpen = true }}
-                />
+                /> */}
               </Menu>
             }
             position={Position.BOTTOM}
@@ -551,8 +551,9 @@ class RegularNavbar extends React.Component {
                 appState.graph.clearBrush = true;
                 appState.graph.filterNodes()
                 appState.graph.frame.updateSelectionOpacity()
+
                 // this.forceUpdate();
-              }}> Clear All Selections and Filters</a>
+              }}>Clear All Selections and Filters</a>
               </div>
             </div>
           )}

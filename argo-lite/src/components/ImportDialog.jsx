@@ -105,11 +105,11 @@ class ImportDialog extends React.Component {
           </div>
         </div>
         </div>
-        <Switch
+        {/* <Switch
           label="Has Headers"
           checked={nodeFile.hasColumns}
           onChange={() => (nodeFile.hasColumns = !nodeFile.hasColumns)}
-        />
+        /> */}
         {nodeFile.ready && (
           <div className="column-selection">
             <PreviewTable file={nodeFile} />
@@ -161,11 +161,11 @@ class ImportDialog extends React.Component {
             />
           </div>
         </div>
-        <Switch
+        {/* <Switch
           label="Has Headers"
           checked={edgeFile.hasColumns}
           onChange={() => (edgeFile.hasColumns = !edgeFile.hasColumns)}
-        />
+        /> */}
         {/* <Switch
           label="Create Missing Nodes"
           checked={edgeFile.createMissing}
@@ -291,7 +291,7 @@ class ImportDialog extends React.Component {
               {this.renderNodesSelection()}
               {this.renderEdgesSelection()}
               {this.renderExampleDataset()}
-              {this.renderDelimiterSelection()}
+              {/* {this.renderDelimiterSelection()} */}
               <hr />
               <PostImportOptions />
             </div>
