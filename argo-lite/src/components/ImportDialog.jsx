@@ -258,8 +258,8 @@ class ImportDialog extends React.Component {
                         </tbody>
                     </table>
                     <p>Example Dataset:</p>
-                    <a className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1_OIDSbUyM9gTqziVdcqU_NsGxkk6HMTo/view?usp=share_link"> US_airport_nodelist.csv</a>
-                    <a className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1cvOUir8gKDlS_hhNGL0qQOn2eNHCDsOU/view?usp=share_link"> US_airport_edgelist.csv</a>
+                    <a target="_blank" rel="noopener noreferrer" className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1_OIDSbUyM9gTqziVdcqU_NsGxkk6HMTo/view?usp=share_link"> US_airport_nodelist.csv</a>
+                    <a target="_blank" rel="noopener noreferrer" className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1cvOUir8gKDlS_hhNGL0qQOn2eNHCDsOU/view?usp=share_link"> US_airport_edgelist.csv</a>
                 </div>
     )
   }
