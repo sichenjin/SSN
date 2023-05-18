@@ -23,7 +23,8 @@ class HelpDialog extends React.Component {
           title={`Help`}
         >
           <div className={classnames(Classes.DIALOG_BODY)}>
-            Argo supports both mouse/trackpad and touchscreen.
+          <a className="pt-button pt-icon-document"  href="https://gatech.co1.qualtrics.com/jfe/form/SV_3kjYXeZT37404PY"> Please fill out the participant survey here</a>
+            SNoMaN supports both mouse/trackpad and touchscreen.
             <div className="argo-table-container">
               <table className="argo-table-container__table pt-table pt-bordered pt-striped">
                 <thead>
