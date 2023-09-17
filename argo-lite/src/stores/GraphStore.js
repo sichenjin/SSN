@@ -52,6 +52,7 @@ export default class GraphStore {
   @observable enableCoefficient = true;
   @observable enableComponent = true;
   @observable modularity = undefined;
+  @observable globalFlatRatio = undefined;
   @observable keydown = false;
   clusteringco = 0;
   graphDiameter = 0;

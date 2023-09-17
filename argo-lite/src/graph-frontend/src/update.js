@@ -6,21 +6,21 @@ var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
 
-module.exports = function(self) {
+module.exports = function (self) {
   /**
    *  Update the position and color of the edges
    */
-  self.updateEdges = function() {
+  self.updateEdges = function () {
     self.edges.setDrawRange(0, self.drawCount + 6);
     var total = self.drawCount + 6;
     var positions = self.edges.attributes.position.array;
     var colors = self.edges.attributes.color.array;
     // var width = self.edges.attributes.width.array;
 
-     //directed arrows
-     self.directedArrows.attributes.position.array = new Float32Array(self.MAX_LINES * 3);
-     var arrowPosition = self.directedArrows.attributes.position.array;
-     var arrowColor = self.directedArrows.attributes.color.array;
+    //directed arrows
+    self.directedArrows.attributes.position.array = new Float32Array(self.MAX_LINES * 3);
+    var arrowPosition = self.directedArrows.attributes.position.array;
+    var arrowColor = self.directedArrows.attributes.color.array;
 
     for (var i = 0; i < total; i += 2) {
       if (self.lineIndices[i / 2]) {
@@ -62,8 +62,8 @@ module.exports = function(self) {
           //directed edges
           if (appState.graph.directedOrNot) {
             self.arrow.visible = true;
-            var midPointX = (v1pos.x + v2pos.x)/2;
-            var midPointY = (v1pos.y + v2pos.y)/2;
+            var midPointX = (v1pos.x + v2pos.x) / 2;
+            var midPointY = (v1pos.y + v2pos.y) / 2;
 
             var dX = v2pos.x - v1pos.x;
             var dY = v2pos.y - v1pos.y;
@@ -82,7 +82,7 @@ module.exports = function(self) {
             if (dX >= 0) {
               var tempXCorner = midPointX - Math.cos(radianDegree) * 0.866;
               var tempYCorner = midPointY - Math.sin(radianDegree) * 0.866;
-              var degreeDifference = Math.PI/2 - radianDegree;
+              var degreeDifference = Math.PI / 2 - radianDegree;
               arrowPosition[i / 2 * 9 + 3] = tempXCorner - 0.5 * Math.cos(degreeDifference);
               arrowPosition[i / 2 * 9 + 4] = tempYCorner + 0.5 * Math.sin(degreeDifference);
               arrowPosition[i / 2 * 9 + 6] = tempXCorner + 0.5 * Math.cos(degreeDifference);
@@ -91,7 +91,7 @@ module.exports = function(self) {
             } else {
               var tempXCorner = midPointX + Math.cos(radianDegree) * 0.866;
               var tempYCorner = midPointY + Math.sin(radianDegree) * 0.866;
-              var degreeDifference = Math.PI/2 - radianDegree;
+              var degreeDifference = Math.PI / 2 - radianDegree;
               arrowPosition[i / 2 * 9 + 3] = tempXCorner + 0.5 * Math.cos(degreeDifference);
               arrowPosition[i / 2 * 9 + 4] = tempYCorner - 0.5 * Math.sin(degreeDifference);
               arrowPosition[i / 2 * 9 + 6] = tempXCorner - 0.5 * Math.cos(degreeDifference);
@@ -99,7 +99,7 @@ module.exports = function(self) {
             }
           } else {
             self.arrow.visible = false;
-          } 
+          }
         }
       }
     }
@@ -113,7 +113,7 @@ module.exports = function(self) {
   /**
    *  Update the position of the labels
    */
-  self.updateLabels = function() {
+  self.updateLabels = function () {
     var nodes = self.force.nodes();
     for (var i = 0; i < nodes.length; i++) {
       let thisNode = self.graph.getNode(nodes[i].id);
@@ -137,10 +137,10 @@ module.exports = function(self) {
   /**
    *  Update the position and color of the edges
    */
-  self.updateNodes = function() {
+  self.updateNodes = function () {
     // console.log("triggered");
     if (self.options.layout == "ngraph") {
-      self.graph.forEachNode(function(node) {
+      self.graph.forEachNode(function (node) {
         if (node.renderData) {
           node.renderData.draw_object.position.x = self.force.getNodePosition(
             node.id
@@ -192,7 +192,7 @@ module.exports = function(self) {
   /**
    * Restrict camera translation
    */
-  self.updateCamera = function() {
+  self.updateCamera = function () {
     self.controls.target.x -=
       self.controls.object.position.x -
       Math.max(
@@ -223,9 +223,9 @@ module.exports = function(self) {
   /**
    * Given an ngraph, update the current ngraph and add or remove inconsistent nodes
    */
-  self.updateGraph = function(graph) {
+  self.updateGraph = function (graph) {
     var numNodesAdded = 0;
-    graph.forEachNode(function(node) {
+    graph.forEachNode(function (node) {
       var oldNode = self.graph.getNode(node.id);
       if (!oldNode) {
         if (!self.newNodeIds) {
@@ -239,7 +239,7 @@ module.exports = function(self) {
         self.updateNode(oldNode, node);
       }
     });
-    graph.forEachLink(function(link) {
+    graph.forEachLink(function (link) {
       if (!self.graph.getLink(link.fromId, link.toId)) {
         self.addEdge(
           self.graph.getNode(link.fromId),
@@ -248,12 +248,14 @@ module.exports = function(self) {
       }
     });
 
-    self.graph.forEachNode(function(node) {
+    self.graph.forEachNode(function (node) {
       var oldNode = graph.getNode(node.id);
       if (!oldNode) {
         self.removeNode(node);
       }
+      
     });
+    
 
     self.force.alpha(1);
     self.force.stop();
@@ -283,8 +285,8 @@ module.exports = function(self) {
   /**
    * update positions in the ngraph given a list of positions
    */
-  self.updatePositions = function(positions) {
-    self.graph.forEachNode(function(node) {
+  self.updatePositions = function (positions) {
+    self.graph.forEachNode(function (node) {
       var pos = positions[node.id];
       if (pos) {
         node.x = pos[0];
@@ -302,7 +304,7 @@ module.exports = function(self) {
   /**
    * Update a node given a new node
    */
-  self.updateNode = function(node, newNode) {
+  self.updateNode = function (node, newNode) {
     if (newNode.data) {
       if (node.data.color && newNode.data.color) {
         node.data.color = newNode.data.color;

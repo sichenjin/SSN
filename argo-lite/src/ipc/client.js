@@ -354,6 +354,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.import.loading = true;
   appState.graph.convexPolygons =[]
   appState.graph.modularity = undefined
+  appState.graph.globalFlatRatio = undefined
   appState.graph.convexhullby = "NULL"
   appState.graph.groupby = "NULL"
   appState.graph.mapClicked = undefined;

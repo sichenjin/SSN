@@ -99,6 +99,24 @@ class StatGroupPanel extends React.Component {
         );
     }
 
+    avgConnectionDist = () => {
+        appState.graph.rawGraph.nodes.forEach(function (node) {
+            const links = appState.graph.frame.getNode(node['id']).linkObjs
+            if (links) {
+                const cdistance = links.reduce((dist, l) => dist + l.edgeDist, 0);
+                node['average distance'] = cdistance / node.degree
+                node['average distance'] = node['average distance'].toFixed(2)
+            }else{
+                node['average distance'] = 0
+            }
+        })
+
+        appState.graph.scatterplot.x = 'average distance'
+        appState.graph.scatterplot.y = 'degree'
+        appState.graph.metadata.nodeComputed.push('average distance')
+
+    }
+
     runKfullfillment = () => {
         const calculateDistance = (lat1, lon1, lat2, lon2) => {
             const R = 6371; // Radius of the Earth in kilometers
@@ -182,6 +200,155 @@ class StatGroupPanel extends React.Component {
 
 
     }
+
+    runGlobalFlatRatio = () => {
+        const nodes = appState.graph.rawGraph.nodes
+        const iter = 5
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                // Generate a random index from 0 to i
+                const randomIndex = Math.floor(Math.random() * (i + 1));
+
+                // Swap elements array[i] and array[randomIndex]
+                const temp = array[i];
+                array[i] = array[randomIndex];
+                array[randomIndex] = temp;
+            }
+        }
+
+        const calculateDistance = (lat1, lon1, lat2, lon2) => {
+            const R = 6371; // Radius of the Earth in kilometers
+            const dLat = (lat2 - lat1) * (Math.PI / 180);
+            const dLon = (lon2 - lon1) * (Math.PI / 180);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c;
+            return distance;
+        }
+
+        const gBarSumDistances = (nodeOrders, nodesWKnn, distanceMatrix, degreeConstraintMatrix) => {
+            const degreeCount = new Map();
+            nodeOrders.forEach(node => degreeCount.set(node, 0));
+
+            const nodesLabels = nodesWKnn.map((n) => n['id']);
+            const n = nodesLabels.length;
+            const connectionCounted = {}
+            for (const nl of nodesLabels) {
+                connectionCounted[nl] = {};
+            }
+
+            let totalDistance = 0;
+
+            for (let i = 0; i < nodeOrders.length; i++) {
+                const node = nodeOrders[i];
+                const neighbors = nodesWKnn.filter(obj => {
+                    return obj['id'] === node
+                })[0]['nearestnn'];
+
+                const neighborsid = neighbors.map(n => n['id'])
+
+
+                for (const neighbor of neighborsid) {
+                    if (!connectionCounted[node][neighbor] &&
+                        degreeCount.get(node) < appState.graph.frame.getNode(node).data.ref.degree &&
+                        degreeCount.get(neighbor) < appState.graph.frame.getNode(neighbor).data.ref.degree) {
+                        totalDistance += distanceMatrix[node][neighbor];
+                        degreeCount.set(node, degreeCount.get(node) + 1);
+                        degreeCount.set(neighbor, degreeCount.get(neighbor) + 1);
+                        connectionCounted[node][neighbor] = true;
+                        connectionCounted[neighbor][node] = true;
+                        // console.log("Added distance for", node, neighbor, "in order:", nodeOrders);
+                    }
+                }
+            }
+            return totalDistance;
+        }
+
+        //calcualte knn 
+        if (!nodes[0]['nearestnn']) {
+            for (const currentNode of nodes) {
+                // find nearest neighbors
+                const currentId = currentNode.id;
+                currentNode['nearestnn'] = []
+                // neighbors[currentId] = [];
+
+                // Calculate distances to all other nodes
+                for (const otherNode of nodes) {
+                    if (currentNode !== otherNode) {
+                        const distance = calculateDistance(
+                            currentNode.LatY,
+                            currentNode.LonX,
+                            otherNode.LatY,
+                            otherNode.LonX
+                        );
+
+                        currentNode['nearestnn'].push({
+                            id: otherNode.id,
+                            distance: distance
+                        });
+                    }
+                }
+
+                // Sort neighbors by distance and keep the closest K
+                currentNode['nearestnn'].sort((a, b) => a.distance - b.distance);
+                const k = currentNode['degree']
+                currentNode['nearestnn'] = currentNode['nearestnn'].slice(0, k);
+
+            }
+
+        }
+
+        // Generate iteration number of node orders 
+        const nodeOrders = [];
+        for (let i = 0; i < iter; i++) {
+            nodeOrders.push(nodes.map((n) => n['id']));
+            shuffleArray(nodeOrders[i]); // Shuffle the node order
+        }
+
+        // Precompute the distance matrix
+        const nodesLabels = nodes.map((n) => n['id']);
+        const n = nodesLabels.length;
+        const distanceMatrix = {};
+        for (const nl of nodesLabels) {
+            distanceMatrix[nl] = {};
+            for (const ll of nodesLabels) {
+                distanceMatrix[nl][ll] = 0;
+            }
+        }
+
+        for (let i = 0; i < n; i++) {
+            // Skip diagonal values 
+            for (let j = i + 1; j < n; j++) {
+                const distance = calculateDistance(
+                    nodes[i].LatY,
+                    nodes[i].LonX,
+                    nodes[j].LatY,
+                    nodes[j].LonX
+                )
+
+                // Update both upper and lower side of the matrix since the network is undirected
+                distanceMatrix[nodes[i]['id']][nodes[j]['id']] = distance;
+                distanceMatrix[nodes[j]['id']][nodes[i]['id']] = distance;
+            }
+        }
+
+        // Precompute the degree constraint matrix
+        const degreeConstraintMatrix = nodes.map(x => x['degree']);
+
+        // Calculate average distance of G_bar under iterations. 
+        const avgGBarSum = nodeOrders.map(order => gBarSumDistances(order, nodes, distanceMatrix, degreeConstraintMatrix))
+            .reduce((a, b) => a + b, 0) / iter;
+        const links = appState.graph.frame.getNodeList().map(n => n.linkObjs).flat().filter(i => i)
+        const gSum = links.reduce((dist, l) => dist + l.edgeDist, 0) / 2
+
+        appState.graph.globalFlatRatio = avgGBarSum / gSum;
+    }
+
+
+
     runLocalFlatRatio = () => {
         const calculateDistance = (lat1, lon1, lat2, lon2) => {
             const R = 6371; // Radius of the Earth in kilometers
@@ -210,10 +377,10 @@ class StatGroupPanel extends React.Component {
                         const ndistance = currentNode['nearestnn'].reduce((dist, l) => dist + l.distance, 0);
                         // calculate flat ratio
                         currentNode['flattening ratio'] = ndistance / cdistance
-                        if(!isFinite(currentNode['flattening ratio'])){
+                        if (!isFinite(currentNode['flattening ratio'])) {
                             currentNode['flattening ratio'] = 0
                         }
-                    }else{
+                    } else {
                         currentNode['flattening ratio'] = 0
                     }
 
@@ -254,7 +421,7 @@ class StatGroupPanel extends React.Component {
                         const ndistance = currentNode['nearestnn'].reduce((dist, l) => dist + l.distance, 0);
                         // calculate flat ratio
                         currentNode['flattening ratio'] = ndistance / cdistance
-                        if(!isFinite(currentNode['flattening ratio'])){
+                        if (!isFinite(currentNode['flattening ratio'])) {
                             currentNode['flattening ratio'] = 0
                         }
                     } else {
@@ -542,10 +709,20 @@ class StatGroupPanel extends React.Component {
         return (
             (
                 <div>
+
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={this.runGlobalFlatRatio}>Run Global Flattening Ratio</Button>
+                    {appState.graph.globalFlatRatio ? <text className="gf-tag" style={{ fontSize: "8px" }} >{parseFloat(appState.graph.globalFlatRatio).toFixed(3)}</text> : null}
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
                         onClick={this.runLocalFlatRatio}>Run Local Flattening Ratio</Button>
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={this.avgConnectionDist}>Run Average Distance</Button>
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}

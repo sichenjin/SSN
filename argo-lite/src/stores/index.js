@@ -87,6 +87,7 @@ const loadAndDisplaySnapshotFromURL = (url) => {
 const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.convexPolygons =[]
   appState.graph.modularity = undefined
+  appState.graph.globalFlatRatio = undefined
   appState.graph.convexhullby = "NULL"
   appState.graph.groupby = "NULL"
   appState.graph.mapClicked = undefined;
@@ -214,6 +215,8 @@ autorun(() => {
     //
   }
 }) 
+
+
 
 autorun(() => {
   if (appState.graph.frame) {
