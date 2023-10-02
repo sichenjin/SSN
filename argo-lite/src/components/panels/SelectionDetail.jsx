@@ -136,7 +136,8 @@ class SelectionDetail extends React.Component {
     }
 
   }
-
+  
+  @action
   SelectionDensity = () => {
 
     // undirect graph
@@ -149,6 +150,9 @@ if(appState.graph.selectedNodes.length > 1){
     
     const nodelength = appState.graph.selectedNodes.length;
     const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
+    appState.graph.selectedEdge = edgeSelection.length;
+    appState.graph.avgDegree = 0;
+    appState.graph.avgdensity = selectionDen.toFixed(3);
     return selectionDen.toFixed(3)
 }else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
   const thenode = appState.graph.selectedNodes[0]
@@ -160,6 +164,9 @@ if(appState.graph.selectedNodes.length > 1){
     
     const nodelength = selectneighbors.length;
     const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
+    appState.graph.selectedEdge = edgeSelection.length;
+    appState.graph.avgDegree = 0;
+    appState.graph.avgdensity = selectionDen.toFixed(3);
     return selectionDen.toFixed(3)
 
 }

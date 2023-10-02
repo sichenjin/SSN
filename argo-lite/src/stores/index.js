@@ -206,6 +206,7 @@ const updateTimeout = null;
 autorun(() => {
   if (!appState.graph.hasGraph && appState.graph.rawGraph.nodes.length > 0) {
     appState.graph.hasGraph = true;
+    appState.graph.clustercoe = appState.graph.averageClustering().toFixed(3)
   }
 }) 
 

@@ -317,7 +317,13 @@ class ScatterPlot extends React.Component {
           ])
           .range([this.height, 0])
       }
-
+      const capitalizeString =(inputString)=> {
+        const connectingWords = ['in', 'to']; // Add more connecting words as needed
+      
+        return inputString.replace(/\w+/g, function(word) {
+          return connectingWords.includes(word.toLowerCase()) ? word : word.charAt(0).toUpperCase() + word.slice(1);
+        });
+      }
 
 
       return (
@@ -326,12 +332,14 @@ class ScatterPlot extends React.Component {
           {/* <div style={{ width:'50vw', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}> */}
 
           <div style={{ display: "inline", }}>
-            <p className="scatter-plot-font" style={{ display: "inline", fontSize:"12px"}}>X By: </p>
+            <p className="scatter-plot-font" style={{ display: "inline", fontSize:"12px"}}>X by: </p>
             <span >
               < XYSelect className="scatter-plot-font" style={{ display: "inline" }}
-                items={appState.graph.allComputedPropertiesKeyList}
+                items={appState.graph.allComputedPropertiesKeyList.map(s=>capitalizeString(s))}
                 onSelect={it => (appState.graph.scatterplot.x = it.split(' ').map((s) => s.charAt(0).toLowerCase() + s.substring(1)).join(' '))}
-                value={appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                value={
+                  capitalizeString(appState.graph.scatterplot.x)
+                  }
               />
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -341,7 +349,7 @@ class ScatterPlot extends React.Component {
                 className="scatter-plot-font"
                 items={appState.graph.allComputedPropertiesKeyList}
                 onSelect={it => (appState.graph.scatterplot.y = it.split(' ').map((s) => s.charAt(0).toLowerCase() + s.substring(1)).join(' '))}
-                value={appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}
+                value={capitalizeString(appState.graph.scatterplot.y)}
               />
             </span>
           </div>
@@ -367,7 +375,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                {/* <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.x.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text> */}
+                <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -382,11 +390,11 @@ class ScatterPlot extends React.Component {
                     }) : axisBottom().scale(x)
                   }
                 />
-                {/* <text 
-                 style={{ transform: "translate(-3vw, 21vh) rotate(-90deg)", }}
-                  // transform={"translate(-3vw, 21vh) rotate(-90deg)"}
+                <text 
+                 style={{ transform: "translate(-30px, 21vh) rotate(-90deg)", }}
+                  // transform={"translate(-1vw, 21vh) rotate(-90deg)"}
                   fontSize="12px"
-                >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : appState.graph.scatterplot.y.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')}</text> */}
+                >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.y) }</text>
                 <Axis
                   axis="y"
                   transform="translate(0,0)"

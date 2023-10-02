@@ -388,11 +388,11 @@ class RegularNavbar extends React.Component {
                     this.forceUpdate();
                   }}
                 />
-                <MenuItem
+                {/* <MenuItem
                   text="Statistics"
                   iconName="pt-icon-timeline-bar-chart"
                   onClick={() => { appState.preferences.statisticsDialogOpen = true }}
-                />
+                /> */}
                 {/* <MenuItem text="Community Detection" iconName="graph">
                   <MenuItem
                     text="Convex Hull"

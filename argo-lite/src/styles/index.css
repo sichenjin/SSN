@@ -865,3 +865,12 @@ table.pt-table {
 #fileButton {
   line-height: 10px;
 }
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 100%;               
+  background-color:black;
+  height: 1px !important;
+}

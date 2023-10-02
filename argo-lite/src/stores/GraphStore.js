@@ -84,6 +84,12 @@ export default class GraphStore {
   @observable mapClicked = undefined;
   @observable clearBrush = false;
 
+
+  @observable selectedEdge = 0;
+  @observable avgDegree = 0;
+  @observable avgdensity = 0;
+  @observable clustercoe = 0;
+
   //  // Currently Clicked to frozen node on network
   //  @observable networkClicked = undefined;
 
@@ -193,7 +199,7 @@ export default class GraphStore {
 
   @computed
   get filterKeyList() {
-    const removeList = ['isHidden', 'id', 'Longitude', 'Latitude', 'LatY', 'LonX', 'dist to center', 'dist_to_center', 'centrality', 'shortest path', 'pair distance', 'node_id', 'standard distance', 'network density']
+    const removeList = ['isHidden', 'id', 'Longitude', 'Latitude', 'LatY', 'LonX', 'dist to center', 'dist_to_center', 'centrality', 'shortest path', 'pair distance', 'node_id', 'standard distance', 'network density', 'SHORT', "ORGANIZATION"]
     return uniq([
       ...this.metadata.nodeProperties,
       ...this.metadata.nodeComputed
@@ -206,8 +212,17 @@ export default class GraphStore {
     const uniq_compute = uniq([
       ...this.metadata.nodeComputed
     ]).filter(k => k !== 'id'); // since node_id is already present
+
+    const capitalizeString =(inputString)=> {
+      const connectingWords = ['in', 'to']; // Add more connecting words as needed
+    
+      return inputString.replace(/\w+/g, function(word) {
+        return connectingWords.includes(word.toLowerCase()) ? word : word.charAt(0).toUpperCase() + word.slice(1);
+      });
+    }
+    
     const uppercase_compute = uniq_compute.map((u) => {
-      return u.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
+      return capitalizeString(u)
     })
     return uppercase_compute
   }

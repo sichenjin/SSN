@@ -708,33 +708,42 @@ class StatGroupPanel extends React.Component {
 
         return (
             (
-                <div>
-
+                <div> 
+                    <p>Distance and Shortest Path</p>
+                     <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={this.avgConnectionDist}>Run Average Distance</Button>
+                        <br></br>
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={this.runShortestPath}>Run Shortest Path</Button>
+                    <br></br>
+                    <hr />
+                    <p>Efficient Distance Analysis</p>
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={this.runLocalFlatRatio}>Run Local Flattening Ratio</Button>
+                   <br></br>
+                    <Button
+                        className="bp4-button"
+                        style={{ zIndex: '1000' }}
+                        onClick={this.runKfullfillment}>Run  K-fullfillment</Button>
+                        <br></br>
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
                         onClick={this.runGlobalFlatRatio}>Run Global Flattening Ratio</Button>
                     {appState.graph.globalFlatRatio ? <text className="gf-tag" style={{ fontSize: "8px" }} >{parseFloat(appState.graph.globalFlatRatio).toFixed(3)}</text> : null}
+                    <br></br>
+                    <hr />
+                    <p>Group-related Functions</p>
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
-                        onClick={this.runLocalFlatRatio}>Run Local Flattening Ratio</Button>
-                    <Button
-                        className="bp4-button"
-                        style={{ zIndex: '1000' }}
-                        onClick={this.avgConnectionDist}>Run Average Distance</Button>
-                    <Button
-                        className="bp4-button"
-                        style={{ zIndex: '1000' }}
-                        onClick={this.runKfullfillment}>Run  K-fullfillment</Button>
-                    <Button
-                        className="bp4-button"
-                        style={{ zIndex: '1000' }}
-                        onClick={this.runShortestPath}>Run Shortest Path</Button>
-                    <Button
-                        className="bp4-button"
-                        style={{ zIndex: '1000' }}
-                        onClick={this.runcommunity}>Run Community</Button>
+                        onClick={this.runcommunity}>Run Community Detection</Button>
                     {/* <button style={{height: "100%"}} onClick={this.runcommunity} type="button">
                             Run Community
                         </button> */}
@@ -757,7 +766,7 @@ class StatGroupPanel extends React.Component {
                         <p style={{ display: "inline", fontSize: "12px" }}>Convex Hull By: </p>
                         <span style={{}}>
                             <SimpleSelect
-                                items={appState.graph.filterKeyList}
+                                items={appState.graph.filterKeyList.filter(it=>(it !== 'ID'&& (it === 'community' || isNaN(appState.graph.rawGraph.nodes[0][it]))))}
                                 onSelect={it => {
                                     appState.graph.convexhullby = it
                                     this.convexhull(it)
@@ -771,7 +780,7 @@ class StatGroupPanel extends React.Component {
                         <p style={{ display: "inline", fontSize: "12px" }}>Cluster By: </p>
                         <span style={{}}>
                             <SimpleSelect
-                                items={appState.graph.filterKeyList}
+                                items={appState.graph.filterKeyList.filter(it=>(it !== 'ID'&& (it === 'community' || isNaN(appState.graph.rawGraph.nodes[0][it]))))}
                                 onSelect={it => {
                                     appState.graph.groupby = it
                                     this.density_distance(it)
