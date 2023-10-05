@@ -35,6 +35,7 @@ class SelectionDetail extends React.Component {
   edgeSelection = []
 
 
+  @action
   SelectionDistanceFromLatLonIn = () => {
     const selectNodes = appState.graph.selectedNodes;
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
@@ -42,24 +43,32 @@ class SelectionDetail extends React.Component {
     if (appState.graph.mapClicked) {
 
       const edgeSelection = appState.graph.mapClicked.linkObjs
-      if (!edgeSelection || edgeSelection.length == 0) return [null, []];
+      if (!edgeSelection || edgeSelection.length == 0) {
+        appState.graph.avgdist = 0
+        return [null, []];
+      }
       this.edgeSelection = edgeSelection
       const edgeDistance = edgeSelection.map(e => {
         if(e.edgeDist >0){
+          
           return e.edgeDist
         }else {
           return 0
         }
        
       })
-      return [average(edgeDistance).toFixed(3), edgeDistance];
+      appState.graph.avgdist = average(edgeDistance).toFixed(2)
+      return [appState.graph.avgdist, edgeDistance];
 
     }
 
     if (selectNodes.length > 1) {
       //// calculate only the connected distance 
       const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
-      if (edgeSelection.length == 0) return [null, []];
+      if (edgeSelection.length == 0) {
+        appState.graph.avgdist = 0
+        return [null, []];
+      }
       this.edgeSelection = edgeSelection
       const edgeDistance = edgeSelection.map(e => {
         if(e.edgeDist >0){
@@ -69,7 +78,8 @@ class SelectionDetail extends React.Component {
         }
        
       })
-      return [average(edgeDistance).toFixed(3), edgeDistance];
+      appState.graph.avgdist = average(edgeDistance).toFixed(2)
+      return [appState.graph.avgdist, edgeDistance];
 
       //// calculate average distance between all selected nodes 
       // const edgeDistance = []
@@ -121,7 +131,8 @@ class SelectionDetail extends React.Component {
            
           })
           // console.log(edgeDistance)
-          return [average(edgeDistance).toFixed(3), edgeDistance];
+          appState.graph.avgdist = average(edgeDistance).toFixed(2)
+          return [appState.graph.avgdist, edgeDistance];
 
         } else {
           return [null, []]
@@ -145,14 +156,29 @@ class SelectionDetail extends React.Component {
 if(appState.graph.selectedNodes.length > 1){
   const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
     // console.log(edgeSelection.length);
-    if (edgeSelection.length == 0) return 0;
+    if (edgeSelection.length == 0) {
+      appState.graph.tempRawGraph = undefined
+      return 0;
+    }
     // this.edgeSelection = [...edgeSelection]
     
     const nodelength = appState.graph.selectedNodes.length;
     const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
     appState.graph.selectedEdge = edgeSelection.length;
-    appState.graph.avgDegree = 0;
+    appState.graph.avgDegree = appState.graph.selectedNodes.reduce((de, l) => de + l.data.ref.degree, 0) / appState.graph.selectedNodes.length
+    appState.graph.avgDegree = appState.graph.avgDegree.toFixed(3)
     appState.graph.avgdensity = selectionDen.toFixed(3);
+    const selectnodesID = appState.graph.selectedNodes.map(n=>n.id)
+    appState.graph.rediameter = ''
+    appState.graph.reclustercoe = ''
+    appState.graph.recomponent = ''
+    appState.graph.tempRawGraph = {
+      
+        nodes: appState.graph.rawGraph.nodes.filter((n)=>(selectnodesID.includes(n.id))),
+        edges: appState.graph.rawGraph.edges.filter((e)=>(selectnodesID.includes(e.source_id) && selectnodesID.includes(e.target_id)))
+
+      
+    }
     return selectionDen.toFixed(3)
 }else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
   const thenode = appState.graph.selectedNodes[0]
@@ -165,8 +191,21 @@ if(appState.graph.selectedNodes.length > 1){
     const nodelength = selectneighbors.length;
     const selectionDen = (edgeSelection.length / (nodelength * (nodelength - 1))) * 2;
     appState.graph.selectedEdge = edgeSelection.length;
-    appState.graph.avgDegree = 0;
+    appState.graph.avgDegree = selectneighbors.reduce((de, l) => de + l.data.ref.degree, 0) / selectneighbors.length;
+    appState.graph.avgDegree = appState.graph.avgDegree.toFixed(3)
     appState.graph.avgdensity = selectionDen.toFixed(3);
+    const selectnodesID = selectneighbors.map(n=>n.data.ref.id)
+    selectnodesID.push(appState.graph.selectedNodes[0].id)
+    appState.graph.rediameter = ''
+    appState.graph.reclustercoe = ''
+    appState.graph.recomponent = ''
+    appState.graph.tempRawGraph = {
+      
+        nodes: appState.graph.rawGraph.nodes.filter((n)=>(selectnodesID.includes(n.id))),
+        edges: appState.graph.rawGraph.edges.filter((e)=>(selectnodesID.includes(e.source_id) && selectnodesID.includes(e.target_id)))
+
+      
+    }
     return selectionDen.toFixed(3)
 
 }

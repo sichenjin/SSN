@@ -11,6 +11,10 @@ import appState from "../stores/index";
 import classnames from "classnames";
 import { observer } from "mobx-react/index";
 import { observable, computed, action, runInAction } from "mobx";
+import {
+    Button
+} from "@blueprintjs/core";
+
 
 @observer
 class Sidebar extends React.Component {
@@ -35,104 +39,104 @@ class Sidebar extends React.Component {
     SelectionDistanceFromLatLonIn = () => {
         const selectNodes = appState.graph.selectedNodes;
         const average = (array) => array.reduce((a, b) => a + b) / array.length;
-    
+
         if (appState.graph.mapClicked) {
-    
-          const edgeSelection = appState.graph.mapClicked.linkObjs
-          if (!edgeSelection || edgeSelection.length == 0) return [null, []];
-          this.edgeSelection = edgeSelection
-          const edgeDistance = edgeSelection.map(e => {
-            if(e.edgeDist >0){
-              return e.edgeDist
-            }else {
-              return 0
-            }
-           
-          })
-          return [average(edgeDistance).toFixed(3), edgeDistance];
-    
-        }
-    
-        if (selectNodes.length > 1) {
-          //// calculate only the connected distance 
-          const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
-          if (edgeSelection.length == 0) return [null, []];
-          this.edgeSelection = edgeSelection
-          const edgeDistance = edgeSelection.map(e => {
-            if(e.edgeDist >0){
-              return e.edgeDist
-            }else {
-              return 0
-            }
-           
-          })
-          return [average(edgeDistance).toFixed(3), edgeDistance];
-    
-          //// calculate average distance between all selected nodes 
-          // const edgeDistance = []
-          // appState.graph.frame.lineIndices.forEach((edge)=>{
-          //   if (appState.graph.selectedNodes.includes(edge.source ) && appState.graph.selectedNodes.includes(edge.target ) ){
-          //     edgeDistance.push(edge.edgeDist)
-    
-          //   }
-          // })
-          // if(edgeDistance.length>0){
-          //   return [average(edgeDistance).toFixed(3), edgeDistance];
-          // }else{
-          //   return  [null, []]
-          // }
-    
-          // for (let i = 0; i < selectNodes.length; i++) {
-          //   for (let j = i + 1; j < selectNodes.length; j++) {
-          //     const lon1 = selectNodes[i].data.ref.LonX
-          //     const lat1 = selectNodes[i].data.ref.LatY
-          //     const lon2 = selectNodes[j].data.ref.LonX
-          //     const lat2 = selectNodes[j].data.ref.LatY
-          //     const edgeDist = appState.graph.frame.getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)
-          //     edgeDistance.push(edgeDist)
-          //   }
-          // }
-    
-    
-    
-        } else {   // when no node is selected, return the distribution of the whole network 
-    
-          let edgeSelection = []
-          appState.graph.frame.getNodeList().forEach(node => {
-            if(node.linkObjs && node.linkObjs.length>0){
-              edgeSelection.push(...node.linkObjs)
-            }
-            
-          })
-    
-          if (edgeSelection.length > 0) {
-            let uniqEdgeSelection = uniq(edgeSelection)
-            this.edgeSelection = uniqEdgeSelection
-            if (uniqEdgeSelection.length > 0) {
-              let edgeDistance = uniqEdgeSelection.map(e=>{
-                if(e.edgeDist >0){
-                  return e.edgeDist
-                }else {
-                  return 0
+
+            const edgeSelection = appState.graph.mapClicked.linkObjs
+            if (!edgeSelection || edgeSelection.length == 0) return [null, []];
+            this.edgeSelection = edgeSelection
+            const edgeDistance = edgeSelection.map(e => {
+                if (e.edgeDist > 0) {
+                    return e.edgeDist
+                } else {
+                    return 0
                 }
-               
-              })
-              // console.log(edgeDistance)
-              return [average(edgeDistance).toFixed(3), edgeDistance];
-    
-            } else {
-              return [null, []]
-            }
-    
-          } else {
-            return [null, []]
-          }
-    
-    
-          // return null
+
+            })
+            return [average(edgeDistance).toFixed(3), edgeDistance];
+
         }
-    
-      }
+
+        if (selectNodes.length > 1) {
+            //// calculate only the connected distance 
+            const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
+            if (edgeSelection.length == 0) return [null, []];
+            this.edgeSelection = edgeSelection
+            const edgeDistance = edgeSelection.map(e => {
+                if (e.edgeDist > 0) {
+                    return e.edgeDist
+                } else {
+                    return 0
+                }
+
+            })
+            return [average(edgeDistance).toFixed(3), edgeDistance];
+
+            //// calculate average distance between all selected nodes 
+            // const edgeDistance = []
+            // appState.graph.frame.lineIndices.forEach((edge)=>{
+            //   if (appState.graph.selectedNodes.includes(edge.source ) && appState.graph.selectedNodes.includes(edge.target ) ){
+            //     edgeDistance.push(edge.edgeDist)
+
+            //   }
+            // })
+            // if(edgeDistance.length>0){
+            //   return [average(edgeDistance).toFixed(3), edgeDistance];
+            // }else{
+            //   return  [null, []]
+            // }
+
+            // for (let i = 0; i < selectNodes.length; i++) {
+            //   for (let j = i + 1; j < selectNodes.length; j++) {
+            //     const lon1 = selectNodes[i].data.ref.LonX
+            //     const lat1 = selectNodes[i].data.ref.LatY
+            //     const lon2 = selectNodes[j].data.ref.LonX
+            //     const lat2 = selectNodes[j].data.ref.LatY
+            //     const edgeDist = appState.graph.frame.getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2)
+            //     edgeDistance.push(edgeDist)
+            //   }
+            // }
+
+
+
+        } else {   // when no node is selected, return the distribution of the whole network 
+
+            let edgeSelection = []
+            appState.graph.frame.getNodeList().forEach(node => {
+                if (node.linkObjs && node.linkObjs.length > 0) {
+                    edgeSelection.push(...node.linkObjs)
+                }
+
+            })
+
+            if (edgeSelection.length > 0) {
+                let uniqEdgeSelection = uniq(edgeSelection)
+                this.edgeSelection = uniqEdgeSelection
+                if (uniqEdgeSelection.length > 0) {
+                    let edgeDistance = uniqEdgeSelection.map(e => {
+                        if (e.edgeDist > 0) {
+                            return e.edgeDist
+                        } else {
+                            return 0
+                        }
+
+                    })
+                    // console.log(edgeDistance)
+                    return [average(edgeDistance).toFixed(3), edgeDistance];
+
+                } else {
+                    return [null, []]
+                }
+
+            } else {
+                return [null, []]
+            }
+
+
+            // return null
+        }
+
+    }
 
     // @computed
     SelectionDensity = () => {
@@ -163,6 +167,37 @@ class Sidebar extends React.Component {
 
         }
 
+
+    }
+
+    rerunDiameter = ()=>{
+        // console.log("rerun degree")
+        //create rawgraph based on selected nodes
+        if (appState.graph.tempRawGraph) {
+            appState.graph.rediameter = appState.graph.rerundiameter(appState.graph.tempRawGraph)
+        }else{
+            appState.graph.rediameter= 0
+        }
+
+    }
+    rerunCluster = ()=>{
+        // console.log("rerun degree")
+        //create rawgraph based on selected nodes
+        if (appState.graph.tempRawGraph) {
+            appState.graph.reclustercoe = appState.graph.reruncluster(appState.graph.tempRawGraph).toFixed(2)
+        }else{
+            appState.graph.reclustercoe= 0
+        }
+
+    }
+    rerunComponent = ()=>{
+        // console.log("rerun degree")
+        //create rawgraph based on selected nodes
+        if (appState.graph.tempRawGraph) {
+            appState.graph.recomponent = appState.graph.reruncomponent(appState.graph.tempRawGraph)
+        }else{
+            appState.graph.recomponent= 0
+        }
 
     }
 
@@ -220,13 +255,19 @@ class Sidebar extends React.Component {
                                     </tr>
                                     <tr>
                                         <td># Edges</td>
-                                      
-                                        <td>{appState.graph.hasGraph ? appState.graph.selectedEdge: 'loading graph'}</td>
+
+                                        <td>{appState.graph.hasGraph ? appState.graph.selectedEdge : 'loading graph'}</td>
                                     </tr>
                                     <tr>
                                         <td>Average Degree</td>
                                         <td>
                                             {appState.graph.hasGraph ? appState.graph.avgDegree : 'loading graph'}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Distance</td>
+                                        <td>
+                                            {appState.graph.hasGraph ? appState.graph.avgdist : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>
@@ -236,18 +277,34 @@ class Sidebar extends React.Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Network Diameter</td>
+                                        <td>Network Diameter
+                                            <br></br>
+                                            <Button
+                                                className="bp4-button"
+                                                style={{ zIndex: '1000' }}
+                                                onClick={this.rerunDiameter}>rerun</Button>
+                                        </td>
                                         <td>
-                                            {appState.graph.hasGraph ? appState.graph.diameter() : 'loading graph'}
+                                            {appState.graph.hasGraph ? appState.graph.rediameter : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Clustering<br></br>Coefficient</td>
-                                        <td>{(appState.graph.hasGraph) ? 0 : 'loading graph'}</td>
+                                        <td>Clustering<br></br>Coefficient
+                                        <br></br>
+                                            <Button
+                                                className="bp4-button"
+                                                style={{ zIndex: '1000' }}
+                                                onClick={this.rerunCluster}>rerun</Button></td>
+                                        <td>{(appState.graph.hasGraph) ? appState.graph.reclustercoe : 'loading graph'}</td>
                                     </tr>
                                     <tr>
-                                        <td>Connected <br></br>Component</td>
-                                        <td>{(appState.graph.hasGraph) ? 1 : 'loading graph'}</td>
+                                        <td>Connected <br></br>Component
+                                        <br></br>
+                                            <Button
+                                                className="bp4-button"
+                                                style={{ zIndex: '1000' }}
+                                                onClick={this.rerunComponent}>rerun</Button></td>
+                                        <td>{(appState.graph.hasGraph) ? appState.graph.recomponent : 'loading graph'}</td>
 
                                     </tr>
                                 </tbody>
@@ -257,11 +314,12 @@ class Sidebar extends React.Component {
                 </SidebarMenu>
             );
         } else if (appState.graph.frame && appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0] && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {
+            //one node is clicked
             const thenode = appState.graph.selectedNodes[0]
             const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
             // appState.graph.selectedNodes = selectneighbors
             if (selectneighbors.length > 1) {
-                appState.graph.frame && (
+                return appState.graph.frame && (
                     <SidebarMenu>
                         <div class="sidebar-container">
                             <div class="w3-bar w3-black">
@@ -298,12 +356,12 @@ class Sidebar extends React.Component {
                             <hr />
                             <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
                                 <table className={Classes.TABLE} style={{ width: '100%' }}>
-        
+
                                     <tbody>
                                         {/* <thead> */}
                                         <tr>
                                             <th colspan="2" style={{ textAlign: "center" }}>Network Statistics</th>
-        
+
                                         </tr>
                                         {/* </thead> */}
                                         {/* <caption>Network Statistics</caption> */}
@@ -322,26 +380,48 @@ class Sidebar extends React.Component {
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Average Distance</td>
+                                            <td>
+                                                {appState.graph.hasGraph ? appState.graph.avgdist : 'loading graph'}
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Network Density</td>
                                             <td>
                                                 {appState.graph.hasGraph ? appState.graph.avgdensity : 'loading graph'}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Network Diameter</td>
-                                            <td>
-                                                {appState.graph.hasGraph ? appState.graph.diameter() : 'loading graph'}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Clustering<br></br>Coefficient</td>
-                                            <td>{(appState.graph.hasGraph) ? appState.graph.clustercoe : 'loading graph'}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Connected <br></br>Component</td>
-                                            <td>{(appState.graph.hasGraph) ? appState.graph.components() : 'loading graph'}</td>
-        
-                                        </tr>
+                                        <td>Network Diameter
+                                            <br></br>
+                                            <Button
+                                                className="bp4-button"
+                                                style={{ zIndex: '1000' }}
+                                                onClick={this.rerunDiameter}>rerun</Button>
+                                        </td>
+                                        <td>
+                                            {appState.graph.hasGraph ? appState.graph.rediameter : 'loading graph'}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Clustering<br></br>Coefficient
+                                        <br></br>
+                                            <Button
+                                                className="bp4-button"
+                                                style={{ zIndex: '1000' }}
+                                                onClick={this.rerunCluster}>rerun</Button></td>
+                                        <td>{(appState.graph.hasGraph) ? appState.graph.reclustercoe : 'loading graph'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Connected <br></br>Component
+                                        <br></br>
+                                            <Button
+                                                className="bp4-button"
+                                                style={{ zIndex: '1000' }}
+                                                onClick={this.rerunComponent}>rerun</Button></td>
+                                        <td>{(appState.graph.hasGraph) ? appState.graph.recomponent : 'loading graph'}</td>
+
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -349,7 +429,8 @@ class Sidebar extends React.Component {
                     </SidebarMenu>
                 );
             } else {
-                appState.graph.frame && (
+                //selection is 0
+                return appState.graph.frame && (
                     <SidebarMenu>
                         <div class="sidebar-container">
                             <div class="w3-bar w3-black">
@@ -386,12 +467,12 @@ class Sidebar extends React.Component {
                             <hr />
                             <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
                                 <table className={Classes.TABLE} style={{ width: '100%' }}>
-        
+
                                     <tbody>
                                         {/* <thead> */}
                                         <tr>
                                             <th colspan="2" style={{ textAlign: "center" }}>Network Statistics</th>
-        
+
                                         </tr>
                                         {/* </thead> */}
                                         {/* <caption>Network Statistics</caption> */}
@@ -410,6 +491,12 @@ class Sidebar extends React.Component {
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Average Distance</td>
+                                            <td>
+                                                {0}
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Network Density</td>
                                             <td>
                                                 {0}
@@ -418,7 +505,7 @@ class Sidebar extends React.Component {
                                         <tr>
                                             <td>Network Diameter</td>
                                             <td>
-                                                {appState.graph.hasGraph ? appState.graph.diameter() : 'loading graph'}
+                                                {appState.graph.hasGraph ? 0 : 'loading graph'}
                                             </td>
                                         </tr>
                                         <tr>
@@ -427,8 +514,8 @@ class Sidebar extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>Connected <br></br>Component</td>
-                                            <td>{(appState.graph.hasGraph) ? 1 : 'loading graph'}</td>
-        
+                                            <td>{(appState.graph.hasGraph) ? 0 : 'loading graph'}</td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -477,12 +564,12 @@ class Sidebar extends React.Component {
                         <hr />
                         <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
                             <table className={Classes.TABLE} style={{ width: '100%' }}>
-    
+
                                 <tbody>
                                     {/* <thead> */}
                                     <tr>
                                         <th colspan="2" style={{ textAlign: "center" }}>Network Statistics</th>
-    
+
                                     </tr>
                                     {/* </thead> */}
                                     {/* <caption>Network Statistics</caption> */}
@@ -498,6 +585,12 @@ class Sidebar extends React.Component {
                                         <td>Average Degree</td>
                                         <td>
                                             {appState.graph.hasGraph ? appState.graph.degree().toFixed(3) : 'loading graph'}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Distance</td>
+                                        <td>
+                                            {appState.graph.frame ? appState.graph.avgDist() : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>
@@ -519,7 +612,7 @@ class Sidebar extends React.Component {
                                     <tr>
                                         <td>Connected <br></br>Component</td>
                                         <td>{(appState.graph.hasGraph) ? appState.graph.components() : 'loading graph'}</td>
-    
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -527,8 +620,9 @@ class Sidebar extends React.Component {
                     </div>
                 </SidebarMenu>
             );
-         }
+        }
         else {
+            //everything else , no valid selection, etc. 
             return appState.graph.frame && (
                 <SidebarMenu>
                     <div class="sidebar-container">
@@ -566,12 +660,12 @@ class Sidebar extends React.Component {
                         <hr />
                         <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
                             <table className={Classes.TABLE} style={{ width: '100%' }}>
-    
+
                                 <tbody>
                                     {/* <thead> */}
                                     <tr>
                                         <th colspan="2" style={{ textAlign: "center" }}>Network Statistics</th>
-    
+
                                     </tr>
                                     {/* </thead> */}
                                     {/* <caption>Network Statistics</caption> */}
@@ -590,25 +684,33 @@ class Sidebar extends React.Component {
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>Average Distance</td>
+                                        <td>
+                                            {appState.graph.hasGraph ? 0 : 'loading graph'}
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>Network Density</td>
                                         <td>
                                             {appState.graph.hasGraph ? 0 : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Network Diameter</td>
+                                        <td>Network Diameter <br></br>
+
+                                        </td>
                                         <td>
-                                            {appState.graph.hasGraph ? appState.graph.diameter() : 'loading graph'}
+                                            {appState.graph.hasGraph ? 0 : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Clustering<br></br>Coefficient</td>
-                                        <td>{(appState.graph.hasGraph) ? appState.graph.clustercoe : 'loading graph'}</td>
+                                        <td>{(appState.graph.hasGraph) ? 0 : 'loading graph'}</td>
                                     </tr>
                                     <tr>
                                         <td>Connected <br></br>Component</td>
-                                        <td>{(appState.graph.hasGraph) ? appState.graph.components() : 'loading graph'}</td>
-    
+                                        <td>{(appState.graph.hasGraph) ? 0 : 'loading graph'}</td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -616,10 +718,11 @@ class Sidebar extends React.Component {
                     </div>
                 </SidebarMenu>
             );
+
         }
 
 
-        
+
     }
 }
 

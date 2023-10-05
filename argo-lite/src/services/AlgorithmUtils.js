@@ -86,6 +86,18 @@ export function averageClusteringCoefficient(snapshot) {
 }
 
 /**
+ * ReCalculate the number of connected components in a graph
+ * @param {*} rawGraph the rawGraph inside appState
+ */
+export function reaverageClusteringCoefficient(snapshot) {
+    
+    const jsnxGraph = convertToJsnx(snapshot);
+    
+    
+    return jsnx.averageClustering(jsnxGraph);
+}
+
+/**
  * Calculate the number of connected components in a graph
  * @param {*} rawGraph the rawGraph inside appState
  */
@@ -94,7 +106,20 @@ export function connectedComponents(snapshot) {
     var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
     console.log('compute connected copoenent')
     appState.graph.connectcom = cc.componentCount()
+    // console.log('connected:')
+    // console.log(appState.graph.connectcom)
     return appState.graph.connectcom;
+   
+}
+
+export function reconnectedComponents(snapshot) {
+    
+    var cc = new jsgraphs.ConnectedComponents(convertToJSGraph(snapshot)[0]);
+    
+    
+    // console.log('connected:')
+    // console.log(appState.graph.connectcom)
+    return cc.componentCount();
    
 }
 
@@ -120,6 +145,8 @@ export function averageDegree(snapshot) {
     )
     return sum / snapshot.rawGraph.nodes.length;
 }
+
+
 
 
 /**

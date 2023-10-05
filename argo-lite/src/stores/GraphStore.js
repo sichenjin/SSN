@@ -2,7 +2,7 @@ import { observable, computed, action, runInAction } from "mobx";
 import createGraph from "ngraph.graph";
 import { scales } from "../constants/index";
 import uniq from "lodash/uniq";
-import { averageClusteringCoefficient, connectedComponents, graphDensity, averageDegree, exactGraphDiameter } from "../services/AlgorithmUtils";
+import { averageClusteringCoefficient, connectedComponents, graphDensity, averageDegree, exactGraphDiameter , reaverageClusteringCoefficient, reconnectedComponents} from "../services/AlgorithmUtils";
 import { ContextMenu, MenuFactory, MenuItemFactory } from "@blueprintjs/core";
 import { Frame } from "../graph-frontend";
 // import appState from '../stores';
@@ -87,8 +87,14 @@ export default class GraphStore {
 
   @observable selectedEdge = 0;
   @observable avgDegree = 0;
+  @observable avgdist = 0;
   @observable avgdensity = 0;
   @observable clustercoe = 0;
+  @observable rediameter = '';
+  @observable reclustercoe = '';
+  @observable recomponent = '';
+
+ tempRawGraph = undefined;
 
   //  // Currently Clicked to frozen node on network
   //  @observable networkClicked = undefined;
@@ -967,6 +973,41 @@ export default class GraphStore {
     return averageDegree(snapshot);
   }
 
+  avgDist(){
+
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+    const edgeSelection = [];
+    this.frame.getNodeList().forEach(node => {
+      if(node.linkObjs && node.linkObjs.length>0){
+        edgeSelection.push(...node.linkObjs)
+      }
+      
+    })
+
+    if (edgeSelection.length > 0) {
+      const uniqEdgeSelection = uniq(edgeSelection)
+      
+      if (uniqEdgeSelection.length > 0) {
+        const edgeDistance = uniqEdgeSelection.map(e=>{
+          if(e.edgeDist >0){
+            return e.edgeDist
+          }else {
+            return 0
+          }
+         
+        })
+        // console.log(edgeDistance)
+        return average(edgeDistance).toFixed(2);
+
+      } else {
+        return 0
+      }
+
+    } else {
+      return 0
+    }
+  }
+
 
   diameter() {
     const snapshot = {
@@ -974,4 +1015,26 @@ export default class GraphStore {
     };
     return exactGraphDiameter(snapshot);
   }
+
+  rerundiameter(temraw){
+    const snapshot = {
+      rawGraph: temraw,
+    };
+    return exactGraphDiameter(snapshot);
+  }
+
+  reruncluster(temraw){
+    const snapshot = {
+      rawGraph: temraw,
+    };
+    return reaverageClusteringCoefficient(snapshot);
+  }
+
+  reruncomponent(temraw){
+    const snapshot = {
+      rawGraph: temraw,
+    };
+    return connectedComponents(snapshot);
+  }
 }
+
