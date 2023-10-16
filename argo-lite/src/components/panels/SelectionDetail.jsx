@@ -25,7 +25,7 @@ class SelectionDetail extends React.Component {
   // { top: 32, right: 32, bottom: 64, left: 64 }
   containerDiv = document.querySelector("#graph-container");
   allwidth = this.containerDiv.offsetWidth / 2;
-  allheight = this.containerDiv.offsetHeight/ 2;
+  allheight = this.containerDiv.offsetHeight/ 3 *2;
   width = this.allwidth - this.margin.left - this.margin.right
   height = this.allheight - this.margin.top - this.margin.bottom
   brushmargin = this.margin
@@ -539,14 +539,12 @@ if(appState.graph.selectedNodes.length > 1){
                   <td style={{ padding: '5px 10px' }}> {appState.graph.selectedNodes.length + ' nodes are selected'}</td>
                   {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
                 </tr>
-                <tr>
+                {/* <tr>
                   <td style={{ padding: '5px 10px' }}> {'The average distance is ' + this.SelectionDistanceFromLatLonIn()[0] + ' km'}</td>
-                  {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
                 </tr>
                 <tr>
                   <td style={{ padding: '5px 10px' }}> {'The network density (undirected network) is ' + this.SelectionDensity()}</td>
-                  {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
-                </tr>
+                </tr> */}
                 {/* {appState.graph.allPropertiesKeyList.map((it, i) => (
                   
                 ))} */}
@@ -799,14 +797,12 @@ if(appState.graph.selectedNodes.length > 1){
                     <td style={{ padding: '5px 10px' }}> {selectneighbors.length + ' nodes are selected'}</td>
                     {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <td style={{ padding: '5px 10px' }}> {'The average distance is ' + this.SelectionDistanceFromLatLonIn()[0] + ' km'}</td>
-                    {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
                   </tr>
                   <tr>
                     <td style={{ padding: '5px 10px' }}> {'The network density (undirected network) is ' + this.SelectionDensity()}</td>
-                    {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
-                  </tr>
+                  </tr> */}
                   {/* {appState.graph.allPropertiesKeyList.map((it, i) => (
                     
                   ))} */}

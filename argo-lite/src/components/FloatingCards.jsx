@@ -10,7 +10,6 @@ import NodesFilterPanel from "./panels/NodesFilterPanel";
 import EdgesPanel from "./panels/EdgesPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodeDetail from "./panels/NodeDetailPanel";
-import SelectionDetail from "./panels/SelectionDetail";
 import ScatterPlot from "./panels/ScatterPlot";
 import Legends from "./Legends";
 import StatusBar from './StatusBar';
@@ -399,20 +398,7 @@ class FloatingCards extends React.Component {
 
 
 
-        
-
-
-        {/* {// This menu only shows when there are nodes selected
-          appState.graph.selectedNodes.length > 1 && <SelectionDetail />
-        } */}
-        {/* {appState.graph.selectedNodes.length === 1 && (
-          <NodeDetail node={appState.graph.selectedNodes[0].data.ref} />
-        )} */}
-
-        {/* {appState.graph.selectedNodes.length !== 1 && appState.graph.currentlyHovered && (
-          <NodeDetail node={appState.graph.currentlyHovered.data.ref} />
-        )} */}
-
+     
 
 
         <Legends />

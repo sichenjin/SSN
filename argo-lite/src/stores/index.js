@@ -224,12 +224,14 @@ autorun(() => {
   if (appState.graph.frame) {
     console.log("Triggered");
     // appState.graph.frame.selection = []
+
     if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
       appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
     }
     if (appState.graph.frame.selection.length > 0) {
         appState.graph.frame.selection = appState.graph.frame.selection.filter(x => x !== undefined)
     }
+    appState.graph.selectedNodes = appState.graph.frame.selection
 
     appState.graph.frame.updateGraph(appState.graph.computedGraph); //loads nodes on screen when snapshot loaded
     appState.graph.frame.setAllNodesShapeWithOverride(appState.graph.nodes.shape, appState.graph.overrides);
