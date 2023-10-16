@@ -25,7 +25,7 @@ export default function AreaSelect() {
         appState.graph.frame.selection = []
         appState.graph.selectedNodes = []
         appState.graph.edgeselection = []
-
+        appState.graph.areaSelected = undefined;
 
 
       });
@@ -72,7 +72,8 @@ export default function AreaSelect() {
       if (selectionNode.length === 0) return 
       appState.graph.selectedNodes = selectionNode
       appState.graph.frame.selection = selectionNode
-      appState.graph.frame.updateSelectionOpacity()
+      appState.graph.frame.updateSelectionOutOpacity();
+      appState.graph.areaSelected = true;
       
       // console.log(appState.graph.selectedNodes)
     });

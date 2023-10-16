@@ -55,6 +55,7 @@ export function MapClick() {
         appState.graph.selectedNodes = []
         appState.graph.edgeselection = []
         appState.graph.mapClicked = null
+        appState.graph.areaSelected = undefined;
         // appState.graph.networkClicked = null
         appState.graph.watchAppearance = appState.graph.watchAppearance + 1
         appState.graph.frame.updateSelectionOpacity()

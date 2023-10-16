@@ -211,6 +211,8 @@ class MapView extends React.Component {
 
 
 
+
+
     if (appState.graph.edgeselection.length !== 0) {  // && appState.graph.selectedNodes.length !== 0
       const tempedgelist = this.edgeSelectionID
       if (tempedgelist.indexOf(edge.id) !== -1) {
@@ -235,12 +237,34 @@ class MapView extends React.Component {
       }
     }
 
+    //highlight branching out edges as well when select from map 
+    if(appState.graph.areaSelected && appState.graph.selectedNodes.length > 0){
+      
+      if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+        return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+      } else {
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+      }
+    }
+
+    if(appState.graph.degreeselection.length>0){
+      const degreeselectionID = appState.graph.degreeselection.map(n=>n.id)
+      if (degreeselectionID.indexOf(edge.fromId) !== -1 && degreeselectionID.indexOf(edge.toId) !== -1) {
+        return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+      } else {
+
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0'}
+      }
+    }
+
 
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
       return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
 
       // { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
     }
+
+    
 
     if (appState.graph.selectedNodes.length > 0) {
       //highlight within selection edges , &&
