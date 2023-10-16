@@ -21,6 +21,7 @@ module.exports = function (self) {
     self.mouseY = mouseY;
     if (self.leftMouseDown && self.mouseDown) {
       appState.graph.mapClicked = null
+      appState.graph.areaSelected = undefined;
       // appState.graph.networkClicked = null
       
       // left-clicked empty space (i.e., not clicking a node)
@@ -265,6 +266,7 @@ module.exports = function (self) {
     //when not clicking, nodes aren't being interacted with
     appState.graph.smartPause.interactingWithGraph = false;
     appState.graph.mapClicked = null
+    appState.graph.areaSelected = undefined;
     appState.graph.degreeselection = []
     appState.graph.degreebrushed = false
     
@@ -283,7 +285,13 @@ module.exports = function (self) {
 
     if(self.selection.length == 0){
       appState.graph.mapClicked = null
+      appState.graph.areaSelected = undefined;
     }
+
+    // if(self.selection.length>0){
+    //   const tselection = self.selection.map(n=>n)
+    //   appState.graph.selectedNodes = tselection
+    // }
     
   
     // Left or right mouse button

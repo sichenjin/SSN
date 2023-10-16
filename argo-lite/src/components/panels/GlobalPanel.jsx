@@ -165,7 +165,9 @@ class GlobalPanel extends React.Component {
                     items={appState.graph.filterKeyList}
                     // itemRenderer={CommonItemRenderer}
                     // filterable={false}
-                    onItemSelect={it => (appState.graph.nodes.sizeBy = it)}
+                    onSelect={it => {appState.graph.nodes.sizeBy = it
+                      appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
+                    // onItemSelect={it => (appState.graph.nodes.sizeBy = it)}
                     value={appState.graph.nodes.sizeBy}
                     />
                 </span>
@@ -178,7 +180,9 @@ class GlobalPanel extends React.Component {
                   items={Object.keys(scales)}
                   itemRenderer={CommonItemRenderer}
                   filterable={false}
-                  onItemSelect={it => (appState.graph.nodes.size.scale = it)}
+                  onSelect={it => {appState.graph.nodes.size.scale = it
+                    appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
+                  // onItemSelect={it => (appState.graph.nodes.size.scale = it)}
                   value={appState.graph.nodes.size.scale}
                   />
                 </span>

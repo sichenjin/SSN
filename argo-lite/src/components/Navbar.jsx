@@ -349,20 +349,20 @@ class RegularNavbar extends React.Component {
                   text="Open Snapshot"
                   onClick={() => { appState.preferences.openSnapshotDialogOpen = true }}
                 /> */}
-                {/* <MenuDivider /> */}
-                {/* <MenuItem
+                <MenuDivider />
+                <MenuItem
                   iconName="download"
                   text="Save Snapshot"
                   onClick={() => {
                     appState.project.stringCopyOfSnapshot = appState.graph.saveImmediateStates();
                     appState.project.isSaveSnapshotDialogOpen = true
                   }}
-                /> */}
-                {/* <MenuItem
+                />
+                <MenuItem
                   iconName="pt-icon-document-share"
                   text="Publish and Share Snapshot"
                   onClick={() => { appState.preferences.shareDialogOpen = true }}
-                /> */}
+                />
               </Menu>
             }
             position={Position.BOTTOM}
@@ -538,11 +538,12 @@ class RegularNavbar extends React.Component {
               <div className="pt-button-group">
               <a className="pt-button pt-icon-refresh"  role="button" onClick={() => {
                 appState.graph.mapClicked = undefined;
+                appState.graph.areaSelected = undefined;
                 appState.graph.selectedNodes = [];
                 appState.graph.frame.selection = []
                 appState.graph.filter  = {}
                 appState.graph.currentlyHovered = undefined;
-                // appState.graph.mapClicked = undefined;
+              
                 appState.graph.edgeselection = [];
                 appState.graph.degreeselection = [];
                 appState.graph.degreebrushed = false;

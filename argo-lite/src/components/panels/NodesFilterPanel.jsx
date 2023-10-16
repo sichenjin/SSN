@@ -125,7 +125,7 @@ class NodesFilterPanel extends React.Component {
                   min={Math.min(... appState.graph.rawGraph.nodes.map(n => n[it]))}   //uniqueValue[it][0] is computed min 
                   max={Math.max(... appState.graph.rawGraph.nodes.map(n => n[it]))} //uniqueValue[it][1] is computed max
                   stepSize={1}
-                  labelStepSize={10}
+                  labelStepSize={10000}
                   className="range-slider-container"
                   onChange={([a, b]) => {
                     runInAction("update scale", () => {

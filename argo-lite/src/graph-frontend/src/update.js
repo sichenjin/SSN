@@ -1,3 +1,5 @@
+// import appState from '../../stores/index';
+const { default: appState } = require("../../stores");
 var def = require("./imports").default;
 var THREE = def.THREE;
 var Edge = def.Edge;
@@ -5,6 +7,7 @@ var Node = def.Node;
 var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
+
 
 module.exports = function (self) {
   /**
@@ -276,8 +279,11 @@ module.exports = function (self) {
       if (self.newNodeIds.length < 10) {
         for (let i = 0; i < self.newNodeIds.length; i++) {
           self.selection.push(self.graph.getNode(self.newNodeIds[i]));
+          appState.graph.selectedNodes.push(self.graph.getNode(self.newNodeIds[i]));
         }
-        self.ee.emit("select-nodes", self.selection);
+        // self.ee.emit("select-nodes", self.selection);
+        
+        //  = self.selection 
       }
     }
   };

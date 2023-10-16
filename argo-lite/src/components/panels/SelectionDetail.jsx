@@ -1054,12 +1054,12 @@ if(appState.graph.selectedNodes.length > 1){
               <tr>
                 <td style={{ padding: '5px 10px' }}> {'No node is selected'} | {`Size by ${appState.graph.hasGraph ? appState.graph.nodes.sizeBy : 'NULL'}`} | {`Color by ${appState.graph.hasGraph ? appState.graph.nodes.colorBy : 'NULL'}`}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td style={{ padding: '5px 10px' }}> {`The average degree is ${appState.graph.hasGraph ? appState.graph.degree().toFixed(3) : 'NULL'}`}</td>
               </tr>
               <tr>
                 <td style={{ padding: '5px 10px' }}> {`The average density is ${appState.graph.hasGraph ? (appState.graph.density() ).toFixed(3) : 'NULL'}`}</td>
-              </tr>
+              </tr> */}
 
             </tbody>
           </table>

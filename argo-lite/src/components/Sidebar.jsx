@@ -239,7 +239,7 @@ class Sidebar extends React.Component {
                         </div>
                         <hr />
                         <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
-                            <table className={Classes.TABLE} style={{ width: '100%' }}>
+                            <table className={Classes.TABLE + ' ' + "siderTable"} style={{ width: '100%' }}>
 
                                 <tbody>
                                     {/* <thead> */}
@@ -355,7 +355,7 @@ class Sidebar extends React.Component {
                             </div>
                             <hr />
                             <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
-                                <table className={Classes.TABLE} style={{ width: '100%' }}>
+                                <table className={Classes.TABLE + ' ' + "siderTable"} style={{ width: '100%' }}>
 
                                     <tbody>
                                         {/* <thead> */}
@@ -466,7 +466,7 @@ class Sidebar extends React.Component {
                             </div>
                             <hr />
                             <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
-                                <table className={Classes.TABLE} style={{ width: '100%' }}>
+                                <table className={Classes.TABLE + ' ' + "siderTable"} style={{ width: '100%' }}>
 
                                     <tbody>
                                         {/* <thead> */}
@@ -563,7 +563,7 @@ class Sidebar extends React.Component {
                         </div>
                         <hr />
                         <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
-                            <table className={Classes.TABLE} style={{ width: '100%' }}>
+                            <table className={Classes.TABLE + ' ' + "siderTable"} style={{ width: '100%' }}>
 
                                 <tbody>
                                     {/* <thead> */}
@@ -659,7 +659,7 @@ class Sidebar extends React.Component {
                         </div>
                         <hr />
                         <div id="statTable" className={classnames(Classes.DIALOG_BODY)}>
-                            <table className={Classes.TABLE} style={{ width: '100%' }}>
+                            <table className={Classes.TABLE + ' ' + "siderTable"} style={{ width: '100%' }}>
 
                                 <tbody>
                                     {/* <thead> */}

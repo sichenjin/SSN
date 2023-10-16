@@ -91,10 +91,11 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.convexhullby = "NULL"
   appState.graph.groupby = "NULL"
   appState.graph.mapClicked = undefined;
+  appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
-  // appState.graph.mapClicked = undefined;
+ 
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -235,7 +236,7 @@ autorun(() => {
     appState.graph.frame.setLabelRelativeSize(appState.graph.nodes.labelSize);
     appState.graph.frame.setLabelLength(appState.graph.nodes.labelLength);
     appState.graph.frame.updateSelectionOpacity();
-    appState.graph.frame.clearSelection();
+    // appState.graph.frame.clearSelection();
     // if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
     //   appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
     // }
@@ -295,9 +296,9 @@ autorun(() => {
   if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
     appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
   }
-  if (appState.graph && appState.graph.frame && appState.graph.frame.selection.length > 0) {
-    this.frame.selection = this.frame.selection.filter(x => x !== undefined)
-  }
+  // if (appState.graph && appState.graph.frame && appState.graph.frame.selection.length > 0) {
+  //   this.frame.selection = this.frame.selection.filter(x => x !== undefined)
+  // }
 })
 
 // Argo-lite specific: extract CSV from File object and update related fields.

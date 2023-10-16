@@ -82,6 +82,7 @@ export default class GraphStore {
 
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
+  @observable areaSelected = undefined;
   @observable clearBrush = false;
 
 
@@ -164,7 +165,7 @@ export default class GraphStore {
     nodeProperties: [],
     nodePropertyTypes: [],
     uniqueValue: {},
-    nodeComputed: ["pagerank", "degree", 'centrality', 'distance to center', 'betweeness centrality', 'closeness centrality', 'distance to group center'],
+    nodeComputed: ["pagerank", "degree", 'centrality', 'distance to center'  ,  'betweenness', 'closeness',  'betweeness centrality', 'closeness centrality', 'distance to group center'],
     edgeProperties: [],
     snapshotName: "loading..." // Optional: for display in Argo-lite only
   };
@@ -451,7 +452,7 @@ export default class GraphStore {
 
     });
      // this.runActiveLayout()
-
+    //  appState.graph.watchAppearance = appState.graph.watchAppearance +1
   }
 
   showNodes(nodeids) {
@@ -773,7 +774,7 @@ export default class GraphStore {
         nodeProperties: nodekeyList,
         nodePropertyTypes: nodePropertyTypes,
         uniqueValue: uniqueValue,
-        nodeComputed: ['pagerank', 'degree', 'distance to center'],
+        nodeComputed: ['pagerank', 'degree', 'distance to center' ,  'betweenness', 'closeness'],
         edgeProperties: ['source_id', 'target_id'],
        
       },
