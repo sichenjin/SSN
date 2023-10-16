@@ -173,7 +173,7 @@ function actualLoadSQL(currentDb) {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
       nodeProperties: Object.keys(nodesArr[0]),
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center'],
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center',  'betweenness', 'closeness'],
       edgeProperties: ['source_id', 'target_id'],
     },
   };

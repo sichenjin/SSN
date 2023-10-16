@@ -58,6 +58,8 @@ import createGraph from 'ngraph.graph';
 import pageRank from 'ngraph.pagerank';
 import path from 'ngraph.path';
 import parse from "csv-parse/lib/sync";
+import centrality from 'ngraph.centrality';
+// import betweennes from 'ngraph.centrality/src/betweenness';
 // import worker from './worker';
 
 // TODO: Register web worker used by Argo-lite.
@@ -358,10 +360,11 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.convexhullby = "NULL"
   appState.graph.groupby = "NULL"
   appState.graph.mapClicked = undefined;
+  appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
-  // appState.graph.mapClicked = undefined;
+ 
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -555,7 +558,7 @@ async function parseGEXF(content) {
     if (nodeAttvalues.length != 0) {
       nodeAttvalue = nodeAttvalues[0].getElementsByTagName("attvalue");
     }
-    let node = { id: id, degree: 0, pagerank: 0, node_id: id };
+    let node = { id: id, degree: 0, pagerank: 0, node_id: id,  betweenness:0, closeness:0 };
     for (let j = 0; j < nodeAttvalue.length; j++) {
       const value = nodeAttvalue[j].attributes["value"].value;
       const attributeIdElementAttribute = nodeAttvalue[j].attributes["for"] || nodeAttvalue[j].attributes["id"];
@@ -606,7 +609,7 @@ async function importGraphFromCSV(config) {
       { id: node[config.nodes.mapping.id].toString(), LatY: parseFloat(node[config.nodes.mapping.LatY]),LonX: parseFloat(node[config.nodes.mapping.LonX]),degree: 0, ...node }));
     nodesArr =
       nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0, pagerank: 0, centrality: parseFloat(n['centrality']), 'dist to center': parseFloat(n['distance to center']), LonX: parseFloat(n[config.nodes.mapping.LonX]), LatY: parseFloat(n[config.nodes.mapping.LatY]) }));
+        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0,betweenness:0, closeness:0 , pagerank: 0, centrality: parseFloat(n['centrality']), 'dist to center': parseFloat(n['distance to center']), LonX: parseFloat(n[config.nodes.mapping.LonX]), LatY: parseFloat(n[config.nodes.mapping.LatY]) }));
     nodesArr.forEach(n => degreeDict[n.id] = 0);
   }
   const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
@@ -616,12 +619,12 @@ async function importGraphFromCSV(config) {
       const to = it[toId].toString();
       if (!graph.hasNode(from)) {
         graph.addNode(from, { id: from, degree: 0 });
-        nodesArr.push({ id: from, degree: 0, pagerank: 0 });
+        nodesArr.push({ id: from, degree: 0, pagerank: 0 , betweenness:0, closeness:0 });
         degreeDict[from] = 0;
       }
       if (!graph.hasNode(to)) {
         graph.addNode(to, { id: to, degree: 0 });
-        nodesArr.push({ id: to, degree: 0, pagerank: 0 });
+        nodesArr.push({ id: to, degree: 0, pagerank: 0 ,betweenness:0, closeness:0 });
         degreeDict[to] = 0;
       }
     });
@@ -793,10 +796,11 @@ async function importGraphFromCSV(config) {
     return pathsArr
 
   }
-  const pathsArr = shortestPathPairs();
+  // const pathsArr = shortestPathPairs();
   const rank = pageRank(graph);
-
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] ) }));
+  const betweenness = centrality.betweenness(graph)
+  const closeness = centrality.closeness(graph);
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id],  closeness: closeness[n.id],betweenness:betweenness[n.id], degree: parseInt(degreeDict[n.id] ) }));
   const nodekeyList = Object.keys(nodesArr[0])
   const nodePropertyTypes = {}
   nodekeyList.forEach(function (k) {
@@ -815,7 +819,7 @@ async function importGraphFromCSV(config) {
     }
   })
   return {
-    rawGraph: { nodes: nodesArr, edges: edgesArr, paths: pathsArr },
+    rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
       snapshotName: 'Untitled Graph',
       fullNodes: nodesArr.length,
@@ -823,7 +827,7 @@ async function importGraphFromCSV(config) {
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center', 'shortest path', 'pair distance'],
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center',  'betweenness', 'closeness' ],
       edgeProperties: ['source_id', 'target_id'],
      
     },
@@ -969,10 +973,12 @@ export async function importGraphFromGexf() {
     return pathsArr
 
   }
-  const pathsArr = shortestPathPairs();
+  // const pathsArr = shortestPathPairs();
 
   const rank = pageRank(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
+  const betweenness = centrality.betweenness(graph);
+  const closeness = centrality.closeness(graph);
+  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, closeness:closeness[n.id] , betweenness: betweenness[n.id],pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
   const nodekeyList = Object.keys(nodesArr[0])
   const nodePropertyTypes = {}
   nodekeyList.forEach(function (k) {
@@ -991,7 +997,7 @@ export async function importGraphFromGexf() {
     }
   })
   return {
-    rawGraph: { nodes: nodesArr, edges: edgesArr , paths: pathsArr},
+    rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
       snapshotName: 'Untitled Graph',
       fullNodes: nodesArr.length,
@@ -999,7 +1005,7 @@ export async function importGraphFromGexf() {
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center', 'shortest path', 'pair distance'],
+      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center',  'betweenness', 'closeness'],
       edgeProperties: ['source_id', 'target_id'],
      
     },
