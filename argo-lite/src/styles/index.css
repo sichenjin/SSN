@@ -873,4 +873,15 @@ hr {
   width: 100%;               
   background-color:black;
   height: 1px !important;
+  margin: 10px 0 !important; 
+}
+
+table.siderTable th, table.siderTable td {
+padding: 5px !important;
+}
+
+.stat-section-heading{
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 0 3px; 
 }

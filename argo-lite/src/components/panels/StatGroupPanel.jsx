@@ -709,7 +709,7 @@ class StatGroupPanel extends React.Component {
         return (
             (
                 <div> 
-                    <p>Distance and Shortest Path</p>
+                    <p className="stat-section-heading">Distance and Shortest Path</p>
                      <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
@@ -721,7 +721,7 @@ class StatGroupPanel extends React.Component {
                         onClick={this.runShortestPath}>Run Shortest Path</Button>
                     <br></br>
                     <hr />
-                    <p>Efficient Distance Analysis</p>
+                    <p className="stat-section-heading">Efficient Distance Analysis</p>
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
@@ -739,7 +739,7 @@ class StatGroupPanel extends React.Component {
                     {appState.graph.globalFlatRatio ? <text className="gf-tag" style={{ fontSize: "8px" }} >{parseFloat(appState.graph.globalFlatRatio).toFixed(3)}</text> : null}
                     <br></br>
                     <hr />
-                    <p>Group-related Functions</p>
+                    <p className="stat-section-heading">Group-related Functions</p>
                     <Button
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
