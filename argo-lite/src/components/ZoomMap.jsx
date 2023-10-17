@@ -25,7 +25,19 @@ export function ZoomMap() {
           // }
           return null;
         }   //no selection 
-        if (appState.graph.frame.selection.length ==1) return;  // only one node is selected 
+        if (appState.graph.frame.selection.length ==1) { // only one node is selected 
+          const nodeLoc = appState.graph.frame.selection.map(function(node){
+            return [parseFloat(node.data.ref.LatY) , parseFloat(node.data.ref.LonX)]
+          })
+          const b = latLngBounds() // seemed to work without having to pass init arg
+          nodeLoc.forEach(coords => {
+              b.extend(coords)
+          })
+          if(Object.keys(b).length > 0){
+            map.fitBounds(b)
+          }
+          return; 
+        }  
 
         const nodeLoc = appState.graph.frame.selection.map(function(node){
             return [parseFloat(node.data.ref.LatY) , parseFloat(node.data.ref.LonX)]
