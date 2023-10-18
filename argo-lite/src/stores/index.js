@@ -93,6 +93,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.mapClicked = undefined;
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
+  if(appState.graph.frame) {appState.graph.frame.selection = [];}
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
  
@@ -225,12 +226,7 @@ autorun(() => {
     console.log("Triggered");
     // appState.graph.frame.selection = []
 
-    if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
-      appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
-    }
-    if (appState.graph.frame.selection.length > 0) {
-        appState.graph.frame.selection = appState.graph.frame.selection.filter(x => x !== undefined)
-    }
+    // 
     appState.graph.selectedNodes = appState.graph.frame.selection
 
     appState.graph.frame.updateGraph(appState.graph.computedGraph); //loads nodes on screen when snapshot loaded
