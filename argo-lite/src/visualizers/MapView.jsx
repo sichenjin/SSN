@@ -662,9 +662,10 @@ class MapView extends React.Component {
                 >
                   {(appState.graph.frame && node.renderData.textHolder.children[0].element.override) ?
                     <Tooltip
+                    style = {{textAlign: "left"}}
                       width={node.renderData.textHolder.children[0].element.children[0].style.width}
                       fontSize={node.renderData.textHolder.children[0].element.children[0].style.fontSize}
-                      className="maptooltip" direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> : <Tooltip className="maptooltip" direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
+                      className = {`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> : <Tooltip  style = {{textAlign: "left"}} className={`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
 
                 </CircleMarker>
               );
