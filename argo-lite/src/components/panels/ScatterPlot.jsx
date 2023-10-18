@@ -34,7 +34,7 @@ class ScatterPlot extends React.Component {
 
   @observable data = appState.graph.frame.getNodeList().filter(node => !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.x])) && !isNaN(parseFloat(node.data.ref[appState.graph.scatterplot.y])))
 
-  margin = { top: 40, right: 10, bottom: 50, left: 50 }
+  margin = { top: 40, right: 10, bottom: 60, left: 70 }
   // clustermargin = {top: 50, right: 50, bottom: 50, left: 50}
   width = window.innerWidth * 0.48 - this.margin.left - this.margin.right
   height = window.innerHeight * 0.35 - this.margin.top - this.margin.bottom
@@ -58,42 +58,57 @@ class ScatterPlot extends React.Component {
     this.setState({
       csvarray: []
     });
-    // this.state.;
-    if (appState.graph.scatterplot.x === 'shortest path') {
-      column1 = this.infinityhop
-      header.push('shortest path')
-    } else if (appState.graph.scatterplot.x === 'pair distance') {
-      column1 = appState.graph.rawGraph.paths.map((path, i) => {
-        return parseFloat(path['distance'])
-      })
-      header.push('pair distance')
-    } else {
-      header.push(appState.graph.scatterplot.x)
-      column1 = appState.graph.frame.getNodeList().map((d) => {
-        return parseFloat(d.data.ref[appState.graph.scatterplot.x])
-      })
-    }
+    // // this.state.;
+    // if (appState.graph.scatterplot.x === 'shortest path') {
+    //   column1 = this.infinityhop
+    //   header.push('shortest path')
+    // } else if (appState.graph.scatterplot.x === 'pair distance') {
+    //   column1 = appState.graph.rawGraph.paths.map((path, i) => {
+    //     return parseFloat(path['distance'])
+    //   })
+    //   header.push('pair distance')
+    // } else {
+    //   header.push(appState.graph.scatterplot.x)
+    //   column1 = appState.graph.frame.getNodeList().map((d) => {
+    //     return parseFloat(d.data.ref[appState.graph.scatterplot.x])
+    //   })
+    // }
 
-    if (appState.graph.scatterplot.y === 'shortest path') {
-      column2 = this.infinityhop
-      header.push('shortest path')
-    } else if (appState.graph.scatterplot.y === 'pair distance') {
-      column2 = appState.graph.rawGraph.paths.map((path, i) => {
-        return parseFloat(path['distance'])
-      })
-      header.push('pair distance')
-    } else {
-      header.push(appState.graph.scatterplot.y)
-      column2 = appState.graph.frame.getNodeList().map((d) => {
-        return parseFloat(d.data.ref[appState.graph.scatterplot.y])
-      })
-    }
+    // if (appState.graph.scatterplot.y === 'shortest path') {
+    //   column2 = this.infinityhop
+    //   header.push('shortest path')
+    // } else if (appState.graph.scatterplot.y === 'pair distance') {
+    //   column2 = appState.graph.rawGraph.paths.map((path, i) => {
+    //     return parseFloat(path['distance'])
+    //   })
+    //   header.push('pair distance')
+    // } else {
+    //   header.push(appState.graph.scatterplot.y)
+    //   column2 = appState.graph.frame.getNodeList().map((d) => {
+    //     return parseFloat(d.data.ref[appState.graph.scatterplot.y])
+    //   })
+    // }
 
+    //download for all 
     let temp = []
+    header = appState.graph.metadata.nodeComputed.filter(n=> (n!== 'shortest path'&& n!=='pair distance'))
+    header.unshift('id')
     temp.push(header)
-    for (var i = 0; i < column2.length && i < column1.length; i++) {
-      temp.push([column1[i], column2[i]]);
-    }
+    // temp[0].unshift('id')
+    appState.graph.frame.getNodeList().forEach((node)=>{
+      const noderow = []
+      // noderow.push(node.id)
+      header.forEach((column)=>{
+        noderow.push(node.data.ref[column])
+      })
+      temp.push(noderow)
+    })
+   
+    
+    // temp.push(header)
+    // for (var i = 0; i < column2.length && i < column1.length; i++) {
+    //   temp.push([column1[i], column2[i]]);
+    // }
     this.setState({
       csvarray: temp
     });
@@ -375,7 +390,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(20vw, 28vh)' }} fontSize="12px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
+                <text style={{ transform: 'translate(20vw, 27.5vh)' }} fontSize="11px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -391,9 +406,9 @@ class ScatterPlot extends React.Component {
                   }
                 />
                 <text 
-                 style={{ transform: "translate(-30px, 21vh) rotate(-90deg)", }}
+                 style={{ transform: "translate(-45px, 18vh) rotate(-90deg)", }}
                   // transform={"translate(-1vw, 21vh) rotate(-90deg)"}
-                  fontSize="12px"
+                  fontSize="11px"
                 >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.y) }</text>
                 <Axis
                   axis="y"
