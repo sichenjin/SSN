@@ -154,9 +154,16 @@ module.exports = function(self) {
   };
 
   self.showSelectedLabels = () => {
-    document.getElementById("showSelected").style.display="none";
-    document.getElementById("hideSelected").style.display="inline";
+    // document.getElementById("showSelected").style.display="none";
+    // document.getElementById("hideSelected").style.display="inline";
     self.showLabels(self.selection.map(n => n.id));
+    self.selection.forEach(n=>{
+      document.querySelectorAll(`.maptooltip_${n.id}`).forEach(node=>{
+        node.style.opacity = 1;
+      })
+      
+    })
+    
   };
 
   self.hideSelectedLabels = () => {
@@ -189,6 +196,9 @@ module.exports = function(self) {
       }
     });
     self.updateNodesShowingLabels();
+    
+    
+    
   };
 
   self.hideLabels = nodeids => {
@@ -202,8 +212,8 @@ module.exports = function(self) {
   };
 
   self.hideAllLabels = () => {
-    document.getElementById("hideAll").style.display="none";
-    document.getElementById("showAll").style.display="inline";
+    // document.getElementById("hideAll").style.display="none";
+    // document.getElementById("showAll").style.display="inline";
     self.graph.forEachNode(function(node) {
       var node = self.graph.getNode(node.id);
       node.renderData.textHolder.children[0].element.override = false;
@@ -216,8 +226,8 @@ module.exports = function(self) {
   };
 
   self.showAllLabels = () => {
-    document.getElementById("showAll").style.display="none";
-    document.getElementById("hideAll").style.display="inline";
+    // document.getElementById("showAll").style.display="none";
+    // document.getElementById("hideAll").style.display="inline";
     self.graph.forEachNode(function(node) {
       var node = self.graph.getNode(node.id);
       node.renderData.textHolder.children[0].element.override = true;

@@ -23,7 +23,7 @@ class LabelsPanel extends React.Component {
           Show All
         </Button>
         <Button
-          style={{display:"none"}}
+          style={{display:"inline"}}
           id="hideAll"
           iconName="eye-off"
           className={Classes.FILL}
@@ -32,7 +32,7 @@ class LabelsPanel extends React.Component {
           Hide All
         </Button>
         
-        <Button
+        {/* <Button
           style={{
             // width:"140px"
             // marginLeft:"10px"
@@ -43,9 +43,9 @@ class LabelsPanel extends React.Component {
           onClick={() => appState.graph.frame.hideSelectedLabels()}
         >
           Hide Selected
-        </Button>
+        </Button> */}
         <Button
-          style={{width:"140px",marginLeft:"10px",display:"none"}}
+          style={{display:"inline"}}
           id="showSelected"
           iconName="eye-on"
           className={Classes.FILL}
@@ -73,7 +73,7 @@ class LabelsPanel extends React.Component {
         <Slider
         style ={{left:"10%", width:"80%"}}
           min={1}
-          max={20}
+          max={40}
           
           stepSize={1}
           labelStepSize={5}
