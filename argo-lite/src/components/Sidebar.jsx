@@ -26,7 +26,7 @@ class Sidebar extends React.Component {
         }
         var x = document.getElementsByClassName("sidebarButton");
         for (i = 0; i < x.length; i++) {
-            x[i].style.background = "black";
+            x[i].style.background = "white";
         }
         document.getElementById(cityName).style.display = "block";
         document.getElementById(cityName + 'Tab').style.background = "gray";
@@ -206,7 +206,7 @@ class Sidebar extends React.Component {
             return appState.graph.frame && (
                 <SidebarMenu>
                     <div class="sidebar-container">
-                        <div class="w3-bar w3-black">
+                        <div class="w3-bar ">
                             <button id="AppearanceTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
                             <button id="FilterTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Filter")}>Filter</button>
                             <button id="StatisticsTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
@@ -322,7 +322,7 @@ class Sidebar extends React.Component {
                 return appState.graph.frame && (
                     <SidebarMenu>
                         <div class="sidebar-container">
-                            <div class="w3-bar w3-black">
+                            <div class="w3-bar ">
                                 <button id="AppearanceTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
                                 <button id="FilterTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Filter")}>Filter</button>
                                 <button id="StatisticsTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
@@ -433,7 +433,7 @@ class Sidebar extends React.Component {
                 return appState.graph.frame && (
                     <SidebarMenu>
                         <div class="sidebar-container">
-                            <div class="w3-bar w3-black">
+                            <div class="w3-bar ">
                                 <button id="AppearanceTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
                                 <button id="FilterTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Filter")}>Filter</button>
                                 <button id="StatisticsTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
@@ -530,7 +530,7 @@ class Sidebar extends React.Component {
             return appState.graph.frame && (
                 <SidebarMenu>
                     <div class="sidebar-container">
-                        <div class="w3-bar w3-black">
+                        <div class="w3-bar ">
                             <button id="AppearanceTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
                             <button id="FilterTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Filter")}>Filter</button>
                             <button id="StatisticsTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
@@ -626,7 +626,7 @@ class Sidebar extends React.Component {
             return appState.graph.frame && (
                 <SidebarMenu>
                     <div class="sidebar-container">
-                        <div class="w3-bar w3-black">
+                        <div class="w3-bar ">
                             <button id="AppearanceTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Appearance")}>Appearance</button>
                             <button id="FilterTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Filter")}>Filter</button>
                             <button id="StatisticsTab" class="sidebarButton w3-bar-item-button w3-bar-item w3-button" onClick={this.openCity.bind(this, "Statistics")}>Statistics</button>
