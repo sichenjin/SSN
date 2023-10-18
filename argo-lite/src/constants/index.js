@@ -40,8 +40,8 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   // mafia: 6f4e03f4-1de3-485b-96a8-8c3e513b6e54//// 732a9a88-9123-46b4-a271-3616675eab3d
   ["Mafia Family Network", "2abf97e5-d210-481b-8675-a4656e622a55"],
   // c43890f8-1cfb-4599-a0d3-8f47303691fc
-  ["US flight Network", '01221941-76e7-4491-b712-b54fd3b07f7a'],
-  ['US 117th House Vote Network',"5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1"]
+  ["US flight Network", '01221941-76e7-4491-b712-b54fd3b07f7a']
+  // ['US 117th House Vote Network',"5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1"]
 ];
 
 // When resizing window or running on mobile,

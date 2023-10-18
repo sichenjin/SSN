@@ -349,7 +349,7 @@ class RegularNavbar extends React.Component {
                   text="Open Snapshot"
                   onClick={() => { appState.preferences.openSnapshotDialogOpen = true }}
                 /> */}
-                <MenuDivider />
+                {/* <MenuDivider />
                 <MenuItem
                   iconName="download"
                   text="Save Snapshot"
@@ -362,7 +362,7 @@ class RegularNavbar extends React.Component {
                   iconName="pt-icon-document-share"
                   text="Publish and Share Snapshot"
                   onClick={() => { appState.preferences.shareDialogOpen = true }}
-                />
+                /> */}
               </Menu>
             }
             position={Position.BOTTOM}

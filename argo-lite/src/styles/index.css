@@ -678,6 +678,7 @@ text-overflow: ellipsis;
 .sidebarButton {
   font-size: 10px !important;
   width: 33.3% !important;
+  border-radius: 10px 10px 0px 0px;
 }
 .sidebar-menu {
   display: flex;
@@ -698,7 +699,7 @@ table.pt-table {
 }
 
 .pt-button{
-  font-size:12px !important;
+  font-size:11px !important;
   height:15px;
   line-height: 15px;
   min-width: 0px;
@@ -779,6 +780,7 @@ table.pt-table {
 
 .w3-black{
   text-align: center;
+  background-color: #f5f8fa !important;
 }
 
 
@@ -884,4 +886,8 @@ padding: 5px !important;
   font-size: 12px;
   font-weight: bold;
   margin: 0 0 3px; 
+}
+
+.maptooltip{
+text-align: left;
 }
