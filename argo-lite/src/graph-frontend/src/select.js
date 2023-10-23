@@ -5,6 +5,7 @@ var Node = def.Node;
 var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
+const { linkVertical } = require("d3");
 var $ = require("jquery");
 const { default: appState } = require("../../stores");
 
@@ -65,6 +66,22 @@ module.exports = function (self) {
     return withinoutEdges;
   }
 
+   //return all the edges within distance 
+   self.getEdgeWithinDist = function (mindist, maxdist) {
+    const withinoutEdges = []
+    self.graph.forEachNode (n=>{
+      if(n.linkObjs && n.linkObjs.length> 0){
+        n.linkObjs.forEach(function (link) {
+          if (link.edgeDist >mindist && link.edgeDist <maxdist) {
+            withinoutEdges.push(link)
+          }
+        })
+      }
+    })
+    
+    return withinoutEdges;
+  }
+
 
   self.getEdgeWithinSelectionForDensity = function (selection) {
     const withinEdges = []
@@ -86,7 +103,7 @@ module.exports = function (self) {
     return withinEdges;
   }
 
-
+  
  //highlight nodes and edges within selection
  self.updateDegreeHistOpacity = function () {
   if (self.degreehighlight.length > 0) {
@@ -258,6 +275,51 @@ module.exports = function (self) {
       });
       self.colorNodeEdge(null);
     }
+  }
+
+  self.highlightAllEdges = function(){
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    self.lineIndices.forEach(function (link) {
+      link.linecolor.r = red //black/white
+      link.linecolor.g = blue
+      link.linecolor.b = green
+    })
+    self.arrow.material.color.setRGB(red, blue, green);  
+  }
+
+  //highlight  edges within distance range 
+  self.highlightedgeWithinDist = function(mindist, maxdist){
+
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    //fisrt dehighlight all the edges
+    self.lineIndices.forEach(function (link) {
+      if(link.edgeDist>=mindist && link.edgeDist <=maxdist){
+        link.linecolor.r = red;
+      link.linecolor.g = blue;
+      link.linecolor.b = green;
+      }else{
+      link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+      link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      }
+      
+    })
+    self.arrow.material.color.setRGB(red, blue, green);  
+
+    //hilight  edges within distance 
+    
+    // const withinEdges = self.getEdgeWithinDist(mindist,maxdist)
+
+    // for (var i = 0; i < withinEdges.length; i++) {
+    //   withinEdges[i].linecolor.r = red;
+    //   withinEdges[i].linecolor.g = blue;
+    //   withinEdges[i].linecolor.b = green;
+    // }
+    // self.arrow.material.color.setRGB(red, blue, green);
   }
 
 

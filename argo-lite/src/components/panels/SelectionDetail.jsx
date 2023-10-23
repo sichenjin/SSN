@@ -220,6 +220,8 @@ if(appState.graph.selectedNodes.length > 1){
     // appState.graph.selectedNodes = []
     appState.graph.edgeselection = []
     appState.graph.clearBrush = false
+    // rehighlight all edges in sociogram
+    appState.graph.frame.highlightAllEdges()
 
   }
   onEdgeBrush = ({ target, type, selection, sourceEvent }) => {
@@ -259,6 +261,7 @@ if(appState.graph.selectedNodes.length > 1){
 
 
     appState.graph.edgeselection = filteredge
+    appState.graph.frame.highlightedgeWithinDist(distbuffer_min, distbuffer_max)
     // this.distBinData = []
     // const selectionNode = appState.graph.frame.getNodeList().filter(node =>
     //   // console.log(node)
