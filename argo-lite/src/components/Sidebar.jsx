@@ -142,7 +142,7 @@ class Sidebar extends React.Component {
     SelectionDensity = () => {
 
         // undirect graph
-        console.log("ashdakjs")
+        // console.log("ashdakjs")
         if (appState.graph.selectedNodes.length > 1) {
             const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(appState.graph.selectedNodes)
             // console.log(edgeSelection.length);

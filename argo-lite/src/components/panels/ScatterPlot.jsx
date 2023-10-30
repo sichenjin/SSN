@@ -120,6 +120,7 @@ class ScatterPlot extends React.Component {
     appState.graph.frame.selection = []
     appState.graph.selectedNodes = []
     appState.graph.edgeselection = []
+    appState.graph.mapClicked = null
     appState.graph.clearBrush = false;
 
   }

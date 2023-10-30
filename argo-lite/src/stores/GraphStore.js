@@ -206,7 +206,7 @@ export default class GraphStore {
 
   @computed
   get filterKeyList() {
-    const removeList = ['isHidden', 'id', 'Longitude', 'Latitude', 'LatY', 'LonX', 'dist to center', 'dist_to_center', 'centrality', 'shortest path', 'pair distance', 'node_id', 'standard distance', 'network density', 'SHORT', "ORGANIZATION"]
+    const removeList = ['isHidden', 'id', 'Longitude', 'Latitude', 'LatY', 'LonX', 'dist to center', 'dist_to_center', 'centrality', 'shortest path', 'pair distance', 'node_id', 'standard distance', 'network density', 'SHORT', "ORGANIZATION", 'isconvex', 'nearestnn']
     return uniq([
       ...this.metadata.nodeProperties,
       ...this.metadata.nodeComputed

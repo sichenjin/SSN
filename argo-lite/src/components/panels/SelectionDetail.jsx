@@ -21,7 +21,7 @@ import { filter, forEach } from "lodash";
 class SelectionDetail extends React.Component {
 
   // 
-  margin = { top: 32, right: 30, bottom: 64, left: 40 }
+  margin = { top: 32, right: 30, bottom: 70, left: 40 }
   // { top: 32, right: 32, bottom: 64, left: 64 }
   containerDiv = document.querySelector("#graph-container");
   allwidth = this.containerDiv.offsetWidth / 2;
@@ -39,6 +39,7 @@ class SelectionDetail extends React.Component {
   SelectionDistanceFromLatLonIn = () => {
     const selectNodes = appState.graph.selectedNodes;
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
+    this.SelectionDensity()
 
     if (appState.graph.mapClicked) {
 
@@ -559,7 +560,7 @@ if(appState.graph.selectedNodes.length > 1){
               {/* <text className="distribution-title" >Distance Distribution</text> */}
               <svg
                 width={"50%"}
-                height={"30vh"}
+                height={"35vh"}
                 // className="hist"
                 id="edgesvg"
                 ref={input => (this.edgesvg = input)}
@@ -646,7 +647,7 @@ if(appState.graph.selectedNodes.length > 1){
               </svg>
               <svg
                 width={"50%"}
-                height={"30vh"}
+                height={"35vh"}
                 // className="hist"
                 id="degreesvg"
                 ref={input => (this.degreesvg = input)}
@@ -817,7 +818,7 @@ if(appState.graph.selectedNodes.length > 1){
                 {/* <text className="distribution-title" >Distance Distribution</text> */}
                 <svg
                   width={"50%"}
-                  height={"30vh"}
+                  height={"35vh"}
                   // className="hist"
                   id="edgesvg"
                   ref={input => (this.edgesvg = input)}
@@ -904,7 +905,7 @@ if(appState.graph.selectedNodes.length > 1){
                 </svg>
                 <svg
                   width={"50%"}
-                  height={"30vh"}
+                  height={"35vh"}
                   // className="hist"
                   id="degreesvg"
                   ref={input => (this.degreesvg = input)}
@@ -1069,7 +1070,7 @@ if(appState.graph.selectedNodes.length > 1){
 
             <svg
               width={"50%"}
-              height={"30vh"}
+              height={"35vh"}
               // className="hist"
               id="edgesvg"
               ref={input => (this.edgesvg = input)}
@@ -1130,7 +1131,7 @@ if(appState.graph.selectedNodes.length > 1){
             {/* <text className="distribution-title">Degree Distribution</text> */}
             <svg
               width={"50%"}
-              height={"30vh"}
+              height={"35vh"}
               // className="hist"
               id="degreesvg"
               ref={input => (this.degreesvg = input)}
