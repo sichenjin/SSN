@@ -1,3 +1,5 @@
+const { default: appState } = require("../../stores");
+
 var def = require("./imports").default;
 var THREE = def.THREE;
 var Edge = def.Edge;
@@ -163,6 +165,17 @@ module.exports = function(self) {
       })
       
     })
+      
+    if(appState.graph.mapClicked){
+      const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(appState.graph.mapClicked)
+      selectneighbors.forEach(n=>{
+        document.querySelectorAll(`.maptooltip_${n.id}`).forEach(node=>{
+          node.style.opacity = 1;
+        })
+        
+      })
+      self.showLabels(selectneighbors.map(n => n.id));
+    }
     
   };
 
