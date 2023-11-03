@@ -181,8 +181,8 @@ if(appState.graph.selectedNodes.length > 1){
       
     }
     return selectionDen.toFixed(3)
-}else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
-  const thenode = appState.graph.selectedNodes[0]
+}else if (appState.graph.mapClicked){
+  const thenode = appState.graph.mapClicked
   const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
   const edgeSelection = appState.graph.frame.getEdgeWithinSelectionForDensity(selectneighbors)
     // console.log(edgeSelection.length);
@@ -196,7 +196,7 @@ if(appState.graph.selectedNodes.length > 1){
     appState.graph.avgDegree = appState.graph.avgDegree.toFixed(3)
     appState.graph.avgdensity = selectionDen.toFixed(3);
     const selectnodesID = selectneighbors.map(n=>n.data.ref.id)
-    selectnodesID.push(appState.graph.selectedNodes[0].id)
+    selectnodesID.push(appState.graph.mapClicked.id)
     appState.graph.rediameter = ''
     appState.graph.reclustercoe = ''
     appState.graph.recomponent = ''
@@ -759,8 +759,8 @@ if(appState.graph.selectedNodes.length > 1){
         </div>
       );
     }
-    else if(appState.graph.selectedNodes.length ==1 && appState.graph.selectedNodes[0] && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]){
-      const thenode = appState.graph.selectedNodes[0]
+    else if(appState.graph.mapClicked && this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]){
+      const thenode = appState.graph.mapClicked
       const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(thenode)
       // appState.graph.selectedNodes = selectneighbors
       if(selectneighbors.length >1 ){
@@ -1020,6 +1020,62 @@ if(appState.graph.selectedNodes.length > 1){
         return <div></div>
       }
      
+    }else if (appState.graph.selectedNodes.length == 1 && appState.graph.selectedNodes[0]){
+      return (
+        //
+        <div
+          className={classnames(
+            // 'overlay-card',
+            // "right-overlay-card",
+            // "transparent-frame"
+          )}
+          style={{
+            // width: '40vw',
+            height: '40vh',
+            // border:'#C0C0C0',
+            // borderStyle:'solid',
+          }}
+        >
+          <div className={classnames(Classes.CARD, "node-details-table")}>
+            <table
+              className={classnames(Classes.TABLE, Classes.TABLE_STRIPED, "node-details-table-content")}
+              style={{
+                width: "100%",
+                padding: '0',
+                fontSize: "12px"
+              }}
+            >
+
+              <thead>
+                {/* <tr>
+                  <th></th>
+                  <th></th>
+                 
+                </tr> */}
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ padding: '5px 10px' }}> {'1 nodes are selected'}</td>
+                  {/* <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td> */}
+                </tr>
+                {/* <tr>
+                  <td style={{ padding: '5px 10px' }}> {'The average distance is ' + this.SelectionDistanceFromLatLonIn()[0] + ' km'}</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: '5px 10px' }}> {'The network density (undirected network) is ' + this.SelectionDensity()}</td>
+                </tr> */}
+                {/* {appState.graph.allPropertiesKeyList.map((it, i) => (
+                  
+                ))} */}
+              </tbody>
+            </table>
+          </div>
+
+         
+
+
+        </div>
+      );
     }
     else if( this.SelectionDistanceFromLatLonIn() && this.SelectionDistanceFromLatLonIn()[0]) {  // when no node is selected, show the result of the whole network 
       return <div
