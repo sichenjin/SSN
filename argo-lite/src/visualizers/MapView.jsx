@@ -664,8 +664,9 @@ class MapView extends React.Component {
                     <Tooltip
                     style = {{textAlign: "left"}}
                       width={node.renderData.textHolder.children[0].element.children[0].style.width}
-                      fontSize={node.renderData.textHolder.children[0].element.children[0].style.fontSize}
-                      className = {`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> : <Tooltip  style = {{textAlign: "left"}} className={`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
+                      fontSize={node.renderData.textHolder.children[0].element.children[0].style.mapfontSize}
+                      className = {`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> : 
+                      <Tooltip   fontSize={node.renderData.textHolder.children[0].element.children[0].style.mapfontSize} style = {{textAlign: "left"}} className={`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
 
                 </CircleMarker>
               );

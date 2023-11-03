@@ -57,7 +57,7 @@ module.exports = function(self) {
     });
 
     // change the map label size
-    size = (size * self.relativeFontSize *2 ) ;
+    size = (size * self.relativeFontSize ) ;
     document.querySelectorAll('.maptooltip').forEach(node=>{
       node.style.fontSize = size.toString() + "px";
     })

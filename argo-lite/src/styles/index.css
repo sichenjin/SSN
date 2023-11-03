@@ -594,10 +594,11 @@ text-overflow: ellipsis;
     interactive: false;
     fill: false;
   color:black;
-  font-size:10px;
-  line-height:2px;
+  /* font-size:6px; */
+  /* line-height:0px; */
   border-radius: 0px;
-  border: 6px solid transparent;
+  border: 0px solid transparent;
+  font-size: 6px;
   }
 
   .pt-multi-select{
