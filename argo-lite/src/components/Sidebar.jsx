@@ -672,16 +672,16 @@ class Sidebar extends React.Component {
                                     {/* <caption>Network Statistics</caption> */}
                                     <tr>
                                         <td># Nodes</td>
-                                        <td>{appState.graph.metadata.fullNodes}</td>
+                                        <td>{appState.graph.frame.getNodeList().length}</td>
                                     </tr>
                                     <tr>
                                         <td># Edges</td>
-                                        <td>{appState.graph.metadata.fullEdges}</td>
+                                        <td>{appState.graph.frame.getEdgeList().filter(n=>n.fromId!==n.toId).length}</td>
                                     </tr>
                                     <tr>
                                         <td>Average Degree</td>
                                         <td>
-                                            {appState.graph.hasGraph ? appState.graph.degree().toFixed(3) : 'loading graph'}
+                                            {appState.graph.hasGraph ? appState.graph.avgDe().toFixed(3) : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>
@@ -693,7 +693,7 @@ class Sidebar extends React.Component {
                                     <tr>
                                         <td>Network Density</td>
                                         <td>
-                                            {appState.graph.hasGraph ? appState.graph.density().toFixed(3) : 'loading graph'}
+                                            {appState.graph.hasGraph ? appState.graph.filtergraphDensity().toFixed(3) : 'loading graph'}
                                         </td>
                                     </tr>
                                     <tr>

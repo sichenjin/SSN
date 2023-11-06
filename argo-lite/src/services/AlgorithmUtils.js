@@ -133,6 +133,16 @@ export function graphDensity(snapshot) {
     return (2 * edgeCount) / ((nodeCount) * (nodeCount - 1));
 }
 
+// /**
+//  * Calculate the density of a graph withour selfloop and changes when filters apply 
+//  * @param {*} rawGraph the rawGraph inside appState
+//  */
+//  export function newgraphDensity(snapshot) {
+//     const nodeCount = snapshot.rawGraph.nodes.length;
+//     const edgeCount = snapshot.rawGraph.edges.length ;
+//     return (2 * edgeCount) / ((nodeCount) * (nodeCount - 1));
+// }
+
 /**
  * Calculate the average degree of a graph
  * @param {*} rawGraph the rawGraph inside appState

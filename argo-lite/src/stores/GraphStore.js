@@ -944,6 +944,20 @@ export default class GraphStore {
    */
 
   averageClustering() {
+    if(this.frame){
+      const shonodeid = this.frame.getNodeList().map(n=>n.id)
+    
+    const shownodes = this.rawGraph.nodes.filter((n)=>(shonodeid.includes(n.id)))
+    const showedges = this.rawGraph.edges.filter((e)=>(shonodeid.includes(e.source_id) && shonodeid.includes(e.target_id)))
+    const snapshot = {
+      rawGraph: {
+        nodes:shownodes,
+        edges:showedges
+      },
+    };
+    return averageClusteringCoefficient(snapshot);
+    }
+
     const snapshot = {
       rawGraph: this.rawGraph,
     };
@@ -952,6 +966,21 @@ export default class GraphStore {
 
 
   components() {
+    if(this.frame){
+      const shonodeid = this.frame.getNodeList().map(n=>n.id)
+    
+    const shownodes = this.rawGraph.nodes.filter((n)=>(shonodeid.includes(n.id)))
+    const showedges = this.rawGraph.edges.filter((e)=>(shonodeid.includes(e.source_id) && shonodeid.includes(e.target_id)))
+    const snapshot = {
+      rawGraph: {
+        nodes:shownodes,
+        edges:showedges
+      },
+    };
+    return connectedComponents(snapshot);
+    }
+    
+
     const snapshot = {
       rawGraph: this.rawGraph,
     };
@@ -966,12 +995,27 @@ export default class GraphStore {
     return graphDensity(snapshot);
   }
 
+  filtergraphDensity(){
+    const nodeCount = this.frame.getNodeList().length;
+    const edgeCount = this.frame.getEdgeList().filter(n=>n.fromId!==n.toId).length ;
+    return (2 * edgeCount) / ((nodeCount) * (nodeCount - 1));
+  }
+
  
   degree() {
     const snapshot = {
       rawGraph: this.rawGraph,
     };
     return averageDegree(snapshot);
+  }
+
+  avgDe(){
+    let sum = 0;
+    this.frame.getNodeList().forEach(e => {
+            sum += e.data.ref.degree;
+        }
+    )
+    return sum / this.frame.getNodeList().length;
   }
 
   avgDist(){
@@ -1011,6 +1055,20 @@ export default class GraphStore {
 
 
   diameter() {
+    if(this.frame){
+      const shonodeid = this.frame.getNodeList().map(n=>n.id)
+    
+    const shownodes = this.rawGraph.nodes.filter((n)=>(shonodeid.includes(n.id)))
+    const showedges = this.rawGraph.edges.filter((e)=>(shonodeid.includes(e.source_id) && shonodeid.includes(e.target_id)))
+    const snapshot = {
+      rawGraph: {
+        nodes:shownodes,
+        edges:showedges
+      },
+    };
+    return exactGraphDiameter(snapshot);
+    }
+    
     const snapshot = {
       rawGraph: this.rawGraph,
     };
