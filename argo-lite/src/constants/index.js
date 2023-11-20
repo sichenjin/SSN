@@ -41,7 +41,9 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   ["Mafia Family Network", "2abf97e5-d210-481b-8675-a4656e622a55"],
   // c43890f8-1cfb-4599-a0d3-8f47303691fc
   ["US flight Network", '01221941-76e7-4491-b712-b54fd3b07f7a'],
-  
+  // https://poloclub.github.io/argo-graph-lite/#a6470fe8-f562-4e78-94ee-196f78006c1c
+  ['US 117th House Vote of 5 States', '51cd24cd-0819-4f2c-b28b-364dc84bb055'],
+  // https://poloclub.github.io/argo-graph-lite/#51cd24cd-0819-4f2c-b28b-364dc84bb055
   ['US 117th House Vote Network','ef6031bc-d0ac-4287-8042-1d9759d61a12']
   // "5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1" 960 edges
   // e6d1062c-f1ac-4d69-8039-16d589fb04cf
