@@ -183,9 +183,9 @@ class StatGroupPanel extends React.Component {
 
                 const intersection = [...cnn].filter(item => snn.has(item));
                 if (currentNode['degree'] === 0) {
-                    currentNode['k-fulfillment'] = 0
+                    currentNode['k-Fulfillment'] = 0
                 } else {
-                    currentNode['k-fulfillment'] = intersection.length / currentNode['degree']
+                    currentNode['k-Fulfillment'] = intersection.length / currentNode['degree']
                 }
 
             }
@@ -194,8 +194,8 @@ class StatGroupPanel extends React.Component {
         }
 
         findKfulfillment(appState.graph.rawGraph.nodes, appState.graph.rawGraph.edges)
-        appState.graph.metadata.nodeComputed.push('k-fulfillment')
-        appState.graph.scatterplot.x = 'k-fulfillment'
+        appState.graph.metadata.nodeComputed.push('k-Fulfillment')
+        appState.graph.scatterplot.x = 'k-Fulfillment'
         appState.graph.scatterplot.y = 'degree'
 
 

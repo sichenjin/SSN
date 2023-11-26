@@ -61,7 +61,7 @@ export const SCALE_CATEGORY = "Nominal Scale";
 
 export const scales = {
   [SCALE_LINEAR]: scale.scaleLinear,
-  [SCALE_LOG]: scale.scaleLog,
+  // [SCALE_LOG]: scale.scaleLog,
   [SCALE_CATEGORY] : scale.scaleOrdinal
 };
 
