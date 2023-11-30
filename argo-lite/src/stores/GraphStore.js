@@ -73,7 +73,8 @@ export default class GraphStore {
   @observable convexPolygonsShow = true;
 
   @observable mapEdgeShow = true;
-  @observable autoZoom = true;
+  @observable autoZoom = false;
+  @observable firstload =true;
 
 
 

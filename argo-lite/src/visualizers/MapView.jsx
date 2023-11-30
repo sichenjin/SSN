@@ -511,7 +511,11 @@ class MapView extends React.Component {
         {/* <ReactLeafletToolbar /> */}
         
         <AreaSelect />
-        <ZoomMap /> 
+        {(appState.graph.hasGraph && (!appState.import.loading)) ? (
+                    <ZoomMap /> 
+                  ) : (
+                    <div></div>
+                  )}
         <MapClick />
         <DetectKeyPress />
 

@@ -379,7 +379,8 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.clearBrush = false;
   
   appState.graph.mapEdgeShow = true;
-  appState.graph.autoZoom = true;
+  appState.graph.autoZoom = false;
+  appState.graph.firstload =true;
   appState.graph.keydown = false;
   appState.graph.clusteringco = 0;
   appState.graph.graphDiameter = 0;
@@ -414,6 +415,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
       appState.graph.rawGraph = graph.rawGraph;
       appState.graph.metadata = graph.metadata;
       appState.graph.setUpFrame();
+      appState.import.loading = false;
     });
     // Reinitialize global configs
     appState.graph.nodes = appState.graph.initialGlobalConfig.nodes;
@@ -434,7 +436,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
     appState.graph.frame.turnOffLabelCSSRenderer();
     // appState.import.loading = false;
   });
-  // appState.import.loading = false;
+  appState.import.loading = false;
 }
 
 export function requestImportGraphFromGexf() {
@@ -507,7 +509,7 @@ async function readCSV(fileObject, hasHeader, delimiter) {
         });
         
       }
-      appState.import.loading = false;
+      // appState.import.loading = false;
       appState.import.dialogOpen = false;
     }
   });
@@ -827,7 +829,7 @@ async function importGraphFromCSV(config) {
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center',  'betweenness', 'closeness' ],
+      nodeComputed: ['pagerank', 'degree','distance to center',  'betweenness', 'closeness' ],
       edgeProperties: ['source_id', 'target_id'],
      
     },
@@ -1005,7 +1007,7 @@ export async function importGraphFromGexf() {
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree', 'centrality', 'distance to center',  'betweenness', 'closeness'],
+      nodeComputed: ['pagerank', 'degree',  'distance to center',  'betweenness', 'closeness'],
       edgeProperties: ['source_id', 'target_id'],
      
     },

@@ -265,7 +265,7 @@ class Sidebar extends React.Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Average Distance</td>
+                                        <td>Average Distance <br></br>(km)</td>
                                         <td>
                                             {appState.graph.hasGraph ? appState.graph.avgdist : 'loading graph'}
                                         </td>
@@ -380,7 +380,7 @@ class Sidebar extends React.Component {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Average Distance</td>
+                                            <td>Average Distance <br></br>(km)</td>
                                             <td>
                                                 {appState.graph.hasGraph ? appState.graph.avgdist : 'loading graph'}
                                             </td>
@@ -491,7 +491,7 @@ class Sidebar extends React.Component {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Average Distance</td>
+                                            <td>Average Distance <br></br>(km)</td>
                                             <td>
                                                 {0}
                                             </td>
@@ -589,7 +589,7 @@ class Sidebar extends React.Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Average Distance</td>
+                                        <td>Average Distance <br></br>(km)</td>
                                         <td>
                                             {0}
                                         </td>
@@ -685,7 +685,7 @@ class Sidebar extends React.Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Average Distance</td>
+                                        <td>Average Distance<br></br> (km)</td>
                                         <td>
                                             {appState.graph.frame ? appState.graph.avgDist() : 'loading graph'}
                                         </td>
@@ -781,7 +781,7 @@ class Sidebar extends React.Component {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Average Distance</td>
+                                        <td>Average Distance<br></br> (km)</td>
                                         <td>
                                             {appState.graph.hasGraph ? 0 : 'loading graph'}
                                         </td>

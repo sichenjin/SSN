@@ -112,7 +112,8 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.clearBrush = false;
   
   appState.graph.mapEdgeShow = true;
-  appState.graph.autoZoom = true;
+  appState.graph.autoZoom = false;
+  appState.graph.firstload =true;
   appState.graph.keydown = false;
   appState.graph.clusteringco = 0;
   appState.graph.graphDiameter = 0;
