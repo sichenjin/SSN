@@ -59,7 +59,16 @@ class StatGroupPanel extends React.Component {
                 var communityDict = response.data.message;
                 appState.graph.modularity = response.data.modularity;
                 appState.graph.rawGraph.nodes.forEach((node) => {
-                    node.community = communityDict[node.id] ? String.fromCharCode(communityDict[node.id] + 97) : 'a'
+                    var unicommunity = Math.max.apply(null, Object.values(communityDict)) +1
+                    if(node.degree>0 && !communityDict[node.id]){
+                        node.community = String.fromCharCode( unicommunity + 95)
+                        unicommunity = unicommunity+1
+                    }else if(communityDict[node.id]){
+                        node.community = String.fromCharCode(communityDict[node.id] + 95)
+                    }else{
+                        node.community =  '-1'
+                    }
+                    
                 })
                 const nodesArr = appState.graph.rawGraph.nodes
                 const nodekeyList = Object.keys(nodesArr[1])
@@ -570,22 +579,37 @@ class StatGroupPanel extends React.Component {
     }
 
     convexhull = (group) => {
-
-        var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
-            return edge.source_id
-        })
-        var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
-            return edge.target_id
-        })
-        var querydict = {
-            "type": 'edgelist',
-            "message": {
-                'name': 'convex'
-            },
-            "group": group,
-            "nodes": appState.graph.rawGraph.nodes
+        var querydict 
+        if(group === 'community'){
+            querydict = {
+                "type": 'edgelist',
+                "message": {
+                    'name': 'convex'
+                },
+                "group": group,
+                "nodes": appState.graph.rawGraph.nodes.filter(n=>n['community']!== '-1')
+    
+            }
+        }else{
+            querydict = {
+                "type": 'edgelist',
+                "message": {
+                    'name': 'convex'
+                },
+                "group": group,
+                "nodes": appState.graph.rawGraph.nodes
+    
+            }
 
         }
+
+        // var fromedgelist = appState.graph.rawGraph.edges.map((edge) => {
+        //     return edge.source_id
+        // })
+        // var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
+        //     return edge.target_id
+        // })
+        
         axios.post('https://snoman.herokuapp.com/flask/convexhull', querydict).then(
 
             // https://snoman.herokuapp.com/flask/convexhull', querydict).then(
@@ -668,17 +692,45 @@ class StatGroupPanel extends React.Component {
         // var toedgelist = appState.graph.rawGraph.edges.map((edge) => {
         //     return edge.target_id
         // })
-        var querydict = {
+
+        var querydict 
+        if(group === 'community'){
+            querydict = {
             "type": 'edgelist',
             "message": {
                 'name': 'density_distance'
             },
             "group": group,
-            "nodes": appState.graph.rawGraph.nodes,
+            "nodes": appState.graph.rawGraph.nodes.filter(n=>n['community']!== '-1'),
             "edges": appState.graph.rawGraph.edges
 
 
         }
+        }else{
+            querydict = {
+                "type": 'edgelist',
+                "message": {
+                    'name': 'density_distance'
+                },
+                "group": group,
+                "nodes": appState.graph.rawGraph.nodes,
+                "edges": appState.graph.rawGraph.edges
+    
+    
+            }
+        }
+        
+        // var querydict = {
+        //     "type": 'edgelist',
+        //     "message": {
+        //         'name': 'density_distance'
+        //     },
+        //     "group": group,
+        //     "nodes": appState.graph.rawGraph.nodes,
+        //     "edges": appState.graph.rawGraph.edges
+
+
+        // }
         axios.post('https://snoman.herokuapp.com/flask/densitydistance', querydict).then(
             (response) => {
                 var jsondata = JSON.parse(response.data)
