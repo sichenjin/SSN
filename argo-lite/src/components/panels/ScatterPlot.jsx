@@ -341,6 +341,12 @@ class ScatterPlot extends React.Component {
         });
       }
 
+      // if (isLoggedIn) {
+      //   button = <LogoutButton onClick={this.handleLogoutClick} />;
+      // } else {
+      //   button = <LoginButton onClick={this.handleLoginClick} />;
+      // }
+
 
       return (
         <div>
@@ -391,7 +397,7 @@ class ScatterPlot extends React.Component {
                 className="main"
               >
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(20vw, 27.5vh)' }} fontSize="11px">{(appState.graph.scatterplot.x === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
+                <text style={{ transform: 'translate(20vw, 27.5vh)' }} fontSize="11px">{(appState.graph.scatterplot.x === 'standard distance' || appState.graph.scatterplot.x === 'distance to center') ? capitalizeString(appState.graph.scatterplot.x)+' (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -410,7 +416,7 @@ class ScatterPlot extends React.Component {
                  style={{ transform: "translate(-45px, 18vh) rotate(-90deg)", }}
                   // transform={"translate(-1vw, 21vh) rotate(-90deg)"}
                   fontSize="11px"
-                >{(appState.graph.scatterplot.y === 'standard distance') ? 'Standard Distance (km)' : capitalizeString(appState.graph.scatterplot.y) }</text>
+                >{(appState.graph.scatterplot.y === 'standard distance' || appState.graph.scatterplot.y === 'distance to center') ? capitalizeString(appState.graph.scatterplot.y) + ' (km)' : capitalizeString(appState.graph.scatterplot.y) }</text>
                 <Axis
                   axis="y"
                   transform="translate(0,0)"
