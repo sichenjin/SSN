@@ -375,14 +375,14 @@ class ScatterPlot extends React.Component {
               />
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            
-            <text id="scattertitle" style={{}} > {( ((appState.graph.scatterplot.x === 'shortest path') && (appState.graph.scatterplot.y === 'pair distance')) || ((appState.graph.scatterplot.y === 'shortest path') && (appState.graph.scatterplot.x === 'pair distance')) ) ? (
+
+            <text id="scattertitle" style={{}} > {(((appState.graph.scatterplot.x === 'shortest path') && (appState.graph.scatterplot.y === 'pair distance')) || ((appState.graph.scatterplot.y === 'shortest path') && (appState.graph.scatterplot.x === 'pair distance'))) ? (
               'Route Factor Diagram'
             ) : (((appState.graph.scatterplot.y == 'network density') && (appState.graph.scatterplot.x == 'standard distance')) ||
-            ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))) ? (
+              ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))) ? (
               'Cluster-Cluster Plot'
-            ) :  (
-             'Centrality-Centrality Plot'
+            ) : (
+              'Centrality-Centrality Plot'
             )}</text>
           </div>
 
@@ -579,36 +579,6 @@ class RenderCircles extends React.Component {
       }
     } else if (((appState.graph.scatterplot.y == 'network density') && (appState.graph.scatterplot.x == 'standard distance')) ||
       ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))) {  // density distance node style
-      // density distance node style
-
-      // //hover on one group 
-      // if (appState.graph.distanceDensityCurrentlyHovered) {
-
-      //   if (String(node['name']) === String(appState.graph.distanceDensityCurrentlyHovered)) {
-      //     return {
-      //       fill: appState.graph.nodeColorScale(node['name']),
-      //       zIndex: "10000",
-      //       stroke: def.NODE_HIGHLIGHT,
-      //       fillOpacity: 0.8
-      //     }
-      //   } else {
-      //     return {
-      //       fill: appState.graph.nodeColorScale(node['name']),
-      //       zIndex: "0",
-      //       stroke: false,
-      //       fillOpacity: 0.1
-      //     }
-      //   }
-
-      // } else {// no hover 
-      //   return {
-      //     fill: appState.graph.nodeColorScale(node['name']),
-      //     zIndex: "0",
-      //     stroke: false,
-      //     fillOpacity: 0.8
-      //   }
-
-      // }
 
       //Click
       if (appState.graph.distanceDensityCurrentlyClicked.length !== 0) {
@@ -640,13 +610,46 @@ class RenderCircles extends React.Component {
       }
     }
     else { //path node style 
-      return {
 
-        fill: appState.graph.edges.color,
-        zIndex: "0",
-        stroke: false,
-        fillOpacity: 0.8
+      //Click
+      if (appState.graph.pathHoveredList.length !== 0) {
+        const cpathid = `${node.source}👉${node.target}`
+        if (appState.graph.pathHoveredList.includes(cpathid)) {
+          return {
+
+            fill: 'rgba(255, 1, 1, .9)',
+            zIndex: "0",
+            stroke: false,
+            fillOpacity: 0.8
+          } 
+        }
+        else {
+          return {
+
+            fill: appState.graph.edges.color,
+            zIndex: "0",
+            stroke: false,
+            fillOpacity: 0.8
+          }
+        }
       }
+      else {
+        // no click 
+        return {
+
+          fill: appState.graph.edges.color,
+          zIndex: "0",
+          stroke: false,
+          fillOpacity: 0.8
+        }
+      }
+      // return {
+
+      //   fill: appState.graph.edges.color,
+      //   zIndex: "0",
+      //   stroke: false,
+      //   fillOpacity: 0.8
+      // }
     }
 
   }
@@ -754,46 +757,94 @@ class RenderCircles extends React.Component {
             style={this.setScatterStyle(path)}
             id={`${path.source}👉${path.target}`}
             data={path}
-            onMouseOver={(e) => {
-              // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
-              const [sourceid, targetid] = e.target.getAttribute('id').split('👉')
-              // e.target.getAttribute('fill') node.renderData.color,
-              e.target.style.fill = 'rgba(255, 1, 1, .9)'
-              // const source = appState.graph.frame.getNode(sourceid)
-              // const target = appState.graph.frame.getNode(targetid)
-              const thepath = pathFinder.find(sourceid, targetid)
-              const pathnode = thepath.map((node) => {
-                return appState.graph.frame.getNode(node.id)
+            onClick={(e) => {
+              if (appState.graph.pathHoveredList.includes(e.target.getAttribute('id'))) {
+                appState.graph.pathHoveredList = appState.graph.pathHoveredList.filter(node =>
+                  node !== e.target.getAttribute('id')
+                )
+              }
+              else {
+                appState.graph.pathHoveredList.push(e.target.getAttribute('id'));
+              }
+              const pathlist = []
+              appState.graph.pathHoveredList.forEach((pathid) => {
+                const [sourceid, targetid] = pathid.split('👉')
+                // e.target.getAttribute('fill') node.renderData.color,
+                // e.target.style.fill = 'rgba(255, 1, 1, .9)'
+                // const source = appState.graph.frame.getNode(sourceid)
+                // const target = appState.graph.frame.getNode(targetid)
+                const thepath = pathFinder.find(sourceid, targetid)
+                const pathnode = thepath.map((node) => {
+                  return appState.graph.frame.getNode(node.id)
+                })
+                //control map highlight 
+                
+                pathlist.push( {
+                  "sourceid": sourceid,
+                  "targetid": targetid,
+                  "pathnode": pathnode
+                })
+               
               })
-              //control map highlight 
               appState.graph.pathHovered = {
-                "sourceid": sourceid,
-                "targetid": targetid,
-                "pathnode": pathnode
+                'sourceid': pathlist.map(n=>n.sourceid),
+                'targetid': pathlist.map(n=>n.targetid),
+                // 'pathnode': pathlist.map(n=>n.pathnode),
               }
-              // control socio update 
-              appState.graph.frame.highlightPathEdgeNode(pathnode)
-
-
-
-            }}
-            onMouseLeave={(e) => {
-              // if (appState.graph.mapClicked) return;
-              e.target.style.fill = appState.graph.edges.color
-
-              appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
-                // if (n !== appState.graph.mapClicked) {
-                appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
-
-                appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
-                // }
+              appState.graph.pathHovered['pathnode']= []
+              if(pathlist.length>0){
+                appState.graph.pathHovered['pathnode']= pathlist[0].pathnode
+                for (let i = 0; i < pathlist.length-1; i++){
+                  appState.graph.pathHovered['pathnode'] = appState.graph.pathHovered['pathnode'].concat(pathlist[i+1].pathnode)
+                }
               }
-              );
-              appState.graph.frame.colorNodeEdge(null);  //highlight all edges 
-              appState.graph.pathHovered = null;
-
-
+              
+              
+              // pathlist.forEach(p=>appState.graph.pathHovered['pathnode'].concat(p.pathnode))
+              // appState.graph.pathHovered['pathnode'] = [].concat(...appState.graph.pathHovered['pathnode'])
+               // control socio update 
+              appState.graph.frame.highlightPathEdgeNode(appState.graph.pathHovered['pathnode'])
             }}
+            // onMouseOver={(e) => {
+            //   // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
+            //   const [sourceid, targetid] = e.target.getAttribute('id').split('👉')
+            //   // e.target.getAttribute('fill') node.renderData.color,
+            //   e.target.style.fill = 'rgba(255, 1, 1, .9)'
+            //   // const source = appState.graph.frame.getNode(sourceid)
+            //   // const target = appState.graph.frame.getNode(targetid)
+            //   const thepath = pathFinder.find(sourceid, targetid)
+            //   const pathnode = thepath.map((node) => {
+            //     return appState.graph.frame.getNode(node.id)
+            //   })
+            //   //control map highlight 
+            //   appState.graph.pathHovered = {
+            //     "sourceid": sourceid,
+            //     "targetid": targetid,
+            //     "pathnode": pathnode
+            //   }
+            //   // control socio update 
+            //   appState.graph.frame.highlightPathEdgeNode(pathnode)
+
+
+
+            // }}
+            // onMouseLeave={(e) => {
+            //   // if (appState.graph.mapClicked) return;
+            //   e.target.style.fill = appState.graph.edges.color
+
+            //   appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
+            //     // if (n !== appState.graph.mapClicked) {
+            //     appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
+
+            //     appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
+            //     // }
+            //   }
+            //   );
+            //   appState.graph.frame.colorNodeEdge(null);  //highlight all edges 
+            //   appState.graph.pathHovered = null;
+
+
+            // }}
             key={i}
           />)
         )
@@ -808,45 +859,93 @@ class RenderCircles extends React.Component {
             style={this.setScatterStyle(path)}
             id={`${path.source}👉${path.target}`}
             // data={node}
-            onMouseOver={(e) => {
-              // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
-              const [sourceid, targetid] = e.target.getAttribute('id').split('👉')
-
-              e.target.style.fill = 'rgba(255, 1, 1, .9)'
-              // const source = appState.graph.frame.getNode(sourceid)
-              // const target = appState.graph.frame.getNode(targetid)
-              const thepath = pathFinder.find(sourceid, targetid)
-              const pathnode = thepath.map((node) => {
-                return appState.graph.frame.getNode(node.id)
+            onClick={(e) => {
+              if (appState.graph.pathHoveredList.includes(e.target.getAttribute('id'))) {
+                appState.graph.pathHoveredList = appState.graph.pathHoveredList.filter(node =>
+                  node !== e.target.getAttribute('id')
+                )
+              }
+              else {
+                appState.graph.pathHoveredList.push(e.target.getAttribute('id'));
+              }
+              const pathlist = []
+              appState.graph.pathHoveredList.forEach((pathid) => {
+                const [sourceid, targetid] = pathid.split('👉')
+                // e.target.getAttribute('fill') node.renderData.color,
+                // e.target.style.fill = 'rgba(255, 1, 1, .9)'
+                // const source = appState.graph.frame.getNode(sourceid)
+                // const target = appState.graph.frame.getNode(targetid)
+                const thepath = pathFinder.find(sourceid, targetid)
+                const pathnode = thepath.map((node) => {
+                  return appState.graph.frame.getNode(node.id)
+                })
+                //control map highlight 
+                
+                pathlist.push( {
+                  "sourceid": sourceid,
+                  "targetid": targetid,
+                  "pathnode": pathnode
+                })
+               
               })
-              //control map highlight 
               appState.graph.pathHovered = {
-                "sourceid": sourceid,
-                "targetid": targetid,
-                "pathnode": pathnode
+                'sourceid': pathlist.map(n=>n.sourceid),
+                'targetid': pathlist.map(n=>n.targetid),
+                // 'pathnode': pathlist.map(n=>n.pathnode),
               }
-              // control socio update 
-              appState.graph.frame.highlightPathEdgeNode(pathnode)
-
-
-
-            }}
-            onMouseLeave={(e) => {
-              // if (appState.graph.mapClicked) return;
-              e.target.style.fill = appState.graph.edges.color
-              appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
-                // if (n !== appState.graph.mapClicked) {
-                appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
-
-                appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
-                // }
+              appState.graph.pathHovered['pathnode']= []
+              if(pathlist.length>0){
+                appState.graph.pathHovered['pathnode']= pathlist[0].pathnode
+                for (let i = 0; i < pathlist.length-1; i++){
+                  appState.graph.pathHovered['pathnode'] = appState.graph.pathHovered['pathnode'].concat(pathlist[i+1].pathnode)
+                }
               }
-              );
-              appState.graph.frame.colorNodeEdge(null);  //highlight all edges 
-              appState.graph.pathHovered = null;
-
-
+              
+              
+              // pathlist.forEach(p=>appState.graph.pathHovered['pathnode'].concat(p.pathnode))
+              // appState.graph.pathHovered['pathnode'] = [].concat(...appState.graph.pathHovered['pathnode'])
+               // control socio update 
+              appState.graph.frame.highlightPathEdgeNode(appState.graph.pathHovered['pathnode'])
             }}
+            // onMouseOver={(e) => {
+            //   // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
+            //   const [sourceid, targetid] = e.target.getAttribute('id').split('👉')
+
+            //   e.target.style.fill = 'rgba(255, 1, 1, .9)'
+            //   // const source = appState.graph.frame.getNode(sourceid)
+            //   // const target = appState.graph.frame.getNode(targetid)
+            //   const thepath = pathFinder.find(sourceid, targetid)
+            //   const pathnode = thepath.map((node) => {
+            //     return appState.graph.frame.getNode(node.id)
+            //   })
+            //   //control map highlight 
+            //   appState.graph.pathHovered = {
+            //     "sourceid": sourceid,
+            //     "targetid": targetid,
+            //     "pathnode": pathnode
+            //   }
+            //   // control socio update 
+            //   appState.graph.frame.highlightPathEdgeNode(pathnode)
+
+
+
+            // }}
+            // onMouseLeave={(e) => {
+            //   // if (appState.graph.mapClicked) return;
+            //   e.target.style.fill = appState.graph.edges.color
+            //   appState.graph.frame.graph.forEachNode(function (n) {  //highlight all the nodes 
+            //     // if (n !== appState.graph.mapClicked) {
+            //     appState.graph.frame.colorNodeOpacity(n, 1);  // set opacity for all the node 1
+
+            //     appState.graph.frame.highlightNode(n, false, def.ADJACENT_HIGHLIGHT); //set highlight edge null
+            //     // }
+            //   }
+            //   );
+            //   appState.graph.frame.colorNodeEdge(null);  //highlight all edges 
+            //   appState.graph.pathHovered = null;
+
+
+            // }}
             key={i}
           />)
         )

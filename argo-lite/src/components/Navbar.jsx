@@ -543,7 +543,8 @@ class RegularNavbar extends React.Component {
                 appState.graph.frame.selection = []
                 appState.graph.filter  = {}
                 appState.graph.currentlyHovered = undefined;
-              
+                appState.graph.pathHovered = undefined;
+                appState.graph.pathHoveredList = [];
                 appState.graph.edgeselection = [];
                 appState.graph.degreeselection = [];
                 appState.graph.degreebrushed = false;

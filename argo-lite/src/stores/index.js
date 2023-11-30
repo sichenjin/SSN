@@ -100,6 +100,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
+  appState.graph.pathHoveredList = [];
   appState.graph.initialNodesShowingLabels = [];
   appState.graph.densityDistance = [];
   appState.graph.edgeselection = [];

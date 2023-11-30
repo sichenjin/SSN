@@ -50,8 +50,15 @@ module.exports = function (self) {
    */
   self.highlightPathEdgeNode = function (pathnode) {
 
-    //highlight nodes
-
+    
+    if(pathnode.length==0){
+      //no path selected 
+      self.graph.forEachNode(function (n) {
+        self.colorNodeOpacity(n, 1);
+      })
+      self.highlightAllEdges()
+      return 
+    }
     //first dehighlight all nodes 
     self.graph.forEachNode(function (n) {
 
@@ -80,15 +87,24 @@ module.exports = function (self) {
     })
     //undirected 
     //then highlight only the node's edges
-    for (let i = 0; i < pathnode.length-1; i++) {
-      self.lineIndices.forEach(function (link) {
-        if ((link.source.id == pathnode[i].id && link.target.id == pathnode[i+1].id) || (link.source.id == pathnode[i+1].id && link.target.id == pathnode[i].id))  {
-          link.linecolor.r = red;
-          link.linecolor.g = blue;
-          link.linecolor.b = green;
-        }
-      })
-    } 
+    // for (let i = 0; i < pathnode.length-1; i++) {
+    //   self.lineIndices.forEach(function (link) {
+    //     if ((link.source.id == pathnode[i].id && link.target.id == pathnode[i+1].id) || (link.source.id == pathnode[i+1].id && link.target.id == pathnode[i].id))  {
+    //       link.linecolor.r = red;
+    //       link.linecolor.g = blue;
+    //       link.linecolor.b = green;
+    //     }
+    //   })
+    // } 
+    const pathnnodeid = pathnode.map(p=>p.id)
+    self.lineIndices.forEach(function (link) {
+      if ((( pathnnodeid.indexOf(link.source.id)!==-1 && pathnnodeid.indexOf(link.target.id )!==-1)) || (( pathnnodeid.indexOf(link.target.id)!==-1 && pathnnodeid.indexOf(link.source.id )!==-1)))  {
+        link.linecolor.r = red;
+        link.linecolor.g = blue;
+        link.linecolor.b = green;
+      }
+    })
+
   }
 
 

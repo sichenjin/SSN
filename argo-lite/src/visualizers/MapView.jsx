@@ -257,8 +257,25 @@ class MapView extends React.Component {
       }
     }
 
+    if (appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) {
 
-    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
+      const pathnodeid = appState.graph.pathHovered["pathnode"].map(p=>p.id)
+      const pathnodeall = [...appState.graph.pathHovered["sourceid"], ...appState.graph.pathHovered["targetid"], ...pathnodeid];
+      if (pathnodeall.indexOf(edge.fromId) !== -1 && pathnodeall.indexOf(edge.toId) !== -1) {
+        return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
+      } else {
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+      }
+      // for (let i = 0; i < pathnode.length - 1; i++) {
+      //   if ((edge.fromId == pathnode[i].id && edge.toId == pathnode[i + 1].id) || (edge.fromId == pathnode[i + 1].id && edge.toId == pathnode[i].id)) {
+      //     return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
+      //   }
+      // }
+      // return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+    }
+
+
+    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked ) {
       return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
 
       // { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
@@ -292,16 +309,7 @@ class MapView extends React.Component {
       }
     }
 
-    if (appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length > 0) {
-      const pathnode = appState.graph.pathHovered["pathnode"]
-      for (let i = 0; i < pathnode.length - 1; i++) {
-        if ((edge.fromId == pathnode[i].id && edge.toId == pathnode[i + 1].id) || (edge.fromId == pathnode[i + 1].id && edge.toId == pathnode[i].id)) {
-          return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
-        }
-      }
-      return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
-    }
-
+   
 
 
 
@@ -377,15 +385,27 @@ class MapView extends React.Component {
 
     //scatterplot path highlight 
     if (appState.graph.pathHovered && appState.graph.pathHovered["pathnode"].length > 0) {
-      if (node.id == appState.graph.pathHovered["sourceid"] || node.id == appState.graph.pathHovered["targetid"]) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'green', zIndex: '10000' }
-      }
-      else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
-      } else {
+      // if (  node.id == appState.graph.pathHovered["sourceid"]  || node.id == appState.graph.pathHovered["targetid"]) {
+      //   return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'green', zIndex: '10000' }
+      // }
+      // else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
+      //   return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+      // } else {
 
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
-      }
+      //   return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+      // }
+
+      if (  appState.graph.pathHovered["sourceid"].indexOf(node.id) !== -1  || appState.graph.pathHovered["targetid"].indexOf(node.id) !== -1) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'green', zIndex: '10000' }
+        }
+        else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+        } else {
+  
+          return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+        }
+
+      
     }
 
 
@@ -608,6 +628,7 @@ class MapView extends React.Component {
                     mouseover: (e) => {
                       //when selection or mapclick, then freeze, no hover event 
                       if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
+                      if(appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) return;
                       // var currentNode = e.target.options.data
                       // appState.graph.selectedNodes = []
                       // appState.graph.frame.selection = []
@@ -631,7 +652,7 @@ class MapView extends React.Component {
                     mouseout: (e) => {
                       //when selection or mapclick, then freeze, no hover event 
                       if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
-
+                      if(appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) return;
                       appState.graph.frame.graph.forEachNode(function (n) {
                         // if (n !== appState.graph.mapClicked) {
                         appState.graph.frame.colorNodeOpacity(n, 1);

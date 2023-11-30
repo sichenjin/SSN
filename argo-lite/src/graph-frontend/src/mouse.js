@@ -89,6 +89,7 @@ module.exports = function (self) {
    */
   self.onHover = function (node) {
     if(appState.graph.mapClicked) return;
+    if(appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) return;
     if(self.selection.length>0) return;
     if (self.lastHover && self.selection.indexOf(self.lastHover) == -1) {
       self.highlightNode(self.lastHover, false);

@@ -104,6 +104,7 @@ export default class GraphStore {
 
   // Currently hovered path in the scatterplot view 
   @observable pathHovered = undefined;
+  @observable pathHoveredList = [];
   /**
    * Stores data relevant to smart pause feature
    */
