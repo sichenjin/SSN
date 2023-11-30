@@ -771,13 +771,17 @@ class StatGroupPanel extends React.Component {
                                     appState.graph.convexhullby = it
                                     this.convexhull(it)
                                     appState.graph.convexPolygonsShow = true
+                                    //followed by cluster by function
+                                    appState.graph.groupby = it
+                                    this.density_distance(it)
+
                                 }}
                                 value={appState.graph.convexhullby}
                             />
                         </span>
                     </div>
                     <div>
-                        <p style={{ display: "inline", fontSize: "12px" }}>Cluster By: </p>
+                        <p style={{ display: "inline", fontSize: "12px" }}>Group By: </p>
                         <span style={{}}>
                             <SimpleSelect
                                 items={appState.graph.filterKeyList.filter(it=>(it !== 'ID'&& (it === 'community' || isNaN(appState.graph.rawGraph.nodes[0][it]))))}

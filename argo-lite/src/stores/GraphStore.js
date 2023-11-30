@@ -65,6 +65,7 @@ export default class GraphStore {
   // Updated by frame event
   @observable selectedNodes = [];
 
+
   filter = {}
 
 

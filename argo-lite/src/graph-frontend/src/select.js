@@ -39,9 +39,9 @@ module.exports = function (self) {
   self.getEdgeWithinSelection = function (selection) {
     const withinEdges = []
     for (var i = 0; i < selection.length; i++) {
-      if(selection[i] && selection[i].linkObjs){
+      if (selection[i] && selection[i].linkObjs) {
         selection[i].linkObjs.forEach(function (link) {
-          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1 )&& link.source!==link.target && withinEdges.indexOf(link) == -1) {
+          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1) && link.source !== link.target && withinEdges.indexOf(link) == -1) {
             withinEdges.push(link)
           }
         })
@@ -50,14 +50,14 @@ module.exports = function (self) {
     return withinEdges;
   }
 
-  
-   //return all the edges within and out the selected nodes 
-   self.getEdgeWithinOutSelection = function (selection) {
+
+  //return all the edges within and out the selected nodes 
+  self.getEdgeWithinOutSelection = function (selection) {
     const withinoutEdges = []
     for (var i = 0; i < selection.length; i++) {
-      if(selection[i] && selection[i].linkObjs){
+      if (selection[i] && selection[i].linkObjs) {
         selection[i].linkObjs.forEach(function (link) {
-          if ((selection.indexOf(link.source) !== -1 || selection.indexOf(link.target) !== -1 )&& link.source!==link.target && withinoutEdges.indexOf(link) == -1) {
+          if ((selection.indexOf(link.source) !== -1 || selection.indexOf(link.target) !== -1) && link.source !== link.target && withinoutEdges.indexOf(link) == -1) {
             withinoutEdges.push(link)
           }
         })
@@ -66,19 +66,19 @@ module.exports = function (self) {
     return withinoutEdges;
   }
 
-   //return all the edges within distance 
-   self.getEdgeWithinDist = function (mindist, maxdist) {
+  //return all the edges within distance 
+  self.getEdgeWithinDist = function (mindist, maxdist) {
     const withinoutEdges = []
-    self.graph.forEachNode (n=>{
-      if(n.linkObjs && n.linkObjs.length> 0){
+    self.graph.forEachNode(n => {
+      if (n.linkObjs && n.linkObjs.length > 0) {
         n.linkObjs.forEach(function (link) {
-          if (link.edgeDist >mindist && link.edgeDist <maxdist) {
+          if (link.edgeDist > mindist && link.edgeDist < maxdist) {
             withinoutEdges.push(link)
           }
         })
       }
     })
-    
+
     return withinoutEdges;
   }
 
@@ -87,11 +87,11 @@ module.exports = function (self) {
     const withinEdges = []
     const edgekeys = []
     for (var i = 0; i < selection.length; i++) {
-      if(selection[i] && selection[i].linkObjs){
+      if (selection[i] && selection[i].linkObjs) {
         selection[i].linkObjs.forEach(function (link) {
           const key1 = `${link.source.id}👉 ${link.target.id}`
           const key2 = `${link.target.id}👉 ${link.source.id}`
-          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1 )&& link.source!==link.target && edgekeys.indexOf(key1) == -1) {
+          if ((selection.indexOf(link.source) !== -1 && selection.indexOf(link.target) !== -1) && link.source !== link.target && edgekeys.indexOf(key1) == -1) {
             withinEdges.push(link)
             edgekeys.push(key1)
             edgekeys.push(key2)
@@ -103,91 +103,91 @@ module.exports = function (self) {
     return withinEdges;
   }
 
-  
- //highlight nodes and edges within selection
- self.updateDegreeHistOpacity = function () {
-  if (self.degreehighlight.length > 0) {
-    if (self.degreehighlight.length == 1 && appState.graph.colorByDistance) {
-      const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
-        var p = 0.017453292519943295;    // Math.PI / 180
-        var c = Math.cos;
-        var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-          c(lat1 * p) * c(lat2 * p) *
-          (1 - c((lon2 - lon1) * p)) / 2;
-    
-        return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+
+  //highlight nodes and edges within selection
+  self.updateDegreeHistOpacity = function () {
+    if (self.degreehighlight.length > 0) {
+      if (self.degreehighlight.length == 1 && appState.graph.colorByDistance) {
+        const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+          var p = 0.017453292519943295;    // Math.PI / 180
+          var c = Math.cos;
+          var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+            c(lat1 * p) * c(lat2 * p) *
+            (1 - c((lon2 - lon1) * p)) / 2;
+
+          return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+        }
+        var sumOfAllDistance = 0;
+        var n = 0;
+        var max = 0;
+        self.graph.forEachNode(n => {
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.degreehighlight[0].data.ref.LatY, self.degreehighlight[0].data.ref.LonX)
+          if (dist > max) {
+            max = dist;
+          }
+        })
+        self.graph.forEachNode(n => {
+          // self.colorNodeColor(n, "#0000FF");
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.degreehighlight[0].data.ref.LatY, self.degreehighlight[0].data.ref.LonX);
+          console.log(n.data.ref.LatY, n.data.ref.LonX, self.degreehighlight[0]['LatY'], self.degreehighlight[0]['LatX'])
+          self.colorNode(n, 0x0000FF);
+          if (dist == 0) {
+            self.colorNodeOpacity(n, 1);
+          } else if (dist < max / 4) {
+            self.colorNodeOpacity(n, 0.2);
+          } else if (dist < (2 * max) / 4) {
+            self.colorNodeOpacity(n, 0.4);
+          } else if (dist < (3 * max) / 4) {
+            self.colorNodeOpacity(n, 0.6);
+          }
+          else {
+            self.colorNodeOpacity(n, 0.8);
+          }
+
+
+        });
       }
-      var sumOfAllDistance = 0;
-      var n = 0;
-      var max = 0;
-      self.graph.forEachNode(n => {
-        var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX,self.degreehighlight[0].data.ref.LatY, self.degreehighlight[0].data.ref.LonX)
-        if (dist > max) {
-          max = dist;
-        }
-      })
-      self.graph.forEachNode(n => {  
-        // self.colorNodeColor(n, "#0000FF");
-        var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX,self.degreehighlight[0].data.ref.LatY, self.degreehighlight[0].data.ref.LonX);
-        console.log(n.data.ref.LatY, n.data.ref.LonX,self.degreehighlight[0]['LatY'],self.degreehighlight[0]['LatX'])
-        self.colorNode(n, 0x0000FF);
-        if (dist == 0) {
-          self.colorNodeOpacity(n, 1);
-        } else if (dist < max/4) {
+      else {
+        self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
           self.colorNodeOpacity(n, 0.2);
-        }else if (dist < (2*max)/4) {
-          self.colorNodeOpacity(n, 0.4);
-        }else if (dist < (3*max)/4) {
-          self.colorNodeOpacity(n, 0.6);
+
+        });
+        // self.colorNodeEdge(null);    // this is to highlight all 
+
+        //fisrt dehighlight all the edges
+        self.lineIndices.forEach(function (link) {
+          link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+          link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+          link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        })
+
+        //hilight within edges
+        let red = new THREE.Color(appState.graph.edges.color).r;
+        let blue = new THREE.Color(appState.graph.edges.color).g;
+        let green = new THREE.Color(appState.graph.edges.color).b;
+        const withinEdges = self.getEdgeWithinSelection(self.degreehighlight)
+
+        for (var i = 0; i < withinEdges.length; i++) {
+          withinEdges[i].linecolor.r = red;
+          withinEdges[i].linecolor.g = blue;
+          withinEdges[i].linecolor.b = green;
         }
-        else {
-          self.colorNodeOpacity(n, 0.8);
+        self.arrow.material.color.setRGB(red, blue, green);
+
+        //highlight nodes 
+        for (var i = 0; i < self.degreehighlight.length; i++) {
+          self.colorNodeOpacity(self.degreehighlight[i], 1);
         }
-        
-        
+
+      }
+    } else {        //when no nodes satisfying the condition, all 0.2 opacity 
+      self.graph.forEachNode(n => {
+        self.colorNodeOpacity(n, 0.2);
+
       });
+      self.colorNodeEdge(null);
     }
-    else {
-    self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
-      self.colorNodeOpacity(n, 0.2);
-      
-    });
-    // self.colorNodeEdge(null);    // this is to highlight all 
-
-    //fisrt dehighlight all the edges
-    self.lineIndices.forEach(function (link) {
-      link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
-      link.linecolor.g = self.darkMode ? 0.25 : 0.89;
-      link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-    })  
-
-    //hilight within edges
-    let red = new THREE.Color(appState.graph.edges.color).r;
-    let blue = new THREE.Color(appState.graph.edges.color).g;
-    let green = new THREE.Color(appState.graph.edges.color).b;
-    const withinEdges = self.getEdgeWithinSelection(self.degreehighlight)
-
-    for (var i = 0; i < withinEdges.length; i++) {
-      withinEdges[i].linecolor.r = red;
-      withinEdges[i].linecolor.g = blue;
-      withinEdges[i].linecolor.b = green;
-    }
-    self.arrow.material.color.setRGB(red, blue, green);
-
-    //highlight nodes 
-    for (var i = 0; i < self.degreehighlight.length; i++) {
-      self.colorNodeOpacity(self.degreehighlight[i], 1);
-    }
-
-  } 
-  }else {        //when no nodes satisfying the condition, all 0.2 opacity 
-    self.graph.forEachNode(n => {
-      self.colorNodeOpacity(n, 0.2);
-      
-    });
-    self.colorNodeEdge(null);
   }
-}
 
 
   //highlight nodes and edges within selection
@@ -201,83 +201,83 @@ module.exports = function (self) {
           var a = 0.5 - c((lat2 - lat1) * p) / 2 +
             c(lat1 * p) * c(lat2 * p) *
             (1 - c((lon2 - lon1) * p)) / 2;
-      
+
           return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
         }
         var sumOfAllDistance = 0;
         var n = 0;
         var max = 0;
         self.graph.forEachNode(n => {
-          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX,self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX)
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX)
           if (dist > max) {
             max = dist;
           }
         })
-        self.graph.forEachNode(n => {  
+        self.graph.forEachNode(n => {
           // self.colorNodeColor(n, "#0000FF");
-          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX,self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX);
-          console.log(n.data.ref.LatY, n.data.ref.LonX,self.selection[0]['LatY'],self.selection[0]['LatX'])
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX);
+          console.log(n.data.ref.LatY, n.data.ref.LonX, self.selection[0]['LatY'], self.selection[0]['LatX'])
           self.colorNode(n, 0x0000FF);
           if (dist == 0) {
             self.colorNodeOpacity(n, 1);
-          } else if (dist < max/4) {
+          } else if (dist < max / 4) {
             self.colorNodeOpacity(n, 0.2);
-          }else if (dist < (2*max)/4) {
+          } else if (dist < (2 * max) / 4) {
             self.colorNodeOpacity(n, 0.4);
-          }else if (dist < (3*max)/4) {
+          } else if (dist < (3 * max) / 4) {
             self.colorNodeOpacity(n, 0.6);
           }
           else {
             self.colorNodeOpacity(n, 0.8);
           }
-          
-          
+
+
         });
       }
       else {
-      self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
-        self.colorNodeOpacity(n, 0.2);
-        
-      });
-      // self.colorNodeEdge(null);    // this is to highlight all 
+        self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
+          self.colorNodeOpacity(n, 0.2);
 
-      //fisrt dehighlight all the edges
-      self.lineIndices.forEach(function (link) {
-        link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
-        link.linecolor.g = self.darkMode ? 0.25 : 0.89;
-        link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-      })  
+        });
+        // self.colorNodeEdge(null);    // this is to highlight all 
 
-      //hilight within edges
-      let red = new THREE.Color(appState.graph.edges.color).r;
-      let blue = new THREE.Color(appState.graph.edges.color).g;
-      let green = new THREE.Color(appState.graph.edges.color).b;
-      const withinEdges = self.getEdgeWithinSelection(self.selection)
+        //fisrt dehighlight all the edges
+        self.lineIndices.forEach(function (link) {
+          link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+          link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+          link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        })
 
-      for (var i = 0; i < withinEdges.length; i++) {
-        withinEdges[i].linecolor.r = red;
-        withinEdges[i].linecolor.g = blue;
-        withinEdges[i].linecolor.b = green;
+        //hilight within edges
+        let red = new THREE.Color(appState.graph.edges.color).r;
+        let blue = new THREE.Color(appState.graph.edges.color).g;
+        let green = new THREE.Color(appState.graph.edges.color).b;
+        const withinEdges = self.getEdgeWithinSelection(self.selection)
+
+        for (var i = 0; i < withinEdges.length; i++) {
+          withinEdges[i].linecolor.r = red;
+          withinEdges[i].linecolor.g = blue;
+          withinEdges[i].linecolor.b = green;
+        }
+        self.arrow.material.color.setRGB(red, blue, green);
+
+        //highlight nodes 
+        for (var i = 0; i < self.selection.length; i++) {
+          self.colorNodeOpacity(self.selection[i], 1);
+        }
+
       }
-      self.arrow.material.color.setRGB(red, blue, green);
-
-      //highlight nodes 
-      for (var i = 0; i < self.selection.length; i++) {
-        self.colorNodeOpacity(self.selection[i], 1);
-      }
-
-    } 
     }
     else {        //when no nodes are selected, all 1 opacity 
       self.graph.forEachNode(n => {
         self.colorNodeOpacity(n, 1);
-        
+
       });
       self.colorNodeEdge(null);
     }
   }
 
-  self.highlightAllEdges = function(){
+  self.highlightAllEdges = function () {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
@@ -286,32 +286,32 @@ module.exports = function (self) {
       link.linecolor.g = blue
       link.linecolor.b = green
     })
-    self.arrow.material.color.setRGB(red, blue, green);  
+    self.arrow.material.color.setRGB(red, blue, green);
   }
 
   //highlight  edges within distance range 
-  self.highlightedgeWithinDist = function(mindist, maxdist){
+  self.highlightedgeWithinDist = function (mindist, maxdist) {
 
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
     //fisrt dehighlight all the edges
     self.lineIndices.forEach(function (link) {
-      if(link.edgeDist>=mindist && link.edgeDist <=maxdist){
+      if (link.edgeDist >= mindist && link.edgeDist <= maxdist) {
         link.linecolor.r = red;
-      link.linecolor.g = blue;
-      link.linecolor.b = green;
-      }else{
-      link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
-      link.linecolor.g = self.darkMode ? 0.25 : 0.89;
-      link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        link.linecolor.g = blue;
+        link.linecolor.b = green;
+      } else {
+        link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+        link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+        link.linecolor.b = self.darkMode ? 0.25 : 0.89;
       }
-      
+
     })
-    self.arrow.material.color.setRGB(red, blue, green);  
+    self.arrow.material.color.setRGB(red, blue, green);
 
     //hilight  edges within distance 
-    
+
     // const withinEdges = self.getEdgeWithinDist(mindist,maxdist)
 
     // for (var i = 0; i < withinEdges.length; i++) {
@@ -323,7 +323,7 @@ module.exports = function (self) {
   }
 
 
-   //highlight nodes and edges branching out from selection
+  //highlight map selected nodes: highlight nodes and edges branching out from selection and neighbor nodes of the selection with lower transparency
   self.updateSelectionOutOpacity = function () {
     // if()
     if (self.selection.length > 0) {
@@ -334,111 +334,120 @@ module.exports = function (self) {
           var a = 0.5 - c((lat2 - lat1) * p) / 2 +
             c(lat1 * p) * c(lat2 * p) *
             (1 - c((lon2 - lon1) * p)) / 2;
-      
+
           return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
         }
         var sumOfAllDistance = 0;
         var n = 0;
         var max = 0;
         self.graph.forEachNode(n => {
-          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX,self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX)
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX)
           if (dist > max) {
             max = dist;
           }
         })
-        self.graph.forEachNode(n => {  
+        self.graph.forEachNode(n => {
           // self.colorNodeColor(n, "#0000FF");
-          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX,self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX);
-          console.log(n.data.ref.LatY, n.data.ref.LonX,self.selection[0]['LatY'],self.selection[0]['LatX'])
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX);
+          console.log(n.data.ref.LatY, n.data.ref.LonX, self.selection[0]['LatY'], self.selection[0]['LatX'])
           self.colorNode(n, 0x0000FF);
           if (dist == 0) {
             self.colorNodeOpacity(n, 1);
-          } else if (dist < max/4) {
+          } else if (dist < max / 4) {
             self.colorNodeOpacity(n, 0.2);
-          }else if (dist < (2*max)/4) {
+          } else if (dist < (2 * max) / 4) {
             self.colorNodeOpacity(n, 0.4);
-          }else if (dist < (3*max)/4) {
+          } else if (dist < (3 * max) / 4) {
             self.colorNodeOpacity(n, 0.6);
           }
           else {
             self.colorNodeOpacity(n, 0.8);
           }
-          
-          
+
+
         });
       }
       else {
-      self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
-        self.colorNodeOpacity(n, 0.2);
+        self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
+          self.colorNodeOpacity(n, 0.2);
+
+        });
+        // self.colorNodeEdge(null);    // this is to highlight all 
+
+        //fisrt dehighlight all the edges
+        self.lineIndices.forEach(function (link) {
+          link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+          link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+          link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        })
+
+        //hilight within edges
+        let red = new THREE.Color(appState.graph.edges.color).r;
+        let blue = new THREE.Color(appState.graph.edges.color).g;
+        let green = new THREE.Color(appState.graph.edges.color).b;
+        const withinEdges = self.getEdgeWithinOutSelection(self.selection)
+
+        for (var i = 0; i < withinEdges.length; i++) {
+          withinEdges[i].linecolor.r = red;
+          withinEdges[i].linecolor.g = blue;
+          withinEdges[i].linecolor.b = green;
+        }
+        self.arrow.material.color.setRGB(red, blue, green);
+
+
+
+
         
-      });
-      // self.colorNodeEdge(null);    // this is to highlight all 
+        for (var i = 0; i < self.selection.length; i++) {
+          // slightly highlight neighbors 
+          // const neighborNodes = self.getNeighborNodesFromGraph(self.selection[i])
+          // for (var i = 0; i < neighborNodes.length; i++) {
+          //   self.colorNodeOpacity(neighborNodes[i], 0.5);
+          // }
+          //fully highlight nodes 
+          self.colorNodeOpacity(self.selection[i], 1);
+        }
 
-      //fisrt dehighlight all the edges
-      self.lineIndices.forEach(function (link) {
-        link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
-        link.linecolor.g = self.darkMode ? 0.25 : 0.89;
-        link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-      })  
-
-      //hilight within edges
-      let red = new THREE.Color(appState.graph.edges.color).r;
-      let blue = new THREE.Color(appState.graph.edges.color).g;
-      let green = new THREE.Color(appState.graph.edges.color).b;
-      const withinEdges = self.getEdgeWithinOutSelection(self.selection)
-
-      for (var i = 0; i < withinEdges.length; i++) {
-        withinEdges[i].linecolor.r = red;
-        withinEdges[i].linecolor.g = blue;
-        withinEdges[i].linecolor.b = green;
       }
-      self.arrow.material.color.setRGB(red, blue, green);
-
-      //highlight nodes 
-      for (var i = 0; i < self.selection.length; i++) {
-        self.colorNodeOpacity(self.selection[i], 1);
-      }
-
-    } 
     }
     else {        //when no nodes are selected, all 1 opacity 
       self.graph.forEachNode(n => {
         self.colorNodeOpacity(n, 1);
-        
+
       });
       self.colorNodeEdge(null);
     }
   }
 
 
-   //highlight clicked nodes and its neighbor edges only
+  //highlight clicked nodes and its neighbor edges only
   self.highlightClickNode = function (node) {
-    if (node ) {
+    if (node) {
       self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
         self.colorNodeOpacity(n, 0.2);
-        
+
       });
-    //   // self.colorNodeEdge(null);    // this is to highlight all 
+      //   // self.colorNodeEdge(null);    // this is to highlight all 
 
-    //   //fisrt dehighlight all the edges
-    //   self.lineIndices.forEach(function (link) {
-    //     link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
-    //     link.linecolor.g = self.darkMode ? 0.25 : 0.89;
-    //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-    //   })  
+      //   //fisrt dehighlight all the edges
+      //   self.lineIndices.forEach(function (link) {
+      //     link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+      //     link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      //   })  
 
-    //   //hilight neighbor edges
-    //   let red = new THREE.Color(appState.graph.edges.color).r;
-    //   let blue = new THREE.Color(appState.graph.edges.color).g;
-    //   let green = new THREE.Color(appState.graph.edges.color).b;
-    //   const withinEdges = node.linkObjs
+      //   //hilight neighbor edges
+      //   let red = new THREE.Color(appState.graph.edges.color).r;
+      //   let blue = new THREE.Color(appState.graph.edges.color).g;
+      //   let green = new THREE.Color(appState.graph.edges.color).b;
+      //   const withinEdges = node.linkObjs
 
-    //   for (var i = 0; i < withinEdges.length; i++) {
-    //     withinEdges[i].linecolor.r = red;
-    //     withinEdges[i].linecolor.g = blue;
-    //     withinEdges[i].linecolor.b = green;
-    //   }
-    //   self.arrow.material.color.setRGB(red, blue, green);
+      //   for (var i = 0; i < withinEdges.length; i++) {
+      //     withinEdges[i].linecolor.r = red;
+      //     withinEdges[i].linecolor.g = blue;
+      //     withinEdges[i].linecolor.b = green;
+      //   }
+      //   self.arrow.material.color.setRGB(red, blue, green);
 
       //highlight nodes 
       const neighborNodes = self.getNeighborNodesFromGraph(node)
@@ -446,29 +455,47 @@ module.exports = function (self) {
         self.colorNodeOpacity(neighborNodes[i], 1);
       }
 
-    // } else {        //when no nodes are given, all 1 opacity 
-    //   self.graph.forEachNode(n => {
-    //     self.colorNodeOpacity(n, 1);
-        
-    //   });
-    //   self.colorNodeEdge(null);
-    // }
-   
+      // } else {        //when no nodes are given, all 1 opacity 
+      //   self.graph.forEachNode(n => {
+      //     self.colorNodeOpacity(n, 1);
 
-    // self.highlightNode(node, true);
-    // node.renderData.textHolder.children[0].element.hideme = false;
-    self.colorNodeEdge(node);
-  }
+      //   });
+      //   self.colorNodeEdge(null);
+      // }
+
+
+      // self.highlightNode(node, true);
+      // node.renderData.textHolder.children[0].element.hideme = false;
+      self.colorNodeEdge(node);
+    }
   }
 
- 
+
 
 
   self.getNeighborNodesFromGraph = function (node) {
     const nodeNeighbor = []
     const froms = []
     const tos = []
-    if (!node) return 
+    if (!node) return
+    for (var i = 0; i < node.links.length; i++) {
+      froms.push(node.links[i].fromId);
+      tos.push(node.links[i].toId);
+    }
+    self.graph.forEachNode(n => {
+      if (froms.indexOf(n.id) != -1 || tos.indexOf(n.id) != -1) {
+        nodeNeighbor.push(n)
+      }
+    })
+    return nodeNeighbor
+  }
+
+  // get only neighbors from a set of nodes, exclude selected nodes, only neighbors
+  self.getOnlyNeighborNodesFromGraph = function (nodes) {
+    const nodeNeighbor = []
+    const froms = []
+    const tos = []
+    if (nodes.length < 1) return
     for (var i = 0; i < node.links.length; i++) {
       froms.push(node.links[i].fromId);
       tos.push(node.links[i].toId);
@@ -509,8 +536,8 @@ module.exports = function (self) {
       clickedNode.pinnedx = false;
       clickedNode.pinnedy = false;
       appState.graph.mapClicked = null;
-      
-      
+
+
       self.selection = []
     }
 

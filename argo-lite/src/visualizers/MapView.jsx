@@ -397,7 +397,7 @@ class MapView extends React.Component {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
 
       } else if(neighborIDs.indexOf(node.id) !== -1){
-        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, color: 'orange', zIndex: '10000' }
+        return { fillColor: node.renderData.color, fillOpacity: 0.5, stroke: false, color: 'orange', zIndex: '10000' }
 
       }
       else {
