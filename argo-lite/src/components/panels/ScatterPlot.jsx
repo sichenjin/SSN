@@ -91,20 +91,20 @@ class ScatterPlot extends React.Component {
 
     //download for all 
     let temp = []
-    header = appState.graph.metadata.nodeComputed.filter(n=> (n!== 'shortest path'&& n!=='pair distance'))
+    header = appState.graph.metadata.nodeComputed.filter(n => (n !== 'shortest path' && n !== 'pair distance'))
     header.unshift('id')
     temp.push(header)
     // temp[0].unshift('id')
-    appState.graph.frame.getNodeList().forEach((node)=>{
+    appState.graph.frame.getNodeList().forEach((node) => {
       const noderow = []
       // noderow.push(node.id)
-      header.forEach((column)=>{
+      header.forEach((column) => {
         noderow.push(node.data.ref[column])
       })
       temp.push(noderow)
     })
-   
-    
+
+
     // temp.push(header)
     // for (var i = 0; i < column2.length && i < column1.length; i++) {
     //   temp.push([column1[i], column2[i]]);
@@ -132,15 +132,15 @@ class ScatterPlot extends React.Component {
     const selectionNodeID = []
     const svgElement = select(this.svg)
     const circles = svgElement.selectAll("circle")
-    if(selection ) {
+    if (selection) {
       const brushBounds = {
         x0: selection[0][0] - this.margin.left,
         x1: selection[1][0] - this.margin.left,
         y0: selection[0][1] - this.margin.top - this.cr,
         y1: selection[1][1] - this.margin.top - this.cr,
       }
-      console.log(selection[0][1], selection[1][1],brushBounds.y1, brushBounds.y0);
-  
+      console.log(selection[0][1], selection[1][1], brushBounds.y1, brushBounds.y0);
+
       circles.each(function (d, i) {
         const nodecx = parseFloat(select(this).attr("cx"))
         const nodecy = parseFloat(select(this).attr("cy"))
@@ -148,29 +148,29 @@ class ScatterPlot extends React.Component {
         if (nodecx >= brushBounds.x0 && nodecx <= brushBounds.x1 && nodecy >= brushBounds.y0 && nodecy <= brushBounds.y1) {
           selectionNodeID.push(select(this).attr("id"))
         }
-  
-  
-  
+
+
+
       })
-  
-  
+
+
       const selectionNode = appState.graph.frame.getNodeList().filter(node =>
         // console.log(node)
         selectionNodeID.includes(node.id)
-  
+
       )
       appState.graph.frame.selection = selectionNode
       appState.graph.selectedNodes = selectionNode
-  
-  
+
+
       // console.log(selectionNode)
       appState.graph.frame.updateSelectionOpacity()
-    }else{   //click to clear selection 
+    } else {   //click to clear selection 
       appState.graph.frame.selection = []
       appState.graph.frame.updateSelectionOpacity()
-      
+
     }
-    
+
 
   }
   renderBrush = () => (
@@ -179,9 +179,9 @@ class ScatterPlot extends React.Component {
       // Strictly uses the format [[x0, y0], [x1, y1]] for both 1d and 2d brush.
       // Note: d3 allows the format [x, y] for 1d brush.
       // transform={"translate(0," + this.margin.top +")"}
-      selection = {appState.graph.clearBrush? null:undefined}
+      selection={appState.graph.clearBrush ? null : undefined}
       extent={
-        [[this.margin.left,  this.margin.top], [this.width + this.margin.left, this.height + this.margin.top ]]
+        [[this.margin.left, this.margin.top], [this.width + this.margin.left, this.height + this.margin.top]]
       }
       // Obtain mouse positions relative to the current svg during mouse events.
       // By default, getEventMouse returns [event.clientX, event.clientY]
@@ -333,10 +333,10 @@ class ScatterPlot extends React.Component {
           ])
           .range([this.height, 0])
       }
-      const capitalizeString =(inputString)=> {
+      const capitalizeString = (inputString) => {
         const connectingWords = ['in', 'to']; // Add more connecting words as needed
-      
-        return inputString.replace(/\w+/g, function(word) {
+
+        return inputString.replace(/\w+/g, function (word) {
           return connectingWords.includes(word.toLowerCase()) ? word : word.charAt(0).toUpperCase() + word.slice(1);
         });
       }
@@ -354,18 +354,18 @@ class ScatterPlot extends React.Component {
           {/* <div style={{ width:'50vw', transform:'translate(10px,10px)'}} className={classnames(Classes.CARD, "sub-option")}> */}
 
           <div style={{ display: "inline", }}>
-            <p className="scatter-plot-font" style={{ display: "inline", fontSize:"12px"}}>X by: </p>
+            <p className="scatter-plot-font" style={{ display: "inline", fontSize: "12px" }}>X by: </p>
             <span >
               < XYSelect className="scatter-plot-font" style={{ display: "inline" }}
-                items={appState.graph.allComputedPropertiesKeyList.map(s=>capitalizeString(s))}
+                items={appState.graph.allComputedPropertiesKeyList.map(s => capitalizeString(s))}
                 onSelect={it => (appState.graph.scatterplot.x = it.split(' ').map((s) => s.charAt(0).toLowerCase() + s.substring(1)).join(' '))}
                 value={
                   capitalizeString(appState.graph.scatterplot.x)
-                  }
+                }
               />
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <p className="scatter-plot-font" style={{ display: "inline", fontSize:"12px" }}>Y by: </p>
+            <p className="scatter-plot-font" style={{ display: "inline", fontSize: "12px" }}>Y by: </p>
             <span >
               <XYSelect
                 className="scatter-plot-font"
@@ -374,6 +374,16 @@ class ScatterPlot extends React.Component {
                 value={capitalizeString(appState.graph.scatterplot.y)}
               />
             </span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <text id="scattertitle" style={{}} > {( ((appState.graph.scatterplot.x === 'shortest path') && (appState.graph.scatterplot.y === 'pair distance')) || ((appState.graph.scatterplot.y === 'shortest path') && (appState.graph.scatterplot.x === 'pair distance')) ) ? (
+              'Route Factor Diagram'
+            ) : (((appState.graph.scatterplot.y == 'network density') && (appState.graph.scatterplot.x == 'standard distance')) ||
+            ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))) ? (
+              'Cluster-Cluster Plot'
+            ) :  (
+             'Centrality-Centrality Plot'
+            )}</text>
           </div>
 
           <div style={{ display: "inline", }}>
@@ -396,8 +406,9 @@ class ScatterPlot extends React.Component {
                 height={this.height}
                 className="main"
               >
+
                 {appState.graph.hasGraph && <RenderCircles scale={{ x, y }} cr={this.cr} ref={this.circles} maxhop={this.maxhop} infinityhop={this.infinityhop} />}
-                <text style={{ transform: 'translate(20vw, 27.5vh)' }} fontSize="11px">{(appState.graph.scatterplot.x === 'standard distance' || appState.graph.scatterplot.x === 'distance to center') ? capitalizeString(appState.graph.scatterplot.x)+' (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
+                <text style={{ transform: 'translate(20vw, 27.5vh)' }} fontSize="11px">{(appState.graph.scatterplot.x === 'standard distance' || appState.graph.scatterplot.x === 'distance to center') ? capitalizeString(appState.graph.scatterplot.x) + ' (km)' : capitalizeString(appState.graph.scatterplot.x)}</text>
                 <Axis
                   axis="x"
                   transform={"translate(0," + this.height + ")"}
@@ -412,11 +423,11 @@ class ScatterPlot extends React.Component {
                     }) : axisBottom().scale(x)
                   }
                 />
-                <text 
-                 style={{ transform: "translate(-45px, 18vh) rotate(-90deg)", }}
+                <text
+                  style={{ transform: "translate(-45px, 18vh) rotate(-90deg)", }}
                   // transform={"translate(-1vw, 21vh) rotate(-90deg)"}
                   fontSize="11px"
-                >{(appState.graph.scatterplot.y === 'standard distance' || appState.graph.scatterplot.y === 'distance to center') ? capitalizeString(appState.graph.scatterplot.y) + ' (km)' : capitalizeString(appState.graph.scatterplot.y) }</text>
+                >{(appState.graph.scatterplot.y === 'standard distance' || appState.graph.scatterplot.y === 'distance to center') ? capitalizeString(appState.graph.scatterplot.y) + ' (km)' : capitalizeString(appState.graph.scatterplot.y)}</text>
                 <Axis
                   axis="y"
                   transform="translate(0,0)"
@@ -598,7 +609,7 @@ class RenderCircles extends React.Component {
       //   }
 
       // }
-      
+
       //Click
       if (appState.graph.distanceDensityCurrentlyClicked.length !== 0) {
         if (appState.graph.distanceDensityCurrentlyClicked.includes(String(node['name']))) {
@@ -608,7 +619,7 @@ class RenderCircles extends React.Component {
             stroke: def.NODE_HIGHLIGHT,
             fillOpacity: 0.8
           }
-        } 
+        }
         else {
           return {
             fill: appState.graph.nodeColorScale(node['name']),
@@ -620,17 +631,17 @@ class RenderCircles extends React.Component {
       }
       else {
         // no click 
-          return {
-            fill: appState.graph.nodeColorScale(node['name']),
-            zIndex: "0",
-            stroke: false,
-            fillOpacity: 0.8
-          }
+        return {
+          fill: appState.graph.nodeColorScale(node['name']),
+          zIndex: "0",
+          stroke: false,
+          fillOpacity: 0.8
+        }
       }
     }
     else { //path node style 
       return {
-        
+
         fill: appState.graph.edges.color,
         zIndex: "0",
         stroke: false,
@@ -702,8 +713,8 @@ class RenderCircles extends React.Component {
               // }}
               onClick={(e) => {
                 if (appState.graph.distanceDensityCurrentlyClicked.includes(e.target.getAttribute('id'))) {
-                  appState.graph.distanceDensityCurrentlyClicked = appState.graph.distanceDensityCurrentlyClicked.filter(node => 
-                    node !==  e.target.getAttribute('id')
+                  appState.graph.distanceDensityCurrentlyClicked = appState.graph.distanceDensityCurrentlyClicked.filter(node =>
+                    node !== e.target.getAttribute('id')
                   )
                 }
                 else {
@@ -724,7 +735,7 @@ class RenderCircles extends React.Component {
               }}
               key={ci}
             />
-            <text className="scatterplot-label" 
+            <text className="scatterplot-label"
               x={this.props.scale.x(cluster[appState.graph.scatterplot.x])}
               y={this.props.scale.y(cluster[appState.graph.scatterplot.y])}>
               {cluster.name}
@@ -800,7 +811,7 @@ class RenderCircles extends React.Component {
             onMouseOver={(e) => {
               // const thenode = appState.graph.frame.getNode(e.target.dataset.id)
               const [sourceid, targetid] = e.target.getAttribute('id').split('👉')
-              
+
               e.target.style.fill = 'rgba(255, 1, 1, .9)'
               // const source = appState.graph.frame.getNode(sourceid)
               // const target = appState.graph.frame.getNode(targetid)

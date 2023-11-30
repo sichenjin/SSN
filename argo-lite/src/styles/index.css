@@ -892,3 +892,8 @@ padding: 5px !important;
 .maptooltip{
 text-align: left;
 }
+
+#scattertitle{
+  font-size: 12px !important;
+  font-weight: bold !important;
+}
