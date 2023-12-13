@@ -32,7 +32,7 @@ export default class GraphStore {
       // filter:{}
     },
     edges: {
-      color: "#7f7f7f",
+      color: "#AFAEAE",
       crossColor: "#0055aa"
     },
     scatterplot: {
