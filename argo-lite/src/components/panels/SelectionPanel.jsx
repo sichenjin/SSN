@@ -163,7 +163,7 @@ class SelectionPanel extends React.Component {
           </div>
         </SwitchCollapsable>
         <br/>
-        <Collapsable
+        {/* <Collapsable
                     name="Color By Distance"
                     isOpen={this.state.colorByDistance}
                     onToggle={() =>
@@ -189,7 +189,7 @@ class SelectionPanel extends React.Component {
                             </span>
                         </section>
                     </div>
-                </Collapsable>
+                </Collapsable> */}
                 <br />
         <SwitchCollapsable
           name="Override Label"

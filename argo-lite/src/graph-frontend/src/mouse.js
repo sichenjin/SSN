@@ -50,6 +50,9 @@ module.exports = function (self) {
       }
       // update position of nodes in selection
       self.updateSelection(mouseX, mouseY);
+      // console.log(self.selection)
+      // console.log(appState.graph.selectedNodes)
+      self.selection = self.uniqueArrayByAttribute(self.selection, 'id')
     }
 
     if (!self.mouseDown) {
@@ -202,11 +205,14 @@ module.exports = function (self) {
       //sets whether or not last click was 
       //double click or not
       // console.log(clickDifference)
-      if (clickDifference < 500) {
+      if (clickDifference < 1500) {
         self.doubleClicked = true;
+        console.log('doubleclicked')
+        // console.log(selection)
         
       } else {
         self.doubleClicked = false;
+        console.log(clickDifference)
       }
 
       
@@ -225,6 +231,7 @@ module.exports = function (self) {
     //     appState.graph.mapClicked = self.selection[0]
       
     // }
+    // console.log(selection)
 
       if (selection) {
         self.dragging = selection;
@@ -232,7 +239,12 @@ module.exports = function (self) {
         if (self.doubleClicked) {
           //passing in 'selection' node to pass information for node to pin
           // self.updateSelection(self.dragging.x, self.dragging.y, selection);
-
+          // if(appState.graph.selectedNodes.indexOf(selection)){
+          //   appState.graph.selectedNodes = appState.graph.selectedNodes.filter((obj) => obj.id !== selection.id);
+          // }else {
+          //   appState.graph.selectedNodes.push(selection)
+          // }
+          
         } else if (ctrl) {
           self.selection.splice(self.selection.indexOf(selection), 1);
           selection.renderData.isSelected = false;
@@ -257,6 +269,21 @@ module.exports = function (self) {
     }
   };
 
+  //unique by attribute for a list of dict
+  self.uniqueArrayByAttribute= function(arr, attribute) {
+    const uniqueMap = new Map();
+    const result = [];
+  
+    arr.forEach((item) => {
+      if (!uniqueMap.has(item[attribute])) {
+        uniqueMap.set(item[attribute], true);
+        result.push(item);
+      }
+    });
+  
+    return result;
+  };
+
   /**
    * Mouse up event that closes selection flags and emits selection to Argo
    */
@@ -273,19 +300,73 @@ module.exports = function (self) {
     
     self.updateSelectionOpacity();
 
-    if(self.selection.length == 1){
-      const thenode = self.selection[0]
-      self.highlightClickNode(thenode)
-      appState.graph.mapClicked = thenode
-      // self.selection = self.getNeighborNodesFromGraph(thenode);
-      appState.graph.selectedNodes = self.getNeighborNodesFromGraph(thenode);
+    if (selection && !self.selectBox.visible ) {  // when mouse up on one node while not dragging, the node is selected, add or remove the node to/from mapclickedarray and do highlight
+      const thenode = selection
+
+      //when double click, select / remove the single node from selection
+      if(self.doubleClicked){ 
+        if(appState.graph.selectedNodes.indexOf(thenode)>0){  //if in selection then remove
+          appState.graph.selectedNodes = appState.graph.selectedNodes.filter((obj)=> obj.id!==thenode.id )
+          //dehighlight self
+          self.selection = appState.graph.selectedNodes
+          self.colorNodeOpacity(thenode, 0.2);
+          self.decolorNodeEdge (thenode)
+        }else{
+          appState.graph.selectedNodes.push(thenode)
+          self.selection = appState.graph.selectedNodes
+          //dehighlight self
+          self.colorNodeOpacity(thenode, 1);
+          self.changeSingleNodeColorEdge(thenode)
+          
+        }
+      }
+
+
+      //click to add ego-centric network to selection 
+      if (appState.graph.mapClickedArray.indexOf(thenode) < 0) {
+
+
+        appState.graph.mapClickedArray.push(thenode)
+        const thenodeneightbor= self.getNeighborNodesFromGraph(thenode)
         
+        // thenodeneightbor.forEach((n)=>{
+        //   appState.graph.selectedNodes.push(n)
+        // })
+        appState.graph.selectedNodes = appState.graph.selectedNodes.concat(thenodeneightbor)
+        // appState.graph.selectedNodes.push(...thenodeneightbor)
+        appState.graph.selectedNodes = self.uniqueArrayByAttribute(appState.graph.selectedNodes, 'id');
       
+        self.selection = appState.graph.selectedNodes
+        
+        self.highlightClickArrayNode(appState.graph.mapClickedArray)
+      } else {
+        appState.graph.mapClickedArray = appState.graph.mapClickedArray.filter((obj) => obj.id !== thenode.id);
+        let thenodeneighbors = []
+        appState.graph.mapClickedArray.forEach((mapClicked) => {
+          const nodeneighbor = self.getNeighborNodesFromGraph(mapClicked)
+          nodeneighbor.forEach((n)=>{
+            thenodeneighbors.push(n)
+          })
+          // thenodeneighbors.push(...nodeneighbor)
+        })
+      
+        appState.graph.selectedNodes =  self.uniqueArrayByAttribute(thenodeneighbors, 'id')
+        self.selection = appState.graph.selectedNodes
+
+        self.highlightClickArrayNode(appState.graph.mapClickedArray)
+      }
+
+      
+
+
       // appState.graph.networkClicked = thenode
     }
 
     if(self.selection.length == 0){
       appState.graph.mapClicked = null
+      appState.graph.mapClickedArray = []
+      appState.graph.selectedNodes = []
+      self.selection = []
       appState.graph.areaSelected = undefined;
     }
 

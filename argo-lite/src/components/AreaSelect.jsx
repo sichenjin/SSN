@@ -5,6 +5,19 @@ import appState from '../stores';
 
 var def = require("../graph-frontend/src/imports").default;
 
+function uniqueArrayByAttribute(arr, attribute) {
+  const uniqueMap = new Map();
+  const result = [];
+
+  arr.forEach((item) => {
+    if (!uniqueMap.has(item[attribute])) {
+      uniqueMap.set(item[attribute], true);
+      result.push(item);
+    }
+  });
+
+  return result;
+}
 
 export default function AreaSelect() {
   const map = useMap();
@@ -22,9 +35,9 @@ export default function AreaSelect() {
         //   )
         //   node.renderData.draw_object.children[0].visible = false
         // })
-        appState.graph.frame.selection = []
-        appState.graph.selectedNodes = []
-        appState.graph.edgeselection = []
+        // appState.graph.frame.selection = []
+        // appState.graph.selectedNodes = []
+        // appState.graph.edgeselection = []
         appState.graph.areaSelected = undefined;
 
 
@@ -70,9 +83,17 @@ export default function AreaSelect() {
       // }
       // appState.graph.selectedNodes = []
       if (selectionNode.length === 0) return 
-      appState.graph.selectedNodes = selectionNode
-      appState.graph.frame.selection = selectionNode
+      appState.graph.selectedNodes.push(...selectionNode)
+      appState.graph.frame.selection.push(...selectionNode)
+      appState.graph.selectedNodes = uniqueArrayByAttribute(appState.graph.selectedNodes, 'id');
+      appState.graph.frame.selection = uniqueArrayByAttribute(appState.graph.frame.selection, 'id');
       appState.graph.frame.updateSelectionOutOpacity();
+      appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+      //clear previsou selection
+      // appState.graph.selectedNodes = selectionNode
+      // appState.graph.frame.selection = selectionNode
+      // appState.graph.frame.updateSelectionOutOpacity();
+
       appState.graph.areaSelected = true;
       
       // console.log(appState.graph.selectedNodes)

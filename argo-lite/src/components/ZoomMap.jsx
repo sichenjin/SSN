@@ -83,6 +83,7 @@ export function MapClick() {
         appState.useToolbartoSelect = false
       } else {
         appState.graph.frame.selection = []
+        appState.graph.mapClickedArray =[]
         appState.graph.selectedNodes = []
         appState.graph.edgeselection = []
         appState.graph.mapClicked = null

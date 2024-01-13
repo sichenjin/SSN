@@ -91,6 +91,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.convexhullby = "NULL"
   appState.graph.groupby = "NULL"
   appState.graph.mapClicked = undefined;
+  appState.graph.mapClickedArray = [];
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
   if(appState.graph.frame) {appState.graph.frame.selection = [];}

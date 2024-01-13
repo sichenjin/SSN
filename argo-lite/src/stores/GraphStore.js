@@ -84,6 +84,7 @@ export default class GraphStore {
 
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
+  @observable mapClickedArray = [];
   @observable areaSelected = undefined;
   @observable clearBrush = false;
 

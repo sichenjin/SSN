@@ -29,7 +29,7 @@ module.exports = function (self) {
     const tos = [];
     for (var i = 0; i < self.selection.length; i++) {
       for (var j = 0; j < self.selection[i].links.length; j++) {
-        if(!self.selection[i]) continue
+        if (!self.selection[i]) continue
         froms.push(self.selection[i].links[j].fromId);
         tos.push(self.selection[i].links[j].toId);
       }
@@ -45,19 +45,19 @@ module.exports = function (self) {
     }
   };
 
- /**
-   *  Highlight edges and nodes on the path 
-   */
+  /**
+    *  Highlight edges and nodes on the path 
+    */
   self.highlightPathEdgeNode = function (pathnode) {
 
-    
-    if(pathnode.length==0){
+
+    if (pathnode.length == 0) {
       //no path selected 
       self.graph.forEachNode(function (n) {
         self.colorNodeOpacity(n, 1);
       })
       self.highlightAllEdges()
-      return 
+      return
     }
     //first dehighlight all nodes 
     self.graph.forEachNode(function (n) {
@@ -65,20 +65,20 @@ module.exports = function (self) {
       self.colorNodeOpacity(n, 0.2);
     })
 
-    pathnode.forEach((node)=>{
-     self.colorNodeOpacity(node, 1);
+    pathnode.forEach((node) => {
+      self.colorNodeOpacity(node, 1);
     })
     self.highlightNode(pathnode[0], true)
     self.highlightNode(pathnode[pathnode.length - 1], true)
     // pathnode[0].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
     // pathnode[pathnode.length - 1].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
-    
+
 
     //highlight edges
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
-    
+
     //first dehighlight all edges
     self.lineIndices.forEach(function (link) {
       link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
@@ -96,9 +96,9 @@ module.exports = function (self) {
     //     }
     //   })
     // } 
-    const pathnnodeid = pathnode.map(p=>p.id)
+    const pathnnodeid = pathnode.map(p => p.id)
     self.lineIndices.forEach(function (link) {
-      if ((( pathnnodeid.indexOf(link.source.id)!==-1 && pathnnodeid.indexOf(link.target.id )!==-1)) || (( pathnnodeid.indexOf(link.target.id)!==-1 && pathnnodeid.indexOf(link.source.id )!==-1)))  {
+      if (((pathnnodeid.indexOf(link.source.id) !== -1 && pathnnodeid.indexOf(link.target.id) !== -1)) || ((pathnnodeid.indexOf(link.target.id) !== -1 && pathnnodeid.indexOf(link.source.id) !== -1))) {
         link.linecolor.r = red;
         link.linecolor.g = blue;
         link.linecolor.b = green;
@@ -162,6 +162,97 @@ module.exports = function (self) {
   // };
 
 
+  self.colorNodeArrayEdge = function (nodearray) {
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    if (nodearray.length < 1) {  //highlight all the edges 
+
+
+      self.lineIndices.forEach(function (link) {
+
+        link.linecolor.r = red;
+        link.linecolor.g = blue;
+        link.linecolor.b = green;
+      })
+
+    } else {                     //only highlight neighbor edges of nodes in the array 
+      //first dehighlight all edges
+      self.lineIndices.forEach(function (link) {
+        link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+        link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+        link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      })
+      //then highlight neighbor edges of nodes in the array
+      nodearray.forEach(node => {
+        self.lineIndices.forEach(function (link) {
+          if (link.source.id == node.id || link.target.id == node.id) {
+            link.linecolor.r = red;
+            link.linecolor.g = blue;
+            link.linecolor.b = green;
+          }
+        })
+      })
+
+
+
+    }
+
+  }
+
+  self.decolorNodeEdge = function (node) {
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    if (!node) return;
+    else {                     //dehighlight any edges linkto/from the node
+      //first dehighlight all edges
+      self.lineIndices.forEach(function (link) {
+        if (link.source.id == node.id || link.target.id == node.id) {
+          link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+          link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+          link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        }
+      })
+
+
+
+
+    }
+
+
+  }
+
+
+  self.changeSingleNodeColorEdge = function (node) {
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    if (!node) return;
+    else {                     //only highlight the node's edges
+      // //first dehighlight all edges
+      // self.lineIndices.forEach(function (link) {
+      //   link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+      //   link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      //   link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      // })
+      //don't dehilight only do highlight the node's edges
+      self.lineIndices.forEach(function (link) {
+        if (link.source.id == node.id || link.target.id == node.id) {
+          link.linecolor.r = red;
+          link.linecolor.g = blue;
+          link.linecolor.b = green;
+        }
+      })
+
+
+    }
+
+
+  }
+
+
+  // highlight only the node's neighbor edges in the whole sociogram
   self.colorNodeEdge = function (node) {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
@@ -221,10 +312,10 @@ module.exports = function (self) {
     //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
     //   })
 
-      // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
-      // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
-      // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
-    }
+    // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
+    // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
+    // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
+  }
 
   // };
 

@@ -544,22 +544,6 @@ class RenderCircles extends React.Component {
           stroke: false,
           fillOpacity: 0.8
         }
-      } else if (appState.graph.currentlyHovered) {
-        if (node.id === appState.graph.currentlyHovered.id) {
-          return {
-            fill: node.renderData.color,
-            zIndex: "10000",
-            stroke: def.NODE_HIGHLIGHT,
-            fillOpacity: 0.8
-          }
-        } else {
-          return {
-            fill: node.renderData.color,
-            zIndex: "0",
-            stroke: false,
-            fillOpacity: 0.1
-          }
-        }
       } else if (appState.graph.selectedNodes.length > 0) {
         if (appState.graph.selectedNodes.indexOf(node) == -1) {
           return {
@@ -576,7 +560,23 @@ class RenderCircles extends React.Component {
             fillOpacity: 0.8
           }
         }
-      }
+      }else if (appState.graph.currentlyHovered) {
+        if (node.id === appState.graph.currentlyHovered.id) {
+          return {
+            fill: node.renderData.color,
+            zIndex: "10000",
+            stroke: def.NODE_HIGHLIGHT,
+            fillOpacity: 0.8
+          }
+        } else {
+          return {
+            fill: node.renderData.color,
+            zIndex: "0",
+            stroke: false,
+            fillOpacity: 0.1
+          }
+        }
+      } 
     } else if (((appState.graph.scatterplot.y == 'network density') && (appState.graph.scatterplot.x == 'standard distance')) ||
       ((appState.graph.scatterplot.y == 'standard distance') && (appState.graph.scatterplot.x == 'network density'))) {  // density distance node style
 

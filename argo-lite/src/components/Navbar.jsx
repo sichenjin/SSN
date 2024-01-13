@@ -538,6 +538,7 @@ class RegularNavbar extends React.Component {
               <div className="pt-button-group">
               <a className="pt-button pt-icon-refresh"  role="button" onClick={() => {
                 appState.graph.mapClicked = undefined;
+                appState.graph.mapClickedArray = [];
                 appState.graph.areaSelected = undefined;
                 appState.graph.selectedNodes = [];
                 appState.graph.frame.selection = []

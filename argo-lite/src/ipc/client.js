@@ -360,6 +360,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.convexhullby = "NULL"
   appState.graph.groupby = "NULL"
   appState.graph.mapClicked = undefined;
+  appState.graph.mapClickedArray = [];
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
   appState.graph.filter = {}

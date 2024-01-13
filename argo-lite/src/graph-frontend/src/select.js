@@ -419,8 +419,62 @@ module.exports = function (self) {
     }
   }
 
+  //highlight clicked nodes and their neighbors
+  self.highlightClickArrayNode = function (nodearray) {
+    if (nodearray.length>0) {
+      self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
+        self.colorNodeOpacity(n, 0.2);
 
-  //highlight clicked nodes and its neighbor edges only
+      });
+      //   // self.colorNodeEdge(null);    // this is to highlight all 
+
+      //   //fisrt dehighlight all the edges
+      //   self.lineIndices.forEach(function (link) {
+      //     link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+      //     link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      //   })  
+
+      //   //hilight neighbor edges
+      //   let red = new THREE.Color(appState.graph.edges.color).r;
+      //   let blue = new THREE.Color(appState.graph.edges.color).g;
+      //   let green = new THREE.Color(appState.graph.edges.color).b;
+      //   const withinEdges = node.linkObjs
+
+      //   for (var i = 0; i < withinEdges.length; i++) {
+      //     withinEdges[i].linecolor.r = red;
+      //     withinEdges[i].linecolor.g = blue;
+      //     withinEdges[i].linecolor.b = green;
+      //   }
+      //   self.arrow.material.color.setRGB(red, blue, green);
+
+      //highlight nodes 
+      nodearray.forEach(node=>{
+        const neighborNodes = self.getNeighborNodesFromGraph(node)
+      for (var i = 0; i < neighborNodes.length; i++) {
+        self.colorNodeOpacity(neighborNodes[i], 1);
+      }
+      self.colorNodeArrayEdge(nodearray);
+      })
+      
+
+      // } else {        //when no nodes are given, all 1 opacity 
+      //   self.graph.forEachNode(n => {
+      //     self.colorNodeOpacity(n, 1);
+
+      //   });
+      //   self.colorNodeEdge(null);
+      // }
+
+
+      // self.highlightNode(node, true);
+      // node.renderData.textHolder.children[0].element.hideme = false;
+      
+    }
+  }
+
+
+  //highlight a single clicked node and its neighbor edges only
   self.highlightClickNode = function (node) {
     if (node) {
       self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
