@@ -87,7 +87,12 @@ export default function AreaSelect() {
       appState.graph.frame.selection.push(...selectionNode)
       appState.graph.selectedNodes = uniqueArrayByAttribute(appState.graph.selectedNodes, 'id');
       appState.graph.frame.selection = uniqueArrayByAttribute(appState.graph.frame.selection, 'id');
-      appState.graph.frame.updateSelectionOutOpacity();
+      if(appState.graph.pickUpAlter){
+        appState.graph.frame.updateSelectionOutOpacity();
+      }else{
+        appState.graph.frame.updateSelectionOpacity();
+      }
+      
       appState.graph.watchAppearance = appState.graph.watchAppearance + 1
       //clear previsou selection
       // appState.graph.selectedNodes = selectionNode

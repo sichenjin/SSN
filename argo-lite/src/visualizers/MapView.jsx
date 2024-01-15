@@ -100,9 +100,9 @@ class MapView extends React.Component {
     var edgeselectionID = []
     // if (appState.graph.selectedNodes.length > 0) {
 
-      edgeselectionID = appState.graph.edgeselection.map(function (edge) {
-        return `${edge.source.id}👉 ${edge.target.id}`
-      })
+    edgeselectionID = appState.graph.edgeselection.map(function (edge) {
+      return `${edge.source.id}👉 ${edge.target.id}`
+    })
     // }
     // console.log(edgeselectionID)
     return edgeselectionID
@@ -207,17 +207,17 @@ class MapView extends React.Component {
   uniqueArrayByAttribute(arr, attribute) {
     const uniqueMap = new Map();
     const result = [];
-  
+
     arr.forEach((item) => {
       if (!uniqueMap.has(item[attribute])) {
         uniqueMap.set(item[attribute], true);
         result.push(item);
       }
     });
-  
+
     return result;
   }
-  
+
 
   setEdgePathOption = (edge) => {
     if (!appState.graph.mapEdgeShow) {
@@ -243,9 +243,10 @@ class MapView extends React.Component {
 
 
     }
-    if (appState.graph.mapClickedArray.length>0) {
-      const mapClickedArraryID = appState.graph.mapClickedArray.map(n=>n.id)
-      if ((mapClickedArraryID.indexOf(edge.fromId) !== -1) || (mapClickedArraryID.indexOf(edge.toId)!== -1 )) {
+
+    if (appState.graph.mapClickedArray.length > 0) {
+      const mapClickedArraryID = appState.graph.mapClickedArray.map(n => n.id)
+      if ((mapClickedArraryID.indexOf(edge.fromId) !== -1) || (mapClickedArraryID.indexOf(edge.toId) !== -1)) {
         return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
       } else {
         return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
@@ -261,28 +262,37 @@ class MapView extends React.Component {
     // }
 
     //highlight branching out edges as well when select from map 
-    if(appState.graph.areaSelected && appState.graph.selectedNodes.length > 0){
-      
-      if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
-        return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
-      } else {
-        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+    if (appState.graph.areaSelected && appState.graph.selectedNodes.length > 0) {
+      if(appState.graph.pickUpAlter){
+        if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+          return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+        } else {
+          return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+        }
+      }else{
+        if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+          return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+        } else {
+          return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+        }
       }
+
+      
     }
 
-    if(appState.graph.degreeselection.length>0){
-      const degreeselectionID = appState.graph.degreeselection.map(n=>n.id)
+    if (appState.graph.degreeselection.length > 0) {
+      const degreeselectionID = appState.graph.degreeselection.map(n => n.id)
       if (degreeselectionID.indexOf(edge.fromId) !== -1 && degreeselectionID.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
       } else {
 
-        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0'}
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
     }
 
-    if (appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) {
+    if (appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length > 0) {
 
-      const pathnodeid = appState.graph.pathHovered["pathnode"].map(p=>p.id)
+      const pathnodeid = appState.graph.pathHovered["pathnode"].map(p => p.id)
       const pathnodeall = [...appState.graph.pathHovered["sourceid"], ...appState.graph.pathHovered["targetid"], ...pathnodeid];
       if (pathnodeall.indexOf(edge.fromId) !== -1 && pathnodeall.indexOf(edge.toId) !== -1) {
         return { color: appState.graph.edges.crossColor, weight: '1.1', opacity: '1' }
@@ -298,25 +308,36 @@ class MapView extends React.Component {
     }
 
 
-    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked ) {
+    if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked) {
       return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
 
       // { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
     }
 
-    
+
 
     if (appState.graph.selectedNodes.length > 0) {
-      //highlight within selection edges , &&
-      if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
-        return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
-      } else {
-        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
-      }
 
+      //highlight within selection edges , &&
+      if(appState.graph.pickUpAlter){
+        if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+          return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+        } else {
+          return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+        }
+  
+      }else{
+        if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
+          return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+        } else {
+          return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+        }
+  
+      }
+     
 
       //else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
-        // return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
+      // return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
       // } 
     }
 
@@ -332,7 +353,7 @@ class MapView extends React.Component {
       }
     }
 
-   
+
 
 
 
@@ -356,16 +377,20 @@ class MapView extends React.Component {
     console.log(appState.graph.watchAppearance)
     // appState.graph.frame.paused = true;
 
-    if(appState.graph.degreeselection.length>0){
+    if (appState.graph.degreeselection.length > 0) {
       if (appState.graph.degreeselection.indexOf(node) == -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+        if (appState.graph.backNodeShow) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.4, stroke: false, zIndex: 'auto' }
+        } else {
+          return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+        }
       } else {
 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       }
     }
 
-    if(appState.graph.degreebrushed && appState.graph.degreeselection.length==0){
+    if (appState.graph.degreebrushed && appState.graph.degreeselection.length == 0) {
       return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
     }
 
@@ -378,23 +403,43 @@ class MapView extends React.Component {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       }
     }
+
+
     if (!appState.graph.currentlyHovered && appState.graph.selectedNodes.length == 0 && !appState.graph.mapClicked && !appState.graph.pathHovered) {
       return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, zIndex: 'auto' }
     }
 
     if (appState.graph.selectedNodes.length > 0) {
-      const neighborIDs = appState.graph.selectedNeighborIDs
-      if (this.nodesSelectedID.indexOf(node.id) !== -1) {
-        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+      if (appState.graph.pickUpAlter) {
+        const neighborIDs = appState.graph.selectedNeighborIDs
+        if (this.nodesSelectedID.indexOf(node.id) !== -1) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
 
-      } else if(neighborIDs.indexOf(node.id) !== -1){
-        return { fillColor: node.renderData.color, fillOpacity: 0.5, stroke: false, color: 'orange', zIndex: '10000' }
+        } else if (neighborIDs.indexOf(node.id) !== -1) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.5, stroke: false, color: 'orange', zIndex: '10000' }
 
+        }
+        else {
+          if (appState.graph.backNodeShow) {
+            return { fillColor: node.renderData.color, fillOpacity: 0.4, stroke: false, zIndex: 'auto' }
+          } else {
+            return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+          }
+        }
+      } else {
+        if (this.nodesSelectedID.indexOf(node.id) !== -1) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+
+        }
+        else {
+          if (appState.graph.backNodeShow) {
+            return { fillColor: node.renderData.color, fillOpacity: 0.4, stroke: false, zIndex: 'auto' }
+          } else {
+            return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+          }
+        }
       }
-      else {
-        return { fillColor: node.renderData.color, fillOpacity: 0.03, stroke: false, zIndex: 'auto' }
 
-      }
     }
 
 
@@ -410,7 +455,7 @@ class MapView extends React.Component {
       }
     }
 
-    
+
 
     if (appState.graph.mapClicked) {
       // currently node
@@ -419,7 +464,12 @@ class MapView extends React.Component {
       } else if (this.neighborNodesID.indexOf(node.id) !== -1) { // neighbors 
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       } else { //others 
-        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+        if (appState.graph.backNodeShow) {
+          return { fillColor: node.renderData.color, fillOpacity: 0.4, stroke: false, zIndex: 'auto' }
+        } else {
+          return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+        }
+
       }
     }
 
@@ -435,23 +485,23 @@ class MapView extends React.Component {
       //   return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
       // }
 
-      if (  appState.graph.pathHovered["sourceid"].indexOf(node.id) !== -1  || appState.graph.pathHovered["targetid"].indexOf(node.id) !== -1) {
-          return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'green', zIndex: '10000' }
-        }
-        else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
-          return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
-        } else {
-  
-          return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
-        }
+      if (appState.graph.pathHovered["sourceid"].indexOf(node.id) !== -1 || appState.graph.pathHovered["targetid"].indexOf(node.id) !== -1) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: true, color: 'green', zIndex: '10000' }
+      }
+      else if (appState.graph.pathHovered["pathnode"].indexOf(node) == -1) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.1, stroke: false, zIndex: 'auto' }
+      } else {
 
-      
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+      }
+
+
     }
 
 
 
     // select area highlight 
-  
+
     else {
       return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
     }
@@ -497,11 +547,11 @@ class MapView extends React.Component {
   onCreate = (e) => {
     console.log(e);
   }
-  
+
 
   render() {
 
-    
+
 
     return <div id="map"
       style={{
@@ -522,7 +572,7 @@ class MapView extends React.Component {
         zoom={4}
         center={[37.5, -97.5]}
       >
-        
+
         <LayersControl position="topright">
           <LayersControl.BaseLayer name="OpenStreetMap" checked="true">
             <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=8f6a7e18-709d-4fe8-9dc9-fcce7bfa30d8" />
@@ -553,22 +603,22 @@ class MapView extends React.Component {
             <GeoJSON data={congressionjsonfile} />
           </LayersControl.Overlay>
         </LayersControl>
-        
+
 
         {/* <ReactLeafletToolbar /> */}
-        
+
         <AreaSelect />
         {(appState.graph.hasGraph && (!appState.import.loading)) ? (
-                    <ZoomMap /> 
-                  ) : (
-                    <div></div>
-                  )}
+          <ZoomMap />
+        ) : (
+          <div></div>
+        )}
         <MapClick />
         <DetectKeyPress />
 
 
         <Pane name="edgepane" style={{ zIndex: 10000 }}>
-            {/* <Curve path={["M", [50, 14], "Q", [53, 20], [49, 25]]}
+          {/* <Curve path={["M", [50, 14], "Q", [53, 20], [49, 25]]}
           options={{color:'red',fill:false}}
             /> */}
           {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined && appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
@@ -586,10 +636,10 @@ class MapView extends React.Component {
                 // //   }}}
                 // />
                 <Curve path={["M", edgepositions[0], "T", edgepositions[1]]}
-          options={this.setEdgePathOption(edge)}
-            />
-                
-                
+                  options={this.setEdgePathOption(edge)}
+                />
+
+
 
               );
 
@@ -636,28 +686,28 @@ class MapView extends React.Component {
                       e.originalEvent.view.L.DomEvent.stopPropagation(e)
                       const thenode = e.target.options.data
                       if (appState.graph.mapClickedArray.indexOf(thenode) == -1) { //no clicked circle before 
-                        
-                        appState.graph.mapClickedArray.push (thenode)  //control map update 
+
+                        appState.graph.mapClickedArray.push(thenode)  //control map update 
                         appState.graph.currentlyHovered = null
                         appState.graph.selectedNodes.push(...appState.graph.frame.getNeighborNodesFromGraph(thenode))
                         appState.graph.frame.selection.push(...appState.graph.frame.getNeighborNodesFromGraph(thenode))
                         appState.graph.selectedNodes = this.uniqueArrayByAttribute(appState.graph.selectedNodes, 'id');
                         appState.graph.frame.selection = this.uniqueArrayByAttribute(appState.graph.frame.selection, 'id');
-                      
+
                         // appState.graph.frame.highlightNode(thenode, true);   //control socio update 
                         // appState.graph.frame.highlightEdges(thenode, true);
                         // appState.graph.frame.selection = appState.graph.frame.getNeighborNodesFromGraph(thenode);
                         // appState.graph.selectedNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode);
                         // appState.graph.frame.highlightClickNode(thenode);
-                        
+
                       } else {  // click again to unselect 
                         appState.graph.mapClickedArray = appState.graph.mapClickedArray.filter((obj) => obj.id !== thenode.id);
                         let thenodeneighbors = []
-                        appState.graph.mapClickedArray.forEach((mapClicked)=>{
-                          thenodeneighbors.push(... appState.graph.frame.getNeighborNodesFromGraph(mapClicked))
+                        appState.graph.mapClickedArray.forEach((mapClicked) => {
+                          thenodeneighbors.push(...appState.graph.frame.getNeighborNodesFromGraph(mapClicked))
                         })
-                        appState.graph.frame.selection = appState.graph.frame.selection.filter((obj)=> thenodeneighbors.indexOf(obj)>0)
-                        appState.graph.selectedNodes =appState.graph.selectedNodes.filter((obj)=> thenodeneighbors.indexOf(obj)>0)
+                        appState.graph.frame.selection = appState.graph.frame.selection.filter((obj) => thenodeneighbors.indexOf(obj) > 0)
+                        appState.graph.selectedNodes = appState.graph.selectedNodes.filter((obj) => thenodeneighbors.indexOf(obj) > 0)
                         // appState.graph.edgeselection = []
                       }
                       appState.graph.frame.highlightClickArrayNode(appState.graph.mapClickedArray)
@@ -666,7 +716,7 @@ class MapView extends React.Component {
                     mouseover: (e) => {
                       //when selection or mapclick, then freeze, no hover event 
                       if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
-                      if(appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) return;
+                      if (appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length > 0) return;
                       // var currentNode = e.target.options.data
                       // appState.graph.selectedNodes = []
                       // appState.graph.frame.selection = []
@@ -690,7 +740,7 @@ class MapView extends React.Component {
                     mouseout: (e) => {
                       //when selection or mapclick, then freeze, no hover event 
                       if (appState.graph.mapClicked || appState.graph.frame.selection.length !== 0) return;
-                      if(appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length>0) return;
+                      if (appState.graph.pathHovered && appState.graph.pathHovered.pathnode.length > 0) return;
                       appState.graph.frame.graph.forEachNode(function (n) {
                         // if (n !== appState.graph.mapClicked) {
                         appState.graph.frame.colorNodeOpacity(n, 1);
@@ -725,11 +775,11 @@ class MapView extends React.Component {
                 >
                   {(appState.graph.frame && node.renderData.textHolder.children[0].element.override) ?
                     <Tooltip
-                    style = {{textAlign: "left"}}
+                      style={{ textAlign: "left" }}
                       width={node.renderData.textHolder.children[0].element.children[0].style.width}
                       fontSize={node.renderData.textHolder.children[0].element.children[0].style.mapfontSize}
-                      className = {`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> : 
-                      <Tooltip   fontSize={node.renderData.textHolder.children[0].element.children[0].style.mapfontSize} style = {{textAlign: "left"}} className={`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
+                      className={`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={1} permanent>{node.renderData.label}</Tooltip> :
+                    <Tooltip fontSize={node.renderData.textHolder.children[0].element.children[0].style.mapfontSize} style={{ textAlign: "left" }} className={`maptooltip maptooltip_${node.id}`} direction="right" offset={[0, 0]} opacity={0} permanent>{node.renderData.label}</Tooltip>}
 
                 </CircleMarker>
               );
@@ -741,41 +791,43 @@ class MapView extends React.Component {
           }
         </Pane>
         <div>
-        <Switch style={{ position: 'fixed', top: '5vh', left: '97vw', zIndex: '1000' }}
-          defaultChecked={appState.graph.mapEdgeShow}
-          // checked={!node.isHidden}
-          onChange={(value) => {
-            appState.graph.mapEdgeShow = value.target.checked
+          <Switch style={{ position: 'fixed', top: '5vh', left: '97vw', zIndex: '1000' }}
+            defaultChecked={appState.graph.mapEdgeShow}
+            // checked={!node.isHidden}
+            onChange={(value) => {
+              appState.graph.mapEdgeShow = value.target.checked
 
-          }}
-        />
-        <span style={{ fontSize: '12px', position: 'fixed', top: '5vh', right: '4vw', zIndex: '1000' }}> Show Edges</span>
+            }}
+          />
+          <span style={{ fontSize: '12px', position: 'fixed', top: '5vh', right: '4vw', zIndex: '1000' }}> Show Edges</span>
 
 
-        <Switch style={{ position: 'fixed', top: '8vh', left: '97vw', zIndex: '1000' }}
-          defaultChecked={appState.graph.convexPolygonsShow}
-          // checked={!node.isHidden}
-          onChange={(value) => {
-            appState.graph.convexPolygonsShow = value.target.checked
+          <Switch style={{ position: 'fixed', top: '8vh', left: '97vw', zIndex: '1000' }}
+            defaultChecked={appState.graph.convexPolygonsShow}
+            // checked={!node.isHidden}
+            onChange={(value) => {
+              appState.graph.convexPolygonsShow = value.target.checked
 
-          }}
-        />
-        <span style={{ fontSize: '12px', position: 'fixed', top: '8vh', right: '4vw', zIndex: '1000' }}> Show Community Convex Hull</span>
+            }}
+          />
+          <span style={{ fontSize: '12px', position: 'fixed', top: '8vh', right: '4vw', zIndex: '1000' }}> Show Community Convex Hull</span>
 
-        <Switch style={{ position: 'fixed', top: '11vh', left: '97vw', zIndex: '1000' }}
-          defaultChecked={appState.graph.autoZoom}
-          // checked={!node.isHidden}
-          onChange={(value) => {
-            appState.graph.autoZoom = value.target.checked
+          <Switch style={{ position: 'fixed', top: '11vh', left: '97vw', zIndex: '1000' }}
+            defaultChecked={appState.graph.autoZoom}
+            // checked={!node.isHidden}
+            onChange={(value) => {
+              appState.graph.autoZoom = value.target.checked
 
-          }}
-        />
-        <span style={{ fontSize: '12px', position: 'fixed', top: '11vh', right: '4vw', zIndex: '1000' }}> Automatic Zoom</span>
-        
-        <span style={{ fontSize: '12px', position: 'fixed', top: '14vh', right: '1vw', zIndex: '1000' }}> press CTRL key to select nodes on the map</span>
+            }}
+          />
+          <span style={{ fontSize: '12px', position: 'fixed', top: '11vh', right: '4vw', zIndex: '1000' }}> Automatic Zoom</span>
+
+          <span style={{ fontSize: '12px', position: 'fixed', top: '14vh', right: '1vw', zIndex: '1000' }}> press CTRL key to select nodes on the map</span>
+
+
 
         </div>
-        
+
 
 
         {/* {(appState.graph.convexPolygonsShow && this.modularity) ? <Tag className="modularity-tag" style={{ position: 'absolute', top: '55vh', left: '70vw', zIndex: '1000' }}>{"Q value: " + parseFloat(this.modularity).toFixed(3)}</Tag> : null} */}
@@ -787,7 +839,7 @@ class MapView extends React.Component {
 
 
       </MapContainer>
-      
+
     </div>
   }
 }

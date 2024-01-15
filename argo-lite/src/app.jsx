@@ -21,7 +21,7 @@ import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
 // import ScatterPlot from "./components/panels/ScatterPlot"
 import SelectionDetail from "./components/panels/SelectionDetail";
 // import Sidebar from "./components/Sidebar"
-import { Tag } from "@blueprintjs/core";
+import { Tag , Switch} from "@blueprintjs/core";
 // import GraphView from "./components/GraphView";
 
 import keydown, { Keys } from "react-keydown";
@@ -208,29 +208,68 @@ class App extends React.Component {
     return (
       <div className={classnames({
         "app-wrapper": true,
-      })} style={{display: "flex"}}>
+      })} style={{ display: "flex" }}>
         <div>
-        <NavbarSelector />
+          <NavbarSelector />
         </div>
-        <div class="container" style={{paddingTop:"5vh", maxWidth:"100vw", height:"100%"}}>
-          <div class="container" style={{height:"100%"}}>
+        <div class="container" style={{ paddingTop: "5vh", maxWidth: "100vw", height: "100%" }}>
+          <div class="container" style={{ height: "100%" }}>
             <Sidebar />
             {/* {appState.graph.hasGraph && <ComDetection />} */}
             <div class="outer-container">
               <div class="container-up container">
                 <div class="container__left">
-                    {appState.graph.hasGraph && <Tag className="network-tag">Network</Tag>}
-                    <main className="main">
-                      {(appState.graph.hasGraph && (!appState.import.loading)) ? (
-                        <ThreeJSVis />
-                      ) : (
-                        <WorkspaceView />
-                      )}
-                    </main>
-                    {/* {appState.graph.hasGraph && <FloatingCards />} */}
-                    <Dialogs />
+                  {appState.graph.hasGraph && <Tag className="network-tag">Network</Tag>}
+                  <main className="main">
+                    {(appState.graph.hasGraph && (!appState.import.loading)) ? (
+                      <ThreeJSVis />
+                    ) : (
+                      <WorkspaceView />
+                    )}
+                  </main>
+                  {/* {appState.graph.hasGraph && <FloatingCards />} */}
+                  <Dialogs />
                 </div>
                 <div class="resizer" id="dragMe"></div>
+                <div> {appState.graph.selectedNodes.length === 0 && appState.graph.degreeselection.length===0 ? (
+                  <div></div>
+                ) : (
+                  
+                  <div>
+                    <Switch style={{ position: 'fixed', top: '54vh', left: '97vw', zIndex: '1000' }}
+                      defaultChecked={appState.graph.backNodeShow}
+                      // checked={!node.isHidden}
+                      onChange={(value) => {
+                        appState.graph.backNodeShow = value.target.checked
+
+                      }}
+                    />
+                    <span style={{ fontSize: '12px', position: 'fixed', top: '54vh', right: '4vw', zIndex: '1000' }}> Show Background Nodes</span>
+                  </div>
+                )}
+                </div>
+                <div> {appState.graph.selectedNodes.length === 0 ? (
+                  <div></div>
+                ) : (
+                  
+                  <div>
+                    <Switch style={{ position: 'fixed', top: '54vh', right: '47vw', zIndex: '1000' }}
+                      defaultChecked={appState.graph.pickUpAlter}
+                      // checked={!node.isHidden}
+                      onChange={(value) => {
+                        appState.graph.pickUpAlter = value.target.checked
+                        if(appState.graph.pickUpAlter){
+                          appState.graph.frame.updateSelectionOutOpacity();
+                        }else{
+                          appState.graph.frame.updateSelectionOpacity();
+                        }
+
+                      }}
+                    />
+                    <span style={{ fontSize: '12px', position: 'fixed', top: '54vh', right: '40vw', zIndex: '1000' }}> Pick Up Alters</span>
+                  </div>
+                )}
+                </div>
                 <div class="container__right">
                   {(appState.graph.hasGraph && (!appState.import.loading)) ? (
                     <MapView />
@@ -243,12 +282,12 @@ class App extends React.Component {
               <div class="resizer-up" id="dragMeUp"></div>
               <div class="container-down container" id="scatter">
                 <div style={{
-                  display: "flex", height: "100%",width: '40vw'
+                  display: "flex", height: "100%", width: '40vw'
                   // border:'#C0C0C0',
                   // borderStyle:'solid',
                   // flex:"1 1 50%"
                 }}>
-                  {appState.graph.frame &&  <SelectionDetail />}
+                  {appState.graph.frame && <SelectionDetail />}
                 </div>
                 <div style={{
                   display: "flex", height: "100%",
@@ -258,12 +297,12 @@ class App extends React.Component {
                 }}>
                   {/* {appState.graph.hasGraph && <GraphView />} */}
                   <div id="scatter-plot">
-                    {appState.graph.hasGraph && appState.graph.frame  && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
+                    {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
                   </div>
                 </div>
               </div>
             </div>
-            
+
           </div>
         </div>
       </div>

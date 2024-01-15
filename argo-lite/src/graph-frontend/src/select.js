@@ -395,6 +395,16 @@ module.exports = function (self) {
         self.arrow.material.color.setRGB(red, blue, green);
 
 
+        const allneighbors = withinEdges.map((e)=>e.source).concat(withinEdges.map((e)=>e.target))
+        for (var i = 0; i < allneighbors.length; i++) {
+          // slightly highlight neighbors 
+          // const neighborNodes = self.getNeighborNodesFromGraph(self.selection[i])
+          // for (var i = 0; i < neighborNodes.length; i++) {
+          //   self.colorNodeOpacity(neighborNodes[i], 0.5);
+          // }
+          //fully highlight nodes 
+          self.colorNodeOpacity(allneighbors[i], 0.5);
+        }
 
 
         

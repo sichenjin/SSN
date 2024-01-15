@@ -74,6 +74,9 @@ export default class GraphStore {
   @observable convexPolygonsShow = true;
 
   @observable mapEdgeShow = true;
+  @observable outEdgeShow = true;
+  @observable backNodeShow = true;
+  @observable pickUpAlter = true;
   @observable autoZoom = false;
   @observable firstload =true;
 

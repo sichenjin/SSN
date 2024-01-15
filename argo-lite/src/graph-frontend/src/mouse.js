@@ -298,7 +298,11 @@ module.exports = function (self) {
     appState.graph.degreeselection = []
     appState.graph.degreebrushed = false
     
-    self.updateSelectionOpacity();
+    if(appState.graph.pickUpAlter){
+      self.updateSelectionOutOpacity();
+    }else{
+      self.updateSelectionOpacity();
+    }
 
     if (selection && !self.selectBox.visible ) {  // when mouse up on one node while not dragging, the node is selected, add or remove the node to/from mapclickedarray and do highlight
       const thenode = selection
