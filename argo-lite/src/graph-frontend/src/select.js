@@ -50,6 +50,21 @@ module.exports = function (self) {
     return withinEdges;
   }
 
+  // //return all the edges within and out the selected nodes 
+  // self.getEdgeOfCommonSetSelection = function (selection, commonnodes) {
+  //   const withinoutEdges = []
+  //   for (var i = 0; i < selection.length; i++) {
+  //     if (selection[i] && selection[i].linkObjs) {
+  //       selection[i].linkObjs.forEach(function (link) {
+  //         if ((selection.indexOf(link.source) !== -1 || selection.indexOf(link.target) !== -1) && link.source !== link.target && withinoutEdges.indexOf(link) == -1) {
+  //           withinoutEdges.push(link)
+  //         }
+  //       })
+  //     }
+  //   }
+  //   return withinoutEdges;
+  // }
+
 
   //return all the edges within and out the selected nodes 
   self.getEdgeWithinOutSelection = function (selection) {
@@ -64,6 +79,31 @@ module.exports = function (self) {
       }
     }
     return withinoutEdges;
+  }
+
+  self.findIntersection= function(arrays) {
+    if (!Array.isArray(arrays) || arrays.length === 0) {
+      return [];
+    }
+  
+    return arrays.reduce((intersection, currentArray) => {
+      if (!Array.isArray(currentArray)) {
+        return intersection;
+      }
+  
+      return intersection.filter((value) => currentArray.includes(value));
+    });
+  }
+  
+
+  self.getCommonNodesBetweenSets = function(selectionsets){
+    const setsnodes = selectionsets.map(selection=>{
+      const onesetlinks = selection.map(node => node.linkObjs).flat().filter(item => item !== undefined && item !== null);
+      const onesetinoutnodes = onesetlinks.map(link=>[link.source,link.target]).flat();
+      return onesetinoutnodes
+    })
+    const commonnodes = self.findIntersection(setsnodes)
+    return self.uniqueArrayByAttribute(commonnodes, 'id')
   }
 
   //return all the edges within distance 
@@ -322,6 +362,128 @@ module.exports = function (self) {
     // self.arrow.material.color.setRGB(red, blue, green);
   }
 
+  // highlight common nodes of the selection sets, nodes within selection are with lower transparency
+  self.updateSelectionCommonOpacity = function () {
+    // if()
+    if (self.selection.length > 0) {
+      if (self.selection.length == 1 && appState.graph.colorByDistance) {
+        const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+          var p = 0.017453292519943295;    // Math.PI / 180
+          var c = Math.cos;
+          var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+            c(lat1 * p) * c(lat2 * p) *
+            (1 - c((lon2 - lon1) * p)) / 2;
+
+          return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+        }
+        var sumOfAllDistance = 0;
+        var n = 0;
+        var max = 0;
+        self.graph.forEachNode(n => {
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX)
+          if (dist > max) {
+            max = dist;
+          }
+        })
+        self.graph.forEachNode(n => {
+          // self.colorNodeColor(n, "#0000FF");
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX);
+          console.log(n.data.ref.LatY, n.data.ref.LonX, self.selection[0]['LatY'], self.selection[0]['LatX'])
+          self.colorNode(n, 0x0000FF);
+          if (dist == 0) {
+            self.colorNodeOpacity(n, 1);
+          } else if (dist < max / 4) {
+            self.colorNodeOpacity(n, 0.2);
+          } else if (dist < (2 * max) / 4) {
+            self.colorNodeOpacity(n, 0.4);
+          } else if (dist < (3 * max) / 4) {
+            self.colorNodeOpacity(n, 0.6);
+          }
+          else {
+            self.colorNodeOpacity(n, 0.8);
+          }
+
+
+        });
+      }
+      else {
+        self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
+          self.colorNodeOpacity(n, 0.2);
+
+        });
+        // self.colorNodeEdge(null);    // this is to highlight all 
+
+        // //fisrt dehighlight all the edges
+        // self.lineIndices.forEach(function (link) {
+        //   link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+        //   link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+        //   link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        // })
+
+        //hilight within edges
+        let red = new THREE.Color(appState.graph.edges.color).r;
+        let blue = new THREE.Color(appState.graph.edges.color).g;
+        let green = new THREE.Color(appState.graph.edges.color).b;
+        // const withinEdges = self.getEdgeWithinOutSelection(self.selection)
+
+         //fisrt dehighlight all the edges
+         const commonSetNodesID = appState.graph.commonSetNodes.map(n=>n.id)
+         const selectionID = self.selection.map(n=>n.id)
+         self.lineIndices.forEach(function (link) {
+          if(((commonSetNodesID.indexOf(link.source.id) !== -1) && (selectionID.indexOf(link.target.id) !== -1)) || ((commonSetNodesID.indexOf(link.target.id) !== -1) && (selectionID.indexOf(link.source.id) !== -1)) ){
+          link.linecolor.r = red 
+          link.linecolor.g = blue
+          link.linecolor.b = green
+          }else{
+          link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+          link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+          link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+          }
+          
+        })
+       
+
+        // for (var i = 0; i < withinEdges.length; i++) {
+        //   withinEdges[i].linecolor.r = red;
+        //   withinEdges[i].linecolor.g = blue;
+        //   withinEdges[i].linecolor.b = green;
+        // }
+        self.arrow.material.color.setRGB(red, blue, green);
+
+
+        //slightly highlight common nodes
+        for (var i = 0; i < appState.graph.commonSetNodes.length; i++) {
+          // slightly highlight neighbors 
+          // const neighborNodes = self.getNeighborNodesFromGraph(self.selection[i])
+          // for (var i = 0; i < neighborNodes.length; i++) {
+          //   self.colorNodeOpacity(neighborNodes[i], 0.5);
+          // }
+          //fully highlight nodes 
+          self.colorNodeOpacity(appState.graph.commonSetNodes[i], 0.5);
+        }
+
+
+        //highlight nodes in selections
+        for (var i = 0; i < self.selection.length; i++) {
+          // slightly highlight neighbors 
+          // const neighborNodes = self.getNeighborNodesFromGraph(self.selection[i])
+          // for (var i = 0; i < neighborNodes.length; i++) {
+          //   self.colorNodeOpacity(neighborNodes[i], 0.5);
+          // }
+          //fully highlight nodes 
+          self.colorNodeOpacity(self.selection[i], 1);
+        }
+
+      }
+    }
+    else {        //when no nodes are selected, all 1 opacity 
+      self.graph.forEachNode(n => {
+        self.colorNodeOpacity(n, 1);
+
+      });
+      self.colorNodeEdge(null);
+    }
+  }
 
   //highlight map selected nodes: highlight nodes and edges branching out from selection and neighbor nodes of the selection with lower transparency
   self.updateSelectionOutOpacity = function () {

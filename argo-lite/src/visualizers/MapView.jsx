@@ -244,6 +244,17 @@ class MapView extends React.Component {
 
     }
 
+    if(appState.graph.highlightCommonNodes && appState.graph.selectedSets.length > 1){
+      // const commonnodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
+      const commonSetNodesID = appState.graph.commonSetNodes.map(n=>n.id)
+      const selectionID = appState.graph.selectedNodes.map(n => n.id)
+      if( ((commonSetNodesID.indexOf(edge.fromId) !== -1) && (selectionID.indexOf(edge.toId) !== -1)) || ((commonSetNodesID.indexOf(edge.toId) !== -1) && (selectionID.indexOf(edge.fromId) !== -1))){
+        return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+      } else {
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+      }
+    }
+
     if (appState.graph.mapClickedArray.length > 0) {
       const mapClickedArraryID = appState.graph.mapClickedArray.map(n => n.id)
       if ((mapClickedArraryID.indexOf(edge.fromId) !== -1) || (mapClickedArraryID.indexOf(edge.toId) !== -1)) {
@@ -376,6 +387,23 @@ class MapView extends React.Component {
     // //no hover and selection 
     console.log(appState.graph.watchAppearance)
     // appState.graph.frame.paused = true;
+
+    if(appState.graph.highlightCommonNodes && appState.graph.selectedSets.length > 1){
+      // const commonnodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
+      if (appState.graph.selectedNodes.indexOf(node) > -1 ) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+
+      } else if(appState.graph.commonSetNodes.indexOf(node) > -1){  //within selection but not within commons nodes
+        
+        return { fillColor: node.renderData.color, fillOpacity: 0.5, stroke: false, color: 'orange', zIndex: '10000' }
+      }else{  // background nodes
+        if (appState.graph.backNodeShow) {
+          return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+        } else {
+          return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+        }
+      }
+    }
 
     if (appState.graph.degreeselection.length > 0) {
       if (appState.graph.degreeselection.indexOf(node) == -1) {

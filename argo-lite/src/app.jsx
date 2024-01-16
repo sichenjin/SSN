@@ -238,7 +238,7 @@ class App extends React.Component {
                   <div>
                     <Switch style={{ position: 'fixed', top: '54vh', left: '97vw', zIndex: '1000' }}
                       defaultChecked={appState.graph.backNodeShow}
-                      // checked={!node.isHidden}
+                      checked={appState.graph.backNodeShow}
                       onChange={(value) => {
                         appState.graph.backNodeShow = value.target.checked
 
@@ -255,9 +255,11 @@ class App extends React.Component {
                   <div>
                     <Switch style={{ position: 'fixed', top: '54vh', right: '47vw', zIndex: '1000' }}
                       defaultChecked={appState.graph.pickUpAlter}
-                      // checked={!node.isHidden}
+                      checked={appState.graph.pickUpAlter}
                       onChange={(value) => {
                         appState.graph.pickUpAlter = value.target.checked
+                        appState.graph.backNodeShow = false
+                        appState.graph.highlightCommonNodes = false
                         if(appState.graph.pickUpAlter){
                           appState.graph.frame.updateSelectionOutOpacity();
                         }else{
@@ -267,6 +269,32 @@ class App extends React.Component {
                       }}
                     />
                     <span style={{ fontSize: '12px', position: 'fixed', top: '54vh', right: '40vw', zIndex: '1000' }}> Pick Up Alters</span>
+                  </div>
+                )}
+                </div>
+                <div> {appState.graph.selectedSets.length < 2 ? (
+                  <div></div>
+                ) : (
+                  
+                  <div>
+                    <Switch style={{ position: 'fixed', top: '51vh', right: '47vw', zIndex: '1000' }}
+                      defaultChecked={appState.graph.highlightCommonNodes}
+                      checked={appState.graph.highlightCommonNodes}
+                      onChange={(value) => {
+                        
+                        appState.graph.highlightCommonNodes = value.target.checked
+                        if(appState.graph.highlightCommonNodes){
+                          appState.graph.pickUpAlter = false
+                          appState.graph.backNodeShow = false
+                          appState.graph.commonSetNodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
+                          appState.graph.frame.updateSelectionCommonOpacity();
+                        }else{
+                          appState.graph.frame.updateSelectionOpacity();
+                        }
+
+                      }}
+                    />
+                    <span style={{ fontSize: '12px', position: 'fixed', top: '51vh', right: '36vw', zIndex: '1000' }}> Show Common Friends</span>
                   </div>
                 )}
                 </div>

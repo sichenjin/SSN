@@ -53,6 +53,7 @@ module.exports = function (self) {
       // console.log(self.selection)
       // console.log(appState.graph.selectedNodes)
       self.selection = self.uniqueArrayByAttribute(self.selection, 'id')
+      
     }
 
     if (!self.mouseDown) {
@@ -222,6 +223,7 @@ module.exports = function (self) {
         self.dragging = selection;
         if (self.selection.indexOf(selection) == -1) {
           self.selection.push(selection);
+
           selection.renderData.isSelected = false;
         }
       }
@@ -287,21 +289,34 @@ module.exports = function (self) {
   /**
    * Mouse up event that closes selection flags and emits selection to Argo
    */
-  self.onMouseUp = function (selection, mouseX, mouseY, button) {
+  self.onMouseUp = function (selection, mouseX, mouseY, button, ctrl) {
     endTime = Date.now();
     self.mouseDown = false;
-
+    
     //when not clicking, nodes aren't being interacted with
     appState.graph.smartPause.interactingWithGraph = false;
     appState.graph.mapClicked = null
     appState.graph.areaSelected = undefined;
     appState.graph.degreeselection = []
     appState.graph.degreebrushed = false
+    appState.graph.highlightCommonNodes = false;
     
     if(appState.graph.pickUpAlter){
       self.updateSelectionOutOpacity();
-    }else{
+    }
+    else{
       self.updateSelectionOpacity();
+    }
+
+    // self.lastTimeSelectionLength = self.selection.length
+    if(ctrl){
+      
+      appState.graph.selectedSets.push(self.selection.slice(self.lastTimeSelectionLength))
+      self.lastTimeSelectionLength = self.selection.length
+    }else{   // not ctrlled, then start a new set collection
+      appState.graph.selectedSets = []
+      appState.graph.selectedSets.push(self.selection)
+      self.lastTimeSelectionLength = self.selection.length
     }
 
     if (selection && !self.selectBox.visible ) {  // when mouse up on one node while not dragging, the node is selected, add or remove the node to/from mapclickedarray and do highlight
@@ -370,6 +385,9 @@ module.exports = function (self) {
       appState.graph.mapClicked = null
       appState.graph.mapClickedArray = []
       appState.graph.selectedNodes = []
+      appState.graph.selectedSets = []
+      self.lastTimeSelectionLength = 0
+      appState.graph.commonSetNodes =[]
       self.selection = []
       appState.graph.areaSelected = undefined;
     }

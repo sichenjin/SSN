@@ -85,6 +85,9 @@ export function MapClick() {
         appState.graph.frame.selection = []
         appState.graph.mapClickedArray =[]
         appState.graph.selectedNodes = []
+        appState.graph.selectedSets = []
+        appState.graph.frame.lastTimeSelectionLength = 0
+        appState.graph.commonSetNodes =[];
         appState.graph.edgeselection = []
         appState.graph.mapClicked = null
         appState.graph.areaSelected = undefined;

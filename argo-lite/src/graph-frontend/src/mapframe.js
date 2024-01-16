@@ -34,6 +34,7 @@ var MapFrame = function(graph, options) {
     this.mouseStart = new THREE.Vector3(0, 0, 0);
     this.mouseEnd = new THREE.Vector3(0, 0, 0);
     this.dragging = null;
+    this.lastTimeSelectionLength = 0;
     this.showBox = false;
     this.renderWidth = 1000;
     this.renderHeight = 1000;

@@ -64,6 +64,8 @@ export default class GraphStore {
 
   // Updated by frame event
   @observable selectedNodes = [];
+  @observable selectedSets = [];
+  @observable commonSetNodes =[];
 
 
   filter = {}
@@ -77,6 +79,7 @@ export default class GraphStore {
   @observable outEdgeShow = true;
   @observable backNodeShow = true;
   @observable pickUpAlter = true;
+  @observable highlightCommonNodes = false;
   @observable autoZoom = false;
   @observable firstload =true;
 
@@ -88,6 +91,7 @@ export default class GraphStore {
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
   @observable mapClickedArray = [];
+  
   @observable areaSelected = undefined;
   @observable clearBrush = false;
 
@@ -408,6 +412,7 @@ export default class GraphStore {
   get numHiddenNodes() {
     return this.rawGraph.nodes.filter(n => n.isHidden).length;
   }
+
 
   filterNodes() {
     runInAction('filter nodes', () => {

@@ -94,6 +94,8 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.mapClickedArray = [];
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
+  appState.graph.selectedSets = [];
+  appState.graph.commonSetNodes =[];
   if(appState.graph.frame) {appState.graph.frame.selection = [];}
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;

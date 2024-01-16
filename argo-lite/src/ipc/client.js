@@ -363,6 +363,8 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.mapClickedArray = [];
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
+  appState.graph.selectedSets = [];
+  appState.graph.commonSetNodes =[];
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
  

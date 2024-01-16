@@ -541,6 +541,9 @@ class RegularNavbar extends React.Component {
                 appState.graph.mapClickedArray = [];
                 appState.graph.areaSelected = undefined;
                 appState.graph.selectedNodes = [];
+                appState.graph.selectedSets = [];
+                // appState.graph.frame.lastTimeSelectionLength = 0
+                appState.graph.commonSetNodes =[];
                 appState.graph.frame.selection = []
                 appState.graph.filter  = {}
                 appState.graph.currentlyHovered = undefined;
