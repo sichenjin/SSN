@@ -66,6 +66,7 @@ export default class GraphStore {
   @observable selectedNodes = [];
   @observable selectedSets = [];
   @observable commonSetNodes =[];
+  @observable interSetNodes =[];
 
 
   filter = {}
@@ -80,6 +81,7 @@ export default class GraphStore {
   @observable backNodeShow = true;
   @observable pickUpAlter = true;
   @observable highlightCommonNodes = false;
+  @observable showIntersect = false;
   @observable autoZoom = false;
   @observable firstload =true;
 

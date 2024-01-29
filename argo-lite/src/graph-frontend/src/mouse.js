@@ -271,6 +271,20 @@ module.exports = function (self) {
     }
   };
 
+  self.areArraysIdentical= function(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+      return false; // If the lengths are different, the arrays can't be identical
+    }
+  
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) {
+        return false; // If any elements differ, the arrays are not identical
+      }
+    }
+  
+    return true; // If all elements match, the arrays are identical
+  }
+
   //unique by attribute for a list of dict
   self.uniqueArrayByAttribute= function(arr, attribute) {
     const uniqueMap = new Map();
@@ -300,7 +314,7 @@ module.exports = function (self) {
     appState.graph.degreeselection = []
     appState.graph.degreebrushed = false
     appState.graph.highlightCommonNodes = false;
-    
+    appState.graph.showIntersect = false;
     if(appState.graph.pickUpAlter){
       self.updateSelectionOutOpacity();
     }
@@ -309,17 +323,18 @@ module.exports = function (self) {
     }
 
     // self.lastTimeSelectionLength = self.selection.length
+    //selection is the node when mouse is up on, self.selection are the nodes when brushed, slef.selectBox.visible can help tell if it is selected by dragging or click
     if(ctrl){
       
       appState.graph.selectedSets.push(self.selection.slice(self.lastTimeSelectionLength))
       self.lastTimeSelectionLength = self.selection.length
-    }else{   // not ctrlled, then start a new set collection
+    }else if(self.selectBox.visible){   // not ctrled but when dragging not clicking, then start a new set collection
       appState.graph.selectedSets = []
       appState.graph.selectedSets.push(self.selection)
       self.lastTimeSelectionLength = self.selection.length
     }
 
-    if (selection && !self.selectBox.visible ) {  // when mouse up on one node while not dragging, the node is selected, add or remove the node to/from mapclickedarray and do highlight
+    if (selection && !self.selectBox.visible ) {  // when mouse up on one node while not dragging, the node is selected, add or remove the node to/from mapclickedarray and its neighbors to setSelected and do highlight
       const thenode = selection
 
       //when double click, select / remove the single node from selection
@@ -347,7 +362,7 @@ module.exports = function (self) {
 
         appState.graph.mapClickedArray.push(thenode)
         const thenodeneightbor= self.getNeighborNodesFromGraph(thenode)
-        
+        appState.graph.selectedSets.push(thenodeneightbor)
         // thenodeneightbor.forEach((n)=>{
         //   appState.graph.selectedNodes.push(n)
         // })
@@ -360,6 +375,8 @@ module.exports = function (self) {
         self.highlightClickArrayNode(appState.graph.mapClickedArray)
       } else {
         appState.graph.mapClickedArray = appState.graph.mapClickedArray.filter((obj) => obj.id !== thenode.id);
+        const toRemoveSets = self.getNeighborNodesFromGraph(thenode)
+        appState.graph.selectedSets = appState.graph.selectedSets.filter((nodeset)=>!self.areArraysIdentical(nodeset,toRemoveSets))
         let thenodeneighbors = []
         appState.graph.mapClickedArray.forEach((mapClicked) => {
           const nodeneighbor = self.getNeighborNodesFromGraph(mapClicked)
@@ -388,6 +405,7 @@ module.exports = function (self) {
       appState.graph.selectedSets = []
       self.lastTimeSelectionLength = 0
       appState.graph.commonSetNodes =[]
+      appState.graph.interSetNodes = []
       self.selection = []
       appState.graph.areaSelected = undefined;
     }

@@ -365,6 +365,7 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.selectedNodes = [];
   appState.graph.selectedSets = [];
   appState.graph.commonSetNodes =[];
+  appState.graph.interSetNodes = [];
   appState.graph.filter = {}
   appState.graph.currentlyHovered = undefined;
  

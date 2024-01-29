@@ -362,7 +362,110 @@ module.exports = function (self) {
     // self.arrow.material.color.setRGB(red, blue, green);
   }
 
-  // highlight common nodes of the selection sets, nodes within selection are with lower transparency
+  // highlight interset nodes of the selection sets with lower transparency, nodes within selection are with lower transparency
+  self.updateSelectionInterOpacity = function () {
+    // if()
+    if (self.selection.length > 0) {
+      if (self.selection.length == 1 && appState.graph.colorByDistance) {
+        const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+          var p = 0.017453292519943295;    // Math.PI / 180
+          var c = Math.cos;
+          var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+            c(lat1 * p) * c(lat2 * p) *
+            (1 - c((lon2 - lon1) * p)) / 2;
+
+          return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+        }
+        var sumOfAllDistance = 0;
+        var n = 0;
+        var max = 0;
+        self.graph.forEachNode(n => {
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX)
+          if (dist > max) {
+            max = dist;
+          }
+        })
+        self.graph.forEachNode(n => {
+          // self.colorNodeColor(n, "#0000FF");
+          var dist = calDistanceFromLatLonInKm(n.data.ref.LatY, n.data.ref.LonX, self.selection[0].data.ref.LatY, self.selection[0].data.ref.LonX);
+          console.log(n.data.ref.LatY, n.data.ref.LonX, self.selection[0]['LatY'], self.selection[0]['LatX'])
+          self.colorNode(n, 0x0000FF);
+          if (dist == 0) {
+            self.colorNodeOpacity(n, 1);
+          } else if (dist < max / 4) {
+            self.colorNodeOpacity(n, 0.2);
+          } else if (dist < (2 * max) / 4) {
+            self.colorNodeOpacity(n, 0.4);
+          } else if (dist < (3 * max) / 4) {
+            self.colorNodeOpacity(n, 0.6);
+          }
+          else {
+            self.colorNodeOpacity(n, 0.8);
+          }
+
+
+        });
+      }
+      else {
+        
+        // self.colorNodeEdge(null);    // this is to highlight all 
+        //hilight within edges
+        let red = new THREE.Color(appState.graph.edges.color).r;
+        let blue = new THREE.Color(appState.graph.edges.color).g;
+        let green = new THREE.Color(appState.graph.edges.color).b;
+         if (appState.graph.mapClickedArray.length > 0) {
+          const mapClickedArraryID = appState.graph.mapClickedArray.map(n => n.id)
+          const interSetNodesID = appState.graph.interSetNodes.map(n => n.id)
+          // const selectionID = appState.graph.selectedSets.map(n => n.id)
+          self.lineIndices.forEach(function (link) {
+            if(((interSetNodesID.indexOf(link.source.id) !== -1) && (mapClickedArraryID.indexOf(link.target.id) !== -1)) || ((interSetNodesID.indexOf(link.target.id) !== -1) && (mapClickedArraryID.indexOf(link.source.id) !== -1)))
+            {
+            link.linecolor.r = red 
+            link.linecolor.g = blue
+            link.linecolor.b = green
+            }else{
+            link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+            link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+            link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+            }
+            
+          })
+          
+        } else {//dehighlight all the edges, when perform intersection between drag selected sets but not between egocentric networks
+          self.lineIndices.forEach(function (link) {
+            link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+            link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+            link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+          })
+        }
+        self.arrow.material.color.setRGB(red, blue, green);
+
+        self.graph.forEachNode(n => {  //fisrt dehighlight all the nodes  
+          self.colorNodeOpacity(n, 0.2);
+
+        });
+        //slightly highlight nodes in selection
+        for (var i = 0; i < appState.graph.selectedNodes.length; i++) { 
+          self.colorNodeOpacity(appState.graph.selectedNodes[i], 0.5);
+        }
+
+        //highlight nodes in intersection 
+        for (var i = 0; i < appState.graph.interSetNodes.length; i++) {
+          self.colorNodeOpacity(appState.graph.interSetNodes[i], 1);
+        }
+
+      }
+    }
+    else {        //when no nodes are selected, all 1 opacity 
+      self.graph.forEachNode(n => {
+        self.colorNodeOpacity(n, 1);
+
+      });
+      self.colorNodeEdge(null);
+    }
+  }
+
+  // highlight common nodes of the selection sets with lower transparency, nodes within selection are highlighted
   self.updateSelectionCommonOpacity = function () {
     // if()
     if (self.selection.length > 0) {

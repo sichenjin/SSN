@@ -85,6 +85,8 @@ export default function AreaSelect() {
       if (selectionNode.length === 0) return 
       appState.graph.selectedNodes.push(...selectionNode)
       appState.graph.highlightCommonNodes = false
+      appState.graph.showIntersect = false;
+      appState.graph.pickUpAlter = false;
       appState.graph.selectedSets.push(selectionNode)
       appState.graph.frame.selection.push(...selectionNode)
       appState.graph.selectedNodes = uniqueArrayByAttribute(appState.graph.selectedNodes, 'id');

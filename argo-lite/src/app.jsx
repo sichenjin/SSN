@@ -260,6 +260,7 @@ class App extends React.Component {
                         appState.graph.pickUpAlter = value.target.checked
                         appState.graph.backNodeShow = false
                         appState.graph.highlightCommonNodes = false
+                        appState.graph.showIntersect = false;
                         if(appState.graph.pickUpAlter){
                           appState.graph.frame.updateSelectionOutOpacity();
                         }else{
@@ -286,6 +287,7 @@ class App extends React.Component {
                         if(appState.graph.highlightCommonNodes){
                           appState.graph.pickUpAlter = false
                           appState.graph.backNodeShow = false
+                          appState.graph.showIntersect = false;
                           appState.graph.commonSetNodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
                           appState.graph.frame.updateSelectionCommonOpacity();
                         }else{
@@ -294,7 +296,26 @@ class App extends React.Component {
 
                       }}
                     />
-                    <span style={{ fontSize: '12px', position: 'fixed', top: '51vh', right: '36vw', zIndex: '1000' }}> Show Common Friends</span>
+                    <Switch style={{ position: 'fixed', top: '48vh', right: '47vw', zIndex: '1000' }}
+                      defaultChecked={appState.graph.showIntersect}
+                      checked={appState.graph.showIntersect}
+                      onChange={(value) => {
+                        
+                        appState.graph.showIntersect = value.target.checked
+                        if(appState.graph.showIntersect){
+                          appState.graph.pickUpAlter = false
+                          appState.graph.backNodeShow = false
+                          appState.graph.highlightCommonNodes = false
+                          appState.graph.interSetNodes = appState.graph.frame.findIntersection(appState.graph.selectedSets.map(n=>Array.from(n)))
+                          appState.graph.frame.updateSelectionInterOpacity();
+                        }else{
+                          appState.graph.frame.updateSelectionOpacity();
+                        }
+
+                      }}
+                    />
+                    <span style={{ fontSize: '12px', position: 'fixed', top: '51vh', right: '34.5vw', zIndex: '1000' }}> Show Common Friends</span>
+                    <span style={{ fontSize: '12px', position: 'fixed', top: '48vh', right: '37.5vw', zIndex: '1000' }}> Show Intersection</span>
                   </div>
                 )}
                 </div>

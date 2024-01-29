@@ -244,12 +244,28 @@ class MapView extends React.Component {
 
     }
 
-    if(appState.graph.highlightCommonNodes && appState.graph.selectedSets.length > 1){
+    if (appState.graph.highlightCommonNodes && appState.graph.selectedSets.length > 1) {
       // const commonnodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
-      const commonSetNodesID = appState.graph.commonSetNodes.map(n=>n.id)
+      const commonSetNodesID = appState.graph.commonSetNodes.map(n => n.id)
       const selectionID = appState.graph.selectedNodes.map(n => n.id)
-      if( ((commonSetNodesID.indexOf(edge.fromId) !== -1) && (selectionID.indexOf(edge.toId) !== -1)) || ((commonSetNodesID.indexOf(edge.toId) !== -1) && (selectionID.indexOf(edge.fromId) !== -1))){
+      if (((commonSetNodesID.indexOf(edge.fromId) !== -1) && (selectionID.indexOf(edge.toId) !== -1)) || ((commonSetNodesID.indexOf(edge.toId) !== -1) && (selectionID.indexOf(edge.fromId) !== -1))) {
         return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+      } else {
+        return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+      }
+    }
+
+    if (appState.graph.showIntersect && appState.graph.selectedSets.length > 1) {
+      // const commonnodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
+      if (appState.graph.mapClickedArray.length > 0) {
+        const mapClickedArraryID = appState.graph.mapClickedArray.map(n => n.id)
+        const interSetNodesID = appState.graph.interSetNodes.map(n => n.id)
+        // const selectionID = appState.graph.selectedSets.map(n => n.id)
+        if (((interSetNodesID.indexOf(edge.fromId) !== -1) && (mapClickedArraryID.indexOf(edge.toId) !== -1)) || ((interSetNodesID.indexOf(edge.toId) !== -1) && (mapClickedArraryID.indexOf(edge.fromId) !== -1))) {
+          return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
+        } else {
+          return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
+        }
       } else {
         return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
       }
@@ -274,13 +290,13 @@ class MapView extends React.Component {
 
     //highlight branching out edges as well when select from map 
     if (appState.graph.areaSelected && appState.graph.selectedNodes.length > 0) {
-      if(appState.graph.pickUpAlter){
+      if (appState.graph.pickUpAlter) {
         if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
           return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
         } else {
           return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
         }
-      }else{
+      } else {
         if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
           return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
         } else {
@@ -288,7 +304,7 @@ class MapView extends React.Component {
         }
       }
 
-      
+
     }
 
     if (appState.graph.degreeselection.length > 0) {
@@ -330,22 +346,22 @@ class MapView extends React.Component {
     if (appState.graph.selectedNodes.length > 0) {
 
       //highlight within selection edges , &&
-      if(appState.graph.pickUpAlter){
+      if (appState.graph.pickUpAlter) {
         if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
           return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
         } else {
           return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
         }
-  
-      }else{
+
+      } else {
         if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 && this.nodesSelectedID.indexOf(edge.toId) !== -1) {
           return { color: appState.graph.edges.color, weight: '1.1', opacity: '1' }
         } else {
           return { color: appState.graph.edges.color, weight: '0.01', opacity: '0' }
         }
-  
+
       }
-     
+
 
       //else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
       // return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
@@ -388,15 +404,31 @@ class MapView extends React.Component {
     console.log(appState.graph.watchAppearance)
     // appState.graph.frame.paused = true;
 
-    if(appState.graph.highlightCommonNodes && appState.graph.selectedSets.length > 1){
+    if (appState.graph.highlightCommonNodes && appState.graph.selectedSets.length > 1) {
       // const commonnodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
-      if (appState.graph.selectedNodes.indexOf(node) > -1 ) {
+      if (appState.graph.selectedNodes.indexOf(node) > -1) {
         return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
 
-      } else if(appState.graph.commonSetNodes.indexOf(node) > -1){  //within selection but not within commons nodes
-        
+      } else if (appState.graph.commonSetNodes.indexOf(node) > -1) {  //within selection but not within commons nodes
+
         return { fillColor: node.renderData.color, fillOpacity: 0.5, stroke: false, color: 'orange', zIndex: '10000' }
-      }else{  // background nodes
+      } else {  // background nodes
+        if (appState.graph.backNodeShow) {
+          return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+        } else {
+          return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
+        }
+      }
+    }
+
+    if (appState.graph.showIntersect && appState.graph.selectedSets.length > 1) {
+      if (appState.graph.interSetNodes.indexOf(node) > -1) {
+        return { fillColor: node.renderData.color, fillOpacity: 0.8, stroke: false, color: 'orange', zIndex: '10000' }
+
+      } else if (appState.graph.selectedNodes.indexOf(node) > -1) {  //within selection but not within commons nodes
+
+        return { fillColor: node.renderData.color, fillOpacity: 0.3, stroke: false, color: 'orange', zIndex: '10000' }
+      } else {  // background nodes
         if (appState.graph.backNodeShow) {
           return { fillColor: node.renderData.color, fillOpacity: 0, stroke: false, zIndex: 'auto' }
         } else {
@@ -713,11 +745,16 @@ class MapView extends React.Component {
                     click: (e) => {
                       e.originalEvent.view.L.DomEvent.stopPropagation(e)
                       const thenode = e.target.options.data
+                      appState.graph.highlightCommonNodes = false
+                      appState.graph.showIntersect = false;
+                      appState.graph.pickUpAlter = false;
                       if (appState.graph.mapClickedArray.indexOf(thenode) == -1) { //no clicked circle before 
 
                         appState.graph.mapClickedArray.push(thenode)  //control map update 
                         appState.graph.currentlyHovered = null
-                        appState.graph.selectedNodes.push(...appState.graph.frame.getNeighborNodesFromGraph(thenode))
+                        const neightborNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode)
+                        appState.graph.selectedNodes.push(...neightborNodes)
+                        appState.graph.selectedSets.push(neightborNodes)
                         appState.graph.frame.selection.push(...appState.graph.frame.getNeighborNodesFromGraph(thenode))
                         appState.graph.selectedNodes = this.uniqueArrayByAttribute(appState.graph.selectedNodes, 'id');
                         appState.graph.frame.selection = this.uniqueArrayByAttribute(appState.graph.frame.selection, 'id');
@@ -728,12 +765,16 @@ class MapView extends React.Component {
                         // appState.graph.selectedNodes = appState.graph.frame.getNeighborNodesFromGraph(thenode);
                         // appState.graph.frame.highlightClickNode(thenode);
 
+
                       } else {  // click again to unselect 
                         appState.graph.mapClickedArray = appState.graph.mapClickedArray.filter((obj) => obj.id !== thenode.id);
+                        const toRemoveSets = appState.graph.frame.getNeighborNodesFromGraph(thenode)
+                        appState.graph.selectedSets = appState.graph.selectedSets.filter((nodeset) => !appState.graph.frame.areArraysIdentical(nodeset, toRemoveSets))
                         let thenodeneighbors = []
                         appState.graph.mapClickedArray.forEach((mapClicked) => {
                           thenodeneighbors.push(...appState.graph.frame.getNeighborNodesFromGraph(mapClicked))
                         })
+
                         appState.graph.frame.selection = appState.graph.frame.selection.filter((obj) => thenodeneighbors.indexOf(obj) > 0)
                         appState.graph.selectedNodes = appState.graph.selectedNodes.filter((obj) => thenodeneighbors.indexOf(obj) > 0)
                         // appState.graph.edgeselection = []
