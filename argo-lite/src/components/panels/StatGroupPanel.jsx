@@ -206,7 +206,9 @@ class StatGroupPanel extends React.Component {
         appState.graph.metadata.nodeComputed.push('k-Fulfillment')
         appState.graph.scatterplot.x = 'k-Fulfillment'
         appState.graph.scatterplot.y = 'degree'
-
+        appState.graph.nodes.colorBy = "k-Fulfillment"
+        appState.graph.nodes.color.scale = "Linear Scale"
+        appState.graph.watchAppearance = appState.graph.watchAppearance + 1
 
     }
 
@@ -450,6 +452,9 @@ class StatGroupPanel extends React.Component {
         appState.graph.metadata.nodeComputed.push('flattening ratio')
         appState.graph.scatterplot.x = 'flattening ratio'
         appState.graph.scatterplot.y = 'degree'
+        appState.graph.nodes.colorBy = "flattening ratio"
+        appState.graph.nodes.color.scale = "Linear Scale"
+        appState.graph.watchAppearance = appState.graph.watchAppearance + 1
 
     }
 

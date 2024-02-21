@@ -859,7 +859,7 @@ module.exports = function (self) {
       self.highlightEdges(clickedNode, true);
       const neighborNodes = self.getNeighborNodesFromGraph(clickedNode);
       self.selection = neighborNodes;
-      console.log(self.selection)
+      // console.log(self.selection)
     } else if (clickedNode && clickedNode.pinnedx) {
       //if already pinned, then unpin upon double-click
       clickedNode.pinnedx = false;

@@ -310,7 +310,7 @@ html {
 }
 
 .leaflet-control-layers{
-  transform: translate(-35vw,-50px) scale(0.5);
+  transform: translate(-35vw,-50px) scale(1);
 }
 
 .bottom-status-bar {

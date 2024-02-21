@@ -46,7 +46,8 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   ['US 117th House Vote of 5 States', '86665914-5bd3-4293-bc2b-4ab673595c8a'],
   // https://poloclub.github.io/argo-graph-lite/#86665914-5bd3-4293-bc2b-4ab673595c8a
   // https://poloclub.github.io/argo-graph-lite/#51cd24cd-0819-4f2c-b28b-364dc84bb055
-  ['US 117th House Vote Network','ad3d8ca3-1f15-4ae5-90a8-2af15d65bc81']
+  ['US 117th House Vote Network','ad3d8ca3-1f15-4ae5-90a8-2af15d65bc81'], 
+  ['Github Collaboration Network', '2947da0d-3aae-4fd7-bfd9-06c936b33f55']
   // "5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1" 960 edges
   // e6d1062c-f1ac-4d69-8039-16d589fb04cf
 ];

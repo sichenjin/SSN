@@ -56,7 +56,7 @@ class MyConvexHull(Resource):
 
       #remove outlier
       gdf = pd.DataFrame(points, columns = ['glat','glon'])
-      ngdf = gdf[(np.abs(stats.zscore(gdf)) < 3).all(axis=1)]
+      ngdf = gdf[(np.abs(stats.zscore(gdf)) < 3).all(axis=1)]  # zscore = (x=mean)/ std.deviation, https://www.analyticsvidhya.com/blog/2022/08/dealing-with-outliers-using-the-z-score-method/   https://www.machinelearningplus.com/machine-learning/how-to-detect-outliers-with-z-score/
       points = ngdf.to_numpy()
       
       hull = ConvexHull(points)
