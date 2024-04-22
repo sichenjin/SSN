@@ -11,6 +11,28 @@ import { scales } from "../../constants/index";
 import Collapsable from "../utils/Collapsable";
 import SimpleSelect from "../utils/SimpleSelect";
 import CommonItemRenderer from "../utils/CommonItemRenderer";
+import { uniq } from "lodash";
+
+
+const ColorLegend = ({ colors }) => {
+  // const barWidth = parentWidth / colors.length;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+      {colors.map((color, index) => (
+        <div
+          key={index}
+          style={{
+            backgroundColor: color,
+            flex: 1,
+            height: '10px', // Adjust the height of each color bar
+            // marginRight: '10px' // Adjust the spacing between color bars
+          }}
+        ></div>
+      ))}
+    </div>
+  );
+};
+
 
 @observer
 class GlobalPanel extends React.Component {
@@ -23,6 +45,7 @@ class GlobalPanel extends React.Component {
       shapeOptionOpen: false
     };
   }
+
 
   render() {
     return (
@@ -38,114 +61,137 @@ class GlobalPanel extends React.Component {
           }
         >
           <div className={classnames(Classes.CARD, "sub-option")}>
-            <div> 
-                <p style={{display: "inline"}}>Color By: </p>
-                <span style={{float:"right"}}>
-                  <SimpleSelect  
-                    items={appState.graph.filterKeyList}
-                    onSelect={it => {appState.graph.nodes.colorBy = it
-                      appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
-                    value={appState.graph.nodes.colorBy}
-                  />
-                </span>
-              </div>
-            
-              <div style={{marginTop:"10px"}}> 
-                <p style={{display: "inline"}}>Scale Type: </p>
-                <span style={{float:"right"}}>
-                  <SimpleSelect
-                    items={Object.keys(scales)}
-                    onSelect={it => {appState.graph.nodes.color.scale = it
-                      appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
-                    value={appState.graph.nodes.color.scale}
-                  />
-                </span>
-              </div>
-          
             <div>
-              <div style={{marginTop:"10px"}}> 
-                <p style={{display: "inline"}}>Gradient: &nbsp;</p>
-                <span style={{float:"right"}}>
-                    <Popover2
+              <p style={{ display: "inline" }}>Color By: </p>
+              <span style={{ float: "right" }}>
+                <SimpleSelect
+                  items={appState.graph.filterKeyList}
+                  onSelect={it => {
+                    appState.graph.nodes.colorBy = it
+                    appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+                  }}
+                  value={appState.graph.nodes.colorBy}
+                />
+              </span>
+            </div>
+
+            <div style={{ marginTop: "10px" }}>
+              <p style={{ display: "inline" }}>Scale Type: </p>
+              <span style={{ float: "right" }}>
+                <SimpleSelect
+                  items={Object.keys(scales)}
+                  onSelect={it => {
+                    appState.graph.nodes.color.scale = it
+                    appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+                  }}
+                  value={appState.graph.nodes.color.scale}
+                />
+              </span>
+            </div>
+
+            <div>
+              {appState.graph.nodes.color.scale == "Nominal Scale" ? (
+              <div style={{ width: '100%' }}>
+                <ColorLegend colors={appState.graph.getNominalColor} />
+              </div>
+            ) : (
+
+              <div>
+
+                <div>
+                  <div style={{ marginTop: "10px" }}>
+                    <p style={{ display: "inline" }}>Gradient: &nbsp;</p>
+                    <span style={{ float: "right" }}>
+                      <Popover2
                         placement="bottom"
                         modifiers={{
-                            preventOverflow: {
-                              enabled: false,
-                            },
-                          }}
-                    >
-                      <Button                  
-                        text="  "
-                        style={{
-                          backgroundImage: "inherit",
-                          backgroundColor: appState.graph.nodes.color.from
+                          preventOverflow: {
+                            enabled: false,
+                          },
                         }}
-                      />
-                      <SketchPicker
-                        color={appState.graph.nodes.color.from}
-                        onChange={it => {appState.graph.nodes.color.from = it.hex
-                          appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
-                      />
-                    </Popover2>
-                    &nbsp; &#8594; &nbsp;
-                    <Popover2 
-                    placement="bottom"
-                                modifiers={{
-                                    preventOverflow: {
-                                      enabled: false,
-                                    },
-                                  }}
-                                  >
-                    <Button
-                      text="  "
-                      style={{
-                        backgroundImage: "inherit",
-                        backgroundColor: appState.graph.nodes.color.to
-                      }}
+                      >
+                        <Button
+                          text="  "
+                          style={{
+                            backgroundImage: "inherit",
+                            backgroundColor: appState.graph.nodes.color.from
+                          }}
+                        />
+                        <SketchPicker
+                          color={appState.graph.nodes.color.from}
+                          onChange={it => {
+                            appState.graph.nodes.color.from = it.hex
+                            appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+                          }}
+                        />
+                      </Popover2>
+                      &nbsp; &#8594; &nbsp;
+                      <Popover2
+                        placement="bottom"
+                        modifiers={{
+                          preventOverflow: {
+                            enabled: false,
+                          },
+                        }}
+                      >
+                        <Button
+                          text="  "
+                          style={{
+                            backgroundImage: "inherit",
+                            backgroundColor: appState.graph.nodes.color.to
+                          }}
+                        />
+                        <SketchPicker
+                          color={appState.graph.nodes.color.to}
+                          onChange={it => {
+                            appState.graph.nodes.color.to = it.hex
+                            appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+                          }}
+                        />
+                      </Popover2>
+                    </span>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "-1em" }}>
+                  <svg width="100%" height="10" className="gradient-preview">
+                    <defs>
+                      <linearGradient
+                        x1="0%"
+                        y1="50%"
+                        x2="100%"
+                        y2="50%"
+                        id="theGradient"
+                      >
+                        <stop
+                          stopColor={appState.graph.nodes.color.from}
+                          stopOpacity="1"
+                          offset="0%"
+                        />
+                        <stop
+                          stopColor={appState.graph.nodes.color.to}
+                          stopOpacity="1"
+                          offset="100%"
+                        />
+                      </linearGradient>
+                    </defs>
+                    <rect
+                      x="0"
+                      y="0"
+                      width="100%"
+                      height="50"
+                      fill="url(#theGradient)"
                     />
-                    <SketchPicker
-                      color={appState.graph.nodes.color.to}
-                      onChange={it => {appState.graph.nodes.color.to = it.hex
-                        appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
-                    />
-                  </Popover2>
-                </span>
-              </div>
+                  </svg>
+                </div>
+              </div>)}
             </div>
-            <div style={{marginTop:"-1em"}}>
-              <svg width="100%" height="10" className="gradient-preview">
-              <defs>
-                <linearGradient
-                  x1="0%"
-                  y1="50%"
-                  x2="100%"
-                  y2="50%"
-                  id="theGradient"
-                >
-                  <stop
-                    stopColor={appState.graph.nodes.color.from}
-                    stopOpacity="1"
-                    offset="0%"
-                  />
-                  <stop
-                    stopColor={appState.graph.nodes.color.to}
-                    stopOpacity="1"
-                    offset="100%"
-                  />
-                </linearGradient>
-              </defs>
-              <rect
-                x="0"
-                y="0"
-                width="100%"
-                height="50"
-                fill="url(#theGradient)"
-              />
-            </svg>
-            </div>
+
+
+
           </div>
         </Collapsable>
-        
+
         {/* Collapsable Option: Size */}
         <Collapsable
           name="Size"
@@ -156,65 +202,69 @@ class GlobalPanel extends React.Component {
             })
           }
         >
-         
+
           <div className={classnames(Classes.CARD, "sub-option")}>
-            <div> 
-                <p style={{display: "inline"}}>Scale By:</p>
-                <span style={{float:"right"}}>
-                  <SimpleSelect
-                    items={appState.graph.filterKeyList}
-                    // itemRenderer={CommonItemRenderer}
-                    // filterable={false}
-                    onSelect={it => {appState.graph.nodes.sizeBy = it
-                      appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
-                    // onItemSelect={it => (appState.graph.nodes.sizeBy = it)}
-                    value={appState.graph.nodes.sizeBy}
-                    />
-                </span>
-              
+            <div>
+              <p style={{ display: "inline" }}>Scale By:</p>
+              <span style={{ float: "right" }}>
+                <SimpleSelect
+                  items={appState.graph.filterKeyList}
+                  // itemRenderer={CommonItemRenderer}
+                  // filterable={false}
+                  onSelect={it => {
+                    appState.graph.nodes.sizeBy = it
+                    appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+                  }}
+                  // onItemSelect={it => (appState.graph.nodes.sizeBy = it)}
+                  value={appState.graph.nodes.sizeBy}
+                />
+              </span>
+
             </div>
-            <div style={{marginTop:"10px"}}> 
-                <p style={{display: "inline"}}>Scale Type:</p>
-                <span style={{float:"right"}}>
-                  <SimpleSelect
+            <div style={{ marginTop: "10px" }}>
+              <p style={{ display: "inline" }}>Scale Type:</p>
+              <span style={{ float: "right" }}>
+                <SimpleSelect
                   items={Object.keys(scales)}
                   itemRenderer={CommonItemRenderer}
                   filterable={false}
-                  onSelect={it => {appState.graph.nodes.size.scale = it
-                    appState.graph.watchAppearance = appState.graph.watchAppearance + 1}}
+                  onSelect={it => {
+                    appState.graph.nodes.size.scale = it
+                    appState.graph.watchAppearance = appState.graph.watchAppearance + 1
+                  }}
                   // onItemSelect={it => (appState.graph.nodes.size.scale = it)}
                   value={appState.graph.nodes.size.scale}
-                  />
-                </span>
+                />
+              </span>
             </div>
-         
-            <div style={{marginTop:"10px"}}> 
-              <p style={{display: "inline"}}>Size Range:</p>
-            <br />
-            <RangeSlider
-              min={1}
-              max={20}
-              stepSize={0.1}
-              labelStepSize={5}
-              onChange={([a, b]) => {
-                runInAction("update scale", () => {
-                  appState.graph.nodes.size.min = a;
-                  appState.graph.nodes.size.max = b;
-                });
-              }}
-              value={[
-                appState.graph.nodes.size.min,
-                appState.graph.nodes.size.max
-              ]}
-            />
-            </div>
-              <div style = {{height:"15px"}}>
 
-              </div>
+            <div style={{ marginTop: "10px" }}>
+              <p style={{ display: "inline" }}>Size Range:</p>
+              <br />
+              <RangeSlider
+                min={1}
+                max={20}
+                stepSize={0.1}
+                labelStepSize={5}
+                onChange={([a, b]) => {
+                  runInAction("update scale", () => {
+                    appState.graph.nodes.size.min = a;
+                    appState.graph.nodes.size.max = b;
+                  });
+                }}
+                value={[
+                  appState.graph.nodes.size.min,
+                  appState.graph.nodes.size.max
+                ]}
+              />
+            </div>
+            <div style={{ height: "15px" }}>
+
+            </div>
 
           </div>
         </Collapsable>
-        
+
         {/* Collapsable Option: Shape */}
         <Collapsable
           name="Shape"
@@ -226,33 +276,33 @@ class GlobalPanel extends React.Component {
           }
         >
           <div className={classnames(Classes.CARD, "sub-option")}>
-          <div>
-          <p style={{display: "inline"}}>Node Shape:</p>
-          <span style={{float:"right"}}>
-            <Select
-                items={[
-                  "circle",
-                  "square",
-                  "triangle",
-                  "pentagon",
-                  "hexagon",
-                  "octagon"
-                ]}
-                itemRenderer={CommonItemRenderer}
-                filterable={false}
-                onItemSelect={it => (appState.graph.nodes.shape = it)}
-              >
-                <Button  text={appState.graph.nodes.shape} />
-              </Select>
+            <div>
+              <p style={{ display: "inline" }}>Node Shape:</p>
+              <span style={{ float: "right" }}>
+                <Select
+                  items={[
+                    "circle",
+                    "square",
+                    "triangle",
+                    "pentagon",
+                    "hexagon",
+                    "octagon"
+                  ]}
+                  itemRenderer={CommonItemRenderer}
+                  filterable={false}
+                  onItemSelect={it => (appState.graph.nodes.shape = it)}
+                >
+                  <Button text={appState.graph.nodes.shape} />
+                </Select>
               </span>
-            </div>        
+            </div>
           </div>
         </Collapsable>
-        <br/>
-        <text style={{fontSize: "12px"}}>
-          
+        <br />
+        <text style={{ fontSize: "12px" }}>
+
           {pluralize("node", appState.graph.overrides.size, true)}<span> </span>
-          have override styles.  &nbsp;  
+          have override styles.  &nbsp;
           <Button className={"pt-small"} text="Clear" onClick={() => (appState.graph.overrides = new Map())} />
         </text>
       </div>

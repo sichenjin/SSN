@@ -17,7 +17,10 @@ export default class GraphStore {
         scale: "Linear Scale",
         from: "#448AFF",
         to: "#E91E63",
-        nominalColor: ["#0073bc", "#ff3333","#e377c2", "#98df8a", "#ff7f0e", "#a55194", "#2ca02c", "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#1f77b4", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#9c9ede", "#8c6d31", "#ffbb78", "#bd9e39"]
+        nominalColor:  ['#88CCEE', "#EE8866", "#4477AA", '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499',  "#ffbc79", '#EE6677',   "#c85200", '#4477AA', '#CCBB44', '#66CCEE', '#AA3377', "#7f7f7f", '#BBCC33', '#AAAA00', '#77AADD', '#EE8866', '#EEDD88', '#FFAABB', '#99DDFF', '#44BB99']
+        // [ "#006ba4", "#ffbc79", "#882255", "#77AADD", "#EE8866", "#EEDD88", "#4477AA",  "#FFAABB",  "#c85200", "#595959", "#CCBB44", "#66CCEE","#332288", "#DDCC77", "#999933","#CC6677", "#88CCEE", "#AA4499",  "#EE6677",   "#AA3377",  "#BBCC33", "#44AA99", "#AAAA00"]
+        // nominalColor: ["#0073bc",  "#aec7e8", "#e377c2", "#98df8a", "#ff7f0e", "#a55194", "#2ca02c","#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#1f77b4", "#f7b6d2", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#9c9ede", "#8c6d31", "#ffbb78", "#bd9e39"]
+        // "#ff3333","#228833","#117733",#a2c8ec, #898989,  #ababab, #ff800e, 
       },
       sizeBy: "degree",
       size: {
@@ -331,14 +334,37 @@ export default class GraphStore {
       .range([this.nodes.size.min, this.nodes.size.max]);
   }
 
+
+  @computed
+  get getNominalColor(){
+    if (this.nodes.color.scale == "Nominal Scale") { //nominal scale 
+      const uniqcommunity = new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))
+    
+      const colorBlind =  ['#88CCEE', "#EE8866", "#4477AA", '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499',  "#ffbc79", '#EE6677',   "#c85200", '#4477AA', '#CCBB44', '#66CCEE', '#AA3377', "#7f7f7f", '#BBCC33', '#AAAA00', '#77AADD', '#EE8866', '#EEDD88', '#FFAABB', '#99DDFF', '#44BB99']
+
+      // [ "#006ba4", "#ffbc79", "#882255", "#77AADD", "#EE8866", "#EEDD88", "#4477AA",  "#FFAABB",  "#c85200", "#595959", "#CCBB44", "#66CCEE","#332288", "#DDCC77", "#999933","#CC6677", "#88CCEE", "#AA4499",  "#EE6677",   "#AA3377",  "#BBCC33", "#44AA99", "#AAAA00"]
+      // ['#88CCEE', '#44AA99', '#117733', '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499', '#DDDDDD', '#EE6677', '#228833', '#4477AA', '#CCBB44', '#66CCEE', '#AA3377', '#BBBBBB', '#BBCC33', '#AAAA00', '#77AADD', '#EE8866', '#EEDD88', '#FFAABB', '#99DDFF', '#44BB99']
+      return colorBlind.slice(0, uniqcommunity.size)
+        
+    } else { //linear and log scale 
+      return null
+    }
+  }
+
+
+
   @computed
   get nodeColorScale() {
     if (this.nodes.color.scale == "Nominal Scale") { //nominal scale 
-      const nominalColor =  ["#0073bc", "#ff3333", "#ff7f0e", "#a55194", "#2ca02c", "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#1f77b4", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#9c9ede", "#8c6d31", "#ffbb78", "#bd9e39"]
+      // const nominalColor =  ["#0073bc", "#ff3333", "#ff7f0e", "#a55194", "#2ca02c", "#aec7e8", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#1f77b4", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5", "#9c9ede", "#8c6d31", "#ffbb78", "#bd9e39"]
+      const colorBlind =  ['#88CCEE', "#EE8866", "#4477AA", '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499',  "#ffbc79", '#EE6677',   "#c85200", '#4477AA', '#CCBB44', '#66CCEE', '#AA3377', "#7f7f7f", '#BBCC33', '#AAAA00', '#77AADD', '#EE8866', '#EEDD88', '#FFAABB', '#99DDFF', '#44BB99']
 
+      // [ "#006ba4", "#ffbc79", "#882255", "#77AADD", "#EE8866", "#EEDD88", "#4477AA",  "#FFAABB",  "#c85200", "#595959", "#CCBB44", "#66CCEE","#332288", "#DDCC77", "#999933","#CC6677", "#88CCEE", "#AA4499",  "#EE6677",   "#AA3377",  "#BBCC33", "#44AA99", "#AAAA00"]
+
+      // ['#88CCEE', '#44AA99', '#117733', '#332288', '#DDCC77', '#999933','#CC6677', '#882255', '#AA4499', '#DDDDDD', '#EE6677', '#228833', '#4477AA', '#CCBB44', '#66CCEE', '#AA3377', '#BBBBBB', '#BBCC33', '#AAAA00', '#77AADD', '#EE8866', '#EEDD88', '#FFAABB', '#99DDFF', '#44BB99']
       return scales[this.nodes.color.scale]()
         .domain([...new Set(this.rawGraph.nodes.map(item => item[this.nodes.colorBy]))])
-        .range(nominalColor);
+        .range(colorBlind);
     } else { //linear and log scale 
       return scales[this.nodes.color.scale]()
         .domain(this.minMax[this.nodes.colorBy])
