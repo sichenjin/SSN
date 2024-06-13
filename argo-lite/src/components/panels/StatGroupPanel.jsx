@@ -61,10 +61,10 @@ class StatGroupPanel extends React.Component {
                 appState.graph.rawGraph.nodes.forEach((node) => {
                     var unicommunity = Math.max.apply(null, Object.values(communityDict)) +1
                     if(node.degree>0 && !communityDict[node.id]){
-                        node.community = String.fromCharCode( unicommunity + 95)
+                        node.community = String.fromCharCode( unicommunity + 96)
                         unicommunity = unicommunity+1
                     }else if(communityDict[node.id]){
-                        node.community = String.fromCharCode(communityDict[node.id] + 95)
+                        node.community = String.fromCharCode(communityDict[node.id] + 96)
                     }else{
                         node.community =  '-1'
                     }

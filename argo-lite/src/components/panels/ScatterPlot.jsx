@@ -91,7 +91,7 @@ class ScatterPlot extends React.Component {
 
     //download for all 
     let temp = []
-    header = appState.graph.metadata.nodeComputed.filter(n => (n !== 'shortest path' && n !== 'pair distance'))
+    header = appState.graph.allPropertiesKeyList.filter(n => (n !== 'shortest path' && n !== 'pair distance' && n !== 'isHidden'))
     header.unshift('id')
     temp.push(header)
     // temp[0].unshift('id')
@@ -468,7 +468,7 @@ class ScatterPlot extends React.Component {
 
 
           {(
-            <CSVLink data={this.state.csvarray} onClick={this.downloadCSV} asyncOnClick={true} filename="bsedata.csv">
+            <CSVLink data={this.state.csvarray} onClick={this.downloadCSV} asyncOnClick={true} filename="ssndata.csv">
               <Button
                 className="bp4-button"
                 style={{ transform: "translate(12vw, 1.0vh)", }}
