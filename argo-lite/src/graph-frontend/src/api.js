@@ -11,12 +11,12 @@ var ee = def.ee;
 /**
  * These functions are endpoints revealed to Argo frontend
  */
-module.exports = function(self) {
+module.exports = function (self) {
   /**
    * Set frame.mouseMode to the specified mode
    * @param {string} mode name of the mode, currently supports ['select', 'move']
    */
-  self.setMouseMode = mode => {
+  self.setMouseMode = (mode) => {
     if (mode === "select") {
       // This is the default mode, where users can select one or multiple nodes
       self.mouseMode = "select";
@@ -53,32 +53,30 @@ module.exports = function(self) {
     self.mapNodeAttributes([false, "", "pinned"], self.selection);
   };
 
-  self.setLabelFontSize = size => {
-    self.graph.forEachNode(function(node) {
+  self.setLabelFontSize = (size) => {
+    self.graph.forEachNode(function (node) {
       self.changeLabelFontSize(node, size, self.relativeFontSize);
     });
 
     // change the map label size
-    size = (size * self.relativeFontSize ) ;
-    document.querySelectorAll('.maptooltip').forEach(node=>{
+    size = size * self.relativeFontSize;
+    document.querySelectorAll(".maptooltip").forEach((node) => {
       node.style.fontSize = size.toString() + "px";
-    })
-    
+    });
   };
 
-  self.setLabelRelativeSize = size => {
+  self.setLabelRelativeSize = (size) => {
     self.relativeFontSize = size;
     self.setLabelFontSize(self.labelSize);
   };
 
-  self.setLabelLength = numChars => {
-    self.graph.forEachNode(function(node) {
+  self.setLabelLength = (numChars) => {
+    self.graph.forEachNode(function (node) {
       self.changeLabelLength(node, numChars);
     });
-    document.querySelectorAll('.maptooltip').forEach(node=>{
+    document.querySelectorAll(".maptooltip").forEach((node) => {
       node.style.width = numChars.toString() + "ch";
-    })
-    
+    });
   };
 
   self.toggleMiniMap = () => {
@@ -132,7 +130,7 @@ module.exports = function(self) {
   // Also turns off label CSSRenderer when no node is showing label.
   self.updateNodesShowingLabels = () => {
     var nodes = [];
-    self.graph.forEachNode(n => {
+    self.graph.forEachNode((n) => {
       var node = self.graph.getNode(n.id);
       if (node.renderData.textHolder.children[0].element.override) {
         nodes.push(n.id);
@@ -143,7 +141,10 @@ module.exports = function(self) {
     // This is because CSSRenderer is slow.
     if (nodes.length == 0) {
       self.turnOffLabelCSSRenderer();
-    } else if (!((self.selection.length > 0) && (self.dragging)) || (appState.graph.frame.paused)) { 
+    } else if (
+      !(self.selection.length > 0 && self.dragging) ||
+      appState.graph.frame.paused
+    ) {
       //Only turns on when no node is moving
       self.turnOnLabelCSSRenderer();
     }
@@ -152,41 +153,40 @@ module.exports = function(self) {
   };
 
   self.toggleSelectedLabels = () => {
-    self.toggleLabels(self.selection.map(n => n.id));
+    self.toggleLabels(self.selection.map((n) => n.id));
   };
 
   self.showSelectedLabels = () => {
     // document.getElementById("showSelected").style.display="none";
     // document.getElementById("hideSelected").style.display="inline";
-    self.showLabels(self.selection.map(n => n.id));
-    self.selection.forEach(n=>{
-      document.querySelectorAll(`.maptooltip_${n.id}`).forEach(node=>{
+    self.showLabels(self.selection.map((n) => n.id));
+    self.selection.forEach((n) => {
+      document.querySelectorAll(`.maptooltip_${n.id}`).forEach((node) => {
         node.style.opacity = 1;
-      })
-      
-    })
-      
-    if(appState.graph.mapClicked){
-      const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(appState.graph.mapClicked)
-      selectneighbors.forEach(n=>{
-        document.querySelectorAll(`.maptooltip_${n.id}`).forEach(node=>{
+      });
+    });
+
+    if (appState.graph.mapClicked) {
+      const selectneighbors = appState.graph.frame.getNeighborNodesFromGraph(
+        appState.graph.mapClicked
+      );
+      selectneighbors.forEach((n) => {
+        document.querySelectorAll(`.maptooltip_${n.id}`).forEach((node) => {
           node.style.opacity = 1;
-        })
-        
-      })
-      self.showLabels(selectneighbors.map(n => n.id));
+        });
+      });
+      self.showLabels(selectneighbors.map((n) => n.id));
     }
-    
   };
 
   self.hideSelectedLabels = () => {
-    document.getElementById("hideSelected").style.display="none";
-    document.getElementById("showSelected").style.display="inline";
-    self.hideLabels(self.selection.map(n => n.id));
+    document.getElementById("hideSelected").style.display = "none";
+    document.getElementById("showSelected").style.display = "inline";
+    self.hideLabels(self.selection.map((n) => n.id));
   };
 
-  self.toggleLabels = nodeids => {
-    self.graph.forEachNode(n => {
+  self.toggleLabels = (nodeids) => {
+    self.graph.forEachNode((n) => {
       if (nodeids.includes(n.id)) {
         var node = self.graph.getNode(n.id);
         if (
@@ -194,28 +194,25 @@ module.exports = function(self) {
         ) {
           node.renderData.textHolder.children[0].element.override = false;
         }
-        node.renderData.textHolder.children[0].element.override = !node
-          .renderData.textHolder.children[0].element.override;
+        node.renderData.textHolder.children[0].element.override =
+          !node.renderData.textHolder.children[0].element.override;
       }
     });
     self.updateNodesShowingLabels();
   };
 
-  self.showLabels = nodeids => {
-    self.graph.forEachNode(n => {
+  self.showLabels = (nodeids) => {
+    self.graph.forEachNode((n) => {
       if (nodeids.includes(n.id)) {
         var node = self.graph.getNode(n.id);
         node.renderData.textHolder.children[0].element.override = true;
       }
     });
     self.updateNodesShowingLabels();
-    
-    
-    
   };
 
-  self.hideLabels = nodeids => {
-    self.graph.forEachNode(n => {
+  self.hideLabels = (nodeids) => {
+    self.graph.forEachNode((n) => {
       if (nodeids.includes(n.id)) {
         var node = self.graph.getNode(n.id);
         node.renderData.textHolder.children[0].element.override = false;
@@ -227,57 +224,60 @@ module.exports = function(self) {
   self.hideAllLabels = () => {
     // document.getElementById("hideAll").style.display="none";
     // document.getElementById("showAll").style.display="inline";
-    self.graph.forEachNode(function(node) {
+    self.graph.forEachNode(function (node) {
       var node = self.graph.getNode(node.id);
       node.renderData.textHolder.children[0].element.override = false;
     });
     self.updateNodesShowingLabels();
-    //update map tooltip 
-    document.querySelectorAll('.maptooltip').forEach(node=>{
-      node.style.opacity=0;
-    })
+    //update map tooltip
+    document.querySelectorAll(".maptooltip").forEach((node) => {
+      node.style.opacity = 0;
+    });
   };
 
   self.showAllLabels = () => {
     // document.getElementById("showAll").style.display="none";
     // document.getElementById("hideAll").style.display="inline";
-    self.graph.forEachNode(function(node) {
+    self.graph.forEachNode(function (node) {
       var node = self.graph.getNode(node.id);
       node.renderData.textHolder.children[0].element.override = true;
     });
     self.updateNodesShowingLabels();
-    document.querySelectorAll('.maptooltip').forEach(node=>{
-      node.style.opacity=1;
-    })
+    document.querySelectorAll(".maptooltip").forEach((node) => {
+      node.style.opacity = 1;
+    });
   };
 
-  self.setCanvasSize = function(size) {
+  self.setCanvasSize = function (size) {
     self.setBoundarySize(size);
   };
 
-  self.setAllNodesShape = function(shape) {
+  self.setAllNodesShape = function (shape) {
     if (self.selection.length == 0) {
-      self.graph.forEachNode(function(node) {
+      self.graph.forEachNode(function (node) {
         self.setNodeShape(self.graph.getNode(node.id), shape);
       });
     } else {
-      self.selection.forEach(function(node) {
+      self.selection.forEach(function (node) {
         self.setNodeShape(self.graph.getNode(node.id), shape);
       });
     }
   };
 
-  self.setAllNodesShapeWithOverride = function(shape, overrides) {
-    self.graph.forEachNode(function(node) {
-      if (overrides.has(node.id) && overrides.get(node.id).has('shape')) {
-        self.setNodeShape(self.graph.getNode(node.id), overrides.get(node.id).get('shape'));
+  self.setAllNodesShapeWithOverride = function (shape, overrides) {
+    self.graph.forEachNode(function (node) {
+      if (overrides.has(node.id) && overrides.get(node.id).has("shape")) {
+        self.setNodeShape(
+          self.graph.getNode(node.id),
+          overrides.get(node.id).get("shape")
+        );
       } else {
         self.setNodeShape(self.graph.getNode(node.id), shape);
       }
     });
-  }
+  };
 
-  self.setNodeShape = function(node, shape) {
+  self.setNodeShape = function (node, shape) {
     if (shape == "square") {
       node.renderData.shape = shape;
       node.renderData.draw_object.geometry = self.make2x2Rect();
@@ -285,109 +285,101 @@ module.exports = function(self) {
     } else if (shape == "circle") {
       node.renderData.shape = shape;
       node.renderData.draw_object.geometry = new THREE.CircleGeometry(1, 32);
-      node.renderData.draw_object.children[0].geometry = new THREE.CircleGeometry(
-        1,
-        32
-      );
+      node.renderData.draw_object.children[0].geometry =
+        new THREE.CircleGeometry(1, 32);
     } else if (shape == "triangle") {
       node.renderData.shape = shape;
       node.renderData.draw_object.geometry = new THREE.CircleGeometry(1, 3);
-      node.renderData.draw_object.children[0].geometry = new THREE.CircleGeometry(
-        1,
-        3
-      );
+      node.renderData.draw_object.children[0].geometry =
+        new THREE.CircleGeometry(1, 3);
     } else if (shape == "pentagon") {
       node.renderData.shape = shape;
       node.renderData.draw_object.geometry = new THREE.CircleGeometry(1, 5);
-      node.renderData.draw_object.children[0].geometry = new THREE.CircleGeometry(
-        1,
-        5
-      );
+      node.renderData.draw_object.children[0].geometry =
+        new THREE.CircleGeometry(1, 5);
     } else if (shape == "hexagon") {
       node.renderData.shape = shape;
       node.renderData.draw_object.geometry = new THREE.CircleGeometry(1, 6);
-      node.renderData.draw_object.children[0].geometry = new THREE.CircleGeometry(
-        1,
-        6
-      );
+      node.renderData.draw_object.children[0].geometry =
+        new THREE.CircleGeometry(1, 6);
     } else if (shape == "octagon") {
       node.renderData.shape = shape;
       node.renderData.draw_object.geometry = new THREE.CircleGeometry(1, 8);
-      node.renderData.draw_object.children[0].geometry = new THREE.CircleGeometry(
-        1,
-        8
-      );
+      node.renderData.draw_object.children[0].geometry =
+        new THREE.CircleGeometry(1, 8);
     }
   };
 
-  self.getNumSelected = function() {
+  self.getNumSelected = function () {
     if (self.selection.length == self.graph.getNodesCount()) {
       return 0;
     }
     return self.selection.length;
   };
 
-  self.toggleDark = function() {
+  self.toggleDark = function () {
     self.darkMode = !self.darkMode;
     self.updateViewPortEdgeColor();
   };
 
-  self.updateViewPortEdgeColor = function() {
-    self.viewPort.material.color = new THREE.Color( self.darkMode? 0xffffff : 0x000000 );       
-  }
+  self.updateViewPortEdgeColor = function () {
+    self.viewPort.material.color = new THREE.Color(
+      self.darkMode ? 0xffffff : 0x000000
+    );
+  };
 
-  self.getGraph = function() {
+  self.getGraph = function () {
     return self.graph;
   };
 
-  self.getNodeList = function() {
+  self.getNodeList = function () {
     var nodes = [];
-    self.graph.forEachNode(function(node) {
+    self.graph.forEachNode(function (node) {
       nodes.push(node);
     });
     return nodes;
   };
 
-  self.getEdgeList = function(){
+  self.getEdgeList = function () {
     var edges = [];
 
-    self.graph.forEachLink(function(edge) {
+    self.graph.forEachLink(function (edge) {
       edges.push(edge);
     });
     return edges;
-  }
+  };
 
-  self.getPositions = function() {
+  self.getPositions = function () {
     var poses = {};
-    self.graph.forEachNode(function(node) {
+    self.graph.forEachNode(function (node) {
       poses[node.id] = [node.x, node.y];
     });
     return poses;
   };
 
-  self.getPinPositions = function() {
+  self.getPinPositions = function () {
     var poses = {};
-    self.graph.forEachNode(function(node) {
+    self.graph.forEachNode(function (node) {
       poses[node.id] = [node.fx, node.fy];
     });
     return poses;
   };
 
-  // retrieves current graph's pinned nodes 
-  self.getPinnedNodes = function() {
+  // retrieves current graph's pinned nodes
+  self.getPinnedNodes = function () {
     var poses = new Set();
-    self.graph.forEachNode(function(node) {
-      if(node.pinnedx && node.pinnedy) {
+    self.graph.forEachNode(function (node) {
+      if (node.pinnedx && node.pinnedy) {
         poses.add(node.id);
       }
     });
     return poses;
-  }
+  };
 
   //pins nodes that were pinned from a graph loaded in
-  self.setPinnedNodes = function(nodesToPin) {
+  self.setPinnedNodes = function (nodesToPin) {
     self.mapNodeAttributes([true, "", "pinned"], nodesToPin);
-  }
+  };
 
   var alias = false;
   self.toggleAlias = () => {
@@ -397,7 +389,7 @@ module.exports = function(self) {
     alias = !alias;
   };
 
-  self.setLastNode = id => {
+  self.setLastNode = (id) => {
     self.lastNode = self.graph.getNode(id);
   };
 
@@ -412,11 +404,11 @@ module.exports = function(self) {
     self.onWindowResize();
   };
 
-  self.toggleNeighborHighlight = function() {
+  self.toggleNeighborHighlight = function () {
     self.doHighlightNeighbors = !self.doHighlightNeighbors;
   };
 
-  self.highlightNodeIds = function(nodeids, toggle) {
+  self.highlightNodeIds = function (nodeids, toggle) {
     if (nodeids.length > 0 && Array.isArray(nodeids[0])) {
       nodeids = nodeids[0];
     }
@@ -438,14 +430,14 @@ module.exports = function(self) {
     // });
   };
 
-  self.removeSelected = function() {
+  self.removeSelected = function () {
     for (var i = 0; i < self.selection.length; i++) {
       self.removeNode(self.selection[i]);
     }
     self.selection = [];
   };
 
-  self.removeNodesByIds = function(nodeids) {
+  self.removeNodesByIds = function (nodeids) {
     for (var i = 0; i < nodeids.length; i++) {
       const node = self.graph.getNode(nodeids[i]);
       if (node) {
@@ -455,11 +447,18 @@ module.exports = function(self) {
     self.selection = [];
   };
 
-  self.getSelected = function() {
+  self.removeEdgesByIds = function (source, target) {
+    const edge = self.graph.getLink(source, target);
+    if (edge) {
+      self.removeEdge(edge);
+    }
+  };
+
+  self.getSelected = function () {
     return self.selection;
   };
 
-  self.getSelectedIds = function() {
-    return self.selection.map(n => n.id);
+  self.getSelectedIds = function () {
+    return self.selection.map((n) => n.id);
   };
 };

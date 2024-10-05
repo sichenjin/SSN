@@ -8,10 +8,11 @@ import SelectionPanel from "./SelectionPanel";
 @observer
 class NodesPanel extends React.Component {
   getRenderedNodes = () => {
+    // selectedNodes is the nodes selected by mouse click, instead of nodes that are not hidden
     if (appState.graph.selectedNodes.length === 0) {
       return (
         <div>
-          <text style={{fontSize:"12px"}}>Modifying All Nodes</text>
+          <text style={{ fontSize: "12px" }}>Modifying All Nodes</text>
         </div>
       );
     }

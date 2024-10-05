@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="../node_modules/normalize.css/normalize.css">
-  <link rel="stylesheet" href="../node_modules/@blueprintjs/core/dist/blueprint.css">
-  <link rel="stylesheet" href="../node_modules/@blueprintjs/table/dist/table.css">
-  <link rel="stylesheet" href="styles/index.css">
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="../node_modules/normalize.css/normalize.css" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/@blueprintjs/core/dist/blueprint.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../node_modules/@blueprintjs/table/dist/table.css"
+    />
+    <link rel="stylesheet" href="styles/index.css" />
 
-  
-  <!-- <link
+    <!-- <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin=""
 /> -->
-</head>
-<body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0">
-<div class="app" id="App"></div>
-</body>
-<script type="text/jsx">
-  import React from 'react';
-  import ReactDOM from 'react-dom';
+  </head>
+  <body style="overflow: hidden; background-color: rgba(0, 0, 0, 0); margin: 0">
+    <div class="app" id="App"></div>
+  </body>
+  <script type="text/jsx">
+    import React from 'react';
+    import ReactDOM from 'react-dom';
 
-  const render = () => {
-    const App = require('./app').default;
-    ReactDOM.render(<App/>, document.getElementById('App'));
-  };
+    const render = () => {
+      const App = require('./app').default;
+      ReactDOM.render(<App/>, document.getElementById('App'));
+    };
 
-  render();
-
-</script>
+    render();
+  </script>
 </html>

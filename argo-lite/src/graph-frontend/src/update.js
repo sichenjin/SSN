@@ -8,7 +8,6 @@ var OrbitControls = def.OrbitControls;
 var d3 = def.d3;
 var ee = def.ee;
 
-
 module.exports = function (self) {
   /**
    *  Update the position and color of the edges
@@ -21,7 +20,9 @@ module.exports = function (self) {
     // var width = self.edges.attributes.width.array;
 
     //directed arrows
-    self.directedArrows.attributes.position.array = new Float32Array(self.MAX_LINES * 3);
+    self.directedArrows.attributes.position.array = new Float32Array(
+      self.MAX_LINES * 3
+    );
     var arrowPosition = self.directedArrows.attributes.position.array;
     var arrowColor = self.directedArrows.attributes.color.array;
 
@@ -79,26 +80,33 @@ module.exports = function (self) {
             // var tempYCorner = midPointY - Math.sin(radianDegree) * 0.866;
 
             // var degreeDifference = Math.PI/2 - radianDegree
-            arrowPosition[i / 2 * 9] = midPointX;
-            arrowPosition[i / 2 * 9 + 1] = midPointY;
+            arrowPosition[(i / 2) * 9] = midPointX;
+            arrowPosition[(i / 2) * 9 + 1] = midPointY;
 
             if (dX >= 0) {
               var tempXCorner = midPointX - Math.cos(radianDegree) * 0.866;
               var tempYCorner = midPointY - Math.sin(radianDegree) * 0.866;
               var degreeDifference = Math.PI / 2 - radianDegree;
-              arrowPosition[i / 2 * 9 + 3] = tempXCorner - 0.5 * Math.cos(degreeDifference);
-              arrowPosition[i / 2 * 9 + 4] = tempYCorner + 0.5 * Math.sin(degreeDifference);
-              arrowPosition[i / 2 * 9 + 6] = tempXCorner + 0.5 * Math.cos(degreeDifference);
-              arrowPosition[i / 2 * 9 + 7] = tempYCorner - 0.5 * Math.sin(degreeDifference);
-
+              arrowPosition[(i / 2) * 9 + 3] =
+                tempXCorner - 0.5 * Math.cos(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 4] =
+                tempYCorner + 0.5 * Math.sin(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 6] =
+                tempXCorner + 0.5 * Math.cos(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 7] =
+                tempYCorner - 0.5 * Math.sin(degreeDifference);
             } else {
               var tempXCorner = midPointX + Math.cos(radianDegree) * 0.866;
               var tempYCorner = midPointY + Math.sin(radianDegree) * 0.866;
               var degreeDifference = Math.PI / 2 - radianDegree;
-              arrowPosition[i / 2 * 9 + 3] = tempXCorner + 0.5 * Math.cos(degreeDifference);
-              arrowPosition[i / 2 * 9 + 4] = tempYCorner - 0.5 * Math.sin(degreeDifference);
-              arrowPosition[i / 2 * 9 + 6] = tempXCorner - 0.5 * Math.cos(degreeDifference);
-              arrowPosition[i / 2 * 9 + 7] = tempYCorner + 0.5 * Math.sin(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 3] =
+                tempXCorner + 0.5 * Math.cos(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 4] =
+                tempYCorner - 0.5 * Math.sin(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 6] =
+                tempXCorner - 0.5 * Math.cos(degreeDifference);
+              arrowPosition[(i / 2) * 9 + 7] =
+                tempYCorner + 0.5 * Math.sin(degreeDifference);
             }
           } else {
             self.arrow.visible = false;
@@ -256,9 +264,7 @@ module.exports = function (self) {
       if (!oldNode) {
         self.removeNode(node);
       }
-      
     });
-    
 
     self.force.alpha(1);
     self.force.stop();
@@ -279,11 +285,13 @@ module.exports = function (self) {
       if (self.newNodeIds.length < 10) {
         for (let i = 0; i < self.newNodeIds.length; i++) {
           self.selection.push(self.graph.getNode(self.newNodeIds[i]));
-          appState.graph.selectedNodes.push(self.graph.getNode(self.newNodeIds[i]));
+          appState.graph.selectedNodes.push(
+            self.graph.getNode(self.newNodeIds[i])
+          );
         }
         // self.ee.emit("select-nodes", self.selection);
-        
-        //  = self.selection 
+
+        //  = self.selection
       }
     }
   };
