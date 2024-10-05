@@ -1,5 +1,5 @@
 import React from "react";
-import { Classes,Button, Tab2, Tabs2, Tag } from "@blueprintjs/core";
+import { Classes, Button, Tab2, Tabs2, Tag } from "@blueprintjs/core";
 import classnames from "classnames";
 import { observer } from "mobx-react";
 import appState from "../stores";
@@ -8,14 +8,15 @@ import { addNode } from "../ipc/client";
 import NodesPanel from "./panels/NodesPanel";
 import NodesFilterPanel from "./panels/NodesFilterPanel";
 import EdgesPanel from "./panels/EdgesPanel";
+import EdgesFilterPanel from "./panels/EdgesFilterPanel";
 import LabelsPanel from "./panels/LabelsPanel";
 import NodeDetail from "./panels/NodeDetailPanel";
 import ScatterPlot from "./panels/ScatterPlot";
 import Legends from "./Legends";
-import StatusBar from './StatusBar';
+import StatusBar from "./StatusBar";
 import SelectionActionPanel from "./panels/SelectionActionPanel";
 import ZoomPanel from "./panels/ZoomPanel";
-import * as SvgSaver from 'svgsaver';
+import * as SvgSaver from "svgsaver";
 
 // TODO: migrate to simple select
 
@@ -45,7 +46,7 @@ class FilterOptionsCard extends React.Component {
         <h4>Filter Options</h4>
         <Tabs2 animate id="filter-options">
           <Tab2 id="nodes" title="Nodes" panel={<NodesFilterPanel />} />
-          <Tab2 id="edges" title="Edges" panel={<EdgesPanel />} />
+          <Tab2 id="edges" title="Edges" panel={<EdgesFilterPanel />} />
           {/* <Tab2 id="layout" title="Layout" panel={<LayoutPanel />} /> */}
           <Tabs2.Expander />
         </Tabs2>
@@ -54,63 +55,65 @@ class FilterOptionsCard extends React.Component {
   }
 }
 
-
 //
 
 @observer
 class FloatingCards extends React.Component {
   optionsVisible = {
-    left: '0em'
-  }
+    left: "0em",
+  };
   optionsInvisible = {
-    left: '-22em'
-  }
+    left: "-22em",
+  };
   sideButtonVis = {
-    marginLeft: '50px'
-  }
+    marginLeft: "50px",
+  };
   sideButtonInv = {
-    marginLeft: '-15px'
-  }
+    marginLeft: "-15px",
+  };
   toggleOptions = () => {
-    appState.preferences.isRenderOptionsCardHidden = !appState.preferences.isRenderOptionsCardHidden;
+    appState.preferences.isRenderOptionsCardHidden =
+      !appState.preferences.isRenderOptionsCardHidden;
   };
 
   filtersVisible = {
-    left: '0em'
-  }
+    left: "0em",
+  };
   filtersInvisible = {
-    left: '-22em'
-  }
+    left: "-22em",
+  };
   filterSideButtonVis = {
-    marginLeft: '50px'
-  }
+    marginLeft: "50px",
+  };
   filterSideButtonInv = {
-    marginLeft: '-15px'
-  }
+    marginLeft: "-15px",
+  };
   filterToggleOptions = () => {
-    appState.preferences.isFilterOptionsCardHidden = !appState.preferences.isFilterOptionsCardHidden;
+    appState.preferences.isFilterOptionsCardHidden =
+      !appState.preferences.isFilterOptionsCardHidden;
   };
 
   scatterVisible = {
-    right: '0em'
-  }
+    right: "0em",
+  };
   scatterInvisible = {
-    right: '-52em'
-  }
+    right: "-52em",
+  };
   scatterSideButtonVis = {
-    marginLeft: '0px'
-  }
+    marginLeft: "0px",
+  };
   scatterSideButtonInv = {
-    marginLeft: '80px'
-  }
+    marginLeft: "80px",
+  };
 
   scatterToggleOptions = () => {
-    appState.preferences.isScatterPlotCardHidden = !appState.preferences.isScatterPlotCardHidden;
+    appState.preferences.isScatterPlotCardHidden =
+      !appState.preferences.isScatterPlotCardHidden;
   };
   render() {
     return (
       <div className="floating-overlay">
-        <div className="left-cards" style={{zIndex: '5000'}}>
+        <div className="left-cards" style={{ zIndex: "5000" }}>
           {appState.search.panelOpen && (
             <div
               className={classnames(
@@ -124,7 +127,7 @@ class FloatingCards extends React.Component {
                 style={{
                   display: "flex",
                   justifyContent: "left",
-                  alignItems: "left"
+                  alignItems: "left",
                 }}
               >
                 <h4 style={{ width: 140 }}>
@@ -136,7 +139,7 @@ class FloatingCards extends React.Component {
                 <SimpleSelect
                   style={{ "margin-bottom": 10 }}
                   items={[...appState.graph.metadata.nodeComputed, "node_id"]}
-                  onSelect={it => (appState.graph.searchOrder = it)}
+                  onSelect={(it) => (appState.graph.searchOrder = it)}
                   value={appState.graph.searchOrder}
                 />
               </div>
@@ -148,7 +151,7 @@ class FloatingCards extends React.Component {
                 )}
                 style={{
                   width: "100%",
-                  userSelect: "none"
+                  userSelect: "none",
                 }}
               >
                 <tbody>
@@ -179,10 +182,12 @@ class FloatingCards extends React.Component {
                   onMouseDown={() => {
                     if (appState.search.pageNum > 0) {
                       appState.search.pageNum -= 1;
-                      appState.search.candidates = appState.search.allCands.slice(
-                        appState.search.pageNum * appState.search.nPerPage,
-                        (appState.search.pageNum + 1) * appState.search.nPerPage
-                      );
+                      appState.search.candidates =
+                        appState.search.allCands.slice(
+                          appState.search.pageNum * appState.search.nPerPage,
+                          (appState.search.pageNum + 1) *
+                            appState.search.nPerPage
+                        );
                     }
                   }}
                 >
@@ -193,10 +198,12 @@ class FloatingCards extends React.Component {
                   <a
                     onMouseDown={() => {
                       appState.search.pageNum = 0;
-                      appState.search.candidates = appState.search.allCands.slice(
-                        appState.search.pageNum * appState.search.nPerPage,
-                        (appState.search.pageNum + 1) * appState.search.nPerPage
-                      );
+                      appState.search.candidates =
+                        appState.search.allCands.slice(
+                          appState.search.pageNum * appState.search.nPerPage,
+                          (appState.search.pageNum + 1) *
+                            appState.search.nPerPage
+                        );
                     }}
                   >
                     1&nbsp;
@@ -206,14 +213,14 @@ class FloatingCards extends React.Component {
                     style={{
                       color: "#111111",
                       pointerEvents: "none",
-                      cursor: "default"
+                      cursor: "default",
                     }}
                   >
                     {appState.search.pageNum + 1}&nbsp;
                   </a>
                 )}
                 ...<b>&nbsp;</b>
-                {appState.search.pages.map(i => {
+                {appState.search.pages.map((i) => {
                   if (
                     i != 0 &&
                     i != appState.search.maxPage &&
@@ -225,7 +232,7 @@ class FloatingCards extends React.Component {
                         style={{
                           color: "#111111",
                           pointerEvents: "none",
-                          cursor: "default"
+                          cursor: "default",
                         }}
                       >
                         {appState.search.pageNum + 1}&nbsp;
@@ -245,11 +252,13 @@ class FloatingCards extends React.Component {
                         key={i}
                         onMouseDown={() => {
                           appState.search.pageNum = i;
-                          appState.search.candidates = appState.search.allCands.slice(
-                            appState.search.pageNum * appState.search.nPerPage,
-                            (appState.search.pageNum + 1) *
-                            appState.search.nPerPage
-                          );
+                          appState.search.candidates =
+                            appState.search.allCands.slice(
+                              appState.search.pageNum *
+                                appState.search.nPerPage,
+                              (appState.search.pageNum + 1) *
+                                appState.search.nPerPage
+                            );
                         }}
                       >
                         {i + 1}&nbsp;
@@ -262,10 +271,12 @@ class FloatingCards extends React.Component {
                   <a
                     onMouseDown={() => {
                       appState.search.pageNum = appState.search.maxPage;
-                      appState.search.candidates = appState.search.allCands.slice(
-                        appState.search.pageNum * appState.search.nPerPage,
-                        (appState.search.pageNum + 1) * appState.search.nPerPage
-                      );
+                      appState.search.candidates =
+                        appState.search.allCands.slice(
+                          appState.search.pageNum * appState.search.nPerPage,
+                          (appState.search.pageNum + 1) *
+                            appState.search.nPerPage
+                        );
                     }}
                   >
                     {appState.search.maxPage + 1}&nbsp;
@@ -275,7 +286,7 @@ class FloatingCards extends React.Component {
                     style={{
                       color: "#111111",
                       pointerEvents: "none",
-                      cursor: "default"
+                      cursor: "default",
                     }}
                   >
                     {appState.search.pageNum + 1}
@@ -286,10 +297,12 @@ class FloatingCards extends React.Component {
                   onMouseDown={() => {
                     if (appState.search.pageNum < appState.search.maxPage) {
                       appState.search.pageNum += 1;
-                      appState.search.candidates = appState.search.allCands.slice(
-                        appState.search.pageNum * appState.search.nPerPage,
-                        (appState.search.pageNum + 1) * appState.search.nPerPage
-                      );
+                      appState.search.candidates =
+                        appState.search.allCands.slice(
+                          appState.search.pageNum * appState.search.nPerPage,
+                          (appState.search.pageNum + 1) *
+                            appState.search.nPerPage
+                        );
                     }
                   }}
                 >
@@ -311,24 +324,47 @@ class FloatingCards extends React.Component {
               "left-cards",
               "graph-option"
             )}
-            style={appState.preferences.isRenderOptionsCardHidden ? this.optionsInvisible : this.optionsVisible}
+            style={
+              appState.preferences.isRenderOptionsCardHidden
+                ? this.optionsInvisible
+                : this.optionsVisible
+            }
           >
-            <button className="openbtn2" onClick={this.toggleOptions}> &#8249;
+            <button className="openbtn2" onClick={this.toggleOptions}>
+              {" "}
+              &#8249;
             </button>
             <br />
             <RenderOptionsCard />
           </div>
 
-
-
-          <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", paddingTop: "0em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
-            <button className="openbtn" onClick={this.toggleOptions} style={appState.preferences.isRenderOptionsCardHidden ? this.sideButtonVis : this.sideButtonInv}>
+          <div
+            className={classnames(
+              Classes.CARD,
+              Classes.ELEVATION_2,
+              "overlay-card",
+              "transparent-frame"
+            )}
+            style={{
+              width: "1em",
+              paddingTop: "0em",
+              paddingRight: "0.7em",
+              paddingBottom: "0.5em",
+              marginLeft: "-5.4em",
+            }}
+          >
+            <button
+              className="openbtn"
+              onClick={this.toggleOptions}
+              style={
+                appState.preferences.isRenderOptionsCardHidden
+                  ? this.sideButtonVis
+                  : this.sideButtonInv
+              }
+            >
               &#9776;
             </button>
           </div>
-
-
         </div>
         {/* Scatter Plot  panels */}
         {/* <div className="right-cards">
@@ -366,45 +402,68 @@ class FloatingCards extends React.Component {
         </div> */}
 
         {/* Filter option  panels */}
-        <div className={"left-cards"} style={{ marginTop:'6em'}} >
+        <div className={"left-cards"} style={{ marginTop: "6em" }}>
           <div
-
-
             className={classnames(
               Classes.CARD,
               Classes.ELEVATION_2,
               "overlay-card",
               "left-overlay-card",
               "transparent-frame",
-              "left-cards", 
+              "left-cards",
               "filter-option"
             )}
-            style={appState.preferences.isFilterOptionsCardHidden ? this.filtersInvisible : this.filtersVisible}
+            style={
+              appState.preferences.isFilterOptionsCardHidden
+                ? this.filtersInvisible
+                : this.filtersVisible
+            }
           >
-            <button className="openbtn2" onClick={this.filterToggleOptions}> &#8249;
+            <button className="openbtn2" onClick={this.filterToggleOptions}>
+              {" "}
+              &#8249;
             </button>
             <br />
             <FilterOptionsCard />
-
           </div>
 
-          <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", paddingTop: "0em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
-            <button className="openbtn" onClick={this.filterToggleOptions} style={appState.preferences.isFilterOptionsCardHidden ? this.filterSideButtonVis : this.filterSideButtonInv}>
-               &#9776;
+          <div
+            className={classnames(
+              Classes.CARD,
+              Classes.ELEVATION_2,
+              "overlay-card",
+              "transparent-frame"
+            )}
+            style={{
+              width: "1em",
+              paddingTop: "0em",
+              paddingRight: "0.7em",
+              paddingBottom: "0.5em",
+              marginLeft: "-5.4em",
+            }}
+          >
+            <button
+              className="openbtn"
+              onClick={this.filterToggleOptions}
+              style={
+                appState.preferences.isFilterOptionsCardHidden
+                  ? this.filterSideButtonVis
+                  : this.filterSideButtonInv
+              }
+            >
+              &#9776;
             </button>
           </div>
         </div>
 
-
-
-     
-
-
         <Legends />
         {/* <StatusBar /> */}
-        {// This menu only shows when there are nodes selected
-          appState.graph.selectedNodes.length > 0 && !appState.preferences.isNavbarInMinimalMode && <SelectionActionPanel />
+        {
+          // This menu only shows when there are nodes selected
+          appState.graph.selectedNodes.length > 0 &&
+            !appState.preferences.isNavbarInMinimalMode && (
+              <SelectionActionPanel />
+            )
         }
 
         <ZoomPanel />
@@ -412,6 +471,5 @@ class FloatingCards extends React.Component {
     );
   }
 }
-
 
 export default FloatingCards;
