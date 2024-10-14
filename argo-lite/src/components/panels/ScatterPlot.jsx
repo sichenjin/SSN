@@ -541,45 +541,7 @@ class ScatterPlot extends React.Component {
 
           <Button
             className="bp4-button"
-            style={{ transform: "translate(1vw, 1vh)" }}
-            onClick={() => {
-              const edges = appState.graph.frame.getEdgeList();
-              // check if the src/target degree is already calculated
-              if (!(edges[0].sourceDegree && edges[0].targetDegree)) {
-                const nodes = appState.graph.frame.getNodeList();
-                console.log(edges);
-                const edgeDegrees = edges.map((edge) => {
-                  const source_id = edge.fromId;
-                  const target_id = edge.toId;
-                  const source = nodes.find((node) => node.id === source_id);
-                  const target = nodes.find((node) => node.id === target_id);
-                  const sourceDegree = source.data.ref.degree;
-                  const targetDegree = target.data.ref.degree;
-                  edge.sourceDegree = parseInt(sourceDegree);
-                  edge.targetDegree = parseInt(targetDegree);
-                  console.log(sourceDegree, targetDegree);
-                  // if src_id === target_id, skip it
-                  if (source_id === target_id) {
-                    return null;
-                  }
-                  return {
-                    source: Math.min(sourceDegree, targetDegree),
-                    target: Math.max(sourceDegree, targetDegree),
-                  };
-                });
-              }
-              // console.log(edgeDegrees);
-              appState.graph.scatterplot.x = "source node degree";
-              appState.graph.scatterplot.y = "target node degree";
-              this.forceUpdate();
-            }}
-          >
-            Degree-Degree Plot
-          </Button>
-
-          <Button
-            className="bp4-button"
-            style={{ transform: "translate(30vw, 1vh)" }}
+            style={{ transform: "translate(38vw, 1vh)" }}
             onClick={() => {
               var svgsaver = new SvgSaver(); // creates a new instance
               var svg = document.querySelector("#scatterplot"); // find the SVG element
@@ -598,7 +560,7 @@ class ScatterPlot extends React.Component {
             >
               <Button
                 className="bp4-button"
-                style={{ transform: "translate(15vw, 1.0vh)" }}
+                style={{ transform: "translate(23vw, 1.0vh)" }}
               >
                 Download CSV
               </Button>
