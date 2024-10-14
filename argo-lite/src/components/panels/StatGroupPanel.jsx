@@ -542,7 +542,7 @@ class StatGroupPanel extends React.Component {
   };
 
   runDataAssortativity = () => {
-    // implement the degree-degree plot
+    // Implement the degree-degree plot, where each circle represents an edge, and the x and y coordinates are the larger/smaler degrees of the src/target nodes, respectively. Note that it doesn't ensure that the src node is on the x-axis and the target node is on the y-axis.
     const edges = appState.graph.frame.getEdgeList();
     // check if the src/target degree is already calculated
     if (!(edges[0].sourceDegree && edges[0].targetDegree)) {
@@ -569,8 +569,8 @@ class StatGroupPanel extends React.Component {
       });
     }
     // console.log(edgeDegrees);
-    appState.graph.scatterplot.x = "source node degree";
-    appState.graph.scatterplot.y = "target node degree";
+    appState.graph.scatterplot.x = "nodes with larger degree";
+    appState.graph.scatterplot.y = "nodes with smaller degree";
     // this.forceUpdate();
   };
 

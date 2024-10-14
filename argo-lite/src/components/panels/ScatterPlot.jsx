@@ -229,6 +229,7 @@ class ScatterPlot extends React.Component {
   render() {
     if (appState.graph.hasGraph) {
       let x, y;
+      // set up x/y axes scales
       if (
         appState.graph.scatterplot.x === "network density" ||
         appState.graph.scatterplot.x === "standard distance"
@@ -276,12 +277,12 @@ class ScatterPlot extends React.Component {
         x = scaleLinear()
           .domain([0, max(pairdistance)])
           .range([0, this.width]);
-      } else if (appState.graph.scatterplot.x === "source node degree") {
-        const sourceDegrees = appState.graph.frame.getEdgeList().map((edge) => {
-          return min([edge.sourceDegree, edge.targetDegree]);
+      } else if (appState.graph.scatterplot.x === "nodes with larger degree") {
+        const largerDegrees = appState.graph.frame.getEdgeList().map((edge) => {
+          return max([edge.sourceDegree, edge.targetDegree]);
         });
         x = scaleLinear()
-          .domain([0, max(sourceDegrees)])
+          .domain([0, max(largerDegrees)])
           .range([0, this.width]);
       } else {
         x = scaleLinear()
@@ -337,13 +338,14 @@ class ScatterPlot extends React.Component {
         y = scaleLinear()
           .domain([0, max(pairdistance)])
           .range([this.height, 0]);
-      } else if (appState.graph.scatterplot.y === "target node degree") {
-        console.log("target node degree");
-        const targetDegrees = appState.graph.frame.getEdgeList().map((edge) => {
-          return max([edge.sourceDegree, edge.targetDegree]);
-        });
+      } else if (appState.graph.scatterplot.y === "nodes with smaller degree") {
+        const smallerDegrees = appState.graph.frame
+          .getEdgeList()
+          .map((edge) => {
+            return min([edge.sourceDegree, edge.targetDegree]);
+          });
         y = scaleLinear()
-          .domain([0, max(targetDegrees)])
+          .domain([0, max(smallerDegrees)])
           .range([this.height, 0]);
       } else {
         y = scaleLinear()
@@ -432,8 +434,8 @@ class ScatterPlot extends React.Component {
                   (appState.graph.scatterplot.y == "standard distance" &&
                     appState.graph.scatterplot.x == "network density")
                 ? "Cluster-Cluster Plot"
-                : appState.graph.scatterplot.x == "source node degree" &&
-                  appState.graph.scatterplot.y == "target node degree"
+                : appState.graph.scatterplot.x == "nodes with larger degree" &&
+                  appState.graph.scatterplot.y == "nodes with smaller degree"
                 ? "Degree-Degree Plot"
                 : "Centrality-Centrality Plot"}
             </text>
@@ -625,8 +627,8 @@ class RenderCircles extends React.Component {
       appState.graph.scatterplot.x !== "standard distance" &&
       appState.graph.scatterplot.y !== "network density" &&
       appState.graph.scatterplot.x !== "network density" &&
-      appState.graph.scatterplot.x !== "source node degree" &&
-      appState.graph.scatterplot.y !== "target node degree"
+      appState.graph.scatterplot.x !== "nodes with larger degree" &&
+      appState.graph.scatterplot.y !== "nodes with smaller degree"
     ) {
       if (
         !appState.graph.currentlyHovered &&
@@ -710,8 +712,8 @@ class RenderCircles extends React.Component {
         };
       }
     } else if (
-      appState.graph.scatterplot.x === "source node degree" &&
-      appState.graph.scatterplot.y === "target node degree"
+      appState.graph.scatterplot.x === "nodes with larger degree" &&
+      appState.graph.scatterplot.y === "nodes with smaller degree"
     ) {
       const nodes = appState.graph.frame.getNodeList();
       const source_node = nodes.find((n) => n.id === node.fromId);
@@ -1109,17 +1111,16 @@ class RenderCircles extends React.Component {
           />
         ));
       } else if (
-        appState.graph.scatterplot.x === "source node degree" &&
-        appState.graph.scatterplot.y === "target node degree"
+        appState.graph.scatterplot.x === "nodes with larger degree" &&
+        appState.graph.scatterplot.y === "nodes with smaller degree"
       ) {
         const edges = appState.graph.frame.getEdgeList();
-        // minmin = min(edges[1].sourceDegree, edges[1].targetDegree);
         console.log("Scale domain:", this.props.scale.x.domain());
         console.log("Scale range:", this.props.scale.x.range());
         renderCircles = edges.map((edge, i) => (
           <circle
-            cx={this.props.scale.x(min([edge.sourceDegree, edge.targetDegree]))}
-            cy={this.props.scale.y(max([edge.sourceDegree, edge.targetDegree]))}
+            cx={this.props.scale.x(max([edge.sourceDegree, edge.targetDegree]))}
+            cy={this.props.scale.y(min([edge.sourceDegree, edge.targetDegree]))}
             r={this.props.cr}
             style={this.setScatterStyle(edge)}
             id={`${edge.fromId}👉${path.toId}`}
