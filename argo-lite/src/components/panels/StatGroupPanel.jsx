@@ -547,7 +547,7 @@ class StatGroupPanel extends React.Component {
     // check if the src/target degree is already calculated
     if (!(edges[0].sourceDegree && edges[0].targetDegree)) {
       const nodes = appState.graph.frame.getNodeList();
-      console.log(edges);
+      // console.log(edges);
       const edgeDegrees = edges.map((edge) => {
         const source_id = edge.fromId;
         const target_id = edge.toId;

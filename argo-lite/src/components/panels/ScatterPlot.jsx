@@ -672,6 +672,7 @@ class Axis extends React.Component {
 @observer
 class RenderCircles extends React.Component {
   setScatterStyle = (node, ni) => {
+    // ni is the index of the node in the array
     // const dehighlightNode = {
     //   fill: "rgba(25, 158, 199, .9)",
     //   zIndex: "0"
@@ -696,6 +697,8 @@ class RenderCircles extends React.Component {
         !appState.graph.currentlyHovered &&
         appState.graph.selectedNodes.length == 0
       ) {
+        // if no node is hovered and no node is selected
+        // return the default style
         return {
           fill: node.renderData.color,
           zIndex: "0",
@@ -777,8 +780,9 @@ class RenderCircles extends React.Component {
       appState.graph.scatterplot.x === "nodes with larger degree" &&
       appState.graph.scatterplot.y === "nodes with smaller degree"
     ) {
+      // in this case, the input param "node" is an edge
       const nodes = appState.graph.frame.getNodeList();
-      const source_node = nodes.find((n) => n.id === node.fromId);
+      const source_node = nodes.find((n) => n.id === node.fromId); // used to control the color of the circle
       // console.log(node.fromId);
       if (
         !appState.graph.currentlyHovered &&
@@ -791,11 +795,37 @@ class RenderCircles extends React.Component {
           fillOpacity: 0.8,
         };
       } else if (appState.graph.currentlyHovered) {
-        if (source_node.id === appState.graph.currentlyHovered.id) {
+        // if there are no selected nodes but there is a hovered node
+        if (
+          node.from_id === appState.graph.currentlyHovered.id ||
+          node.to_id === appState.graph.currentlyHovered.id
+        ) {
           return {
             fill: source_node.renderData.color,
             zIndex: "10000",
+            stroke: false,
+            fillOpacity: 0.8,
+          };
+        } else {
+          return {
+            fill: source_node.renderData.color,
+            zIndex: "0",
             stroke: def.NODE_HIGHLIGHT,
+            fillOpacity: 0.1,
+          };
+        }
+      } else {
+        // if there are selected nodes
+        if (
+          appState.graph.selectedNodes.includes(source_node) &&
+          appState.graph.selectedNodes.includes(
+            nodes.find((n) => n.id === node.toId)
+          )
+        ) {
+          return {
+            fill: source_node.renderData.color,
+            zIndex: "10000",
+            stroke: false,
             fillOpacity: 0.8,
           };
         } else {
@@ -1189,6 +1219,27 @@ class RenderCircles extends React.Component {
             from_id={edge.fromId}
             to_id={edge.toId}
             // data={edge}
+            // onClick={(e) => {
+            //   const source_node = appState.graph.frame.getNode(
+            //     e.target.from_id
+            //   );
+            //   const target_node = appState.graph.frame.getNode(e.target.to_id);
+            //   if (
+            //     appState.graph.currentlyHovered &&
+            //     appState.graph.currentlyHovered.id === source_node.id
+            //   ) {
+            //     appState.graph.currentlyHovered = target_node;
+            //   } else {
+            //     appState.graph.currentlyHovered = source_node;
+            //   }
+            //   appState.graph.frame.highlightNode(
+            //     appState.graph.currentlyHovered,
+            //     true
+            //   );
+            //   appState.graph.frame.highlightEdges(
+            //     appState.graph.currentlyHovered
+            //   );
+            // }}
             onMouseOver={(e) => {
               const thenode = appState.graph.frame.getNode(e.target.dataset.id);
               appState.graph.currentlyHovered = thenode; // control map update
@@ -1218,6 +1269,7 @@ class RenderCircles extends React.Component {
         appState.graph.scatterplot.y !== "pair distance" &&
         appState.graph.scatterplot.x !== "pair distance"
       ) {
+        // console.log("ttest", appState.graph.scatterplot.x);
         renderCircles = appState.graph.frame.getNodeList().map((node, i) => (
           <circle
             cx={this.props.scale.x(
@@ -1231,13 +1283,14 @@ class RenderCircles extends React.Component {
             id={node.id}
             data={node}
             onMouseOver={(e) => {
-              // console.log(e.target.dataset.id)
+              console.log("on mouseover scatterplot");
               const thenode = appState.graph.frame.getNode(e.target.dataset.id);
               appState.graph.currentlyHovered = thenode; // control map update
               appState.graph.frame.highlightNode(thenode, true); // control cosio update
               appState.graph.frame.highlightEdges(thenode, true);
             }}
             onMouseLeave={(e) => {
+              console.log("on mouseleave scatterplot");
               if (appState.graph.mapClicked) return;
 
               appState.graph.frame.graph.forEachNode(function (n) {
