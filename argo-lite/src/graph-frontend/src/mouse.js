@@ -48,6 +48,7 @@ module.exports = function (self) {
     }
 
     if (!self.mouseDown) {
+      // console.log("mouse up");
       self.onHover(selection);
       self.mouseStart = new THREE.Vector3(mouseX, mouseY, 0);
     } else {
@@ -103,11 +104,20 @@ module.exports = function (self) {
       appState.graph.currentlyHovered = node;
     } else if (self.selection.length == 0) {
       self.graph.forEachNode((n) => {
-        self.colorNodeOpacity(n, 1);
-
-        self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+        // console.log(n);
+        // if n is the target/src node of any edge in appState.graph.edgeselection, highlight or change opacity
+        // use node id to check if n is in appState.graph.edgeselection
+        appState.graph.edgeselection.forEach((edge) => {
+          if (edge.target == n.id || edge.source == n.id) {
+            self.colorNodeOpacity(n, 1);
+            self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+            self.colorNodeEdge(n);
+          }
+        });
       });
-      self.colorNodeEdge(null);
+      if (appState.graph.edgeselection.length == 0) {
+        self.colorNodeEdge(null);
+      }
       appState.graph.currentlyHovered = null;
     }
     // if (self.prevHighlights != undefined) {

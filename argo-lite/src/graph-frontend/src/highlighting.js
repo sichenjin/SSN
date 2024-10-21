@@ -25,11 +25,12 @@ module.exports = function (self) {
    *  Highlight edges from and to a node and hide others
    */
   self.highlightEdges = function (node, toggle) {
+    console.log("highlightEdges");
     const froms = [];
     const tos = [];
     for (var i = 0; i < self.selection.length; i++) {
       for (var j = 0; j < self.selection[i].links.length; j++) {
-        if (!self.selection[i]) continue
+        if (!self.selection[i]) continue;
         froms.push(self.selection[i].links[j].fromId);
         tos.push(self.selection[i].links[j].toId);
       }
@@ -46,33 +47,29 @@ module.exports = function (self) {
   };
 
   /**
-    *  Highlight edges and nodes on the path 
-    */
+   *  Highlight edges and nodes on the path
+   */
   self.highlightPathEdgeNode = function (pathnode) {
-
-
     if (pathnode.length == 0) {
-      //no path selected 
+      //no path selected
       self.graph.forEachNode(function (n) {
         self.colorNodeOpacity(n, 1);
-      })
-      self.highlightAllEdges()
-      return
+      });
+      self.highlightAllEdges();
+      return;
     }
-    //first dehighlight all nodes 
+    //first dehighlight all nodes
     self.graph.forEachNode(function (n) {
-
       self.colorNodeOpacity(n, 0.2);
-    })
+    });
 
     pathnode.forEach((node) => {
       self.colorNodeOpacity(node, 1);
-    })
-    self.highlightNode(pathnode[0], true)
-    self.highlightNode(pathnode[pathnode.length - 1], true)
+    });
+    self.highlightNode(pathnode[0], true);
+    self.highlightNode(pathnode[pathnode.length - 1], true);
     // pathnode[0].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
     // pathnode[pathnode.length - 1].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
-
 
     //highlight edges
     let red = new THREE.Color(appState.graph.edges.color).r;
@@ -84,8 +81,8 @@ module.exports = function (self) {
       link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
       link.linecolor.g = self.darkMode ? 0.25 : 0.89;
       link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-    })
-    //undirected 
+    });
+    //undirected
     //then highlight only the node's edges
     // for (let i = 0; i < pathnode.length-1; i++) {
     //   self.lineIndices.forEach(function (link) {
@@ -95,30 +92,33 @@ module.exports = function (self) {
     //       link.linecolor.b = green;
     //     }
     //   })
-    // } 
-    const pathnnodeid = pathnode.map(p => p.id)
+    // }
+    const pathnnodeid = pathnode.map((p) => p.id);
     self.lineIndices.forEach(function (link) {
-      if (((pathnnodeid.indexOf(link.source.id) !== -1 && pathnnodeid.indexOf(link.target.id) !== -1)) || ((pathnnodeid.indexOf(link.target.id) !== -1 && pathnnodeid.indexOf(link.source.id) !== -1))) {
+      if (
+        (pathnnodeid.indexOf(link.source.id) !== -1 &&
+          pathnnodeid.indexOf(link.target.id) !== -1) ||
+        (pathnnodeid.indexOf(link.target.id) !== -1 &&
+          pathnnodeid.indexOf(link.source.id) !== -1)
+      ) {
         link.linecolor.r = red;
         link.linecolor.g = blue;
         link.linecolor.b = green;
       }
-    })
-
-  }
-
+    });
+  };
 
   /**
    * Highlight adjacent nodes
-   * 
+   *
    * Also highlights edges.
    */
   self.highlightNeighbors = function (node, froms, tos) {
-    self.graph.forEachNode(n => {
+    self.graph.forEachNode((n) => {
       if (self.selection.indexOf(n) != -1 || n == node) {
         // If the node is selected or the node is the node to be highlighted
         self.colorNodeOpacity(n, 1);
-        self.colorNodeEdge(n);  //set the node.renderData.linecolor , i.e. color edges by nodes  
+        self.colorNodeEdge(n); //set the node.renderData.linecolor , i.e. color edges by nodes
         // for (var i = 0; n.linkObjs && i < n.linkObjs.length; i++) {
         //   n.linkObjs[i].linecolor = n.renderData.linecolor;
         // }
@@ -161,51 +161,46 @@ module.exports = function (self) {
 
   // };
 
-
   self.colorNodeArrayEdge = function (nodearray) {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
-    if (nodearray.length < 1) {  //highlight all the edges 
-
+    if (nodearray.length < 1) {
+      //highlight all the edges
 
       self.lineIndices.forEach(function (link) {
-
         link.linecolor.r = red;
         link.linecolor.g = blue;
         link.linecolor.b = green;
-      })
-
-    } else {                     //only highlight neighbor edges of nodes in the array 
+      });
+    } else {
+      //only highlight neighbor edges of nodes in the array
       //first dehighlight all edges
       self.lineIndices.forEach(function (link) {
         link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
         link.linecolor.g = self.darkMode ? 0.25 : 0.89;
         link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-      })
+      });
       //then highlight neighbor edges of nodes in the array
-      nodearray.forEach(node => {
+      nodearray.forEach((node) => {
         self.lineIndices.forEach(function (link) {
           if (link.source.id == node.id || link.target.id == node.id) {
             link.linecolor.r = red;
             link.linecolor.g = blue;
             link.linecolor.b = green;
           }
-        })
-      })
-
-
-
+        });
+      });
     }
-
-  }
+  };
 
   self.decolorNodeEdge = function (node) {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
     if (!node) return;
-    else {                     //dehighlight any edges linkto/from the node
+    else {
+      //dehighlight any edges linkto/from the node
       //first dehighlight all edges
       self.lineIndices.forEach(function (link) {
         if (link.source.id == node.id || link.target.id == node.id) {
@@ -213,23 +208,17 @@ module.exports = function (self) {
           link.linecolor.g = self.darkMode ? 0.25 : 0.89;
           link.linecolor.b = self.darkMode ? 0.25 : 0.89;
         }
-      })
-
-
-
-
+      });
     }
-
-
-  }
-
+  };
 
   self.changeSingleNodeColorEdge = function (node) {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
     if (!node) return;
-    else {                     //only highlight the node's edges
+    else {
+      //only highlight the node's edges
       // //first dehighlight all edges
       // self.lineIndices.forEach(function (link) {
       //   link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
@@ -243,37 +232,31 @@ module.exports = function (self) {
           link.linecolor.g = blue;
           link.linecolor.b = green;
         }
-      })
-
-
+      });
     }
-
-
-  }
-
+  };
 
   // highlight only the node's neighbor edges in the whole sociogram
   self.colorNodeEdge = function (node) {
     let red = new THREE.Color(appState.graph.edges.color).r;
     let blue = new THREE.Color(appState.graph.edges.color).g;
     let green = new THREE.Color(appState.graph.edges.color).b;
-    if (!node) {  //highlight all the edges 
-
+    if (!node) {
+      //highlight all the edges
 
       self.lineIndices.forEach(function (link) {
-
         link.linecolor.r = red;
         link.linecolor.g = blue;
         link.linecolor.b = green;
-      })
-
-    } else {                     //only highlight the node's edges
+      });
+    } else {
+      //only highlight the node's edges
       //first dehighlight all edges
       self.lineIndices.forEach(function (link) {
         link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
         link.linecolor.g = self.darkMode ? 0.25 : 0.89;
         link.linecolor.b = self.darkMode ? 0.25 : 0.89;
-      })
+      });
       //then highlight only the node's edges
       self.lineIndices.forEach(function (link) {
         if (link.source.id == node.id || link.target.id == node.id) {
@@ -281,9 +264,7 @@ module.exports = function (self) {
           link.linecolor.g = blue;
           link.linecolor.b = green;
         }
-      })
-
-
+      });
     }
 
     // if (isHighlighted) {
@@ -315,11 +296,9 @@ module.exports = function (self) {
     // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
     // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
     // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
-  }
+  };
 
   // };
-
-
 
   /**
    *  Change node opacity
@@ -329,5 +308,5 @@ module.exports = function (self) {
   };
   self.colorNode = function (node, op) {
     node.renderData.draw_object.material.color.setHex(op);
-  }
+  };
 };
