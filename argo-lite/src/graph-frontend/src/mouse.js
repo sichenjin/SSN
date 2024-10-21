@@ -107,13 +107,19 @@ module.exports = function (self) {
         // console.log(n);
         // if n is the target/src node of any edge in appState.graph.edgeselection, highlight or change opacity
         // use node id to check if n is in appState.graph.edgeselection
-        appState.graph.edgeselection.forEach((edge) => {
-          if (edge.target == n.id || edge.source == n.id) {
-            self.colorNodeOpacity(n, 1);
-            self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
-            self.colorNodeEdge(n);
-          }
-        });
+        if (appState.graph.edgeselection.length > 0) {
+          appState.graph.edgeselection.forEach((edge) => {
+            if (edge.target == n.id || edge.source == n.id) {
+              self.colorNodeOpacity(n, 1);
+              self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+              self.colorNodeEdge(n);
+            }
+          });
+        } else {
+          self.colorNodeOpacity(n, 1);
+          self.highlightNode(n, false, def.ADJACENT_HIGHLIGHT);
+          // self.colorNodeEdge(n);
+        }
       });
       if (appState.graph.edgeselection.length == 0) {
         self.colorNodeEdge(null);
