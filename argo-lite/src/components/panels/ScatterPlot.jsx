@@ -150,24 +150,82 @@ class ScatterPlot extends React.Component {
         y0: selection[0][1] - this.margin.top - this.cr,
         y1: selection[1][1] - this.margin.top - this.cr,
       };
-      console.log(
-        selection[0][1],
-        selection[1][1],
-        brushBounds.y1,
-        brushBounds.y0
-      );
-
+      // console.log(
+      //   selection[0][1],
+      //   selection[1][1],
+      //   brushBounds.y1,
+      //   brushBounds.y0
+      // );
+      // console the number of circles
+      // console.log("circle_num", circles.size());
+      let filteredlinks = [];
       circles.each(function (d, i) {
         const nodecx = parseFloat(select(this).attr("cx"));
         const nodecy = parseFloat(select(this).attr("cy"));
-        console.log(nodecx, nodecy);
+        // console.log(nodecx, nodecy);
         if (
           nodecx >= brushBounds.x0 &&
           nodecx <= brushBounds.x1 &&
           nodecy >= brushBounds.y0 &&
           nodecy <= brushBounds.y1
         ) {
-          selectionNodeID.push(select(this).attr("id"));
+          // if not degree-degree plot
+          if (
+            appState.graph.scatterplot.x !== "nodes with larger degree" &&
+            appState.graph.scatterplot.y !== "nodes with smaller degree"
+          ) {
+            selectionNodeID.push(select(this).attr("id"));
+          } else {
+            console.log(
+              select(this).attr("from_id"),
+              select(this).attr("to_id")
+            );
+            // degree-degree plot
+            // selectionNodeID.push(select(this).attr("from_id"));
+            // selectionNodeID.push(select(this).attr("to_id"));
+            // find edges based on from_id and to_id, add them to edgeselection
+            let linkobjs = [];
+            appState.graph.frame.getNodeList().forEach((node) => {
+              if (node.linkObjs && node.linkObjs.length > 0) {
+                linkobjs.push(...node.linkObjs);
+              }
+            });
+            // console.log(linkobjs);
+            linkobjs.forEach((edge) => {
+              // console.log(edge.source.id, edge.target.id);
+
+              if (
+                (edge.source.id === select(this).attr("from_id") &&
+                  edge.target.id === select(this).attr("to_id")) ||
+                (edge.target.id === select(this).attr("from_id") &&
+                  edge.source.id === select(this).attr("to_id"))
+              ) {
+                console.log("filtered edge");
+                filteredlinks.push(edge);
+              }
+            });
+            console.log(filteredlinks);
+            // const filteredge = linkobjs.filter(
+            //   (edge) =>
+            //     (edge.source.id === select(this).attr("from_id") &&
+            //       edge.target.id === select(this).attr("to_id")) ||
+            //     (edge.target.id === select(this).attr("from_id") &&
+            //       edge.source.id === select(this).attr("to_id"))
+            // );
+            appState.graph.edgeselection = filteredlinks;
+            // appState.graph.frame.getEdgeList().forEach((edge) => {
+            //   console.log(edge);
+            //   if (
+            //     edge.fromId === select(this).attr("from_id") &&
+            //     edge.toId === select(this).attr("to_id")
+            //   ) {
+            //     console.log("findedge");
+            //     appState.graph.edgeselection.push(edge);
+            //   }
+            // });
+            // console.log(appState.graph.edgeselection);
+          }
+          // selectionNodeID.push(select(this).attr("id"));
         }
       });
 
@@ -178,6 +236,7 @@ class ScatterPlot extends React.Component {
       appState.graph.frame.selection = selectionNode;
       appState.graph.selectedNodes = selectionNode;
 
+      appState.graph.frame.highlightEdgeInDegreePlot(filteredlinks);
       // console.log(selectionNode)
       appState.graph.frame.updateSelectionOpacity();
     } else {
@@ -186,6 +245,7 @@ class ScatterPlot extends React.Component {
       appState.graph.frame.updateSelectionOpacity();
     }
   };
+
   renderBrush = () => (
     <SVGBrush
       // Defines the boundary of the brush.
@@ -537,6 +597,8 @@ class ScatterPlot extends React.Component {
                 appState.graph.scatterplot.x !== "network density" &&
                 appState.graph.scatterplot.y !== "pair distance" &&
                 appState.graph.scatterplot.x !== "pair distance" &&
+                appState.graph.scatterplot.x !== "nodes with larger degree" &&
+                appState.graph.scatterplot.y !== "nodes with smaller degree" &&
                 this.renderBrush()}
             </svg>
           </div>
@@ -1115,15 +1177,17 @@ class RenderCircles extends React.Component {
         appState.graph.scatterplot.y === "nodes with smaller degree"
       ) {
         const edges = appState.graph.frame.getEdgeList();
-        console.log("Scale domain:", this.props.scale.x.domain());
-        console.log("Scale range:", this.props.scale.x.range());
+        // console.log("Scale domain:", this.props.scale.x.domain());
+        // console.log("Scale range:", this.props.scale.x.range());
         renderCircles = edges.map((edge, i) => (
           <circle
             cx={this.props.scale.x(max([edge.sourceDegree, edge.targetDegree]))}
             cy={this.props.scale.y(min([edge.sourceDegree, edge.targetDegree]))}
             r={this.props.cr}
             style={this.setScatterStyle(edge)}
-            id={`${edge.fromId}👉${path.toId}`}
+            id={`${edge.fromId}👉${edge.toId}`}
+            from_id={edge.fromId}
+            to_id={edge.toId}
             // data={edge}
             onMouseOver={(e) => {
               const thenode = appState.graph.frame.getNode(e.target.dataset.id);

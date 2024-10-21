@@ -557,7 +557,7 @@ class StatGroupPanel extends React.Component {
         const targetDegree = target.data.ref.degree;
         edge.sourceDegree = parseInt(sourceDegree);
         edge.targetDegree = parseInt(targetDegree);
-        console.log(sourceDegree, targetDegree);
+        // console.log(sourceDegree, targetDegree);
         // if src_id === target_id, skip it
         if (source_id === target_id) {
           return null;

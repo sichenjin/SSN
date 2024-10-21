@@ -372,6 +372,7 @@ module.exports = function (self) {
     let green = new THREE.Color(appState.graph.edges.color).b;
     //fisrt dehighlight all the edges
     self.lineIndices.forEach(function (link) {
+      // console.log(link);
       if (link.edgeDist >= mindist && link.edgeDist <= maxdist) {
         link.linecolor.r = red;
         link.linecolor.g = blue;
@@ -394,6 +395,45 @@ module.exports = function (self) {
     //   withinEdges[i].linecolor.b = green;
     // }
     // self.arrow.material.color.setRGB(red, blue, green);
+  };
+
+  // highlight edges selected in degree-degree plot
+  self.highlightEdgeInDegreePlot = function (edges) {
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    //fisrt dehighlight all the edges
+    self.lineIndices.forEach(function (link) {
+      edges.forEach(function (edge) {
+        if (
+          (link.source.id === edge.source.id &&
+            link.target.id === edge.target.id) ||
+          (link.target.id === edge.source.id &&
+            link.source.id === edge.target.id)
+        ) {
+          console.log("test", red, blue, green);
+          link.linecolor.r = red;
+          link.linecolor.g = blue;
+          link.linecolor.b = green;
+        } else {
+          console.log("test2", link);
+          link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+          link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+          link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+        }
+      });
+      // if (edges.indexOf(link) !== -1) {
+      //   // if the edge is in the selected edges
+      //   link.linecolor.r = red;
+      //   link.linecolor.g = blue;
+      //   link.linecolor.b = green;
+      // } else {
+      //   link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+      //   link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      //   link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+      // }
+    });
+    self.arrow.material.color.setRGB(red, blue, green);
   };
 
   // highlight interset nodes of the selection sets with lower transparency, nodes within selection are with lower transparency

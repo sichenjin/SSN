@@ -262,12 +262,11 @@ class SelectionDetail extends React.Component {
     // console.log(this.distBinData)
     const distbuffer_min = min(filterDistBin2.map((d) => d.mind));
     const distbuffer_max = max(filterDistBin2.map((d) => d.maxd));
-    // console.log(this.edgeSelection)
+    // console.log(this.edgeSelection);
     const filteredge = this.edgeSelection.filter(
       (edge) =>
         edge.edgeDist >= distbuffer_min && edge.edgeDist <= distbuffer_max
     );
-
     appState.graph.edgeselection = filteredge;
     appState.graph.frame.highlightedgeWithinDist(
       distbuffer_min,
@@ -284,7 +283,7 @@ class SelectionDetail extends React.Component {
 
     // // console.log(selectionNode)
     // appState.graph.frame.updateSelectionOpacity()
-    console.log(appState.graph.edgeselection);
+    // console.log(appState.graph.edgeselection);
     // console.log(selection)
     // console.log(selectionRectID)
   };

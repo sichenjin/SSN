@@ -1182,6 +1182,7 @@ export default class GraphStore {
   }
 
   setUpFrame() {
+    console.log("setUpFrame");
     const graphFrame = new Frame(this.computedGraph);
     graphFrame.init();
     graphFrame.display();
