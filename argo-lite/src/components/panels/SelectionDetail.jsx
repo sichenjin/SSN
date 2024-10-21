@@ -655,7 +655,7 @@ class SelectionDetail extends React.Component {
                     label="Frequency"
                     fontSize="12px"
                     tickFormat={(tick, ti) => {
-                      console.log(tick, this.maxDistanceCount / 2);
+                      // console.log(tick, this.maxDistanceCount / 2);
                       if (parseInt(tick).toString() == this.prevTick) {
                         return "";
                       } else {

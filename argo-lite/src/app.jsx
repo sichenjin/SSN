@@ -5,7 +5,7 @@ import {
   Button,
   Classes,
   FocusStyleManager,
-  NonIdealState
+  NonIdealState,
 } from "@blueprintjs/core";
 import Dialogs from "./components/Dialogs";
 import NavbarSelector from "./components/Navbar";
@@ -21,18 +21,18 @@ import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
 // import ScatterPlot from "./components/panels/ScatterPlot"
 import SelectionDetail from "./components/panels/SelectionDetail";
 // import Sidebar from "./components/Sidebar"
-import { Tag , Switch} from "@blueprintjs/core";
+import { Tag, Switch } from "@blueprintjs/core";
 // import GraphView from "./components/GraphView";
 
 import keydown, { Keys } from "react-keydown";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
 
 import { useEffect } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 import ScatterPlot from "./components/panels/ScatterPlot";
 
-import Sidebar from "./components/Sidebar"
+import Sidebar from "./components/Sidebar";
 
 registerIPC();
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -49,7 +49,10 @@ function respondToResize() {
     window.setTimeout(respondToResize, 1000);
     return;
   }
-  if (window.innerWidth < MOBILE_WIDTH_CUTOFF || window.innerHeight < MOBILE_HEIGHT_CUTOFF) {
+  if (
+    window.innerWidth < MOBILE_WIDTH_CUTOFF ||
+    window.innerHeight < MOBILE_HEIGHT_CUTOFF
+  ) {
     appState.preferences.turnOnMinimalMode();
   }
   // appState.graph.setUpFrame();
@@ -57,14 +60,11 @@ function respondToResize() {
 
 respondToResize();
 
-window.addEventListener('resize', respondToResize);
+window.addEventListener("resize", respondToResize);
 
 @keydown
 @observer
 class App extends React.Component {
-
-
-
   componentWillReceiveProps({ keydown }) {
     if (keydown.event) {
       if (keydown.event.which === DELETE || keydown.event.which === BACKSPACE) {
@@ -84,9 +84,9 @@ class App extends React.Component {
     }
   }
   render() {
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
       // Query the element
-      const resizer = document.getElementById('dragMeUp');
+      const resizer = document.getElementById("dragMeUp");
       const leftSide = resizer.previousElementSibling;
       const rightSide = resizer.nextElementSibling;
 
@@ -104,8 +104,8 @@ class App extends React.Component {
         upHeight = leftSide.getBoundingClientRect().height;
 
         // Attach the listeners to `document`
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
       };
 
       const mouseMoveHandler = function (e) {
@@ -113,40 +113,42 @@ class App extends React.Component {
         const dx = e.clientX - x;
         const dy = e.clientY - y;
 
-        const newLeftHeight = ((upHeight + dy) * 100) / resizer.parentNode.getBoundingClientRect().height;
+        const newLeftHeight =
+          ((upHeight + dy) * 100) /
+          resizer.parentNode.getBoundingClientRect().height;
         leftSide.style.height = `${newLeftHeight}%`;
 
-        resizer.style.cursor = 'col-resize';
-        document.body.style.cursor = 'col-resize';
+        resizer.style.cursor = "col-resize";
+        document.body.style.cursor = "col-resize";
 
-        leftSide.style.userSelect = 'none';
-        leftSide.style.pointerEvents = 'none';
+        leftSide.style.userSelect = "none";
+        leftSide.style.pointerEvents = "none";
 
-        rightSide.style.userSelect = 'none';
-        rightSide.style.pointerEvents = 'none';
+        rightSide.style.userSelect = "none";
+        rightSide.style.pointerEvents = "none";
       };
 
       const mouseUpHandler = function () {
-        resizer.style.removeProperty('cursor');
-        document.body.style.removeProperty('cursor');
+        resizer.style.removeProperty("cursor");
+        document.body.style.removeProperty("cursor");
 
-        leftSide.style.removeProperty('user-select');
-        leftSide.style.removeProperty('pointer-events');
+        leftSide.style.removeProperty("user-select");
+        leftSide.style.removeProperty("pointer-events");
 
-        rightSide.style.removeProperty('user-select');
-        rightSide.style.removeProperty('pointer-events');
+        rightSide.style.removeProperty("user-select");
+        rightSide.style.removeProperty("pointer-events");
 
         // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
       };
 
       // Attach the handler
-      resizer.addEventListener('mousedown', mouseDownHandler);
+      resizer.addEventListener("mousedown", mouseDownHandler);
     });
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener("DOMContentLoaded", function () {
       // Query the element
-      const resizer = document.getElementById('dragMe');
+      const resizer = document.getElementById("dragMe");
       const leftSide = resizer.previousElementSibling;
       const rightSide = resizer.nextElementSibling;
 
@@ -164,8 +166,8 @@ class App extends React.Component {
         leftWidth = leftSide.getBoundingClientRect().width;
 
         // Attach the listeners to `document`
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
       };
 
       const mouseMoveHandler = function (e) {
@@ -173,55 +175,65 @@ class App extends React.Component {
         const dx = e.clientX - x;
         const dy = e.clientY - y;
 
-        const newLeftWidth = ((leftWidth + dx) * 100) / resizer.parentNode.getBoundingClientRect().width;
+        const newLeftWidth =
+          ((leftWidth + dx) * 100) /
+          resizer.parentNode.getBoundingClientRect().width;
         leftSide.style.width = `${newLeftWidth}%`;
 
-        resizer.style.cursor = 'col-resize';
-        document.body.style.cursor = 'col-resize';
+        resizer.style.cursor = "col-resize";
+        document.body.style.cursor = "col-resize";
 
-        leftSide.style.userSelect = 'none';
-        leftSide.style.pointerEvents = 'none';
+        leftSide.style.userSelect = "none";
+        leftSide.style.pointerEvents = "none";
 
-        rightSide.style.userSelect = 'none';
-        rightSide.style.pointerEvents = 'none';
+        rightSide.style.userSelect = "none";
+        rightSide.style.pointerEvents = "none";
       };
 
       const mouseUpHandler = function () {
-        resizer.style.removeProperty('cursor');
-        document.body.style.removeProperty('cursor');
+        resizer.style.removeProperty("cursor");
+        document.body.style.removeProperty("cursor");
 
-        leftSide.style.removeProperty('user-select');
-        leftSide.style.removeProperty('pointer-events');
+        leftSide.style.removeProperty("user-select");
+        leftSide.style.removeProperty("pointer-events");
 
-        rightSide.style.removeProperty('user-select');
-        rightSide.style.removeProperty('pointer-events');
+        rightSide.style.removeProperty("user-select");
+        rightSide.style.removeProperty("pointer-events");
 
         // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
       };
 
       // Attach the handler
-      resizer.addEventListener('mousedown', mouseDownHandler);
+      resizer.addEventListener("mousedown", mouseDownHandler);
     });
 
     return (
-      <div className={classnames({
-        "app-wrapper": true,
-      })} style={{ display: "flex" }}>
+      <div
+        className={classnames({
+          "app-wrapper": true,
+        })}
+        style={{ display: "flex" }}
+      >
         <div>
           <NavbarSelector />
         </div>
-        <div class="container" style={{ paddingTop: "5vh", maxWidth: "100vw", height: "100%" }}>
+        <div
+          class="container"
+          style={{ paddingTop: "5vh", maxWidth: "100vw", height: "100%" }}
+        >
           <div class="container" style={{ height: "100%" }}>
             <Sidebar />
             {/* {appState.graph.hasGraph && <ComDetection />} */}
             <div class="outer-container">
               <div class="container-up container">
                 <div class="container__left">
-                  {appState.graph.hasGraph && <Tag className="network-tag">Network</Tag>}
+                  {appState.graph.hasGraph && (
+                    <Tag className="network-tag">Network</Tag>
+                  )}
                   <main className="main">
-                    {(appState.graph.hasGraph && (!appState.import.loading)) ? (
+                    {appState.graph.hasGraph && !appState.import.loading ? (
                       <ThreeJSVis />
                     ) : (
                       <WorkspaceView />
@@ -231,96 +243,171 @@ class App extends React.Component {
                   <Dialogs />
                 </div>
                 <div class="resizer" id="dragMe"></div>
-                <div> {appState.graph.selectedNodes.length === 0 && appState.graph.degreeselection.length===0 ? (
-                  <div></div>
-                ) : (
-                  
-                  <div>
-                    <Switch style={{ position: 'fixed', top: '54vh', left: '97vw', zIndex: '1000' }}
-                      defaultChecked={appState.graph.backNodeShow}
-                      checked={appState.graph.backNodeShow}
-                      onChange={(value) => {
-                        appState.graph.backNodeShow = value.target.checked
-
-                      }}
-                    />
-                    <span style={{ fontSize: '12px', position: 'fixed', top: '54vh', right: '4vw', zIndex: '1000' }}> Show Background Nodes</span>
-                  </div>
-                )}
+                <div>
+                  {" "}
+                  {appState.graph.selectedNodes.length === 0 &&
+                  appState.graph.degreeselection.length === 0 ? (
+                    <div></div>
+                  ) : (
+                    <div>
+                      <Switch
+                        style={{
+                          position: "fixed",
+                          top: "17vh",
+                          left: "97vw",
+                          zIndex: "1000",
+                        }}
+                        defaultChecked={appState.graph.backNodeShow}
+                        checked={appState.graph.backNodeShow}
+                        onChange={(value) => {
+                          appState.graph.backNodeShow = value.target.checked;
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          position: "fixed",
+                          top: "17vh",
+                          right: "4vw",
+                          zIndex: "1000",
+                        }}
+                      >
+                        {" "}
+                        Show Background Nodes
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <div> {appState.graph.selectedNodes.length === 0 ? (
-                  <div></div>
-                ) : (
-                  
-                  <div>
-                    <Switch style={{ position: 'fixed', top: '54vh', right: '47vw', zIndex: '1000' }}
-                      defaultChecked={appState.graph.pickUpAlter}
-                      checked={appState.graph.pickUpAlter}
-                      onChange={(value) => {
-                        appState.graph.pickUpAlter = value.target.checked
-                        appState.graph.backNodeShow = false
-                        appState.graph.highlightCommonNodes = false
-                        appState.graph.showIntersect = false;
-                        if(appState.graph.pickUpAlter){
-                          appState.graph.frame.updateSelectionOutOpacity();
-                        }else{
-                          appState.graph.frame.updateSelectionOpacity();
-                        }
-
-                      }}
-                    />
-                    <span style={{ fontSize: '12px', position: 'fixed', top: '54vh', right: '40vw', zIndex: '1000' }}> Pick Up Alters</span>
-                  </div>
-                )}
-                </div>
-                <div> {appState.graph.selectedSets.length < 2 ? (
-                  <div></div>
-                ) : (
-                  
-                  <div>
-                    <Switch style={{ position: 'fixed', top: '51vh', right: '47vw', zIndex: '1000' }}
-                      defaultChecked={appState.graph.highlightCommonNodes}
-                      checked={appState.graph.highlightCommonNodes}
-                      onChange={(value) => {
-                        
-                        appState.graph.highlightCommonNodes = value.target.checked
-                        if(appState.graph.highlightCommonNodes){
-                          appState.graph.pickUpAlter = false
-                          appState.graph.backNodeShow = false
+                <div>
+                  {" "}
+                  {appState.graph.selectedNodes.length === 0 ? (
+                    <div></div>
+                  ) : (
+                    <div>
+                      <Switch
+                        style={{
+                          position: "fixed",
+                          top: "14vh",
+                          left: "97vw",
+                          zIndex: "1000",
+                        }}
+                        defaultChecked={appState.graph.pickUpAlter}
+                        checked={appState.graph.pickUpAlter}
+                        onChange={(value) => {
+                          appState.graph.pickUpAlter = value.target.checked;
+                          appState.graph.backNodeShow = false;
+                          appState.graph.highlightCommonNodes = false;
                           appState.graph.showIntersect = false;
-                          appState.graph.commonSetNodes = appState.graph.frame.getCommonNodesBetweenSets(appState.graph.selectedSets)
-                          appState.graph.frame.updateSelectionCommonOpacity();
-                        }else{
-                          appState.graph.frame.updateSelectionOpacity();
-                        }
-
-                      }}
-                    />
-                    <Switch style={{ position: 'fixed', top: '48vh', right: '47vw', zIndex: '1000' }}
-                      defaultChecked={appState.graph.showIntersect}
-                      checked={appState.graph.showIntersect}
-                      onChange={(value) => {
-                        
-                        appState.graph.showIntersect = value.target.checked
-                        if(appState.graph.showIntersect){
-                          appState.graph.pickUpAlter = false
-                          appState.graph.backNodeShow = false
-                          appState.graph.highlightCommonNodes = false
-                          appState.graph.interSetNodes = appState.graph.frame.findIntersection(appState.graph.selectedSets.map(n=>Array.from(n)))
-                          appState.graph.frame.updateSelectionInterOpacity();
-                        }else{
-                          appState.graph.frame.updateSelectionOpacity();
-                        }
-
-                      }}
-                    />
-                    <span style={{ fontSize: '12px', position: 'fixed', top: '51vh', right: '34.5vw', zIndex: '1000' }}> Show Common Friends</span>
-                    <span style={{ fontSize: '12px', position: 'fixed', top: '48vh', right: '37.5vw', zIndex: '1000' }}> Show Intersection</span>
-                  </div>
-                )}
+                          if (appState.graph.pickUpAlter) {
+                            appState.graph.frame.updateSelectionOutOpacity();
+                          } else {
+                            appState.graph.frame.updateSelectionOpacity();
+                          }
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          position: "fixed",
+                          top: "14vh",
+                          right: "4vw",
+                          zIndex: "1000",
+                        }}
+                      >
+                        {" "}
+                        Pick Up Alters
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {" "}
+                  {appState.graph.selectedSets.length < 2 ? (
+                    <div></div>
+                  ) : (
+                    <div>
+                      <Switch
+                        style={{
+                          position: "fixed",
+                          top: "20vh",
+                          left: "97vw",
+                          zIndex: "1000",
+                        }}
+                        defaultChecked={appState.graph.highlightCommonNodes}
+                        checked={appState.graph.highlightCommonNodes}
+                        onChange={(value) => {
+                          appState.graph.highlightCommonNodes =
+                            value.target.checked;
+                          if (appState.graph.highlightCommonNodes) {
+                            appState.graph.pickUpAlter = false;
+                            appState.graph.backNodeShow = false;
+                            appState.graph.showIntersect = false;
+                            appState.graph.commonSetNodes =
+                              appState.graph.frame.getCommonNodesBetweenSets(
+                                appState.graph.selectedSets
+                              );
+                            appState.graph.frame.updateSelectionCommonOpacity();
+                          } else {
+                            appState.graph.frame.updateSelectionOpacity();
+                          }
+                        }}
+                      />
+                      <Switch
+                        style={{
+                          position: "fixed",
+                          top: "23vh",
+                          left: "97vw",
+                          zIndex: "1000",
+                        }}
+                        defaultChecked={appState.graph.showIntersect}
+                        checked={appState.graph.showIntersect}
+                        onChange={(value) => {
+                          appState.graph.showIntersect = value.target.checked;
+                          if (appState.graph.showIntersect) {
+                            appState.graph.pickUpAlter = false;
+                            appState.graph.backNodeShow = false;
+                            appState.graph.highlightCommonNodes = false;
+                            appState.graph.interSetNodes =
+                              appState.graph.frame.findIntersection(
+                                appState.graph.selectedSets.map((n) =>
+                                  Array.from(n)
+                                )
+                              );
+                            appState.graph.frame.updateSelectionInterOpacity();
+                          } else {
+                            appState.graph.frame.updateSelectionOpacity();
+                          }
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          position: "fixed",
+                          top: "20vh",
+                          right: "4vw",
+                          zIndex: "1000",
+                        }}
+                      >
+                        {" "}
+                        Show Common Friends
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          position: "fixed",
+                          top: "23vh",
+                          right: "4vw",
+                          zIndex: "1000",
+                        }}
+                      >
+                        {" "}
+                        Show Intersection
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div class="container__right">
-                  {(appState.graph.hasGraph && (!appState.import.loading)) ? (
+                  {appState.graph.hasGraph && !appState.import.loading ? (
                     <MapView />
                   ) : (
                     <WorkspaceView />
@@ -330,32 +417,41 @@ class App extends React.Component {
               </div>
               <div class="resizer-up" id="dragMeUp"></div>
               <div class="container-down container" id="scatter">
-                <div style={{
-                  display: "flex", height: "100%", width: '40vw'
-                  // border:'#C0C0C0',
-                  // borderStyle:'solid',
-                  // flex:"1 1 50%"
-                }}>
+                <div
+                  style={{
+                    display: "flex",
+                    height: "100%",
+                    width: "40vw",
+                    // border:'#C0C0C0',
+                    // borderStyle:'solid',
+                    // flex:"1 1 50%"
+                  }}
+                >
                   {appState.graph.frame && <SelectionDetail />}
                 </div>
-                <div style={{
-                  display: "flex", height: "100%",
-                  // border:'#C0C0C0',
-                  // borderStyle:'solid',
-                  // flex:"1 1 50%"
-                }}>
+                <div
+                  style={{
+                    display: "flex",
+                    height: "100%",
+                    // border:'#C0C0C0',
+                    // borderStyle:'solid',
+                    // flex:"1 1 50%"
+                  }}
+                >
                   {/* {appState.graph.hasGraph && <GraphView />} */}
                   <div id="scatter-plot">
-                    {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
+                    {appState.graph.hasGraph &&
+                      appState.graph.frame &&
+                      appState.graph.rawGraph.nodes[0].degree !== undefined && (
+                        <ScatterPlot />
+                      )}
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-
     );
   }
 }

@@ -527,7 +527,7 @@ class MapView extends React.Component {
     // return {fillColor: node.renderData.color , fillOpacity: node.renderData.draw_object.material.opacity, stroke: node.renderData.draw_object.children[0].material.color}
 
     // //no hover and selection
-    console.log(appState.graph.watchAppearance);
+    // console.log(appState.graph.watchAppearance);
     // appState.graph.frame.paused = true;
 
     if (
@@ -1331,7 +1331,7 @@ class MapView extends React.Component {
               Automatic Zoom
             </span>
 
-            <Switch
+            {/* <Switch
               style={{
                 position: "fixed",
                 top: "14vh",
@@ -1355,13 +1355,13 @@ class MapView extends React.Component {
             >
               {" "}
               Select Participating Nodes
-            </span>
+            </span> */}
 
             <span
               style={{
                 fontSize: "12px",
                 position: "fixed",
-                top: "17vh",
+                top: "54vh",
                 right: "1vw",
                 zIndex: "1000",
               }}
