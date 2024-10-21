@@ -11,10 +11,13 @@ import parse from "csv-parse/lib/sync";
 import SearchStore from "./SearchStore";
 import { runSearch } from "../ipc/client";
 
-import { BACKEND_URL, SAMPLE_GRAPH_SNAPSHOTS} from "../constants";
-import { toaster } from '../notifications/client';
+import { BACKEND_URL, SAMPLE_GRAPH_SNAPSHOTS } from "../constants";
+import { toaster } from "../notifications/client";
 
-import {LocalFileData,constructFileFromLocalFileData} from "get-file-object-from-local-path"
+import {
+  LocalFileData,
+  constructFileFromLocalFileData,
+} from "get-file-object-from-local-path";
 
 // import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
@@ -26,18 +29,17 @@ export class AppState {
     this.import = new ImportStore();
     this.search = new SearchStore();
     this.project = new ProjectStore();
-  //   this.map = <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-  //   <TileLayer
-  //     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  //     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  //   />
-  //   <Marker position={[51.505, -0.09]}>
-  //     <Popup>
-  //       A pretty CSS3 popup. <br /> Easily customizable.
-  //     </Popup>
-  //   </Marker>
-  // </MapContainer>
-
+    //   this.map = <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+    //   <TileLayer
+    //     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    //     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    //   />
+    //   <Marker position={[51.505, -0.09]}>
+    //     <Popup>
+    //       A pretty CSS3 popup. <br /> Easily customizable.
+    //     </Popup>
+    //   </Marker>
+    // </MapContainer>
   }
 }
 
@@ -45,62 +47,73 @@ const appState = new AppState();
 
 window.appState = appState;
 
-appState.useToolbartoSelect = false
+appState.useToolbartoSelect = false;
 
 const loadSnapshotFromURL = (url) => {
   return fetch(url, {
-    method: 'GET',
-    mode: 'cors'
-  }).then(response => response.text()).catch(error => {
-    toaster.show({
-      message: 'Failed to fetch graph snapshot',
-      intent: Intent.DANGER,
-      timeout: -1
+    method: "GET",
+    mode: "cors",
+  })
+    .then((response) => response.text())
+    .catch((error) => {
+      toaster.show({
+        message: "Failed to fetch graph snapshot",
+        intent: Intent.DANGER,
+        timeout: -1,
+      });
+      console.error(error);
     });
-    console.error(error);
-  });
 };
 
 const loadSnapshotFromStrapi = (uuid) => {
   const url = `${BACKEND_URL}/snapshots?uuid=${uuid}`;
   return fetch(url, {
-    method: 'GET',
-    mode: 'cors'
-  }).then(response => response.json()).then(json => json[0].body).catch(error => {
-    toaster.show({
-      message: 'Failed to fetch graph snapshot',
-      intent: Intent.DANGER,
-      timeout: -1
+    method: "GET",
+    mode: "cors",
+  })
+    .then((response) => response.json())
+    .then((json) => json[0].body)
+    .catch((error) => {
+      toaster.show({
+        message: "Failed to fetch graph snapshot",
+        intent: Intent.DANGER,
+        timeout: -1,
+      });
+      console.error(error);
     });
-    console.error(error);
-  });
 };
 
 const loadAndDisplaySnapshotFromURL = (url) => {
-  loadSnapshotFromURL(url).then(snapshotString => {
+  loadSnapshotFromURL(url).then((snapshotString) => {
     // use filename/last segment of URL as title in Navbar
-    appState.graph.metadata.snapshotName = url.split('/').pop() || url.split('/').pop().pop();
+    appState.graph.metadata.snapshotName =
+      url.split("/").pop() || url.split("/").pop().pop();
     appState.graph.loadImmediateStates(snapshotString);
   });
 };
 
 const loadAndDisplaySnapshotFromStrapi = (uuid) => {
-  appState.graph.convexPolygons =[]
-  appState.graph.modularity = undefined
-  appState.graph.globalFlatRatio = undefined
-  appState.graph.convexhullby = "NULL"
-  appState.graph.groupby = "NULL"
+  appState.graph.convexPolygons = [];
+  appState.graph.modularity = undefined;
+  appState.graph.globalFlatRatio = undefined;
+  appState.graph.global_D_observed = undefined;
+  appState.graph.global_D_expected = undefined;
+  appState.graph.globalANN = undefined;
+  appState.graph.convexhullby = "NULL";
+  appState.graph.groupby = "NULL";
   appState.graph.mapClicked = undefined;
   appState.graph.mapClickedArray = [];
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
   appState.graph.selectedSets = [];
-  appState.graph.commonSetNodes =[];
+  appState.graph.commonSetNodes = [];
   appState.graph.interSetNodes = [];
-  if(appState.graph.frame) {appState.graph.frame.selection = [];}
-  appState.graph.filter = {}
+  if (appState.graph.frame) {
+    appState.graph.frame.selection = [];
+  }
+  appState.graph.filter = {};
   appState.graph.currentlyHovered = undefined;
- 
+
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -113,21 +126,20 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.distanceDensityCurrentlyHovered = undefined;
   appState.graph.distanceDensityCurrentlyClicked = [];
   appState.graph.pinnedNodes = null;
-  appState.import.loading = true
+  appState.import.loading = true;
   appState.graph.clearBrush = false;
-  
+
   appState.graph.mapEdgeShow = true;
   appState.graph.autoZoom = false;
-  appState.graph.firstload =true;
+  appState.graph.firstload = true;
   appState.graph.keydown = false;
   appState.graph.clusteringco = 0;
   appState.graph.graphDiameter = 0;
   appState.graph.connectcom = 0;
 
- 
-  loadSnapshotFromStrapi(uuid).then(snapshotString => {
+  loadSnapshotFromStrapi(uuid).then((snapshotString) => {
     // TODO: use more sensible snapshot name
-    appState.graph.metadata.snapshotName = 'Shared';
+    appState.graph.metadata.snapshotName = "Shared";
     appState.graph.loadImmediateStates(snapshotString);
     appState.import.loading = false;
   });
@@ -169,21 +181,19 @@ window.loadInitialSampleGraph = async () => {
   // console.log(edgeFile)
   // appState.import.selectedEdgeFileFromInput = edgeFile
 
-  
-
   // default fallback url
-  let url = "https://argo-graph-lite.s3.amazonaws.com/lesmiserables.json"
+  let url = "https://argo-graph-lite.s3.amazonaws.com/lesmiserables.json";
 
   // check url hash
   if (window.location.hash) {
     const hash = window.location.hash.substring(1);
     // If the hash component begins with http.
-    if (hash.length >= 4 && hash.startsWith('http')) {
+    if (hash.length >= 4 && hash.startsWith("http")) {
       try {
         url = decodeURIComponent(hash);
       } catch (e) {
         console.error(e);
-        alert('Provided URL is not valid.');
+        alert("Provided URL is not valid.");
       }
     } else {
       // If the hash component does not begin with http
@@ -191,7 +201,6 @@ window.loadInitialSampleGraph = async () => {
       loadAndDisplaySnapshotFromStrapi(hash);
       return;
     }
-    
   }
   // loadAndDisplaySnapshotFromURL(url)
   loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[0][1]);
@@ -203,7 +212,7 @@ window.saveSnapshotToString = () => {
 };
 
 // Load initial sample graph when Argo Lite is ready
-window.addEventListener('load', (event) => {
+window.addEventListener("load", (event) => {
   window.loadInitialSampleGraph();
 });
 
@@ -214,29 +223,31 @@ const updateTimeout = null;
 autorun(() => {
   if (!appState.graph.hasGraph && appState.graph.rawGraph.nodes.length > 0) {
     appState.graph.hasGraph = true;
-    appState.graph.clustercoe = appState.graph.averageClustering().toFixed(3)
+    appState.graph.clustercoe = appState.graph.averageClustering().toFixed(3);
   }
-}) 
+});
 
 // // update MapView
 autorun(() => {
-  if (appState.graph.rawGraph.nodes.length > 0 ) {  // has spatial information 
+  if (appState.graph.rawGraph.nodes.length > 0) {
+    // has spatial information
     //
   }
-}) 
-
-
+});
 
 autorun(() => {
   if (appState.graph.frame) {
     console.log("Triggered");
     // appState.graph.frame.selection = []
 
-    // 
-    appState.graph.selectedNodes = appState.graph.frame.selection
+    //
+    appState.graph.selectedNodes = appState.graph.frame.selection;
 
     appState.graph.frame.updateGraph(appState.graph.computedGraph); //loads nodes on screen when snapshot loaded
-    appState.graph.frame.setAllNodesShapeWithOverride(appState.graph.nodes.shape, appState.graph.overrides);
+    appState.graph.frame.setAllNodesShapeWithOverride(
+      appState.graph.nodes.shape,
+      appState.graph.overrides
+    );
     appState.graph.frame.setLabelRelativeSize(appState.graph.nodes.labelSize);
     appState.graph.frame.setLabelLength(appState.graph.nodes.labelLength);
     appState.graph.frame.updateSelectionOpacity();
@@ -253,33 +264,32 @@ autorun(() => {
   appState.graph.pinNodes();
 });
 
-
-// // // resume layout by default 
+// // // resume layout by default
 autorun(() => {
-  
   // appState.graph.runActiveLayout();
   // setTimeout(function(){appState.graph.frame.paused = true},9000);
   appState.graph.frame.paused = true;
   // appState.graph.frame.resumeLayout();
-                  // this.forceUpdate();
-}) 
-
+  // this.forceUpdate();
+});
 
 autorun(() => {
   if (appState.graph.frame && appState.graph.positions) {
     // If positions are saved in a snapshot, pause layout upon loading.
     appState.graph.frame.updatePositions(appState.graph.positions);
     appState.graph.positions = null;
-    console.log('[autorun] Positions updated.');
-
+    console.log("[autorun] Positions updated.");
   }
   if (appState.graph.frame && appState.graph.initialNodesShowingLabels) {
     appState.graph.frame.showLabels(appState.graph.initialNodesShowingLabels);
     appState.graph.initialNodesShowingLabels = null;
   }
 
-  if (appState.graph.frame && appState.graph.frame.getNodeList().length>0){  //dehilight border when innitially load 
-    appState.graph.frame.getNodeList().forEach((node)=>{node.renderData.draw_object.children[0].visible=false})
+  if (appState.graph.frame && appState.graph.frame.getNodeList().length > 0) {
+    //dehilight border when innitially load
+    appState.graph.frame.getNodeList().forEach((node) => {
+      node.renderData.draw_object.children[0].visible = false;
+    });
   }
 });
 
@@ -297,13 +307,15 @@ autorun(() => {
 });
 
 autorun(() => {
-  if (appState.graph.selectedNodes && appState.graph.selectedNodes.length >0 ){
-    appState.graph.selectedNodes = appState.graph.selectedNodes.filter(x => x !== undefined)
+  if (appState.graph.selectedNodes && appState.graph.selectedNodes.length > 0) {
+    appState.graph.selectedNodes = appState.graph.selectedNodes.filter(
+      (x) => x !== undefined
+    );
   }
   // if (appState.graph && appState.graph.frame && appState.graph.frame.selection.length > 0) {
   //   this.frame.selection = this.frame.selection.filter(x => x !== undefined)
   // }
-})
+});
 
 // Argo-lite specific: extract CSV from File object and update related fields.
 autorun(() => {
@@ -321,40 +333,49 @@ autorun(() => {
     // Read entire CSV into memory as string
     const fileAsString = reader.result;
     // Get top 20 lines. Or if there's less than 10 line, get all the lines.
-    const lines = fileAsString.split('\n');
+    const lines = fileAsString.split("\n");
     const lineNumber = lines.length;
-    const topLinesAsString = lines.map(l => l.trim()).filter((l, i) => i < 20).join('\n');
+    const topLinesAsString = lines
+      .map((l) => l.trim())
+      .filter((l, i) => i < 20)
+      .join("\n");
     console.log(topLinesAsString);
 
     // Parse the top lines
     try {
-      const it = hasHeader ? parse(topLinesAsString, {
-        comment: "#",
-        trim: true,
-        auto_parse: true,
-        skip_empty_lines: true,
-        columns: hasHeader,
-        delimiter
-      }) : parse(topLinesAsString, {
-        comment: "#",
-        trim: true,
-        auto_parse: true,
-        skip_empty_lines: true,
-        columns: undefined,
-        delimiter
-      });
+      const it = hasHeader
+        ? parse(topLinesAsString, {
+            comment: "#",
+            trim: true,
+            auto_parse: true,
+            skip_empty_lines: true,
+            columns: hasHeader,
+            delimiter,
+          })
+        : parse(topLinesAsString, {
+            comment: "#",
+            trim: true,
+            auto_parse: true,
+            skip_empty_lines: true,
+            columns: undefined,
+            delimiter,
+          });
       runInAction("preview top N lines of edge file", () => {
         appState.import.importConfig.edgeFile.topN = it;
-        appState.import.importConfig.edgeFile.columns = Object.keys(it[0]).map(key => `${key}`);
-        appState.import.importConfig.edgeFile.mapping.fromId = appState.import.importConfig.edgeFile.columns[0];
-        appState.import.importConfig.edgeFile.mapping.toId = appState.import.importConfig.edgeFile.columns[1];
+        appState.import.importConfig.edgeFile.columns = Object.keys(it[0]).map(
+          (key) => `${key}`
+        );
+        appState.import.importConfig.edgeFile.mapping.fromId =
+          appState.import.importConfig.edgeFile.columns[0];
+        appState.import.importConfig.edgeFile.mapping.toId =
+          appState.import.importConfig.edgeFile.columns[1];
         appState.import.importConfig.edgeFile.ready = true;
       });
     } catch {
       toaster.show({
-        message: 'Error: Fails to parse file',
+        message: "Error: Fails to parse file",
         intent: Intent.DANGER,
-        timeout: -1
+        timeout: -1,
       });
     }
   };
@@ -362,9 +383,9 @@ autorun(() => {
   reader.onerror = () => {
     console.error(reader.error);
     toaster.show({
-      message: 'Error: Fails to open file',
+      message: "Error: Fails to open file",
       intent: Intent.DANGER,
-      timeout: -1
+      timeout: -1,
     });
   };
 });
@@ -384,42 +405,52 @@ autorun(() => {
     // Read entire CSV into memory as string
     const fileAsString = reader.result;
     // Get top 20 lines. Or if there's less than 10 line, get all the lines.
-    const lines = fileAsString.split('\n');
+    const lines = fileAsString.split("\n");
     const lineNumber = lines.length;
-    const topLinesAsString = lines.map(l => l.trim()).filter((l, i) => i < 20).join('\n');
+    const topLinesAsString = lines
+      .map((l) => l.trim())
+      .filter((l, i) => i < 20)
+      .join("\n");
     console.log(topLinesAsString);
 
     // Parse the top lines
     try {
-      const it = hasHeader ? parse(topLinesAsString, {
-        comment: "#",
-        trim: true,
-        auto_parse: true,
-        skip_empty_lines: true,
-        columns: hasHeader,
-        delimiter
-      }) : parse(topLinesAsString, {
-        comment: "#",
-        trim: true,
-        auto_parse: true,
-        skip_empty_lines: true,
-        columns: undefined,
-        delimiter
-      });
+      const it = hasHeader
+        ? parse(topLinesAsString, {
+            comment: "#",
+            trim: true,
+            auto_parse: true,
+            skip_empty_lines: true,
+            columns: hasHeader,
+            delimiter,
+          })
+        : parse(topLinesAsString, {
+            comment: "#",
+            trim: true,
+            auto_parse: true,
+            skip_empty_lines: true,
+            columns: undefined,
+            delimiter,
+          });
 
       runInAction("preview top N lines of node file", () => {
         appState.import.importConfig.nodeFile.topN = it;
-        appState.import.importConfig.nodeFile.columns = Object.keys(it[0]).map(key => `${key}`);
-        appState.import.importConfig.nodeFile.mapping.id = appState.import.importConfig.nodeFile.columns[0];
-        appState.import.importConfig.nodeFile.mapping.LatY = appState.import.importConfig.nodeFile.columns[2];
-        appState.import.importConfig.nodeFile.mapping.LonX = appState.import.importConfig.nodeFile.columns[1];
+        appState.import.importConfig.nodeFile.columns = Object.keys(it[0]).map(
+          (key) => `${key}`
+        );
+        appState.import.importConfig.nodeFile.mapping.id =
+          appState.import.importConfig.nodeFile.columns[0];
+        appState.import.importConfig.nodeFile.mapping.LatY =
+          appState.import.importConfig.nodeFile.columns[2];
+        appState.import.importConfig.nodeFile.mapping.LonX =
+          appState.import.importConfig.nodeFile.columns[1];
         appState.import.importConfig.nodeFile.ready = true;
       });
     } catch {
       toaster.show({
-        message: 'Error: Fails to open file',
+        message: "Error: Fails to open file",
         intent: Intent.DANGER,
-        timeout: -1
+        timeout: -1,
       });
     }
   };
@@ -427,9 +458,9 @@ autorun(() => {
   reader.onerror = () => {
     console.error(reader.error);
     toaster.show({
-      message: 'Error: Fails to open file',
+      message: "Error: Fails to open file",
       intent: Intent.DANGER,
-      timeout: -1
+      timeout: -1,
     });
   };
 });

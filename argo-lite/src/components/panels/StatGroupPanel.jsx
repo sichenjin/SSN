@@ -466,6 +466,71 @@ class StatGroupPanel extends React.Component {
     appState.graph.watchAppearance = appState.graph.watchAppearance + 1;
   };
 
+  runGlobalANN = () => {
+    // ANN = D_observed / D_expected https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/h-how-average-nearest-neighbor-distance-spatial-st.htm
+    // D_observed = the observed average distance between each node and its nearest neighbors
+    // D_expected = the expected average distance between each node and its nearest neighbors = 0.5 / sqrt(n / A)
+    // n = number of nodes, A = area of minimum enclosing rectangle around all nodes.
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+      const R = 6371; // Radius of the Earth in kilometers
+      const dLat = (lat2 - lat1) * (Math.PI / 180);
+      const dLon = (lon2 - lon1) * (Math.PI / 180);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) *
+          Math.cos(lat2 * (Math.PI / 180)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+      return distance;
+    };
+    // if ANN has not been calculated, calculate it
+    if (!appState.graph.globalANN) {
+      const nodes = appState.graph.rawGraph.nodes;
+      nodes.forEach((node) => {
+        const neighbors = nodes.filter((n) => n.id !== node.id);
+        neighbors.forEach((neighbor) => {
+          neighbor.distance = calculateDistance(
+            node.LatY,
+            node.LonX,
+            neighbor.LatY,
+            neighbor.LonX
+          );
+        });
+        // sort neighbors by distance, the first one is the nearest neighbor
+        neighbors.sort((a, b) => a.distance - b.distance);
+        // console.log(neighbors);
+        node.nn = neighbors[0];
+      });
+      const n = nodes.length;
+      let d_observed = 0;
+      nodes.forEach((node) => {
+        d_observed += node.nn.distance;
+      });
+      d_observed /= n;
+      appState.graph.global_D_observed = d_observed;
+      // A is the minimal enclosing rectangle area around all nodes
+      let minLat = Infinity,
+        maxLat = -Infinity,
+        minLon = Infinity,
+        maxLon = -Infinity;
+      nodes.forEach((node) => {
+        if (node.LatY < minLat) minLat = node.LatY;
+        if (node.LatY > maxLat) maxLat = node.LatY;
+        if (node.LonX < minLon) minLon = node.LonX;
+        if (node.LonX > maxLon) maxLon = node.LonX;
+      });
+      const width = calculateDistance(minLat, minLon, minLat, maxLon);
+      const height = calculateDistance(minLat, minLon, maxLat, minLon);
+      const A = width * height;
+      appState.graph.global_D_expected = 0.5 / Math.sqrt(n / A);
+      appState.graph.globalANN =
+        appState.graph.global_D_observed / appState.graph.global_D_expected;
+      console.log("global ann", appState.graph.globalANN);
+    }
+  };
+
   runShortestPath = () => {
     const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
       var p = 0.017453292519943295; // Math.PI / 180
@@ -819,6 +884,23 @@ class StatGroupPanel extends React.Component {
         >
           Run Data Assortativity
         </Button>
+        <br></br>
+        <Button
+          className="bp4-button"
+          style={{ zIndex: "1000" }}
+          onClick={this.runGlobalANN}
+        >
+          Run Global ANN
+        </Button>
+        {appState.graph.globalANN ? (
+          <text className="ann-tag" style={{ fontSize: "8px" }}>
+            {parseFloat(appState.graph.global_D_observed).toFixed(3) +
+              "/" +
+              parseFloat(appState.graph.global_D_expected).toFixed(3) +
+              "=" +
+              parseFloat(appState.graph.globalANN).toFixed(3)}
+          </text>
+        ) : null}
         <br></br>
         <hr />
         <p className="stat-section-heading">Efficient Distance Analysis</p>

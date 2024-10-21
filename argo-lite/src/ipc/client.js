@@ -1,8 +1,8 @@
-import { runInAction, toJS } from 'mobx';
-import { Intent } from '@blueprintjs/core';
-import { demapify } from 'es6-mapify';
+import { runInAction, toJS } from "mobx";
+import { Intent } from "@blueprintjs/core";
+import { demapify } from "es6-mapify";
 
-import appState from '../stores/index';
+import appState from "../stores/index";
 import {
   ADD_NODE,
   ADD_NODES,
@@ -51,14 +51,14 @@ import {
   SAVE_USER_CONFIG,
   CHANGE_WORKSPACE_FOLDER,
   CHANGED_WORKSPACE_FOLDER,
-} from '../constants/index';
-import { toaster } from '../notifications/client';
+} from "../constants/index";
+import { toaster } from "../notifications/client";
 
-import createGraph from 'ngraph.graph';
-import pageRank from 'ngraph.pagerank';
-import path from 'ngraph.path';
+import createGraph from "ngraph.graph";
+import pageRank from "ngraph.pagerank";
+import path from "ngraph.path";
 import parse from "csv-parse/lib/sync";
-import centrality from 'ngraph.centrality';
+import centrality from "ngraph.centrality";
 // import betweennes from 'ngraph.centrality/src/betweenness';
 // import worker from './worker';
 
@@ -68,10 +68,10 @@ import centrality from 'ngraph.centrality';
 const ipcRenderer = {
   send: (eventString) => {
     console.log(`ipcRenderer.send(${eventString}, ...)`);
-  }
-}
+  },
+};
 
-const Nonloc = 360
+const Nonloc = 360;
 
 export default function registerIPC() {
   // ipcRenderer.on(LOADED_USER_CONFIG, (event, loadedObject) => {
@@ -84,7 +84,6 @@ export default function registerIPC() {
   //     appState.preferences.workspacePath = loadedObject.workspace;
   //   }
   // });
-
   // ipcRenderer.on(SAVED_USER_CONFIG, (event) => {
   //   toaster.show({
   //     message: "User configuration saved",
@@ -92,14 +91,12 @@ export default function registerIPC() {
   //     iconName: 'saved',
   //   });
   // });
-
   // ipcRenderer.on(LOADED_GRAPH_SQLITE, (event, loadedObject) => {
   //   runInAction('load saved graph', () => {
   //     appState.graph.rawGraph = loadedObject.rawGraph;
   //     appState.graph.metadata = loadedObject.metadata;
   //   });
   // });
-
   // ipcRenderer.on(OPENED_GRAPH, (event, loadedObject) => {
   //   runInAction('load saved graph and state', () => {
   //     console.log(loadedObject);
@@ -110,11 +107,9 @@ export default function registerIPC() {
   //     }
   //   });
   // });
-
   // ipcRenderer.on(LOADED_GRAPH_STATE, (event, loadedObject) => {
   //   appState.graph.loadImmediateStates(loadedObject);
   // });
-
   // ipcRenderer.on(SAVED_GRAPH_STATE, (event, savedFilePath) => {
   //   toaster.show({
   //     message: `Saved graph snapshot file to ${savedFilePath}`,
@@ -126,7 +121,6 @@ export default function registerIPC() {
   //     },
   //   });
   // });
-
   // ipcRenderer.on(SAVED_GRAPH_STATE_TO_PROJECT, (event, snapshotName) => {
   //   toaster.show({
   //     message: `Saved to snapshot ${snapshotName}`,
@@ -134,7 +128,6 @@ export default function registerIPC() {
   //     iconName: 'saved',
   //   });
   // });
-
   // ipcRenderer.on(SAVED_GRAPH_JSON, (event, savedFilePath) => {
   //   toaster.show({
   //     message: `Saved graph file to ${savedFilePath}`,
@@ -146,30 +139,24 @@ export default function registerIPC() {
   //     },
   //   });
   // });
-
   // ipcRenderer.on(CHOSEN_NODE_FILE, (event, path) => {
   //   appState.import.importConfig.nodeFile.path = path;
   // });
-
   // ipcRenderer.on(CHOSEN_EDGE_FILE, (event, path) => {
   //   appState.import.importConfig.edgeFile.path = path;
   // });
-
   // ipcRenderer.on(CHOSEN_GRAPH_FILE, (event, path) => {
   //   appState.import.graphFile = path;
   // });
-
   // ipcRenderer.on(CHOSEN_STATE_FILE, (event, path) => {
   //   appState.import.stateFile = path;
   // });
-
   // ipcRenderer.on(IMPORTED_GRAPH, (event) => {
   //   appState.import.loading = false;
   //   appState.import.dialogOpen = false;
   //   appState.project.isFetching = true;
   //   fetchWorkspaceProjects();
   // });
-
   // ipcRenderer.on(ADD_NODES, (event, toAdd) => {
   //   runInAction('add nodes and edges to graph', () => {
   //     appState.graph.rawGraph.nodes = appState.graph.rawGraph.nodes.concat(
@@ -180,7 +167,6 @@ export default function registerIPC() {
   //     );
   //   });
   // });
-
   // ipcRenderer.on(ADD_SELECT_NODE, (event, toAdd) => {
   //   runInAction('add nodes and edges to graph', () => {
   //     appState.graph.rawGraph.nodes = appState.graph.rawGraph.nodes.concat(
@@ -190,11 +176,9 @@ export default function registerIPC() {
   //       toAdd.edges,
   //     );
   //   });
-
   //   appState.graph.frame.setLastNode(toAdd.nodes[0].node_id);
   //   appState.graph.frame.dragLastNode();
   // });
-
   // ipcRenderer.on(SEARCH_RESPONSE, (event, candidates) => {
   //   var cands = JSON.parse(candidates);
   //   var ckeys = cands.map(x => x.node_id);
@@ -212,15 +196,12 @@ export default function registerIPC() {
   //     appState.graph.frame.highlightNodeIds(ckeys, true);
   //   }
   // });
-
   // ipcRenderer.on(LOADED_GRAPH_STATE, (event, stateStr) => {
   //   appState.graph.loadImmediateStates(stateStr);
   // });
-
   // ipcRenderer.on(CREATED_NEW_PROJECT, () => {
   //   fetchWorkspaceProjects();
   // });
-
   // ipcRenderer.on(FETCHED_WORKSPACE_PROJECTS, (event, projects) => {
   //   appState.project.isFetching = false;
   //   appState.project.projects = projects;
@@ -236,39 +217,30 @@ export default function registerIPC() {
   //     } else {
   //       appState.project.currentProject = null;
   //     }
-
   //   }
   // });
-
   // ipcRenderer.on(CHANGED_WORKSPACE_FOLDER, (events, newWorkspaceDirectory) => {
   //   appState.preferences.workspacePath = newWorkspaceDirectory;
   //   appState.preferences.saveUserConfig();
   // });
-
   // ipcRenderer.on(MENU_NEW_PROJECT, () => {
   //   appState.project.isNewProjectDialogOpen = true;
   // });
-
   // ipcRenderer.on(MENU_LOAD, () => {
   //   appState.preferences.openDialogOpen = true;
   // });
-
   // ipcRenderer.on(MENU_IMPORT_CSV, () => {
   //   appState.import.dialogOpen = true;
   // });
-
   // ipcRenderer.on(MENU_SAVE_GRAPH_STATE, () => {
   //   // Original implementation for opening a traditional system-level save file dialog
   //   // ipcRenderer.send(SAVE_GRAPH_STATE, appState.graph.saveImmediateStates());
-
   //   // New implementation opening a dialog that saves snapshot to project
   //   appState.project.isSaveSnapshotDialogOpen = true;
   // });
-
   // ipcRenderer.on(MENU_SAVE_GRAPH_STATE_TO_PROJECT, () => {
   //   requestSaveSnapshot();
   // });
-
   // ipcRenderer.on(MENU_SAVE_GRAPH_SQLITE, requestSaveSQLite);
 }
 
@@ -282,9 +254,9 @@ export function addNode(node_id) {
 
 export function requestNeighbors(
   node_id,
-  attr = 'degree',
-  num = '10',
-  order = 'desc',
+  attr = "degree",
+  num = "10",
+  order = "desc"
 ) {
   ipcRenderer.send(GET_NEIGHBORS, node_id, attr, num, order);
 }
@@ -298,7 +270,7 @@ function requestSaveSQLite() {
       nodes: toJS(appState.graph.nodes),
       overrides: toJS(demapify(appState.graph.overrides)),
       nodePositions: appState.graph.frame.getPositions(),
-    }),
+    })
   );
 }
 
@@ -322,7 +294,7 @@ export function requestOpen() {
   ipcRenderer.send(
     OPEN_GRAPH,
     appState.import.graphFile,
-    appState.import.stateFile,
+    appState.import.stateFile
   );
 }
 
@@ -343,32 +315,49 @@ export function requestRename(filePath, newName) {
 export function requestSaveSnapshot(snapshotName) {
   if (!snapshotName) {
     // Default: Use the currently opened snapshot name (if no snapshot opened, the default name in the ProjectStore will be used)
-    ipcRenderer.send(SAVE_GRAPH_STATE_TO_PROJECT, appState.graph.saveImmediateStates(), appState.project.currentProject.projectPath, appState.project.currentSnapshotName);
+    ipcRenderer.send(
+      SAVE_GRAPH_STATE_TO_PROJECT,
+      appState.graph.saveImmediateStates(),
+      appState.project.currentProject.projectPath,
+      appState.project.currentSnapshotName
+    );
   } else {
-    ipcRenderer.send(SAVE_GRAPH_STATE_TO_PROJECT, appState.graph.saveImmediateStates(), appState.project.currentProject.projectPath, snapshotName);
+    ipcRenderer.send(
+      SAVE_GRAPH_STATE_TO_PROJECT,
+      appState.graph.saveImmediateStates(),
+      appState.project.currentProject.projectPath,
+      snapshotName
+    );
   }
 }
 
-export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName) {
+export function requestImportGraphFromCSV(
+  hasNodeFile,
+  delimiter,
+  newProjectName
+) {
   if (!newProjectName) {
-    newProjectName = 'Test Project';
+    newProjectName = "Test Project";
   }
   appState.import.loading = true;
-  appState.graph.convexPolygons =[]
-  appState.graph.modularity = undefined
-  appState.graph.globalFlatRatio = undefined
-  appState.graph.convexhullby = "NULL"
-  appState.graph.groupby = "NULL"
+  appState.graph.convexPolygons = [];
+  appState.graph.modularity = undefined;
+  appState.graph.global_D_observed = undefined;
+  appState.graph.global_D_expected = undefined;
+  appState.graph.globalFlatRatio = undefined;
+  appState.graph.globalANN = undefined;
+  appState.graph.convexhullby = "NULL";
+  appState.graph.groupby = "NULL";
   appState.graph.mapClicked = undefined;
   appState.graph.mapClickedArray = [];
   appState.graph.areaSelected = undefined;
   appState.graph.selectedNodes = [];
   appState.graph.selectedSets = [];
-  appState.graph.commonSetNodes =[];
+  appState.graph.commonSetNodes = [];
   appState.graph.interSetNodes = [];
-  appState.graph.filter = {}
+  appState.graph.filter = {};
   appState.graph.currentlyHovered = undefined;
- 
+
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -382,10 +371,10 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
   appState.graph.distanceDensityCurrentlyClicked = [];
   appState.graph.pinnedNodes = null;
   appState.graph.clearBrush = false;
-  
+
   appState.graph.mapEdgeShow = true;
   appState.graph.autoZoom = false;
-  appState.graph.firstload =true;
+  appState.graph.firstload = true;
   appState.graph.keydown = false;
   appState.graph.clusteringco = 0;
   appState.graph.graphDiameter = 0;
@@ -407,16 +396,16 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
       createMissing: appState.import.importConfig.edgeFile.createMissing,
     },
     delimiter,
-    newProjectName
+    newProjectName,
   };
   ipcRenderer.send(IMPORT_GRAPH, importConfig);
 
   // TODO: Potentially separate this out to web worker.
-  importGraphFromCSV(importConfig).then(graph => {
+  importGraphFromCSV(importConfig).then((graph) => {
     // Run post import filters
     appState.import.postImportFilter(graph.rawGraph);
 
-    runInAction('load imported graph', () => {
+    runInAction("load imported graph", () => {
       appState.graph.rawGraph = graph.rawGraph;
       appState.graph.metadata = graph.metadata;
       appState.graph.setUpFrame();
@@ -445,11 +434,11 @@ export function requestImportGraphFromCSV(hasNodeFile, delimiter, newProjectName
 }
 
 export function requestImportGraphFromGexf() {
-  importGraphFromGexf().then(graph => {
+  importGraphFromGexf().then((graph) => {
     // Run post import filters
     appState.import.postImportFilter(graph.rawGraph);
 
-    runInAction('load imported graph', () => {
+    runInAction("load imported graph", () => {
       appState.graph.rawGraph = graph.rawGraph;
       appState.graph.metadata = graph.metadata;
       appState.graph.setUpFrame();
@@ -483,49 +472,52 @@ async function readCSV(fileObject, hasHeader, delimiter) {
       const content = reader.result;
       try {
         if (hasHeader) {
-          resolve(parse(content, {
+          resolve(
+            parse(content, {
+              comment: "#",
+              trim: true,
+              auto_parse: true,
+              skip_empty_lines: true,
+              columns: hasHeader,
+              delimiter,
+            })
+          );
+        }
+        resolve(
+          parse(content, {
             comment: "#",
             trim: true,
             auto_parse: true,
             skip_empty_lines: true,
-            columns: hasHeader,
-            delimiter
-          }));
-        }
-        resolve(parse(content, {
-          comment: "#",
-          trim: true,
-          auto_parse: true,
-          skip_empty_lines: true,
-          columns: undefined,
-          delimiter
-        }));
+            columns: undefined,
+            delimiter,
+          })
+        );
       } catch (err) {
-        let msg = err.message
-        let mismatch = msg.indexOf("Invalid Record Length:") == 0
+        let msg = err.message;
+        let mismatch = msg.indexOf("Invalid Record Length:") == 0;
         if (mismatch) {
-          msg = msg.replace("is", "set to")
-          msg = msg.replace("got", "but detected")
+          msg = msg.replace("is", "set to");
+          msg = msg.replace("got", "but detected");
         }
         toaster.show({
           message: "Error: " + msg,
           intent: Intent.DANGER,
-          timeout: -1
+          timeout: -1,
         });
-        
       }
       // appState.import.loading = false;
       appState.import.dialogOpen = false;
-    }
+    };
   });
 }
 
 async function parseGEXF(content) {
   const parser = new DOMParser();
   const xmlDoc = parser.parseFromString(content, "text/xml");
-  const xmlEdges = xmlDoc.getElementsByTagName('edge');
-  const xmlNodes = xmlDoc.getElementsByTagName('node');
-  const xmlAttri = xmlDoc.getElementsByTagName('attributes')
+  const xmlEdges = xmlDoc.getElementsByTagName("edge");
+  const xmlNodes = xmlDoc.getElementsByTagName("node");
+  const xmlAttri = xmlDoc.getElementsByTagName("attributes");
 
   let nodeAttri = [];
   let edgeAttri = [];
@@ -535,11 +527,10 @@ async function parseGEXF(content) {
 
   for (let i = 0, l = xmlAttri.length; i < l; i++) {
     const curr = xmlAttri[i];
-    if (curr.getAttribute('class') === 'node') {
-      nodeAttri = curr.getElementsByTagName('attribute');
-    }
-    else if (curr.getAttribute('class') === 'edge') {
-      edgeAttri = curr.getElementsByTagName('attribute');
+    if (curr.getAttribute("class") === "node") {
+      nodeAttri = curr.getElementsByTagName("attribute");
+    } else if (curr.getAttribute("class") === "edge") {
+      edgeAttri = curr.getElementsByTagName("attribute");
     }
   }
 
@@ -550,8 +541,8 @@ async function parseGEXF(content) {
 
   for (let i = 0, l = xmlEdges.length; i < l; i++) {
     const currEdge = xmlEdges[i];
-    const s = currEdge.getAttribute('source').toString();
-    const t = currEdge.getAttribute('target').toString();
+    const s = currEdge.getAttribute("source").toString();
+    const t = currEdge.getAttribute("target").toString();
     edgesArr.push({
       source_id: s,
       target_id: t,
@@ -559,16 +550,24 @@ async function parseGEXF(content) {
   }
   for (let i = 0, l = xmlNodes.length; i < l; i++) {
     const currNode = xmlNodes[i];
-    const id = currNode.getAttribute('id').toString();
+    const id = currNode.getAttribute("id").toString();
     const nodeAttvalues = currNode.getElementsByTagName("attvalues");
     const nodeAttvalue = [];
     if (nodeAttvalues.length != 0) {
       nodeAttvalue = nodeAttvalues[0].getElementsByTagName("attvalue");
     }
-    let node = { id: id, degree: 0, pagerank: 0, node_id: id,  betweenness:0, closeness:0 };
+    let node = {
+      id: id,
+      degree: 0,
+      pagerank: 0,
+      node_id: id,
+      betweenness: 0,
+      closeness: 0,
+    };
     for (let j = 0; j < nodeAttvalue.length; j++) {
       const value = nodeAttvalue[j].attributes["value"].value;
-      const attributeIdElementAttribute = nodeAttvalue[j].attributes["for"] || nodeAttvalue[j].attributes["id"];
+      const attributeIdElementAttribute =
+        nodeAttvalue[j].attributes["for"] || nodeAttvalue[j].attributes["id"];
       const attributeId = attributeIdElementAttribute.value;
       node[nodeAttriOrdered[attributeId]] = value;
     }
@@ -592,7 +591,7 @@ async function readGEXF(fileObject) {
     reader.onload = () => {
       const content = reader.result;
       resolve(parseGEXF(content));
-    }
+    };
   });
 }
 
@@ -601,8 +600,12 @@ async function importGraphFromCSV(config) {
   // but the frontend selector always convert int to string values, we need to
   // manually convert the user-selected fromId and toId values back to int.
   // Note that this should only be done when there's no header provided on the CSV (hasColumns == false).
-  const fromId = config.nodes.hasColumns ? config.edges.mapping.fromId : parseInt(config.edges.mapping.fromId);
-  const toId = config.nodes.hasColumns ? config.edges.mapping.toId : parseInt(config.edges.mapping.toId);
+  const fromId = config.nodes.hasColumns
+    ? config.edges.mapping.fromId
+    : parseInt(config.edges.mapping.fromId);
+  const toId = config.nodes.hasColumns
+    ? config.edges.mapping.toId
+    : parseInt(config.edges.mapping.toId);
 
   // Create temporary data structures.
   let nodesArr = [];
@@ -611,27 +614,61 @@ async function importGraphFromCSV(config) {
   const graph = createGraph();
   const degreeDict = {};
   if (config.hasNodeFile) {
-    nodesArr = await readCSV(appState.import.selectedNodeFileFromInput, config.nodes.hasColumns, config.delimiter);
-    nodesArr.forEach(node => graph.addNode(node[config.nodes.mapping.id].toString(),
-      { id: node[config.nodes.mapping.id].toString(), LatY: parseFloat(node[config.nodes.mapping.LatY]),LonX: parseFloat(node[config.nodes.mapping.LonX]),degree: 0, ...node }));
-    nodesArr =
-      nodesArr.map(
-        n => ({ ...n, id: n[config.nodes.mapping.id].toString(), degree: 0,betweenness:0, closeness:0 , pagerank: 0, LonX: parseFloat(n[config.nodes.mapping.LonX]), LatY: parseFloat(n[config.nodes.mapping.LatY]) }));
-    nodesArr.forEach(n => degreeDict[n.id] = 0);
+    nodesArr = await readCSV(
+      appState.import.selectedNodeFileFromInput,
+      config.nodes.hasColumns,
+      config.delimiter
+    );
+    nodesArr.forEach((node) =>
+      graph.addNode(node[config.nodes.mapping.id].toString(), {
+        id: node[config.nodes.mapping.id].toString(),
+        LatY: parseFloat(node[config.nodes.mapping.LatY]),
+        LonX: parseFloat(node[config.nodes.mapping.LonX]),
+        degree: 0,
+        ...node,
+      })
+    );
+    nodesArr = nodesArr.map((n) => ({
+      ...n,
+      id: n[config.nodes.mapping.id].toString(),
+      degree: 0,
+      betweenness: 0,
+      closeness: 0,
+      pagerank: 0,
+      LonX: parseFloat(n[config.nodes.mapping.LonX]),
+      LatY: parseFloat(n[config.nodes.mapping.LatY]),
+    }));
+    nodesArr.forEach((n) => (degreeDict[n.id] = 0));
   }
-  const edges = await readCSV(appState.import.selectedEdgeFileFromInput, config.edges.hasColumns, config.delimiter);
+  const edges = await readCSV(
+    appState.import.selectedEdgeFileFromInput,
+    config.edges.hasColumns,
+    config.delimiter
+  );
   if (config.edges.createMissing) {
     edges.forEach((it) => {
       const from = it[fromId].toString();
       const to = it[toId].toString();
       if (!graph.hasNode(from)) {
         graph.addNode(from, { id: from, degree: 0 });
-        nodesArr.push({ id: from, degree: 0, pagerank: 0 , betweenness:0, closeness:0 });
+        nodesArr.push({
+          id: from,
+          degree: 0,
+          pagerank: 0,
+          betweenness: 0,
+          closeness: 0,
+        });
         degreeDict[from] = 0;
       }
       if (!graph.hasNode(to)) {
         graph.addNode(to, { id: to, degree: 0 });
-        nodesArr.push({ id: to, degree: 0, pagerank: 0 ,betweenness:0, closeness:0 });
+        nodesArr.push({
+          id: to,
+          degree: 0,
+          pagerank: 0,
+          betweenness: 0,
+          closeness: 0,
+        });
         degreeDict[to] = 0;
       }
     });
@@ -641,7 +678,16 @@ async function importGraphFromCSV(config) {
 
   const edgesArr = [];
 
-  const addEdge = (from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily) => {
+  const addEdge = (
+    from,
+    to,
+    fromlocLatY,
+    fromlocLonX,
+    tolocLatY,
+    tolocLonX,
+    withinState,
+    withinFamily
+  ) => {
     const edgeKey = `${from}👉${to}`;
     const edgeKey2 = `${to}👉${from}`;
     if (edgesSet.has(edgeKey) || edgesSet.has(edgeKey2)) {
@@ -656,8 +702,7 @@ async function importGraphFromCSV(config) {
       tolocLonX: tolocLonX,
       withinState: withinState,
       withinFamily: withinFamily,
-
-    }
+    };
     graph.addLink(from, to, data);
 
     degreeDict[from] += 1;
@@ -670,30 +715,51 @@ async function importGraphFromCSV(config) {
       tolocLatY: tolocLatY,
       tolocLonX: tolocLonX,
       withinState: withinState,
-      withinFamily: withinFamily
+      withinFamily: withinFamily,
     });
   };
 
-  if (config.hasNodeFile && nodesArr[0].LatY !== undefined && nodesArr[0].LonX !== undefined) {  //node has spatial location info
-    edges.forEach(it => {
+  if (
+    config.hasNodeFile &&
+    nodesArr[0].LatY !== undefined &&
+    nodesArr[0].LonX !== undefined
+  ) {
+    //node has spatial location info
+    edges.forEach((it) => {
       const from = it[fromId].toString();
       const to = it[toId].toString();
-      var fromlocLatY = parseFloat(graph.getNode(it[fromId].toString()).data.LatY)
-      var fromlocLonX = parseFloat(graph.getNode(it[fromId].toString()).data.LonX)
-      var tolocLatY = parseFloat(graph.getNode(it[toId].toString()).data.LatY)
-      var tolocLonX = parseFloat(graph.getNode(it[toId].toString()).data.LonX) // observable array???
-      var withinState = (graph.getNode(to).data.GEOID === graph.getNode(from).data.GEOID)
-      var withinFamily = (graph.getNode(to).data.Family === graph.getNode(from).data.Family)
-      // fromloc.push(graph.getNode(it[fromId].toString()).data.LatY) 
-      // fromloc.push(graph.getNode(it[fromId].toString()).data.LonX) 
+      var fromlocLatY = parseFloat(
+        graph.getNode(it[fromId].toString()).data.LatY
+      );
+      var fromlocLonX = parseFloat(
+        graph.getNode(it[fromId].toString()).data.LonX
+      );
+      var tolocLatY = parseFloat(graph.getNode(it[toId].toString()).data.LatY);
+      var tolocLonX = parseFloat(graph.getNode(it[toId].toString()).data.LonX); // observable array???
+      var withinState =
+        graph.getNode(to).data.GEOID === graph.getNode(from).data.GEOID;
+      var withinFamily =
+        graph.getNode(to).data.Family === graph.getNode(from).data.Family;
+      // fromloc.push(graph.getNode(it[fromId].toString()).data.LatY)
+      // fromloc.push(graph.getNode(it[fromId].toString()).data.LonX)
       // toloc.push(graph.getNode(it[toId].toString()).data.LatY)
       // toloc.push(graph.getNode(it[toId].toString()).data.LonX)
       // Argo currently works with undirected graph
-      addEdge(from, to, fromlocLatY, fromlocLonX, tolocLatY, tolocLonX, withinState, withinFamily);
+      addEdge(
+        from,
+        to,
+        fromlocLatY,
+        fromlocLonX,
+        tolocLatY,
+        tolocLonX,
+        withinState,
+        withinFamily
+      );
       // addEdge(to, from);
     });
-  } else {  //doesn't have  spatial location info
-    edges.forEach(it => {
+  } else {
+    //doesn't have  spatial location info
+    edges.forEach((it) => {
       const from = it[fromId].toString();
       const to = it[toId].toString();
       // Argo currently works with undirected graph
@@ -703,142 +769,159 @@ async function importGraphFromCSV(config) {
   }
 
   const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
-    var p = 0.017453292519943295;    // Math.PI / 180
+    var p = 0.017453292519943295; // Math.PI / 180
     var c = Math.cos;
-    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-      c(lat1 * p) * c(lat2 * p) *
-      (1 - c((lon2 - lon1) * p)) / 2;
+    var a =
+      0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
 
     return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-  }
+  };
 
   //calculate the diatance to centern/ average lat/lon
   const calDIstanceToCenter = () => {
-    const latlist = nodesArr.map(n => n['LatY'])
-    const lonlist = nodesArr.map(n => n['LonX'])
+    const latlist = nodesArr.map((n) => n["LatY"]);
+    const lonlist = nodesArr.map((n) => n["LonX"]);
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
-    var avgLat
-    var avgLon
+    var avgLat;
+    var avgLon;
     if (latlist.length > 0 && lonlist.length > 0) {
-      avgLat = average(latlist)
-      avgLon = average(lonlist)
+      avgLat = average(latlist);
+      avgLon = average(lonlist);
       nodesArr.forEach(function (n, i) {
-        n['distance to center'] = calDistanceFromLatLonInKm(avgLat, avgLon, latlist[i], lonlist[i])
-      })
+        n["distance to center"] = calDistanceFromLatLonInKm(
+          avgLat,
+          avgLon,
+          latlist[i],
+          lonlist[i]
+        );
+      });
     }
-  }
+  };
 
+  const calMedianCenter = () => {
+    const latlist = nodesArr.map((n) => n["LatY"]);
+    const lonlist = nodesArr.map((n) => n["LonX"]);
+    const medianCenter = (values) => {
+      if (values.length === 0) throw new Error("No inputs");
 
-  const calMedianCenter = ()=>{
-    const latlist = nodesArr.map(n => n['LatY'])
-    const lonlist = nodesArr.map(n => n['LonX'])
-    const medianCenter = (values)=>{
-      if(values.length ===0) throw new Error("No inputs");
+      const result1 = [...values].sort((a, b) => a - b);
 
-      const result1 = [...values].sort((a, b) => a - b)
-    
       // values.sort(function(a,b){
       //   return a-b;
       // });
-    
+
       var half = Math.floor(result1.length / 2);
-      
-      if (result1.length % 2)
-        return result1[half];
-      
+
+      if (result1.length % 2) return result1[half];
+
       return (result1[half - 1] + result1[half]) / 2.0;
-    }
+    };
 
     if (latlist.length > 0 && lonlist.length > 0) {
-      const medianLat = medianCenter(latlist)
-      const medianLon = medianCenter(lonlist)
+      const medianLat = medianCenter(latlist);
+      const medianLon = medianCenter(lonlist);
       nodesArr.forEach(function (n, i) {
-        n['distance to center'] = calDistanceFromLatLonInKm(medianLat, medianLon, latlist[i], lonlist[i])
-      })
+        n["distance to center"] = calDistanceFromLatLonInKm(
+          medianLat,
+          medianLon,
+          latlist[i],
+          lonlist[i]
+        );
+      });
     }
+  };
 
-
-  }
-
-  if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
+  if (nodesArr[0]["LonX"] && nodesArr[0]["LatY"]) {
     // calDIstanceToCenter();
-  calMedianCenter();
-
+    calMedianCenter();
   }
   const shortestPathPairs = () => {
     let pathFinder = path.aGreedy(graph);
-    const pathsArr = []
+    const pathsArr = [];
     const pathsSet = new Set();
 
-
-
     graph.forEachNode(function (fromnode) {
-
       graph.forEachNode(function (tonode) {
         if (fromnode.id !== tonode.id) {
           const pathKey1 = `${fromnode.id}👉${tonode.id}`;
           const pathKey2 = `${tonode.id}👉${fromnode.id}`;
           // undirected graph:
-          // only add once for undirected graph 
-          if (!(pathsSet.has(pathKey1)) && !(pathsSet.has(pathKey2)) ) {
+          // only add once for undirected graph
+          if (!pathsSet.has(pathKey1) && !pathsSet.has(pathKey2)) {
             pathsSet.add(pathKey1);
             pathsSet.add(pathKey2);
             pathsArr.push({
-             "source":fromnode.id,
-             "target":tonode.id,
-            "path": pathFinder.find(fromnode.id, tonode.id),
-            "distance": calDistanceFromLatLonInKm(fromnode.data.LatY, fromnode.data.LonX, tonode.data.LatY, tonode.data.LonX)
-          
-           })
+              source: fromnode.id,
+              target: tonode.id,
+              path: pathFinder.find(fromnode.id, tonode.id),
+              distance: calDistanceFromLatLonInKm(
+                fromnode.data.LatY,
+                fromnode.data.LonX,
+                tonode.data.LatY,
+                tonode.data.LonX
+              ),
+            });
           }
-           
-          //directed graph: 
+
+          //directed graph:
         }
-
-      })
-
-    })
+      });
+    });
     // console.log(nodesArr.length)
     // console.log(pathsArr.length)
-    return pathsArr
-
-  }
+    return pathsArr;
+  };
   // const pathsArr = shortestPathPairs();
   const rank = pageRank(graph);
-  const betweenness = centrality.betweenness(graph)
+  const betweenness = centrality.betweenness(graph);
   const closeness = centrality.closeness(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, pagerank: rank[n.id],  closeness: closeness[n.id],betweenness:betweenness[n.id], degree: parseInt(degreeDict[n.id] ) }));
-  const nodekeyList = Object.keys(nodesArr[0])
-  const nodePropertyTypes = {}
+  nodesArr = nodesArr.map((n) => ({
+    ...n,
+    node_id: n.id,
+    pagerank: rank[n.id],
+    closeness: closeness[n.id],
+    betweenness: betweenness[n.id],
+    degree: parseInt(degreeDict[n.id]),
+  }));
+  const nodekeyList = Object.keys(nodesArr[0]);
+  const nodePropertyTypes = {};
   nodekeyList.forEach(function (k) {
-    nodePropertyTypes[k] = typeof (nodesArr[0][k])
-  })
-  const uniqueValue = {}
+    nodePropertyTypes[k] = typeof nodesArr[0][k];
+  });
+  const uniqueValue = {};
   nodekeyList.forEach(function (k, i) {
-
-    if (nodePropertyTypes[k] == 'string') {
-      uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+    if (nodePropertyTypes[k] == "string") {
+      uniqueValue[k] = [...new Set(nodesArr.map((item) => item[k]))];
     } else {
-      const valuea = nodesArr.map(function (el) { return el[k]; })
-      const minv = Math.min(...valuea)
-      const maxv = Math.max(...valuea)
-      uniqueValue[k] = [minv, maxv]
+      const valuea = nodesArr.map(function (el) {
+        return el[k];
+      });
+      const minv = Math.min(...valuea);
+      const maxv = Math.max(...valuea);
+      uniqueValue[k] = [minv, maxv];
     }
-  })
+  });
   return {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
-      snapshotName: 'Untitled Graph',
+      snapshotName: "Untitled Graph",
       fullNodes: nodesArr.length,
       fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree','distance to center',  'betweenness', 'closeness' ],
-      edgeProperties: ['source_id', 'target_id'],
-     
+      nodeComputed: [
+        "pagerank",
+        "degree",
+        "distance to center",
+        "betweenness",
+        "closeness",
+      ],
+      edgeProperties: ["source_id", "target_id"],
     },
-  }
+  };
 }
 
 export async function importGraphFromGexf() {
@@ -875,7 +958,7 @@ export async function importGraphFromGexf() {
     });
   };
 
-  edges.forEach(it => {
+  edges.forEach((it) => {
     const from = it["source_id"].toString();
     const to = it["target_id"].toString();
 
@@ -885,138 +968,157 @@ export async function importGraphFromGexf() {
   });
 
   const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
-    var p = 0.017453292519943295;    // Math.PI / 180
+    var p = 0.017453292519943295; // Math.PI / 180
     var c = Math.cos;
-    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-      c(lat1 * p) * c(lat2 * p) *
-      (1 - c((lon2 - lon1) * p)) / 2;
+    var a =
+      0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
 
     return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-  }
+  };
 
   //calculate the diatance to center/ average lat/lon
   const calDIstanceToCenter = () => {
-    const latlist = nodesArr.map(n => n['LatY'])
-    const lonlist = nodesArr.map(n => n['LonX'])
+    const latlist = nodesArr.map((n) => n["LatY"]);
+    const lonlist = nodesArr.map((n) => n["LonX"]);
     const average = (array) => array.reduce((a, b) => a + b) / array.length;
-    var avgLat
-    var avgLon
+    var avgLat;
+    var avgLon;
     if (latlist.length > 0 && lonlist.length > 0) {
-      avgLat = average(latlist)
-      avgLon = average(lonlist)
+      avgLat = average(latlist);
+      avgLon = average(lonlist);
       nodesArr.forEach(function (n, i) {
-        n['distance to center'] = calDistanceFromLatLonInKm(avgLat, avgLon, latlist[i], lonlist[i])
-      })
-    }
-  }
-
-  const calMedianCenter = ()=>{
-    const latlist = nodesArr.map(n => n['LatY'])
-    const lonlist = nodesArr.map(n => n['LonX'])
-    const medianCenter = (values)=>{
-      if(values.length ===0) throw new Error("No inputs");
-    
-      values.sort(function(a,b){
-        return a-b;
+        n["distance to center"] = calDistanceFromLatLonInKm(
+          avgLat,
+          avgLon,
+          latlist[i],
+          lonlist[i]
+        );
       });
-    
-      var half = Math.floor(values.length / 2);
-      
-      if (values.length % 2)
-        return values[half];
-      
-      return (values[half - 1] + values[half]) / 2.0;
     }
+  };
+
+  const calMedianCenter = () => {
+    const latlist = nodesArr.map((n) => n["LatY"]);
+    const lonlist = nodesArr.map((n) => n["LonX"]);
+    const medianCenter = (values) => {
+      if (values.length === 0) throw new Error("No inputs");
+
+      values.sort(function (a, b) {
+        return a - b;
+      });
+
+      var half = Math.floor(values.length / 2);
+
+      if (values.length % 2) return values[half];
+
+      return (values[half - 1] + values[half]) / 2.0;
+    };
 
     if (latlist.length > 0 && lonlist.length > 0) {
-      const medianLat = medianCenter(latlist)
-      const medianLon = medianCenter(lonlist)
+      const medianLat = medianCenter(latlist);
+      const medianLon = medianCenter(lonlist);
       nodesArr.forEach(function (n, i) {
-        n['distance to center'] = calDistanceFromLatLonInKm(medianLat, medianLon, latlist[i], lonlist[i])
-      })
+        n["distance to center"] = calDistanceFromLatLonInKm(
+          medianLat,
+          medianLon,
+          latlist[i],
+          lonlist[i]
+        );
+      });
     }
+  };
 
-
-  }
-
-  if (nodesArr[0]['LonX'] && nodesArr[0]['LatY']) {
+  if (nodesArr[0]["LonX"] && nodesArr[0]["LatY"]) {
     // calDIstanceToCenter();
     calMedianCenter();
   }
 
   const shortestPathPairs = () => {
     let pathFinder = path.aGreedy(graph);
-    const pathsArr = []
+    const pathsArr = [];
     const pathsSet = new Set();
 
-
-
     graph.forEachNode(function (fromnode) {
-
       graph.forEachNode(function (tonode) {
         if (fromnode.id !== tonode.id) {
           const pathKey1 = `${fromnode.id}👉${tonode.id}`;
           const pathKey2 = `${tonode.id}👉${fromnode.id}`;
           // undirected graph:
-          // only add once for undirected graph 
-          if (!(pathsSet.has(pathKey1)) && !(pathsSet.has(pathKey2)) ) {
-            pathsSet.add(pathKey1)
-            pathsSet.add(pathKey2)
+          // only add once for undirected graph
+          if (!pathsSet.has(pathKey1) && !pathsSet.has(pathKey2)) {
+            pathsSet.add(pathKey1);
+            pathsSet.add(pathKey2);
             pathsArr.push({
-             "source":fromnode.id,
-             "target":tonode.id,
-            "path": pathFinder.find(fromnode.id, tonode.id),
-            "distance": calDistanceFromLatLonInKm(fromnode.data.LatY, fromnode.data.LonX, tonode.data.LatY, tonode.data.LonX)
-          
-           })
+              source: fromnode.id,
+              target: tonode.id,
+              path: pathFinder.find(fromnode.id, tonode.id),
+              distance: calDistanceFromLatLonInKm(
+                fromnode.data.LatY,
+                fromnode.data.LonX,
+                tonode.data.LatY,
+                tonode.data.LonX
+              ),
+            });
           }
-           
-          //directed graph: 
+
+          //directed graph:
         }
-
-      })
-
-    })
-    return pathsArr
-
-  }
+      });
+    });
+    return pathsArr;
+  };
   // const pathsArr = shortestPathPairs();
 
   const rank = pageRank(graph);
   const betweenness = centrality.betweenness(graph);
   const closeness = centrality.closeness(graph);
-  nodesArr = nodesArr.map(n => ({ ...n, node_id: n.id, closeness:closeness[n.id] , betweenness: betweenness[n.id],pagerank: rank[n.id], degree: parseInt(degreeDict[n.id] / 2) }));
-  const nodekeyList = Object.keys(nodesArr[0])
-  const nodePropertyTypes = {}
+  nodesArr = nodesArr.map((n) => ({
+    ...n,
+    node_id: n.id,
+    closeness: closeness[n.id],
+    betweenness: betweenness[n.id],
+    pagerank: rank[n.id],
+    degree: parseInt(degreeDict[n.id] / 2),
+  }));
+  const nodekeyList = Object.keys(nodesArr[0]);
+  const nodePropertyTypes = {};
   nodekeyList.forEach(function (k) {
-    nodePropertyTypes[k] = typeof (nodesArr[0][k])
-  })
-  const uniqueValue = {}
+    nodePropertyTypes[k] = typeof nodesArr[0][k];
+  });
+  const uniqueValue = {};
   nodekeyList.forEach(function (k, i) {
-
-    if (nodePropertyTypes[k] == 'string') {
-      uniqueValue[k] = [...new Set(nodesArr.map(item => item[k]))]
+    if (nodePropertyTypes[k] == "string") {
+      uniqueValue[k] = [...new Set(nodesArr.map((item) => item[k]))];
     } else {
-      const valuea = nodesArr.map(function (el) { return el[k]; })
-      const minv = Math.min(...valuea)
-      const maxv = Math.max(...valuea)
-      uniqueValue[k] = [minv, maxv]
+      const valuea = nodesArr.map(function (el) {
+        return el[k];
+      });
+      const minv = Math.min(...valuea);
+      const maxv = Math.max(...valuea);
+      uniqueValue[k] = [minv, maxv];
     }
-  })
+  });
   return {
     rawGraph: { nodes: nodesArr, edges: edgesArr },
     metadata: {
-      snapshotName: 'Untitled Graph',
+      snapshotName: "Untitled Graph",
       fullNodes: nodesArr.length,
       fullEdges: edgesArr.length, //Math.floor(edgesArr.length / 2), // Counting undirected edges
       nodeProperties: nodekeyList,
       nodePropertyTypes: nodePropertyTypes,
       uniqueValue: uniqueValue,
-      nodeComputed: ['pagerank', 'degree',  'distance to center',  'betweenness', 'closeness'],
-      edgeProperties: ['source_id', 'target_id'],
-     
+      nodeComputed: [
+        "pagerank",
+        "degree",
+        "distance to center",
+        "betweenness",
+        "closeness",
+      ],
+      edgeProperties: ["source_id", "target_id"],
     },
-  }
+  };
 }
 
 export function runSearch(searchStr) {
