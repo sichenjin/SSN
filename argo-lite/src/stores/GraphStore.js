@@ -98,6 +98,7 @@ export default class GraphStore {
   connectcom = 0;
   community_color_dict = {};
   community_ann_dict = {};
+  community_expecct_ann_dict = {};
   ann_order = 10;
 
   //access to process.js "self"
@@ -294,6 +295,8 @@ export default class GraphStore {
       "ORGANIZATION",
       "isconvex",
       "nearestnn",
+      "distance",
+      "nn",
       // "source_id",
       // "target_id",
     ];
