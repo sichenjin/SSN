@@ -912,10 +912,32 @@ class RenderCircles extends React.Component {
     }
   };
 
+  renderLines = (community_ann_dict_clean) => {
+    const lines = [];
+    Object.keys(community_ann_dict_clean).forEach((key) => {
+      const annList = community_ann_dict_clean[key];
+      for (let i = 0; i < annList.length - 1; i++) {
+        lines.push(
+          <line
+            x1={this.props.scale.x(i + 1)}
+            y1={this.props.scale.y(annList[i])}
+            x2={this.props.scale.x(i + 2)}
+            y2={this.props.scale.y(annList[i + 1])}
+            stroke={appState.graph.community_color_dict[key]}
+            strokeWidth="1"
+            key={`${key}-${i}`}
+          />
+        );
+      }
+    });
+    return lines;
+  };
+
   render() {
     const pathFinder = path.aGreedy(appState.graph.computedGraph);
     if (appState.graph.hasGraph) {
       let renderCircles = [];
+      let renderLines = [];
       // let renderLabels = []
       // let ydata =[]
       if (
@@ -1316,6 +1338,7 @@ class RenderCircles extends React.Component {
           }
         });
         console.log(community_ann_dict_clean);
+        renderLines = this.renderLines(community_ann_dict_clean);
         renderCircles = Object.keys(community_ann_dict_clean).map((key, i) => {
           // console.log(community_ann_dict_clean[key])
           return community_ann_dict_clean[key].map((ann, j) => (
@@ -1386,7 +1409,12 @@ class RenderCircles extends React.Component {
         ));
       }
 
-      return <g>{renderCircles}</g>;
+      return (
+        <g>
+          {renderLines}
+          {renderCircles}
+        </g>
+      );
     }
   }
 }
