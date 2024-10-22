@@ -344,6 +344,11 @@ class ScatterPlot extends React.Component {
         x = scaleLinear()
           .domain([0, max(largerDegrees)])
           .range([0, this.width]);
+      } else if (appState.graph.scatterplot.x === "order") {
+        x = scaleLinear()
+          .domain([0, appState.graph.ann_order])
+          .range([0, this.width]);
+        console.log(x);
       } else {
         x = scaleLinear()
           .domain([
@@ -407,6 +412,14 @@ class ScatterPlot extends React.Component {
         y = scaleLinear()
           .domain([0, max(smallerDegrees)])
           .range([this.height, 0]);
+      } else if (appState.graph.scatterplot.y === "ANN") {
+        // get the max ann value from community_ann_dict, where the key is the community id, and the value is the ann value list. find the max value among all value lists.
+        const max_ann = max(
+          Object.values(appState.graph.community_ann_dict),
+          (ann_list) => max(ann_list)
+        );
+        console.log(max_ann);
+        y = scaleLinear().domain([0, max_ann]).range([this.height, 0]);
       } else {
         y = scaleLinear()
           .domain([
@@ -497,6 +510,9 @@ class ScatterPlot extends React.Component {
                 : appState.graph.scatterplot.x == "nodes with larger degree" &&
                   appState.graph.scatterplot.y == "nodes with smaller degree"
                 ? "Degree-Degree Plot"
+                : appState.graph.scatterplot.x == "order" &&
+                  appState.graph.scatterplot.y == "ANN"
+                ? "ANN Plot"
                 : "Centrality-Centrality Plot"}
             </text>
           </div>
@@ -599,6 +615,8 @@ class ScatterPlot extends React.Component {
                 appState.graph.scatterplot.x !== "pair distance" &&
                 appState.graph.scatterplot.x !== "nodes with larger degree" &&
                 appState.graph.scatterplot.y !== "nodes with smaller degree" &&
+                appState.graph.scatterplot.x !== "order" &&
+                appState.graph.scatterplot.y !== "ANN" &&
                 this.renderBrush()}
             </svg>
           </div>
@@ -691,7 +709,9 @@ class RenderCircles extends React.Component {
       appState.graph.scatterplot.y !== "network density" &&
       appState.graph.scatterplot.x !== "network density" &&
       appState.graph.scatterplot.x !== "nodes with larger degree" &&
-      appState.graph.scatterplot.y !== "nodes with smaller degree"
+      appState.graph.scatterplot.y !== "nodes with smaller degree" &&
+      appState.graph.scatterplot.x !== "order" &&
+      appState.graph.scatterplot.y !== "ANN"
     ) {
       if (
         !appState.graph.currentlyHovered &&
@@ -837,6 +857,21 @@ class RenderCircles extends React.Component {
           };
         }
       }
+    } else if (
+      appState.graph.scatterplot.x === "order" &&
+      appState.graph.scatterplot.y === "ANN"
+    ) {
+      // in this case, each circle represents the xth order ann value of a community
+      // the input param "node" is the community_id, traverse community_color_dict to get the color of the community
+      const community_color_dict = appState.graph.community_color_dict;
+      const community_id = node;
+      const community_color = community_color_dict[community_id];
+      return {
+        fill: community_color,
+        zIndex: "10000",
+        stroke: false,
+        fillOpacity: 0.8,
+      };
     } else {
       //path node style
 
@@ -1263,6 +1298,39 @@ class RenderCircles extends React.Component {
             key={i}
           />
         ));
+      } else if (
+        appState.graph.scatterplot.x === "order" &&
+        appState.graph.scatterplot.y === "ANN"
+      ) {
+        // traverse through the community_ann_dict, each key is the community id, and the value is the ann value list
+        // each community's xth order ann is represented by a circle
+        // cx should traverse from 1-10, cy should be the value in ann value list
+        const community_ann_dict = appState.graph.community_ann_dict;
+        // remove all NaN values in ann value lists, of the value is null also remove it
+        const community_ann_dict_clean = {};
+        Object.keys(community_ann_dict).forEach((key) => {
+          const ann_list = community_ann_dict[key];
+          const clean_ann_list = ann_list.filter((ann) => ann !== null);
+          if (clean_ann_list.length > 0) {
+            community_ann_dict_clean[key] = clean_ann_list;
+          }
+        });
+        console.log(community_ann_dict_clean);
+        renderCircles = Object.keys(community_ann_dict_clean).map((key, i) => {
+          // console.log(community_ann_dict_clean[key])
+          return community_ann_dict_clean[key].map((ann, j) => (
+            // console.log("ann", ann),
+            // console.log(j + 1),
+            <circle
+              cx={this.props.scale.x(j + 1)}
+              cy={this.props.scale.y(ann)}
+              r={this.props.cr}
+              style={this.setScatterStyle(key)}
+              id={key}
+              key={i}
+            />
+          ));
+        });
       } else if (
         appState.graph.scatterplot.y !== "shortest path" &&
         appState.graph.scatterplot.x !== "shortest path" &&

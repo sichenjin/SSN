@@ -29,6 +29,110 @@ class StatGroupPanel extends React.Component {
     this.state = {};
   }
 
+  runLocalANN = () => {
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+      const R = 6371; // Radius of the Earth in kilometers
+      const dLat = (lat2 - lat1) * (Math.PI / 180);
+      const dLon = (lon2 - lon1) * (Math.PI / 180);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) *
+          Math.cos(lat2 * (Math.PI / 180)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+      return distance;
+    };
+
+    const computeANN = (cc_nodes, order) => {
+      let observedDistance = 0;
+
+      cc_nodes.forEach((node) => {
+        // Calculate distances to all other nodes
+        const distances = cc_nodes
+          .filter((n) => n.id !== node.id && n.community === node.community)
+          .map((n) => ({
+            id: n.id,
+            dist: calculateDistance(node.LatY, node.LonX, n.LatY, n.LonX),
+          }));
+
+        // Sort by distance and pick the 'order' number of neighbors
+        distances.sort((a, b) => a.dist - b.dist);
+        // console.log(distances);
+        // console.log(order);
+        // console.log(cc_nodes);
+        // const nearestNeighbors = distances.slice(0, order);
+        const order_neighbor = distances[order - 1];
+        const knn_dist = distances[order - 1].dist;
+        observedDistance += knn_dist;
+      });
+
+      const c_n = cc_nodes.length;
+
+      return observedDistance / c_n; // Average Nearest Neighbor Distance
+    };
+
+    // Run ANN for each community
+    const nodes = appState.graph.rawGraph.nodes;
+    if (!nodes[0]["community"]) {
+      // this.runcommunity();
+      // pop up a prompt box to ask user to run community detection first
+      alert("Please run community detection first");
+      return;
+    }
+    // calculate local ANN for each community to create ANN vs. neighbor order plots for each community, where x axis represents the order of neighbors and y axis represents the ANN value.
+    const maxOrder = appState.graph.ann_order; // how many neighbor orders to compute
+    // create a community dict where the keys are community ids and the values are the nodes in that community
+    const communityDict = {};
+    // createa community ann dict to store the ANN values for each community, where the keys are community ids and the values are the ANN values for each order
+    // initialize annValuesDict with empty arrays for each community
+    const annValuesDict = {};
+    nodes.forEach((node) => {
+      // skip nodes that are not in any community
+      if (node.community === "-1") {
+        return;
+      }
+      if (!communityDict[node.community]) {
+        communityDict[node.community] = [];
+      }
+      if (!annValuesDict[node.community]) {
+        annValuesDict[node.community] = [];
+      }
+      communityDict[node.community].push(node);
+    });
+    console.log(communityDict);
+    // record the color for each community in community_color_dict
+    const c_color_dict = {};
+    const frame_nodes = appState.graph.frame.getNodeList();
+    for (const [c_id, c_nodes] of Object.entries(communityDict)) {
+      const sample_node = c_nodes[0];
+      frame_nodes.forEach((node) => {
+        if (sample_node.id === node.id) {
+          c_color_dict[c_id] = node.renderData.color;
+        }
+      });
+    }
+    appState.graph.community_color_dict = c_color_dict;
+    // compute ANN for each community
+    for (let order = 1; order <= maxOrder; order++) {
+      for (const [c_id, c_nodes] of Object.entries(communityDict)) {
+        if (c_nodes.length <= order) {
+          // skip communities that have fewer nodes than the order
+          annValuesDict[c_id].push(null);
+          continue;
+        }
+        const ann = computeANN(c_nodes, order); // return a float ann value for the current order for this community
+        // push ann to the annValuesDict with no order because the index of the array is the order
+        annValuesDict[c_id].push(ann);
+      }
+    }
+    console.log(annValuesDict);
+    appState.graph.community_ann_dict = annValuesDict;
+    appState.graph.scatterplot.x = "order";
+    appState.graph.scatterplot.y = "ANN";
+  };
+
   runcommunity = () => {
     appState.graph.convexPolygons = [];
 
@@ -50,6 +154,7 @@ class StatGroupPanel extends React.Component {
       // https://snoman.herokuapp.com/flask/community', querydict).then(
       (response) => {
         var communityDict = response.data.message;
+        console.log(communityDict);
         appState.graph.modularity = response.data.modularity;
         appState.graph.rawGraph.nodes.forEach((node) => {
           var unicommunity =
@@ -91,7 +196,7 @@ class StatGroupPanel extends React.Component {
 
         appState.graph.nodes.convexhullby = "community";
         appState.graph.nodes.groupby = "community";
-        appState.graph.watchAppearance = appState.graph.watchAppearance + 1;
+        appState.graph.watchAppearance = appState.graph.watchAppearance + 1; //force update
 
         // console.log(result);
       },
@@ -962,6 +1067,13 @@ class StatGroupPanel extends React.Component {
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
                         onClick={() => this.density_distance('Family')}>Cluster Cluster</Button> */}
+        <Button
+          className="bp4-button"
+          style={{ zIndex: "1000" }}
+          onClick={this.runLocalANN}
+        >
+          Run Local ANN
+        </Button>
 
         <div>
           <p style={{ display: "inline", fontSize: "12px" }}>
