@@ -45,7 +45,7 @@ class StatGroupPanel extends React.Component {
       return distance;
     };
 
-    const computeANN = (cc_nodes, order) => {
+    const computeANN = (c_id, cc_nodes, order) => {
       let observedDistance = 0;
 
       cc_nodes.forEach((node) => {
@@ -69,7 +69,23 @@ class StatGroupPanel extends React.Component {
       });
 
       const c_n = cc_nodes.length;
-
+      // A is the minimal enclosing rectangle area around all nodes in the current community
+      let A = 0;
+      let minLat = Infinity,
+        maxLat = -Infinity,
+        minLon = Infinity,
+        maxLon = -Infinity;
+      cc_nodes.forEach((node) => {
+        if (node.LatY < minLat) minLat = node.LatY;
+        if (node.LatY > maxLat) maxLat = node.LatY;
+        if (node.LonX < minLon) minLon = node.LonX;
+        if (node.LonX > maxLon) maxLon = node.LonX;
+      });
+      const width = calculateDistance(minLat, minLon, minLat, maxLon);
+      const height = calculateDistance(minLat, minLon, maxLat, minLon);
+      A = width * height;
+      expectedDistance = 0.5 / Math.sqrt(c_n / A);
+      appState.graph.community_expect_ann_dict[c_id] = expectedDistance;
       return observedDistance / c_n; // Average Nearest Neighbor Distance
     };
 
@@ -122,7 +138,7 @@ class StatGroupPanel extends React.Component {
           annValuesDict[c_id].push(null);
           continue;
         }
-        const ann = computeANN(c_nodes, order); // return a float ann value for the current order for this community
+        const ann = computeANN(c_id, c_nodes, order); // return a float ann value for the current order for this community
         // push ann to the annValuesDict with no order because the index of the array is the order
         annValuesDict[c_id].push(ann);
       }
