@@ -925,6 +925,7 @@ class RenderCircles extends React.Component {
             y2={this.props.scale.y(annList[i + 1])}
             stroke={appState.graph.community_color_dict[key]}
             strokeWidth="1"
+            strokeDasharray={key === "sample" ? "5,5" : "0"} // Apply dashed line for "sample"
             key={`${key}-${i}`}
           />
         );

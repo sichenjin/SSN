@@ -51,7 +51,7 @@ class StatGroupPanel extends React.Component {
       cc_nodes.forEach((node) => {
         // Calculate distances to all other nodes
         const distances = cc_nodes
-          .filter((n) => n.id !== node.id && n.community === node.community)
+          .filter((n) => n.id !== node.id)
           .map((n) => ({
             id: n.id,
             dist: calculateDistance(node.LatY, node.LonX, n.LatY, n.LonX),
@@ -63,7 +63,7 @@ class StatGroupPanel extends React.Component {
         // console.log(order);
         // console.log(cc_nodes);
         // const nearestNeighbors = distances.slice(0, order);
-        const order_neighbor = distances[order - 1];
+        // const order_neighbor = distances[order - 1];
         const knn_dist = distances[order - 1].dist;
         observedDistance += knn_dist;
       });
@@ -84,7 +84,7 @@ class StatGroupPanel extends React.Component {
       const width = calculateDistance(minLat, minLon, minLat, maxLon);
       const height = calculateDistance(minLat, minLon, maxLat, minLon);
       A = width * height;
-      expectedDistance = 0.5 / Math.sqrt(c_n / A);
+      let expectedDistance = 0.5 / Math.sqrt(c_n / A);
       appState.graph.community_expect_ann_dict[c_id] = expectedDistance;
       return observedDistance / c_n; // Average Nearest Neighbor Distance
     };
@@ -144,7 +144,28 @@ class StatGroupPanel extends React.Component {
       }
     }
     console.log(annValuesDict);
+    // Randomly select N number of nodes in the network (where N =  max(size(modules))
+    // Run ANN on this sample and put it in the community_ann_dict with key = "sample"
+    let sample_N = maxOrder + 1;
+    // randomly select N nodes from the network
+    const sample_nodes = [];
+    const sample_nodes_id = [];
+    while (sample_nodes.length < sample_N) {
+      const random_node = nodes[Math.floor(Math.random() * nodes.length)];
+      if (!sample_nodes_id.includes(random_node.id)) {
+        sample_nodes.push(random_node);
+        sample_nodes_id.push(random_node.id);
+      }
+    }
+
+    annValuesDict["sample"] = [];
+    for (let order = 1; order <= maxOrder; order++) {
+      const sample_ann = computeANN("sample", sample_nodes, order);
+      annValuesDict["sample"].push(sample_ann);
+    }
+    console.log(annValuesDict);
     appState.graph.community_ann_dict = annValuesDict;
+    appState.graph.community_color_dict["sample"] = "#000000";
     appState.graph.scatterplot.x = "order";
     appState.graph.scatterplot.y = "ANN";
   };
