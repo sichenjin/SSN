@@ -1088,7 +1088,7 @@ class StatGroupPanel extends React.Component {
           style={{ zIndex: "1000" }}
           onClick={this.runLocalANN}
         >
-          Run Local ANN
+          Run Community ANN
         </Button>
 
         <div>
