@@ -258,6 +258,9 @@ class StatGroupPanel extends React.Component {
     appState.graph.scatterplot.x = "average distance";
     appState.graph.scatterplot.y = "degree";
     appState.graph.metadata.nodeComputed.push("average distance");
+    appState.graph.nodes.colorBy = "average distance";
+    appState.graph.nodes.color.scale = "Linear Scale";
+    appState.graph.watchAppearance = appState.graph.watchAppearance + 1;
   };
 
   runKfullfillment = () => {

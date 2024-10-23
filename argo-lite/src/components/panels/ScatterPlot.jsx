@@ -642,7 +642,7 @@ class ScatterPlot extends React.Component {
             >
               <Button
                 className="bp4-button"
-                style={{ transform: "translate(23vw, 1.0vh)" }}
+                style={{ transform: "translate(18vw, 1.0vh)" }}
               >
                 Download CSV
               </Button>
