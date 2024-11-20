@@ -10,6 +10,7 @@ export default ({ items, onSelect, value, fill = false }) => (
     filterable={false}
     onItemSelect={onSelect}
   >
-    <Button className={fill ? Classes.FILL : null} text={value} />
+        <Button className={fill ? Classes.FILL : null} text={value} />
+
   </Select>
 );

@@ -28,7 +28,7 @@ class EdgesPanel extends React.Component {
         let graph = appState.graph.graph;
         return (
             <div>
-                <p>{`Modifying All Edges`}</p>
+                <text style={{fontSize:"9px"}}>{`Modifying All Edges`}</text>
 
 
                 {/* Collapsable Option: Color */}

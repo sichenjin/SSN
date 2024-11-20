@@ -12,16 +12,9 @@ class LabelsPanel extends React.Component {
       <div>
         <span style={{display: "inline-block"}}>
         <Button
-          style={{width:"100px"}}
-          id="hideAll"
-          iconName="eye-off"
-          className={Classes.FILL}
-          onClick={() => appState.graph.frame.hideAllLabels()}
-        >
-          Hide All
-        </Button>
-        <Button
-          style={{width:"100px",display:"none"}}
+          style={{
+            // width:"100px",
+            display:"inline"}}
           id="showAll"
           iconName="eye-on"
           className={Classes.FILL}
@@ -30,7 +23,20 @@ class LabelsPanel extends React.Component {
           Show All
         </Button>
         <Button
-          style={{width:"140px",marginLeft:"10px"}}
+          style={{display:"none"}}
+          id="hideAll"
+          iconName="eye-off"
+          className={Classes.FILL}
+          onClick={() => appState.graph.frame.hideAllLabels()}
+        >
+          Hide All
+        </Button>
+        
+        <Button
+          style={{
+            // width:"140px"
+            // marginLeft:"10px"
+          }}
           id="hideSelected"
           iconName="eye-off"
           className={Classes.FILL}
@@ -49,32 +55,36 @@ class LabelsPanel extends React.Component {
         </Button>
         </span>
         <div style={{height: '20px'}} />
-        <h6>Label Size</h6>
+        <text className="option-font">Label Size</text>
         <Slider
+        style ={{left:"10%", width:"80%"}}
           min={0.1}
           max={1}
           stepSize={0.1}
+          labelStepSize={0.5}
           onChange={value => {
             appState.graph.nodes.labelSize = value;
           }}
           value={appState.graph.nodes.labelSize}
         />
         <div style={{height: '20px'}} />
-        <h6>Label Length</h6>
+        <text className="option-font">Label Length</text>
         <Slider
+        style ={{left:"10%", width:"80%"}}
           min={1}
           max={32}
+          
           stepSize={0.1}
-          labelStepSize={5}
+          labelStepSize={10}
           onChange={value => {
             appState.graph.nodes.labelLength = value;
           }}
           value={appState.graph.nodes.labelLength}
         />
         <div style={{height: '20px'}} />
-        <h6>Label By</h6> 
+        <text className="option-font">Label By</text>
         <Select
-          items={appState.graph.allPropertiesKeyList}
+          items={appState.graph.filterKeyList}
           itemRenderer={CommonItemRenderer}
           filterable={false}
           onItemSelect={it => (appState.graph.nodes.labelBy = it)}

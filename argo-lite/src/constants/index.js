@@ -8,8 +8,8 @@ import * as scale from "d3-scale";
 export const IS_IFRAME_WIDGET = window.location !== window.parent.location;
 
 export const FRONTEND_URL = "https://poloclub.github.io/argo-graph-lite";
-export const LOGO_URL = "https://github.com/poloclub/argo-graph-lite";
-export const GITHUB_URL = "https://github.com/poloclub/argo-graph-lite";
+export const LOGO_URL = "https://sites.gatech.edu/snoman/";
+export const GITHUB_URL = "https://github.com/sichenjin/SSN";
 // Argo-lite Graph Sharing backend Strapi Server:
 export const BACKEND_URL = "https://argo-share.herokuapp.com"; // for production
 // export const BACKEND_URL = "https://sleepy-brushlands-57948.herokuapp.com"; // for free heroku
@@ -19,9 +19,21 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   // https://poloclub.github.io/argo-graph-lite/#099905af-a9a1-417a-8a1c-92fa121d7d0d
   // #bc368f46-a78b-4fc7-bd29-68594a8f7e3c
   // https://poloclub.github.io/argo-graph-lite/#ab19b31c-efe1-4b77-ba03-4656ef1bd4bc
-  ["Food Sharing", "ab19b31c-efe1-4b77-ba03-4656ef1bd4bc"],   //without -degree nodes snapshot 
+  // https://poloclub.github.io/argo-graph-lite/#6c399b67-1454-498c-9abc-86cafa48434d 
+  // https://poloclub.github.io/argo-graph-lite/#f5eb85cb-65be-46fe-bd66-1c3066e27893  
+  // https://poloclub.github.io/argo-graph-lite/#0b92553e-b85a-4be4-94ce-84c8868da40c /
+  //change back to no shortest path snapshot for foodsharing "ab19b31c-efe1-4b77-ba03-4656ef1bd4bc"
+  // https://poloclub.github.io/argo-graph-lite/#c1295995-f0c4-4350-9ea0-c97c8a134a34 //shortest path for food sharing 
+  // https://poloclub.github.io/argo-graph-lite/#ae71bf2c-0b47-43bd-8955-c64a53734341  
+  // "" 
+  
+  // https://poloclub.github.io/argo-graph-lite/#82ffaa24-1d0f-402d-8d5c-9e6595827bc8
+  ["Food Sharing", "c1295995-f0c4-4350-9ea0-c97c8a134a34"
+  ],   //without -degree nodes snapshot 
   // ["CORD-19 Citation Graph 06-02", "4bf882d3-8966-4f41-a590-acafeb998d2a"],
-  ["Mafia Family", "ea3fa573-78e0-465a-98ff-f6a02d9884c2"]
+  ["Mafia Family", "ea3fa573-78e0-465a-98ff-f6a02d9884c2"],
+  ["US flight Network", '946e933d-81f5-4ade-a8f7-a02941aae953']
+  
 ];
 
 // When resizing window or running on mobile,

@@ -55,6 +55,13 @@ module.exports = function(self) {
     self.graph.forEachNode(function(node) {
       self.changeLabelFontSize(node, size, self.relativeFontSize);
     });
+
+    // change the map label size
+    size = (size * self.relativeFontSize *2 ) ;
+    document.querySelectorAll('.maptooltip').forEach(node=>{
+      node.style.fontSize = size.toString() + "px";
+    })
+    
   };
 
   self.setLabelRelativeSize = size => {
@@ -66,6 +73,10 @@ module.exports = function(self) {
     self.graph.forEachNode(function(node) {
       self.changeLabelLength(node, numChars);
     });
+    document.querySelectorAll('.maptooltip').forEach(node=>{
+      node.style.width = numChars.toString() + "ch";
+    })
+    
   };
 
   self.toggleMiniMap = () => {
@@ -81,7 +92,7 @@ module.exports = function(self) {
       return;
     }
     self.mapShowing = true;
-    self.element.appendChild(self.minimapRenderer.domElement);
+    // self.element.appendChild(self.minimapRenderer.domElement);
   };
 
   self.hideMiniMap = () => {
@@ -89,7 +100,7 @@ module.exports = function(self) {
       return;
     }
     self.mapShowing = false;
-    self.element.removeChild(self.minimapRenderer.domElement);
+    // self.element.removeChild(self.minimapRenderer.domElement);
   };
 
   // The CSS Renderer for rendering labels is the most expensive
@@ -198,6 +209,10 @@ module.exports = function(self) {
       node.renderData.textHolder.children[0].element.override = false;
     });
     self.updateNodesShowingLabels();
+    //update map tooltip 
+    document.querySelectorAll('.maptooltip').forEach(node=>{
+      node.style.opacity=0;
+    })
   };
 
   self.showAllLabels = () => {
@@ -208,6 +223,9 @@ module.exports = function(self) {
       node.renderData.textHolder.children[0].element.override = true;
     });
     self.updateNodesShowingLabels();
+    document.querySelectorAll('.maptooltip').forEach(node=>{
+      node.style.opacity=1;
+    })
   };
 
   self.setCanvasSize = function(size) {

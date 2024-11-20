@@ -203,7 +203,7 @@ class ShareDialog extends React.Component {
                                         width: "400px",
                                         resize: "none"
                                     }}
-                                    readonly="true"
+                                    readOnly="true"
                                     value={`from IPython.display import IFrame` + "\n" + `IFrame("${this.state.sharedURL}", width=700, height=350)`} />
                                 <button
                                     onClick={() => {

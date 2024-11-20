@@ -117,6 +117,20 @@ class ImportDialog extends React.Component {
               value={nodeFile.mapping.id}
               onSelect={it => (nodeFile.mapping.id = it)}
             />
+            <p sytle = {{margin: '0 0 0px',padding: '0'}}></p>
+            Column for Node Longitude:
+            <SimpleSelect
+              items={nodeFile.columns}
+              value={nodeFile.mapping.LonX}
+              onSelect={it => (nodeFile.mapping.LonX = it)}
+            />
+            <p sytle = {{margin: '0 0 0px',padding: '0'}}></p>
+            Column for Node Latitude:
+            <SimpleSelect
+              items={nodeFile.columns}
+              value={nodeFile.mapping.LatY}
+              onSelect={it => (nodeFile.mapping.LatY = it)}
+            />
           </div>
         )}
       </Collapsable>
@@ -131,7 +145,7 @@ class ImportDialog extends React.Component {
         isOpen={this.state.edgesOpen}
         onToggle={() => this.setState({ edgesOpen: !this.state.edgesOpen })}
       >
-        <div className={classnames(Classes.CONTROL_GROUP)}>
+        <div className={classnames(Classes.CONTROL_GROUP)} style={{margin: "10px"}}>
           <div className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
             <input
               type="file"

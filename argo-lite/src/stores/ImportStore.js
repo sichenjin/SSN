@@ -24,7 +24,9 @@ export default class ImportStore {
       ready: false, // whether the topN is ready to display
       columns: [],
       mapping: {
-        id: "<UNK>"
+        id: "<UNK>",
+        LonX: "<UNK>",
+        LatY: "<UNK>"
       },
       delimiter: ","
     },
@@ -48,11 +50,11 @@ export default class ImportStore {
   */
 
   postImportFilteringOptions = {
-    "top 10 nodes with highest PageRank scores": (rawGraph) => {
+    "top 10 nodes with highest degree": (rawGraph) => {
       const sortedList = [...rawGraph.nodes];
       sortedList.sort((n1, n2) => {
-          if (n1["pagerank"] && n2["pagerank"]) {
-              return n2["pagerank"] - n1["pagerank"];
+          if (n1["degree"] && n2["degree"]) {
+              return n2["degree"] - n1["degree"];
           }
           return 0;
       });
@@ -72,7 +74,7 @@ export default class ImportStore {
     },
   };
 
-  defaultPostImportFilteringOption = "top 10 nodes with highest PageRank scores";
+  defaultPostImportFilteringOption = "All Nodes";
   
   @observable selectedPostImportFilteringOption = this.defaultPostImportFilteringOption;
 

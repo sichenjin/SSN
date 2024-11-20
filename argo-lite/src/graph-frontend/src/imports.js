@@ -23,7 +23,7 @@ exports.default = {
   d3: d3,
   ee: ee,
   NODE_COLOR: 0x0055aa,
-  NODE_HIGHLIGHT: 0xDB7734,
+  NODE_HIGHLIGHT: 0x0055aa,
   // NODE_HIGHLIGHT_RGB: 'rgb(219, 119, 52)',
   ADJACENT_HIGHLIGHT: 0x95a5a6,
   SEARCH_HIGHLIGHT: 0xe67e22,
@@ -31,7 +31,7 @@ exports.default = {
   NODE_TEXTURE: "http://i.imgur.com/reTXqiM.png",
   NODE_NO_HTEX: true,
   NODE_NO_TEX: true,
-  NODE_NO_HCOLOR: false,
+  NODE_NO_HCOLOR: true,
   NODE_NO_COLOR: false,
   NODE_NO_HIGHLIGHT: false,
   NODE_NEIGHBOR_HIGHLIGHT: true,
@@ -50,5 +50,5 @@ exports.default = {
   TEXT_BACK_COLOR: "rgba(100, 100, 200, 0)",
   TEXT_OPACITY: "1",
   TEXT_WIREFRAME: false,
-  PIN_COLOR: 0xffffff
+  PIN_COLOR: 0xFFA500
 };

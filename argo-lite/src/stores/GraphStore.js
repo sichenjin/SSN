@@ -27,7 +27,7 @@ export default class GraphStore {
       shape: "circle",
       labelSize: 0.6,
       labelLength: 10,
-      filter:{}
+      // filter:{}
     },
     edges: {
       color: "#7f7f7f",
@@ -55,6 +55,16 @@ export default class GraphStore {
   // Updated by frame event
   @observable selectedNodes = [];
 
+  @observable filter = {}
+
+
+  @observable convexNodes = [];
+  @observable convexPolygons = [];
+  @observable convexPolygonsShow = false;
+
+  @observable mapEdgeShow = true;
+  @observable autoZoom = true;
+
 
 
   // Currently hovered node
@@ -63,6 +73,8 @@ export default class GraphStore {
   // Currently Clicked to frozen node on map
   @observable mapClicked = undefined;
 
+  // Currently hovered path in the scatterplot view 
+  @observable pathHovered = undefined;
   /**
    * Stores data relevant to smart pause feature
    */
@@ -73,7 +85,7 @@ export default class GraphStore {
       duration: 10000, //duration of resumed layout
     },
     //lastUnpaused: undefined, //old code using lastUnpaused
-    smartPaused: false, //true when resumed, but graph layout is paused due to inactivity
+    smartPaused: true, //true when resumed, but graph layout is paused due to inactivity
     interactingWithGraph: false, //true when node is clicked or dragged. TODO: refactor to more understandable name
   }
 
@@ -125,6 +137,22 @@ export default class GraphStore {
     snapshotName: "loading..." // Optional: for display in Argo-lite only
   };
 
+  @observable
+  densityDistance = []
+
+  @observable
+  edgeselection = []
+
+  //name of currently hovered family group on the cluster cluster scatterplot 
+  @observable
+  distanceDensityCurrentlyHovered = undefined
+
+  @observable
+  groupby = 'NULL'
+
+  @observable
+  convexhullby = 'NULL'
+
   // used for listing all the properties, either original or computed
   @computed
   get allPropertiesKeyList() {
@@ -135,11 +163,56 @@ export default class GraphStore {
   }
 
   @computed
-  get allComputedPropertiesKeyList() {
+  get filterKeyList() {
+    const removeList = ['isHidden','id','Longitude', 'Latitude','LatY', 'LonX', 'dist to center','dist_to_center','centrality','shortest path', 'pair distance','node_id','standard distance','network density']
     return uniq([
+      ...this.metadata.nodeProperties,
+      ...this.metadata.nodeComputed
+    ]).filter(k =>removeList.indexOf(k)=== -1); // since node_id is already present
+  }
+
+  @computed
+  get allComputedPropertiesKeyList() {
+   
+    const uniq_compute = uniq([
       ...this.metadata.nodeComputed
     ]).filter(k => k !== 'id' ); // since node_id is already present
+    const uppercase_compute = uniq_compute.map((u)=>{
+    return u.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
+    })
+     return uppercase_compute
   }
+
+  @computed
+  get selectedNeighborIDs(){
+
+   
+ 
+    if (this.selectedNodes.length>0) {
+      const neighborIDs = []
+      for (var j = 0; j < this.selectedNodes.length; j++) {
+        this.selectedNodes[j].links.forEach((link)=>{
+        neighborIDs.push(link.fromId);
+        neighborIDs.push(link.toId);
+        })
+        
+      }
+      if (neighborIDs.length>0){
+        const uniqNeighborIDs = uniq([
+        ...neighborIDs
+      ])
+      return uniqNeighborIDs
+    }else{
+      return []
+    }
+    }else{ 
+      return []
+    }
+    
+
+  }
+
+  
 
   
 
@@ -277,18 +350,20 @@ export default class GraphStore {
 
   filterNodes() { 
     runInAction('filter nodes', () => {
-    if(Object.keys(this.nodes.filter).length !== 0  ){
+    if(Object.keys(this.filter).length !== 0  ){
       
       
         this.rawGraph.nodes = this.rawGraph.nodes.map(n => {
           var satisfy = true
-          for (const fkey in this.nodes.filter){
+          for (const fkey in this.filter){
             if(this.metadata.nodePropertyTypes[fkey] == 'string'){
-              if(!this.nodes.filter[fkey].includes(n[fkey])){
+              if(this.filter[fkey].length >0 && (!this.filter[fkey].includes(n[fkey]))){
                 satisfy = false
               }
             }else{  // number range 
-  
+              if(this.filter[fkey] && (n[fkey]<this.filter[fkey]['min'] || n[fkey]>this.filter[fkey]['max'])){
+                satisfy = false
+              }
             }
           }
           if (satisfy) {

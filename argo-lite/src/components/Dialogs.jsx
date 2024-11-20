@@ -14,11 +14,12 @@ import FilterDialog from './FilterDialog';
 import HelpDialog from './HelpDialog';
 import NeighborDialog from './NeighborDialog';
 import DataSheetDialog from './DataSheetDialog';
+import ResizableDraggableDialog from "./ResizableDraggableDialog"
 
 export default class Dialogs extends React.Component {
   render() {
     return (
-      <div style={{ display: "none" }}>
+      <div style={{ }}>
         <PreferencesDialog />
         <ImportDialog />
         <GEXFImportDialog />
@@ -30,6 +31,7 @@ export default class Dialogs extends React.Component {
         <RenameSnapshotDialog />
         <ShareDialog />
         <StatisticsDialog />
+        {/* <ResizableDraggableDialog /> */}
         <FilterDialog />
         <HelpDialog />
         <NeighborDialog />

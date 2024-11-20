@@ -3,21 +3,32 @@ import { Button, Classes ,Intent, TagProps} from "@blueprintjs/core";
 import { MultiSelect } from "@blueprintjs/labs";
 import CommonItemRenderer from "./CommonItemRenderer";
 
-export default ({ items, onSelect, value, fill = false , tag}) => {
+export default ({ items, onSelect, value, fill = false , tag,tagprops }) => {
 
 const clearButton = <Button icon="cross"  /> ;
+// this.state = {
+//   selecteditems : value
+// }
 
 return (
 
   <MultiSelect
   popoverProps={{
     popoverClassName: "filter-scroll",
+   
+    targetTagName: 'div' 
   }}
+//  placeholder={'Search for a country'} 
+  resetOnSelect={true}
     items={items}
     itemRenderer={CommonItemRenderer}
-    filterable={false}
+    filterable={true}
     onItemSelect={onSelect}
     tagRenderer = {tag}
+    selectedItems = {value}
+    tagInputProps = {tagprops}
+    
+
     // tagInputProps={{ tagProps: {intent: Intent.PRIMARY, interactive: true,values: value}}}
     // tagInputProps={{
     //   onRemove: {appState.graph.nodes.filter = {}},

@@ -10,6 +10,8 @@ const runImport = (config, nodesArr, edges) => {
         nodesArr.forEach(node =>
           graph.addNode(node[config.nodes.mapping.id].toString(), {
             id: node[config.nodes.mapping.id].toString(),
+            LatY: parseFloat(node[config.nodes.mapping.LatY]),
+            LonX: parseFloat(node[config.nodes.mapping.LonX]),
             degree: 0,
             ...node,
           }),
@@ -17,6 +19,8 @@ const runImport = (config, nodesArr, edges) => {
         nodesArr = nodesArr.map(n => ({
           ...n,
           id: n[config.nodes.mapping.id].toString(),
+          LatY: parseFloat(node[config.nodes.mapping.LatY]),
+          LonX: parseFloat(node[config.nodes.mapping.LonX]),
           degree: 0,
           pagerank: 0,
         }));

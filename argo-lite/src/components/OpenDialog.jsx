@@ -63,7 +63,9 @@ class OpenDialog extends React.Component {
             value={appState.import.graphFile}
           />
         </div>
-        <Button intent={Intent.PRIMARY} onClick={requestChooseGraphFile}>
+        <Button 
+        style={{height:'15px'}}
+        intent={Intent.PRIMARY} onClick={requestChooseGraphFile}>
           Choose File
         </Button>
       </div>
@@ -82,7 +84,9 @@ class OpenDialog extends React.Component {
             value={appState.import.stateFile}
           />
         </div>
-        <Button intent={Intent.PRIMARY} onClick={requestChooseStateFile}>
+        <Button 
+        style={{height:'15px'}}
+        intent={Intent.PRIMARY} onClick={requestChooseStateFile}>
           Choose File
         </Button>
       </div>

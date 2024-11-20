@@ -10,14 +10,18 @@ import SimpleSelect from "../utils/SimpleSelect";
 import MultiSelects from "../utils/MultiSelects";
 import classnames from "classnames";
 import uniq from "lodash/uniq";
+import { runInAction } from "mobx";
 
 @observer
 class NodesFilterPanel extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
-    appState.graph.allPropertiesKeyList.forEach(it => {
-      this.state[it + 'isOpen'] = false
+    this.state = {
+
+    }
+    appState.graph.filterKeyList.forEach(it => {
+      this.state[it + 'isOpen'] = false;
+      this.state[it + '_filterlist'] = []
     });
     // console.log(this.state)
     // this.state = 
@@ -49,7 +53,7 @@ class NodesFilterPanel extends React.Component {
   render() {
     return (
       <div>
-        {appState.graph.allPropertiesKeyList.map((it, i) => (
+        {appState.graph.filterKeyList.map((it, i) => (
           <Collapsable
             name={it}
             isOpen={this.state[it + 'isOpen']}
@@ -60,34 +64,100 @@ class NodesFilterPanel extends React.Component {
             }
           >
             <div className={classnames(Classes.CARD, "sub-option")}>
-              {appState.graph.metadata.nodePropertyTypes[it] == 'string' ?
+              { (it === 'community' || isNaN(appState.graph.rawGraph.nodes[0][it]) ) ?
                 <MultiSelects
-                  items={appState.graph.metadata.uniqueValue[it]}
+                  items={[...new Set(appState.graph.rawGraph.nodes.map(n => n[it]))]}
                   onSelect={selectit => {
-                    appState.graph.nodes.filter[it]? appState.graph.nodes.filter[it].push(selectit): appState.graph.nodes.filter[it]=[selectit]   
+
+                    this.setState({
+                      [it + '_filterlist']: this.state[it + '_filterlist'] ? [...this.state[it + '_filterlist'], selectit] : [selectit]
+                    })
+                    appState.graph.filter[it] ? appState.graph.filter[it].push(selectit) : appState.graph.filter[it] = [selectit]
                     appState.graph.filterNodes()
-                    // console.log(selectit)
-                    // console.log(appState.graph.nodes.filter[it][0])
+
+                    // console.log(this.state[it + '_filterlist'])
+                    // return selectit
+                    // console.log(appState.graph.filter[it][0])
                   }}
-                  tag = { selectit=> { console.log(selectit); return selectit}}
-                  value= {['sdadf']}
+                  tag={selectit => { return selectit }}
+                  value={this.state[it + '_filterlist']}
+                  tagprops={{
+                    fill:true ,
+                    onRemove: selectit => {
+                      var self = this
+                      var deselectIndex0 = this.state[it + '_filterlist'].indexOf(selectit)
+                      if (deselectIndex0 > -1) {
+                        this.setState({
+                          [it + '_filterlist']:this.state[it + '_filterlist'].filter(item => item !== selectit)
+                          //  this.state[it + '_filterlist'].splice(deselectIndex0, 1)
+                        })
+                       
+                      }
+                      
+                      var deselectIndex1 = appState.graph.filter[it].indexOf(selectit)
+                      if (deselectIndex1 > -1) {
+                        appState.graph.filter[it] = appState.graph.filter[it].filter(item => item !== selectit)
+
+                        // appState.graph.filter[it].splice(deselectIndex1, 1)
+                        appState.graph.filterNodes()
+                      }
+
+
+                      console.log(this.state[it + '_filterlist'])
+                      // return selectit
+                      // console.log(appState.graph.filter[it][0])
+                    },
+                    // tagProps: getTagProps,
+                  }}
                 />
                 :
                 <RangeSlider
-                  min={1}
-                  max={20}
-                  stepSize={0.1}
-                  labelStepSize={5}
-                  // onChange={([a, b]) => {
-                  //   runInAction("update scale", () => {
-                  //     appState.graph.nodes.size.min = a;
-                  //     appState.graph.nodes.size.max = b;
-                  //   });
-                  // }}
-                  // value={[
-                  //   appState.graph.nodes.size.min,
-                  //   appState.graph.nodes.size.max
-                  // ]}
+                  min={Math.min(... appState.graph.rawGraph.nodes.map(n => n[it]))}   //uniqueValue[it][0] is computed min 
+                  max={Math.max(... appState.graph.rawGraph.nodes.map(n => n[it]))} //uniqueValue[it][1] is computed max
+                  stepSize={1}
+                  labelStepSize={10}
+                  className="range-slider-container"
+                  onChange={([a, b]) => {
+                    runInAction("update scale", () => {
+                      this.setState({
+                        [it + '_filterlist']: {
+                          "min":a,
+                          "max":b
+                        }
+                      })
+                      appState.graph.filter[it] ={
+                        "min":a,
+                        "max":b
+                      }
+                    })
+                    
+                  }}
+                  onRelease={([a, b]) => {
+                  this.setState({
+                    [it + '_filterlist']: {
+                      "min":a,
+                      "max":b
+                    }
+                  })
+                  appState.graph.filter[it] ={
+                    "min":a,
+                    "max":b
+                  }
+                  appState.graph.filterNodes()
+                  
+                
+                 
+                }}
+                value={(appState.graph.filter[it] && appState.graph.filter[it]["min"])?
+                [
+                  appState.graph.filter[it]["min"],
+                  appState.graph.filter[it]["max"]
+                ]:
+              [
+                Math.min(... appState.graph.rawGraph.nodes.map(n => n[it])),
+                Math.max(... appState.graph.rawGraph.nodes.map(n => n[it]))
+
+              ]}
                 />
 
               }

@@ -10,15 +10,15 @@ module.exports = function (self) {
    *  Change color of node edges
    */
   self.highlightNode = function (node, toggle, color = def.NODE_HIGHLIGHT) {
-    if (toggle) {
-      node.renderData.draw_object.children[0].material.color.setHex(color);
-      node.renderData.draw_object.children[0].visible = true;
-    } else {
-      node.renderData.draw_object.children[0].material.color.set(
-        node.renderData.hcolor
-      );
-      node.renderData.draw_object.children[0].visible = false;
-    }
+    // if (toggle) {
+    //   node.renderData.draw_object.children[0].material.color.setHex(color);
+    //   node.renderData.draw_object.children[0].visible = false;
+    // } else {
+    //   node.renderData.draw_object.children[0].material.color.set(
+    //     node.renderData.hcolor
+    //   );
+    //   node.renderData.draw_object.children[0].visible = false;
+    // }
   };
 
   /**
@@ -43,6 +43,53 @@ module.exports = function (self) {
       self.highlightNeighbors(node, froms, tos);
     }
   };
+
+ /**
+   *  Highlight edges and nodes on the path 
+   */
+  self.highlightPathEdgeNode = function (pathnode) {
+
+    //highlight nodes
+
+    //first dehighlight all nodes 
+    self.graph.forEachNode(function (n) {
+
+      self.colorNodeOpacity(n, 0.2);
+    })
+
+    pathnode.forEach((node)=>{
+     self.colorNodeOpacity(node, 1);
+    })
+    self.highlightNode(pathnode[0], true)
+    self.highlightNode(pathnode[pathnode.length - 1], true)
+    // pathnode[0].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+    // pathnode[pathnode.length - 1].renderData.draw_object.children[0].material.color.setHex(def.NODE_HIGHLIGHT);
+    
+
+    //highlight edges
+    let red = new THREE.Color(appState.graph.edges.color).r;
+    let blue = new THREE.Color(appState.graph.edges.color).g;
+    let green = new THREE.Color(appState.graph.edges.color).b;
+    
+    //first dehighlight all edges
+    self.lineIndices.forEach(function (link) {
+      link.linecolor.r = self.darkMode ? 0.25 : 0.89; //black/white
+      link.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      link.linecolor.b = self.darkMode ? 0.25 : 0.89;
+    })
+    //undirected 
+    //then highlight only the node's edges
+    for (let i = 0; i < pathnode.length-1; i++) {
+      self.lineIndices.forEach(function (link) {
+        if ((link.source.id == pathnode[i].id && link.target.id == pathnode[i+1].id) || (link.source.id == pathnode[i+1].id && link.target.id == pathnode[i].id))  {
+          link.linecolor.r = red;
+          link.linecolor.g = blue;
+          link.linecolor.b = green;
+        }
+      })
+    } 
+  }
+
 
   /**
    * Highlight adjacent nodes
@@ -157,12 +204,12 @@ module.exports = function (self) {
     //     link.linecolor.b = self.darkMode ? 0.25 : 0.89;
     //   })
 
-    //   // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
-    //   // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
-    //   // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
-    // }
+      // node.renderData.linecolor.r =  self.darkMode ? 0.25 : 0.89;
+      // node.renderData.linecolor.g = self.darkMode ? 0.25 : 0.89;
+      // node.renderData.linecolor.b = self.darkMode ? 0.25 : 0.89;
+    }
 
-  };
+  // };
 
 
 

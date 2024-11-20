@@ -1,5 +1,5 @@
 import React from "react";
-import { Classes, Tab2, Tabs2, Tag } from "@blueprintjs/core";
+import { Classes,Button, Tab2, Tabs2, Tag } from "@blueprintjs/core";
 import classnames from "classnames";
 import { observer } from "mobx-react";
 import appState from "../stores";
@@ -16,7 +16,7 @@ import Legends from "./Legends";
 import StatusBar from './StatusBar';
 import SelectionActionPanel from "./panels/SelectionActionPanel";
 import ZoomPanel from "./panels/ZoomPanel";
-
+import * as SvgSaver from 'svgsaver';
 
 // TODO: migrate to simple select
 
@@ -25,7 +25,7 @@ class RenderOptionsCard extends React.Component {
   render() {
     return (
       <div>
-        <h4>Graph Options</h4>
+        <h4>Appearance </h4>
         <Tabs2 animate id="graph-options">
           <Tab2 id="nodes" title="Nodes" panel={<NodesPanel />} />
           <Tab2 id="edges" title="Edges" panel={<EdgesPanel />} />
@@ -77,16 +77,16 @@ class FloatingCards extends React.Component {
   };
 
   filtersVisible = {
-    right: '0em'
+    left: '0em'
   }
   filtersInvisible = {
-    right: '-22em'
+    left: '-22em'
   }
   filterSideButtonVis = {
-    marginLeft: '0px'
+    marginLeft: '50px'
   }
   filterSideButtonInv = {
-    marginLeft: '80px'
+    marginLeft: '-15px'
   }
   filterToggleOptions = () => {
     appState.preferences.isFilterOptionsCardHidden = !appState.preferences.isFilterOptionsCardHidden;
@@ -96,7 +96,7 @@ class FloatingCards extends React.Component {
     right: '0em'
   }
   scatterInvisible = {
-    right: '-22em'
+    right: '-52em'
   }
   scatterSideButtonVis = {
     marginLeft: '0px'
@@ -111,7 +111,7 @@ class FloatingCards extends React.Component {
   render() {
     return (
       <div className="floating-overlay">
-        <div className="left-cards">
+        <div className="left-cards" style={{zIndex: '5000'}}>
           {appState.search.panelOpen && (
             <div
               className={classnames(
@@ -332,13 +332,13 @@ class FloatingCards extends React.Component {
 
         </div>
         {/* Scatter Plot  panels */}
-        <div className="right-cards">
+        {/* <div className="right-cards">
           <div
             className={classnames(
               Classes.CARD,
               Classes.ELEVATION_2,
               "scatter-overlay-card",
-              "scatter-overlay-card",
+              
               "transparent-frame",
               "right-cards",
               "filter-option"
@@ -347,9 +347,12 @@ class FloatingCards extends React.Component {
           >
             <button className="openbtn3" onClick={this.scatterToggleOptions}> &#8250;
             </button>
+            
             <br />
-            {/* <FilterOptionsCard /> */}
-            <div id="scatter-plot">
+            
+            <div id="scatter-plot"
+            style={{transform: "translate(10px, -20px)"}}
+            >
 
               {appState.graph.hasGraph && appState.graph.frame && appState.graph.rawGraph.nodes[0].degree !== undefined && < ScatterPlot />}
             </div>
@@ -361,11 +364,13 @@ class FloatingCards extends React.Component {
               &#9776;
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* Filter option  panels */}
-        {/* <div className="left-cards">
+        <div className={"left-cards"} style={{ marginTop:'6em'}} >
           <div
+
+
             className={classnames(
               Classes.CARD,
               Classes.ELEVATION_2,
@@ -377,7 +382,7 @@ class FloatingCards extends React.Component {
             )}
             style={appState.preferences.isFilterOptionsCardHidden ? this.filtersInvisible : this.filtersVisible}
           >
-            <button className="openbtn3" onClick={this.filterToggleOptions}> &#8250;
+            <button className="openbtn2" onClick={this.filterToggleOptions}> &#8249;
             </button>
             <br />
             <FilterOptionsCard />
@@ -385,23 +390,21 @@ class FloatingCards extends React.Component {
           </div>
 
           <div className={classnames(Classes.CARD, Classes.ELEVATION_2, "overlay-card",
-            "transparent-frame")} style={{ width: "1em", height: "0px", paddingTop: "0em", paddingLeft: "0px", paddingBottom: "0em", marginRight: "35px" }}>
+            "transparent-frame")} style={{ width: "1em", paddingTop: "0em", paddingRight: "0.7em", paddingBottom: "0.5em", marginLeft: "-5.4em" }}>
             <button className="openbtn" onClick={this.filterToggleOptions} style={appState.preferences.isFilterOptionsCardHidden ? this.filterSideButtonVis : this.filterSideButtonInv}>
-              &#9776;
+               &#9776;
             </button>
           </div>
-        </div> */}
+        </div>
 
 
 
-        <Tag className="network-tag">
-          Network
-        </Tag>
+        
 
 
-        {// This menu only shows when there are nodes selected
+        {/* {// This menu only shows when there are nodes selected
           appState.graph.selectedNodes.length > 1 && <SelectionDetail />
-        }
+        } */}
         {/* {appState.graph.selectedNodes.length === 1 && (
           <NodeDetail node={appState.graph.selectedNodes[0].data.ref} />
         )} */}
@@ -413,7 +416,7 @@ class FloatingCards extends React.Component {
 
 
         <Legends />
-        <StatusBar />
+        {/* <StatusBar /> */}
         {// This menu only shows when there are nodes selected
           appState.graph.selectedNodes.length > 0 && !appState.preferences.isNavbarInMinimalMode && <SelectionActionPanel />
         }
