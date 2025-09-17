@@ -13,6 +13,8 @@ import {
   MenuDivider,
   Navbar
 } from "@blueprintjs/core";
+import ScreenRecorder from "./ScreenRecorder";
+
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -32,7 +34,7 @@ import { LOGO_URL, GITHUB_URL, SAMPLE_GRAPH_SNAPSHOTS } from '../constants';
 
 
 import axios from 'axios'
-import { observable, computed,reaction, action, runInAction } from "mobx";
+import { observable, computed, reaction, action, runInAction } from "mobx";
 
 import { Tab2, Tabs2, Tag } from "@blueprintjs/core";
 import NodesPanel from "./panels/NodesPanel";
@@ -49,10 +51,10 @@ class RegularNavbar extends React.Component {
   //   () => {
   //       this.forceUpdate()
   //     }
-    
+
   // );
 
-  
+
   runcommunity = () => {
     appState.graph.convexPolygons = []
 
@@ -287,15 +289,15 @@ class RegularNavbar extends React.Component {
   }
   render() {
     return (
-      <nav className={classnames([Classes.NAVBAR], 'navbar-head')} style={{display:"block", height:"5vh"}}>
-        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])} style={{height:"100%"}}>
+      <nav className={classnames([Classes.NAVBAR], 'navbar-head')} style={{ display: "block", height: "5vh" }}>
+        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])} style={{ height: "100%" }}>
           <a href={LOGO_URL} target="_blank">
             <img title="Snoman" id="SNoMAN logo"
               src={appState.preferences.darkMode ? argologo_dark : argologo_light}
               height="28px"></img>
           </a>
           <span>SNoMaN</span>
-          <div className={classnames([Classes.NAVBAR_HEADING])} style={{height:"100%"}}></div>
+          <div className={classnames([Classes.NAVBAR_HEADING])} style={{ height: "100%" }}></div>
           {/* <a
             href="https://poloclub.github.io/argo-graph/"
             target='_blank'
@@ -366,11 +368,11 @@ class RegularNavbar extends React.Component {
               </Menu>
             }
             position={Position.BOTTOM}
-            style={{height:"100%"}}
+            style={{ height: "100%" }}
           >
             <Button
               className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-              style={{height:"100%"}}
+              style={{ height: "100%" }}
               iconName="document"
             >
               File
@@ -455,8 +457,8 @@ class RegularNavbar extends React.Component {
             </Button>
           </Popover>
         </div>
-        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT]) } style={{height:"100%"}}>
-          <span className={Classes.NAVBAR_DIVIDER} style={{height:"100%"}}/>
+        <div className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_LEFT])} style={{ height: "100%" }}>
+          <span className={Classes.NAVBAR_DIVIDER} style={{ height: "100%" }} />
           {appState.graph.hasGraph && appState.graph.frame && (
             <div style={{ display: "inline" }}>
 
@@ -503,7 +505,7 @@ class RegularNavbar extends React.Component {
                 }, 10)
               })()}
 
-{<Tooltip
+              {<Tooltip
                 content={(appState.graph.frame.paused) ? "Resume Layout Algorithm" : "Pause Layout Algorithm"}
                 position={Position.BOTTOM}
               >
@@ -536,38 +538,41 @@ class RegularNavbar extends React.Component {
               }
               {/* {                    {appState.graph.hasGraph && <Button className={"pt-small"} text="Clear Selection and Filter" onClick={() => (appState.graph.overrides = new Map())} />}} */}
               <div className="pt-button-group">
-              <a className="pt-button pt-icon-refresh"  role="button" onClick={() => {
-                appState.graph.mapClicked = undefined;
-                appState.graph.mapClickedArray = [];
-                appState.graph.areaSelected = undefined;
-                appState.graph.selectedNodes = [];
-                appState.graph.selectedSets = [];
-                // appState.graph.frame.lastTimeSelectionLength = 0
-                appState.graph.commonSetNodes =[];
-                appState.graph.interSetNodes = [];
-                appState.graph.frame.selection = []
-                appState.graph.filter  = {}
-                appState.graph.currentlyHovered = undefined;
-                appState.graph.pathHovered = undefined;
-                appState.graph.pathHoveredList = [];
-                appState.graph.edgeselection = [];
-                appState.graph.degreeselection = [];
-                appState.graph.degreebrushed = false;
-                appState.graph.distanceDensityCurrentlyHovered = undefined;
-                appState.graph.distanceDensityCurrentlyClicked = [];
-                appState.graph.clearBrush = true;
-                appState.graph.filterNodes()
-                appState.graph.frame.updateSelectionOpacity()
+                <a className="pt-button pt-icon-refresh" role="button" onClick={() => {
+                  appState.graph.mapClicked = undefined;
+                  appState.graph.mapClickedArray = [];
+                  appState.graph.areaSelected = undefined;
+                  appState.graph.selectedNodes = [];
+                  appState.graph.selectedSets = [];
+                  // appState.graph.frame.lastTimeSelectionLength = 0
+                  appState.graph.commonSetNodes = [];
+                  appState.graph.interSetNodes = [];
+                  appState.graph.frame.selection = []
+                  appState.graph.filter = {}
+                  appState.graph.currentlyHovered = undefined;
+                  appState.graph.pathHovered = undefined;
+                  appState.graph.pathHoveredList = [];
+                  appState.graph.edgeselection = [];
+                  appState.graph.degreeselection = [];
+                  appState.graph.degreebrushed = false;
+                  appState.graph.distanceDensityCurrentlyHovered = undefined;
+                  appState.graph.distanceDensityCurrentlyClicked = [];
+                  appState.graph.clearBrush = true;
+                  appState.graph.filterNodes()
+                  appState.graph.frame.updateSelectionOpacity()
 
-                // this.forceUpdate();
-              }}>Clear All Selections and Filters</a>
+                  // this.forceUpdate();
+                }}>Clear All Selections and Filters</a>
+                <div style={{ marginLeft: "40px" }}>
+                  <ScreenRecorder />
+                </div>
               </div>
             </div>
           )}
           {/* {!appState.graph.smartPause.smartPaused && this.forceUpdate()} */}
         </div>
         <div
-          className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_RIGHT])} style={{height:"100%"}}
+          className={classnames([Classes.NAVBAR_GROUP, Classes.ALIGN_RIGHT])} style={{ height: "100%" }}
         >
           {/* <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
@@ -588,7 +593,7 @@ class RegularNavbar extends React.Component {
           /> */}
           <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-            style={{height:"100%"}}
+            style={{ height: "100%" }}
             iconName="help"
             onClick={() => {
               appState.preferences.helpDialogOpen = true;
@@ -596,13 +601,13 @@ class RegularNavbar extends React.Component {
           />
           <Button
             className={classnames([Classes.BUTTON, Classes.MINIMAL])}
-            style={{height:"100%"}}
+            style={{ height: "100%" }}
             iconName="minimize"
             onClick={() => {
               appState.preferences.turnOnMinimalMode()
             }}
           />
-          <span className={Classes.NAVBAR_DIVIDER} style={{height:"100%"}}/>
+          <span className={Classes.NAVBAR_DIVIDER} style={{ height: "100%" }} />
           <a
             href={GITHUB_URL}
             target='_blank'
@@ -635,43 +640,43 @@ class MinimalNavbar extends React.Component {
             content={(appState.graph.frame.paused) ? "Resume Layout Algorithm" : "Pause Layout Algorithm"}
             position={Position.BOTTOM}
           >
-             <div className="pt-button-group">
-            <a
-              className={classnames("pt-button pt-icon-maximize", (!appState.graph.smartPause.smartPaused && appState.graph.frame.paused) ? "pt-icon-play" : "pt-icon-pause")}
-              role="button"
-              onClick={() => {
-                if (appState.graph.frame.paused && !appState.graph.smartPause.smartPaused) {
-                  /**graph is going from "pause layout" mode to "resume layout"*/
+            <div className="pt-button-group">
+              <a
+                className={classnames("pt-button pt-icon-maximize", (!appState.graph.smartPause.smartPaused && appState.graph.frame.paused) ? "pt-icon-play" : "pt-icon-pause")}
+                role="button"
+                onClick={() => {
+                  if (appState.graph.frame.paused && !appState.graph.smartPause.smartPaused) {
+                    /**graph is going from "pause layout" mode to "resume layout"*/
 
-                  /** graph runs for default duration when unpaused */
-                  appState.graph.runActiveLayout();
+                    /** graph runs for default duration when unpaused */
+                    appState.graph.runActiveLayout();
 
-                  appState.graph.frame.resumeLayout();
-                  this.forceUpdate();
-                  /**appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused*/
-                } else if (appState.graph.smartPause.smartPaused) {
-                  /**graph is going from smart paused "resume layout" mode to "pause layout" mode*/
-                  appState.graph.frame.paused = true;
-                  appState.graph.smartPause.smartPaused = false;
-                } else {
-                  /**graph is going from in "resume layout" mode to "pause layout" mode*/
-                  appState.graph.frame.pauseLayout();
-                  this.forceUpdate();
-                }
-              }}
-            // onClick={() => {
-            //   if (appState.graph.frame.paused) {
-            //     appState.graph.frame.resumeLayout();
-            //     this.forceUpdate();
-            //   } else {
-            //     appState.graph.frame.pauseLayout();
-            //     this.forceUpdate();
-            //   }
-            // }}
-            />
-          </div>
+                    appState.graph.frame.resumeLayout();
+                    this.forceUpdate();
+                    /**appState.graph.smartPause.lastUnpaused = Date.now(); //old code using lastUnpaused*/
+                  } else if (appState.graph.smartPause.smartPaused) {
+                    /**graph is going from smart paused "resume layout" mode to "pause layout" mode*/
+                    appState.graph.frame.paused = true;
+                    appState.graph.smartPause.smartPaused = false;
+                  } else {
+                    /**graph is going from in "resume layout" mode to "pause layout" mode*/
+                    appState.graph.frame.pauseLayout();
+                    this.forceUpdate();
+                  }
+                }}
+              // onClick={() => {
+              //   if (appState.graph.frame.paused) {
+              //     appState.graph.frame.resumeLayout();
+              //     this.forceUpdate();
+              //   } else {
+              //     appState.graph.frame.pauseLayout();
+              //     this.forceUpdate();
+              //   }
+              // }}
+              />
+            </div>
           </Tooltip>
-         
+
         </div>
         <div
           className={classnames("minimal-navbar-right")}
@@ -680,9 +685,9 @@ class MinimalNavbar extends React.Component {
           }}
         >
           <div className="pt-button-group">
-            <a className="pt-button pt-icon-maximize"  role="button" onClick={() => appState.preferences.turnOffMinimalMode()}></a>
-            <a className="pt-button pt-icon-help"  role="button" onClick={() => appState.preferences.helpDialogOpen = true}></a>
-            <a className="pt-button pt-icon-document-open"  role="button" href={window.location} target="_blank"></a>
+            <a className="pt-button pt-icon-maximize" role="button" onClick={() => appState.preferences.turnOffMinimalMode()}></a>
+            <a className="pt-button pt-icon-help" role="button" onClick={() => appState.preferences.helpDialogOpen = true}></a>
+            <a className="pt-button pt-icon-document-open" role="button" href={window.location} target="_blank"></a>
           </div>
         </div>
       </div>
