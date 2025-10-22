@@ -30,7 +30,7 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   // https://poloclub.github.io/argo-graph-lite/#82ffaa24-1d0f-402d-8d5c-9e6595827bc8
   // c1295995-f0c4-4350-9ea0-c97c8a134a34
   // <iframe src="https://poloclub.github.io/argo-graph-lite/#0add65d1-c16f-4c44-b33f-6bf2adb4b589" width="850" height="500"></iframe>
-  ["Food Sharing", "935e591f-38d3-4e91-974d-40172dd123b6"],  
+  ["Food Sharing", "5e614f87-cf96-4dfb-aff7-4c95e2519138"],  
    
   // 8b1fa770-a1d0-43f0-b798-def14744dd8c
   //without -degree nodes snapshot 
@@ -39,15 +39,15 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   //<iframe src="https://poloclub.github.io/argo-graph-lite/#732a9a88-9123-46b4-a271-3616675eab3d" width="850" height="500"></iframe> 
   // mafia: 6f4e03f4-1de3-485b-96a8-8c3e513b6e54//// 732a9a88-9123-46b4-a271-3616675eab3d
   
-  ["Mafia Family Network", "13aaf5c9-fea7-4c72-9ca2-a4d605622e82"],
+  ["Mafia Family Network", "cd3b5651-21e2-4293-9455-ce7188aea415"],
   // c43890f8-1cfb-4599-a0d3-8f47303691fc
-  ["US flight Network", '5d34f2ee-da8c-4748-affc-af44798e32d6'],
+  ["US flight Network", '2d6d0f65-644c-4e73-8867-66744fcfb5dc'],
   // https://poloclub.github.io/argo-graph-lite/#a6470fe8-f562-4e78-94ee-196f78006c1c
-  ['US 117th House Vote of 5 States', '86665914-5bd3-4293-bc2b-4ab673595c8a'],
+  ['US 117th House Vote of 5 States', '2a7deff9-96b7-4c05-9817-a6acc374fe8c'],
   // https://poloclub.github.io/argo-graph-lite/#86665914-5bd3-4293-bc2b-4ab673595c8a
   // https://poloclub.github.io/argo-graph-lite/#51cd24cd-0819-4f2c-b28b-364dc84bb055
-  ['US 117th House Vote Network','ad3d8ca3-1f15-4ae5-90a8-2af15d65bc81'], 
-  ['Github Collaboration Network', '2947da0d-3aae-4fd7-bfd9-06c936b33f55']
+  ['US 117th House Vote Network','35513067-16dd-4afe-83f8-9d5e86a861c4'], 
+  ['Github Collaboration Network', 'c2cf1274-250e-4565-83e9-1d32a5eb6764']
   // "5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1" 960 edges
   // e6d1062c-f1ac-4d69-8039-16d589fb04cf
 ];

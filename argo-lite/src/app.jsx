@@ -14,7 +14,8 @@ import WorkspaceView from "./components/WorkspaceView";
 import appState from "./stores/index";
 import ThreeJSVis from "./visualizers/ThreeJSVis";
 import MapView from "./visualizers/MapView";
-import FloatingCards from "./components/FloatingCards";
+// import FloatingCards from "./components/FloatingCards";
+import NodeDetail from "./components/panels/NodeDetailPanel";
 import registerIPC from "./ipc/client";
 import { fetchWorkspaceProjects } from "./ipc/client";
 import { MOBILE_WIDTH_CUTOFF, MOBILE_HEIGHT_CUTOFF } from "./constants";
@@ -451,6 +452,9 @@ class App extends React.Component {
             </div>
           </div>
         </div>
+      {appState.graph.hasGraph && appState.graph.currentlyHovered && (
+          <NodeDetail node={appState.graph.currentlyHovered.data.ref} />
+        )}
       </div>
     );
   }

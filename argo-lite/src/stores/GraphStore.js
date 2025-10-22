@@ -172,6 +172,11 @@ export default class GraphStore {
   // Directed or not
   @observable directedOrNot = false;
 
+  // Color by weight or not
+  @observable colorByWeight = false;
+
+  @observable maxWeight = null;
+
   // Edge thickness based on
   @observable edgeThicknessByDistance = false;
 
@@ -230,6 +235,7 @@ export default class GraphStore {
       "betweeness centrality",
       "closeness centrality",
       "distance to group center",
+      "strength"
     ],
     edgeProperties: ["edgeDistance"],
     snapshotName: "loading...", // Optional: for display in Argo-lite only
@@ -1098,6 +1104,7 @@ export default class GraphStore {
           "distance to center",
           "betweenness",
           "closeness",
+          "strength"
         ],
         edgeProperties: ["edgeDistance"],
       },

@@ -114,6 +114,11 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.filter = {};
   appState.graph.currentlyHovered = undefined;
 
+  appState.graph.directedOrNot = false;
+  appState.graph.colorByWeight = false;
+  appState.graph.maxWeight = null;
+  appState.graph.colorByWeight = false;
+
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];
   appState.graph.pathHovered = undefined;
@@ -369,6 +374,10 @@ autorun(() => {
           appState.import.importConfig.edgeFile.columns[0];
         appState.import.importConfig.edgeFile.mapping.toId =
           appState.import.importConfig.edgeFile.columns[1];
+        if(appState.import.importConfig.edgeFile.isWeighted){
+          appState.import.importConfig.edgeFile.mapping.weight =
+          appState.import.importConfig.edgeFile.columns[2];
+        }
         appState.import.importConfig.edgeFile.ready = true;
       });
     } catch {

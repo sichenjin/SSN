@@ -372,6 +372,12 @@ export function requestImportGraphFromCSV(
   appState.graph.pinnedNodes = null;
   appState.graph.clearBrush = false;
 
+  appState.graph.directedOrNot = false;
+  appState.graph.colorByWeight = false;
+  appState.graph.maxWeight = null;
+  appState.graph.colorByWeight = false;
+  
+
   appState.graph.mapEdgeShow = true;
   appState.graph.autoZoom = false;
   appState.graph.firstload = true;
@@ -394,6 +400,7 @@ export function requestImportGraphFromCSV(
       columns: toJS(appState.import.importConfig.edgeFile.columns),
       mapping: toJS(appState.import.importConfig.edgeFile.mapping),
       createMissing: appState.import.importConfig.edgeFile.createMissing,
+      isWeighted: appState.import.importConfig.edgeFile.isWeighted,
     },
     delimiter,
     newProjectName,
@@ -613,6 +620,7 @@ async function importGraphFromCSV(config) {
 
   const graph = createGraph();
   const degreeDict = {};
+  const strengthDict = {};
   if (config.hasNodeFile) {
     nodesArr = await readCSV(
       appState.import.selectedNodeFileFromInput,
@@ -638,7 +646,10 @@ async function importGraphFromCSV(config) {
       LonX: parseFloat(n[config.nodes.mapping.LonX]),
       LatY: parseFloat(n[config.nodes.mapping.LatY]),
     }));
-    nodesArr.forEach((n) => (degreeDict[n.id] = 0));
+    nodesArr.forEach((n) => {
+      degreeDict[n.id] = 0;
+      strengthDict[n.id] = 0;
+    });
   }
   const edges = await readCSV(
     appState.import.selectedEdgeFileFromInput,
@@ -686,7 +697,8 @@ async function importGraphFromCSV(config) {
     tolocLatY,
     tolocLonX,
     withinState,
-    withinFamily
+    withinFamily,
+    weight = 1
   ) => {
     const edgeKey = `${from}👉${to}`;
     const edgeKey2 = `${to}👉${from}`;
@@ -702,14 +714,19 @@ async function importGraphFromCSV(config) {
       tolocLonX: tolocLonX,
       withinState: withinState,
       withinFamily: withinFamily,
+      weight: weight,
     };
     graph.addLink(from, to, data);
 
     degreeDict[from] += 1;
     degreeDict[to] += 1;
+    strengthDict[from] = (strengthDict[from] || 0) + weight;
+    strengthDict[to] = (strengthDict[to] || 0) + weight;
+
     edgesArr.push({
       source_id: from,
       target_id: to,
+      weight: weight,
       fromlocLatY: fromlocLatY,
       fromlocLonX: fromlocLonX,
       tolocLatY: tolocLatY,
@@ -744,7 +761,16 @@ async function importGraphFromCSV(config) {
       // fromloc.push(graph.getNode(it[fromId].toString()).data.LonX)
       // toloc.push(graph.getNode(it[toId].toString()).data.LatY)
       // toloc.push(graph.getNode(it[toId].toString()).data.LonX)
+
+
+      let weight = 1;
+      if (config.edges.mapping.weight !== undefined && it[config.edges.mapping.weight] !== undefined) {
+        const w = parseFloat(it[config.edges.mapping.weight]);
+        if (!isNaN(w)) weight = w;
+      }
       // Argo currently works with undirected graph
+
+
       addEdge(
         from,
         to,
@@ -753,7 +779,8 @@ async function importGraphFromCSV(config) {
         tolocLatY,
         tolocLonX,
         withinState,
-        withinFamily
+        withinFamily,
+        weight
       );
       // addEdge(to, from);
     });
@@ -763,7 +790,12 @@ async function importGraphFromCSV(config) {
       const from = it[fromId].toString();
       const to = it[toId].toString();
       // Argo currently works with undirected graph
-      addEdge(from, to, Nonloc, Nonloc, Nonloc, Nonloc);
+      let weight = 1;
+      if (config.edges.mapping.weight !== undefined && it[config.edges.mapping.weight] !== undefined) {
+        const w = parseFloat(it[config.edges.mapping.weight]);
+        if (!isNaN(w)) weight = w;
+      }
+      addEdge(from, to, Nonloc, Nonloc, Nonloc, Nonloc, undefined, undefined, weight);
       // addEdge(to, from);
     });
   }
@@ -874,9 +906,12 @@ async function importGraphFromCSV(config) {
     return pathsArr;
   };
   // const pathsArr = shortestPathPairs();
-  const rank = pageRank(graph);
-  const betweenness = centrality.betweenness(graph);
-  const closeness = centrality.closeness(graph);
+  // const rank = pageRank(graph);
+  // const betweenness = centrality.betweenness(graph);
+  // const closeness = centrality.closeness(graph);
+  const rank = pageRank(graph, (link) => link.data.weight || 1);
+  const betweenness = centrality.betweenness(graph, (link) => link.data.weight || 1);
+  const closeness = centrality.closeness(graph, (link) => link.data.weight || 1);
   nodesArr = nodesArr.map((n) => ({
     ...n,
     node_id: n.id,
@@ -884,6 +919,7 @@ async function importGraphFromCSV(config) {
     closeness: closeness[n.id],
     betweenness: betweenness[n.id],
     degree: parseInt(degreeDict[n.id]),
+    strength: parseInt(strengthDict[n.id]),
   }));
   const nodekeyList = Object.keys(nodesArr[0]);
   const nodePropertyTypes = {};
@@ -918,8 +954,9 @@ async function importGraphFromCSV(config) {
         "distance to center",
         "betweenness",
         "closeness",
+        "strength"
       ],
-      edgeProperties: ["source_id", "target_id"],
+      edgeProperties: ["source_id", "target_id","weight"],
     },
   };
 }
@@ -1115,6 +1152,7 @@ export async function importGraphFromGexf() {
         "distance to center",
         "betweenness",
         "closeness",
+        "strength"
       ],
       edgeProperties: ["source_id", "target_id"],
     },

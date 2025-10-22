@@ -13,6 +13,7 @@ import {
   FeatureGroup,
   Circle,
 } from "react-leaflet";
+import "leaflet-polylinedecorator";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import appState from "../stores";
@@ -22,6 +23,7 @@ import "leaflet-area-select";
 import AreaSelect from "../components/AreaSelect";
 import ReactLeafletToolbar from "../components/ReactLeafletToolbar";
 import { ZoomMap, MapClick, DetectKeyPress } from "../components/ZoomMap";
+import ArrowDecorator from "../components/ArrowDecorator";
 import { useMap } from "react-leaflet";
 import { Tag, Switch } from "@blueprintjs/core";
 import * as turf from "@turf/turf";
@@ -42,7 +44,7 @@ var d3 = def.d3;
 
 @observer
 class MapView extends React.Component {
-  componentDidMount() {}
+  componentDidMount() { }
 
   constructor(props) {
     super(props);
@@ -446,7 +448,39 @@ class MapView extends React.Component {
       appState.graph.selectedNodes.length == 0 &&
       !appState.graph.mapClicked
     ) {
-      return { color: appState.graph.edges.color, weight: "1", opacity: "1" };
+
+      if (appState.graph.colorByWeight && edge.data && edge.data.weight !== undefined) {
+
+        const interpolateRedOrangeGray = (t) => {
+          const colors = ['#999999','#f6d9acff','#f3c486ff','#f88323ff','#fc8d59','#ef6548','#d7301f','#b30000','#7f0000']
+          const index = Math.floor(t * (colors.length - 1));
+          return colors[index];
+        };
+
+
+        const edgeColorScale = d3.scaleSequential(interpolateRedOrangeGray)
+          .domain([0, appState.graph.maxWeight || 10]);
+
+        const w = parseFloat(edge.data.weight);
+        const normalized = Math.min(1, Math.max(0, w / (appState.graph.maxWeight || 10)));
+
+        // If user toggled "color by weight", use gradient
+        const color = appState.graph.colorByWeight
+          ? edgeColorScale(w)
+          : appState.graph.edges.color;
+
+        const opacity = 0.3 + 0.7 * normalized;
+
+        return {
+          color,
+          weight: 1 + normalized,
+          opacity,
+        };
+      } else {
+        return { color: appState.graph.edges.color, weight: "1", opacity: "1" };
+      }
+
+
 
       // { color: edge.data.withinFamily ? appState.graph.edges.color : appState.graph.edges.crossColor, weight: '1', opacity: '1' }
     }
@@ -492,6 +526,7 @@ class MapView extends React.Component {
       //else if (this.nodesSelectedID.indexOf(edge.fromId) !== -1 || this.nodesSelectedID.indexOf(edge.toId) !== -1) {
       // return { color: appState.graph.edges.color, weight: '1', opacity: '1' }
       // }
+
     }
 
     if (appState.graph.currentlyHovered) {
@@ -512,6 +547,9 @@ class MapView extends React.Component {
         };
       }
     }
+
+
+
   };
 
   setNodeCircle = (node) => {
@@ -994,34 +1032,30 @@ class MapView extends React.Component {
           <DetectKeyPress />
 
           <Pane name="edgepane" style={{ zIndex: 10000 }}>
-            {/* <Curve path={["M", [50, 14], "Q", [53, 20], [49, 25]]}
-          options={{color:'red',fill:false}}
-            /> */}
             {appState.graph.rawGraph.edges[0].fromlocLatY !== undefined &&
               appState.graph.rawGraph.edges[0].fromlocLatY !== 360 &&
               appState.graph.frame &&
               appState.graph.frame.getEdgeList().map((edge, i) => {
-                // if (this.frameNode.indexOf(edge.source_id) !== -1 && this.frameNode.indexOf(edge.target_id) !== -1) {
-
-                var edgepositions = [
+                const edgepositions = [
                   [edge.data.fromlocLatY, edge.data.fromlocLonX],
                   [edge.data.tolocLatY, edge.data.tolocLonX],
                 ];
+
                 return (
-                  // <Polyline key={i} pathOptions={this.setEdgePathOption(edge)} positions={edgepositions}
-                  //   data={edge}
-                  // // eventHandlers={{
-                  // //   click: (e) => {
-                  // //     console.log(e.target.options.data)
-                  // //   }}}
-                  // />
-                  <Curve
-                    path={["M", edgepositions[0], "T", edgepositions[1]]}
-                    options={this.setEdgePathOption(edge)}
-                  />
+                  <React.Fragment key={i}>
+                    <Curve
+                      path={["M", edgepositions[0], "T", edgepositions[1]]}
+                      options={this.setEdgePathOption(edge)}
+                    />
+                    {appState.graph.directedOrNot && (
+                      <ArrowDecorator positions={edgepositions} />
+                    )}
+                  </React.Fragment>
                 );
               })}
           </Pane>
+
+
 
           {appState.graph.convexPolygons.map((polygon, i) => {
             var community = polygon.community;
@@ -1204,16 +1238,16 @@ class MapView extends React.Component {
                         // console.log('marker out', e)
                       },
                     }}
-                    // onMouseOver = {this.onMouseOver}
-                    // {(e) => {
-                    //   // appState.graph.currentlyHovered =
-                    //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
-                    // }}
-                    // onMouseOut={this.onMouseOut}
-                    // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
+                  // onMouseOver = {this.onMouseOver}
+                  // {(e) => {
+                  //   // appState.graph.currentlyHovered =
+                  //   e.target.setStyle({fillOpacity: 1, stroke: true, color:'black', weight:3})
+                  // }}
+                  // onMouseOut={this.onMouseOut}
+                  // {(e) => e.target.setStyle({fillOpacity: 0.5,stroke: false })}
                   >
                     {appState.graph.frame &&
-                    node.renderData.textHolder.children[0].element.override ? (
+                      node.renderData.textHolder.children[0].element.override ? (
                       <Tooltip
                         style={{ textAlign: "left" }}
                         width={

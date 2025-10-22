@@ -37,9 +37,9 @@ class StatGroupPanel extends React.Component {
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) *
-          Math.cos(lat2 * (Math.PI / 180)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
       return distance;
@@ -243,6 +243,74 @@ class StatGroupPanel extends React.Component {
     );
   };
 
+  runWeightedCommunity = () => {
+    const fromedgelist = appState.graph.rawGraph.edges.map(e => e.source_id);
+    const toedgelist = appState.graph.rawGraph.edges.map(e => e.target_id);
+    const weightlist = appState.graph.rawGraph.edges.map(e => e.weight || 1); // default 1 if missing
+
+    const querydict = {
+      type: "edgelist_weighted",
+      message: { name: "weighted_community" },
+      fromedgelist: fromedgelist,
+      toedgelist: toedgelist,
+      weightlist: weightlist,
+    };
+
+    axios.post("https://snoman.herokuapp.com/flask/community_weighted", querydict)
+      .then((response) => {
+        const communityDict = response.data.message;
+        console.log("Weighted community:", communityDict);
+        appState.graph.modularity = response.data.modularity;
+
+
+        // same visualization update logic as before...
+
+        appState.graph.rawGraph.nodes.forEach((node) => {
+          var unicommunity =
+            Math.max.apply(null, Object.values(communityDict)) + 1;
+          if (node.degree > 0 && !communityDict[node.id]) {
+            node.community = String.fromCharCode(unicommunity + 95);
+            unicommunity = unicommunity + 1;
+          } else if (communityDict[node.id]) {
+            node.community = String.fromCharCode(communityDict[node.id] + 95);
+          } else {
+            node.community = "-1";
+          }
+        });
+        const nodesArr = appState.graph.rawGraph.nodes;
+        const nodekeyList = Object.keys(nodesArr[1]);
+        const nodePropertyTypes = {};
+        nodekeyList.forEach(function (k) {
+          nodePropertyTypes[k] = typeof nodesArr[1][k];
+        });
+        const uniqueValue = {};
+        nodekeyList.forEach(function (k, i) {
+          if (nodePropertyTypes[k] == "string") {
+            uniqueValue[k] = [...new Set(nodesArr.map((item) => item[k]))];
+          } else {
+            const valuea = nodesArr.map(function (el) {
+              return el[k];
+            });
+            const minv = Math.min(...valuea);
+            const maxv = Math.max(...valuea);
+            uniqueValue[k] = [minv, maxv];
+          }
+        });
+        appState.graph.metadata.nodePropertyTypes = nodePropertyTypes;
+        appState.graph.metadata.uniqueValue = uniqueValue;
+        appState.graph.metadata.nodeProperties = nodekeyList;
+
+        appState.graph.nodes.color.scale = "Nominal Scale";
+        appState.graph.nodes.colorBy = "community";
+
+        appState.graph.nodes.convexhullby = "community";
+        appState.graph.nodes.groupby = "community";
+        appState.graph.watchAppearance = appState.graph.watchAppearance + 1; //force update
+      })
+      .catch((error) => console.log(error));
+  };
+
+
   avgConnectionDist = () => {
     appState.graph.rawGraph.nodes.forEach(function (node) {
       const links = appState.graph.frame.getNode(node["id"]).linkObjs;
@@ -271,9 +339,9 @@ class StatGroupPanel extends React.Component {
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) *
-          Math.cos(lat2 * (Math.PI / 180)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
       return distance;
@@ -373,9 +441,9 @@ class StatGroupPanel extends React.Component {
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) *
-          Math.cos(lat2 * (Math.PI / 180)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
       return distance;
@@ -411,9 +479,9 @@ class StatGroupPanel extends React.Component {
           if (
             !connectionCounted[node][neighbor] &&
             degreeCount.get(node) <
-              appState.graph.frame.getNode(node).data.ref.degree &&
+            appState.graph.frame.getNode(node).data.ref.degree &&
             degreeCount.get(neighbor) <
-              appState.graph.frame.getNode(neighbor).data.ref.degree
+            appState.graph.frame.getNode(neighbor).data.ref.degree
           ) {
             totalDistance += distanceMatrix[node][neighbor];
             degreeCount.set(node, degreeCount.get(node) + 1);
@@ -521,9 +589,9 @@ class StatGroupPanel extends React.Component {
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) *
-          Math.cos(lat2 * (Math.PI / 180)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
       return distance;
@@ -623,9 +691,9 @@ class StatGroupPanel extends React.Component {
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * (Math.PI / 180)) *
-          Math.cos(lat2 * (Math.PI / 180)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
       return distance;
@@ -744,12 +812,113 @@ class StatGroupPanel extends React.Component {
       // console.log(pathsArr.length)
       return pathsArr;
     };
+
     appState.graph.rawGraph.paths = shortestPathPairs();
+    // console.log(appState.graph.rawGraph.paths)
     appState.graph.metadata.nodeComputed.push("shortest path");
     appState.graph.metadata.nodeComputed.push("pair distance");
     appState.graph.scatterplot.x = "pair distance";
     appState.graph.scatterplot.y = "shortest path";
   };
+
+  // not using, as weighted graph may take weight as cost but strength
+  runShortestPathWeighted = () => {
+    const calDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+      var p = 0.017453292519943295;
+      var c = Math.cos;
+      var a =
+        0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
+      return 12742 * Math.asin(Math.sqrt(a));
+    };
+
+    const graph = createGraph();
+
+    // add nodes
+    appState.graph.rawGraph.nodes.forEach((node) =>
+      graph.addNode(node["id"].toString(), {
+        LatY: parseFloat(node["LatY"]),
+        LonX: parseFloat(node["LonX"]),
+      })
+    );
+
+    // add weighted edges (both directions for undirected graph)
+    appState.graph.rawGraph.edges.forEach((edge) => {
+      const weight =
+        parseFloat(edge["weight"] || edge["Weight"] || edge["value"]) || 1;
+      const source = edge["source_id"].toString();
+      const target = edge["target_id"].toString();
+      graph.addLink(source, target, { weight: weight });
+      graph.addLink(target, source, { weight: weight });
+    });
+
+    console.log("Graph built:", graph.getNodesCount(), "nodes");
+
+    const shortestPathPairs = () => {
+      const pathFinder = path.aStar(graph, {
+        distance(fromNode, toNode, link) {
+          return link?.data?.weight ? parseFloat(link.data.weight) : 1;
+        },
+        heuristic: () => 0, // Dijkstra equivalent
+      });
+
+      const pathsArr = [];
+      const pathsSet = new Set();
+
+      graph.forEachNode(function (fromnode) {
+        graph.forEachNode(function (tonode) {
+          if (fromnode.id === tonode.id) return;
+
+          const key = `${fromnode.id}👉${tonode.id}`;
+          if (pathsSet.has(key)) return;
+          pathsSet.add(key);
+
+          const pairdist = calDistanceFromLatLonInKm(
+            fromnode.data.LatY,
+            fromnode.data.LonX,
+            tonode.data.LatY,
+            tonode.data.LonX
+          );
+
+          const pathResult = pathFinder.find(fromnode.id, tonode.id);
+
+          let totalWeight = null;
+          if (pathResult && pathResult.length > 1) {
+            totalWeight = 0;
+            for (let i = 0; i < pathResult.length - 1; i++) {
+              const link = graph.getLink(pathResult[i], pathResult[i + 1]);
+              totalWeight += link?.data?.weight
+                ? parseFloat(link.data.weight)
+                : 1;
+            }
+          }
+
+          pathsArr.push({
+            source: fromnode.id,
+            target: tonode.id,
+            path: pathResult,
+            distance: pairdist,
+            weightedDistance: totalWeight,
+          });
+        });
+      });
+
+      return pathsArr;
+    };
+
+    const results = shortestPathPairs();
+    console.log("Sample paths:", results.filter(r => r.weightedDistance !== null));
+
+    // appState.graph.rawGraph.pathsWeighted = results;
+    // appState.graph.metadata.nodeComputed.push("weighted shortest path");
+    // appState.graph.metadata.nodeComputed.push("pair distance");
+    // appState.graph.scatterplot.x = "pair distance";
+    // appState.graph.scatterplot.y = "weighted shortest path";
+  };
+
+
+
 
   runDataAssortativity = () => {
     // Implement the degree-degree plot, where each circle represents an edge, and the x and y coordinates are the larger/smaler degrees of the src/target nodes, respectively. Note that it doesn't ensure that the src node is on the x-axis and the target node is on the y-axis.
@@ -1006,37 +1175,102 @@ class StatGroupPanel extends React.Component {
     return (
       <div>
         <p className="stat-section-heading">Distance and Shortest Path</p>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.avgConnectionDist}
+        <Tooltip
+
+          content={
+            <div style={{ width: "400px", paddingLeft: "150px" }}>
+              Calculates the mean Euclidean distance of a node's connections. Useful for measuring the spatial reach of the ego-centric network of nodes.
+            </div>
+          }
         >
-          Run Average Distance
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.avgConnectionDist}
+          >
+            Run Average Distance
+          </Button>
+        </Tooltip>
         <br></br>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runShortestPath}
+        <Tooltip
+
+          content={
+            <div style={{ width: "400px", paddingLeft: "150px" }}>
+              Compare the network distance (i.e., the geodesic or minimum-hop path) with the Euclidean distance (“pair distance”) between all node pairs. Note: edge weights are not considered when calculating the shortest path—only the number of hops is used.
+            </div>
+          }
         >
-          Run Shortest Path
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runShortestPath}
+          >
+            Run Shortest Path
+          </Button>
+        </Tooltip>
         <br></br>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runDataAssortativity}
+        <Tooltip
+
+          content={
+            <div style={{ width: "200px", paddingLeft: "30px" }}>
+              Measures the correlation between node degree at the ends of edges.
+            </div>
+          }
         >
-          Run Data Assortativity
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runDataAssortativity}
+          >
+            Run Data Assortativity
+          </Button>
+        </Tooltip>
         <br></br>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runGlobalANN}
+        <Tooltip
+
+          content={
+            <div style={{ width: "900px", paddingLeft: "400px", paddingTop: "500px" }}>
+              <p >
+                <b>Global Average Nearest Neighbor (ANN)</b> quantifies the spatial
+                distribution of nodes—whether they are clustered, randomly distributed,
+                or evenly dispersed.
+              </p>
+              <p style={{ fontSize: "12px", marginBottom: "4px" }}>
+                The ANN ratio is defined as:
+                <code>
+                  ANN = D<sub>observed</sub> / D<sub>expected</sub>
+                </code>
+              </p>
+              <ul style={{ fontSize: "11px", marginLeft: "10px", marginTop: "4px" }}>
+                <li>
+                  <b>D<sub>observed</sub></b>: mean distance between each node and its
+                  nearest neighbor.
+                </li>
+                <li>
+                  <b>D<sub>expected</sub></b> = 0.5 / √(n / A), where <i>n</i> is the
+                  number of nodes and <i>A</i> is the area of the minimal bounding
+                  rectangle.
+                </li>
+              </ul>
+              <p style={{ fontSize: "11px", marginTop: "6px" }}>
+                Interpretation:
+                ANN &lt; 1 → clustering tendency,
+
+                ANN ≈ 1 → random distribution,
+
+                ANN &gt; 1 → uniform dispersion.
+              </p>
+            </div>
+          }
         >
-          Run Global ANN
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runGlobalANN}
+          >
+            Run Global ANN
+          </Button>
+        </Tooltip>
         {appState.graph.globalANN ? (
           <text className="ann-tag" style={{ fontSize: "8px" }}>
             {parseFloat(appState.graph.global_D_observed).toFixed(3) +
@@ -1049,29 +1283,68 @@ class StatGroupPanel extends React.Component {
         <br></br>
         <hr />
         <p className="stat-section-heading">Efficient Distance Analysis</p>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runLocalFlatRatio}
+        <Tooltip
+          content={
+            <div style={{ width: "300px", paddingLeft: "80px" }}>
+              Local Flattening Ratio is defined as the ratio of a node’s minimized distance needed to connect to any k nearest neighbors to the total actual distance of its connections ( Reference:&nbsp;
+              <a
+                href="https://www.tandfonline.com/doi/full/10.1080/13658816.2019.1567736"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sarkar et al., 2019
+              </a>).
+            </div>
+          }
         >
-          Run Local Flattening Ratio
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runLocalFlatRatio}
+          >
+            Run Local Flattening Ratio
+          </Button>
+        </Tooltip>
         <br></br>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runKfullfillment}
+        <Tooltip
+          content={
+            <div style={{ width: "500px", paddingLeft: "200px" }}>
+              K-fullfillment is a node-level metric to describe local (dis)connection. It is defined as the percentage of a node’s K-nearest neighbors (in Euclidean space) that it is connected (i.e., connected K-nearest neighbors divided by total K-nearest neighbors, K is node’s degree.) Nodes that are exclusively connected to their nearest neighbors will have a K-fulfillment value of 1. K-fullfillment assumes that the target SSN is an unweighted, undirected network.
+
+            </div>
+          }
         >
-          Run K-fullfillment
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runKfullfillment}
+          >
+            Run K-fullfillment
+          </Button>
+        </Tooltip>
         <br></br>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runGlobalFlatRatio}
+        <Tooltip
+          content={
+            <div style={{ width: "300px", paddingLeft: "80px" }}>
+              Global Flattening Ratio is a network-level metric to measure the spatial tightness of a network. Please find the specific definition in the paper.
+              (<a
+                href="https://www.tandfonline.com/doi/full/10.1080/13658816.2019.1567736"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sarkar et al., 2019
+              </a>).
+            </div>
+          }
         >
-          Run Global Flattening Ratio
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runGlobalFlatRatio}
+          >
+            Run Global Flattening Ratio
+          </Button>
+        </Tooltip>
         {appState.graph.globalFlatRatio ? (
           <text className="gf-tag" style={{ fontSize: "8px" }}>
             {parseFloat(appState.graph.globalFlatRatio).toFixed(3)}
@@ -1080,13 +1353,21 @@ class StatGroupPanel extends React.Component {
         <br></br>
         <hr />
         <p className="stat-section-heading">Group-related Functions</p>
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runcommunity}
+        <Tooltip
+          content={
+            <div style={{ width: "700px", paddingLeft: "280px" }}>
+              Identifies network communities using the Louvain modularity maximization algorithm. The modularity Q measures the strength of partitioning (−1 ≤ Q ≤ 1). For weighted graphs, edge weights are incorporated into the partitioning to better reflect tie strength.
+            </div>
+          }
         >
-          Run Community Detection
-        </Button>
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runWeightedCommunity}
+          >
+            Run Community Detection
+          </Button>
+        </Tooltip>
         {/* <button style={{height: "100%"}} onClick={this.runcommunity} type="button">
                             Run Community
                         </button> */}
@@ -1107,18 +1388,32 @@ class StatGroupPanel extends React.Component {
                         className="bp4-button"
                         style={{ zIndex: '1000' }}
                         onClick={() => this.density_distance('Family')}>Cluster Cluster</Button> */}
-        <Button
-          className="bp4-button"
-          style={{ zIndex: "1000" }}
-          onClick={this.runLocalANN}
+        <Tooltip
+          content={
+            <div style={{ width: "700px", paddingLeft: "300px" }}>
+              Calculates the Average Nearest Neighbor (ANN) index for each community to measure internal clustering. The dashed line indicates the expected ANN value for randomly chosen nodes across the entire network.
+            </div>
+          }
         >
-          Run Community ANN
-        </Button>
-
+          <Button
+            className="bp4-button"
+            style={{ zIndex: "1000" }}
+            onClick={this.runLocalANN}
+          >
+            Run Community ANN
+          </Button>
+        </Tooltip>
         <div>
-          <p style={{ display: "inline", fontSize: "12px" }}>
-            Convex Hull By:{" "}
-          </p>
+          <Tooltip
+            content={
+              <div style={{ width: "700px", paddingLeft: "320px" }}>
+                Outlines each group’s spatial extent using the convex hull algorithm (Barber et al., 2011; Preparata & Shamos, 2012). Outlier nodes (Z-score &gt; 3) are excluded to prevent overly large polygons.            </div>
+            }
+          >
+            <p style={{ display: "inline", fontSize: "12px" }}>
+              Convex Hull By:{" "}
+            </p>
+          </Tooltip>
           <span style={{}}>
             <SimpleSelect
               items={appState.graph.filterKeyList.filter(
@@ -1140,7 +1435,15 @@ class StatGroupPanel extends React.Component {
           </span>
         </div>
         <div>
+          <Tooltip
+            content={
+              <div style={{ width: "700px", paddingLeft: "330px" }}>
+                Visualizes the relationship between group size, spatial dispersion, and network density. Standard distance (Flury & Riedwyl, 1986) quantifies how spread out members are from the group’s mean center. Each dot represents a group—x: density, y: dispersion, size: group size, color: community.
+                </div>
+            }
+          >
           <p style={{ display: "inline", fontSize: "12px" }}>Group By: </p>
+          </Tooltip>
           <span style={{}}>
             <SimpleSelect
               items={appState.graph.filterKeyList.filter(

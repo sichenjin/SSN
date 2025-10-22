@@ -140,6 +140,8 @@ typings/
 # dotenv environment variables file
 .env
 
+venv/
+env/
 
 ### OSX ###
 *.DS_Store

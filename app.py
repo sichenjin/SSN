@@ -6,6 +6,7 @@ from api.Community import Community
 from api.Cliques import Cliques
 from api.MyConvexHull import MyConvexHull
 from api.DensityDistance import DensityDistance
+from api.CommunityWeighted import CommunityWeighted
 from flask_cors import CORS, cross_origin
 
 
@@ -22,9 +23,11 @@ def serve(path):
 api.add_resource(HelloApiHandler, '/flask/hello')
 
 api.add_resource(Community, '/flask/community')
+api.add_resource(CommunityWeighted, '/flask/community_weighted')
 api.add_resource(Cliques, '/flask/Cliques')
 api.add_resource(MyConvexHull, '/flask/convexhull')
 api.add_resource(DensityDistance, '/flask/densitydistance')
+
 
 if __name__=='__main__':
   app.run(debug=True)

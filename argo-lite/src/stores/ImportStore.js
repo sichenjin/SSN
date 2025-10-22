@@ -38,10 +38,12 @@ export default class ImportStore {
       topN: [],
       mapping: {
         fromId: "<UNK>",
-        toId: "<UNK>"
+        toId: "<UNK>",
+        weight: "<UNK>"
       },
       createMissing: true,
-      delimiter: ","
+      delimiter: ",",
+      isWeighted:false
     }
   };
 

@@ -261,7 +261,7 @@ module.exports = function(self) {
     /**Adding triangles for directed edges update*/
     self.directedArrows = new THREE.BufferGeometry();
     var arrowMaterial = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
+      color: 0x6495ED,
     });
     self.arrow = new THREE.Mesh(self.directedArrows, arrowMaterial);
     self.arrow.frustumCulled = false;

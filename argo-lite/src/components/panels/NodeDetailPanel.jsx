@@ -21,6 +21,11 @@ class NodeDetail extends React.Component {
       return Number.parseFloat(num).toPrecision(3);
     };
 
+    // Filter out unnecessary attributes
+    const visibleAttributes = appState.graph.allPropertiesKeyList.filter(
+      (key) => !["isHidden", "LonX", "LatY", 'Longitude', 'longitude', 'latitude' , 'Latitude'].includes(key)
+    );
+
     return (
       <div
         className={classnames(
@@ -33,9 +38,10 @@ class NodeDetail extends React.Component {
           <table
             className={classnames(Classes.TABLE, Classes.TABLE_STRIPED, "node-details-table-content")}
             style={{
-              width: "100%",
+              width: "200px",
               padding: '0',
-              fontSize: "12px"
+              fontSize: "10px",
+              lineHeight: "1.2em",
             }}
           >
             
@@ -46,7 +52,7 @@ class NodeDetail extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {appState.graph.allPropertiesKeyList.map((it, i) => (
+              {visibleAttributes.map((it, i) => (
                 <tr key={`${it}-${i}`}>
                   <td style={{ padding: '5px 10px' }}>{it}</td>
                   <td style={{ padding: '5px 10px', whiteSpace: 'normal' }}>{formatLongFloat(this.props.node[it])}</td>

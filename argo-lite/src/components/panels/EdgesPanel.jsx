@@ -15,20 +15,20 @@ class EdgesPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          timeOutRef: null,
-        //   sizeOptionOpen: false,
-          colorOptionOpen:false,
-          directionOptionOpen:false,
-        //   colorOptionOpen:false,
-          thicknessOptionOpen: false,
+            timeOutRef: null,
+            //   sizeOptionOpen: false,
+            colorOptionOpen: false,
+            directionOptionOpen: false,
+            //   colorOptionOpen:false,
+            thicknessOptionOpen: false,
         };
-      }
+    }
 
     render() {
         let graph = appState.graph.graph;
         return (
             <div>
-                <text style={{fontSize:"12px"}}>{`Modifying All Edges`}</text>
+                <text style={{ fontSize: "12px" }}>{`Modifying All Edges`}</text>
 
 
                 {/* Collapsable Option: Color */}
@@ -37,81 +37,113 @@ class EdgesPanel extends React.Component {
                     isOpen={this.state.colorOptionOpen}
                     onToggle={() =>
                         this.setState({
-                        colorOptionOpen: !this.state.colorOptionOpen
+                            colorOptionOpen: !this.state.colorOptionOpen
                         })
                     }
-                    >
+                >
                     <div className={classnames(Classes.CARD, "sub-option")}>
-                        <div> 
-                            <p style={{display: "inline"}}>Select Edge Color: </p>
-                            <span style={{float:"right"}}>
-                                <Popover2 
-                                placement="bottom"
-                                modifiers={{
-                                    preventOverflow: {
-                                      enabled: false,
-                                    },
-                                  }}>
+                        <div>
+                            <p style={{ display: "inline" }}>Select Edge Color: </p>
+                            <span style={{ float: "right" }}>
+                                <Popover2
+                                    placement="bottom"
+                                    modifiers={{
+                                        preventOverflow: {
+                                            enabled: false,
+                                        },
+                                    }}>
                                     <Button
-                                    text="  "
-                                    style={{
-                                        backgroundImage: "inherit",
-                                        backgroundColor: appState.graph.edges.color
-                                    }}
+                                        text="  "
+                                        style={{
+                                            backgroundImage: "inherit",
+                                            backgroundColor: appState.graph.edges.color
+                                        }}
                                     />
                                     <SketchPicker
-                                    color={appState.graph.edges.color}
-                                    onChange={(it) => {
-                                        appState.graph.process.graph.forEachNode(n => {
-                                             
-                                             let red = new THREE.Color(appState.graph.edges.color).r;
-                                             let blue = new THREE.Color(appState.graph.edges.color).g;
-                                             let green = new THREE.Color(appState.graph.edges.color).b;
-                                             n.renderData.linecolor.r = red;
-                                             n.renderData.linecolor.g = blue;
-                                             n.renderData.linecolor.b = green;
-                                           });
-                                        (appState.graph.edges.color = it.hex);
-                                        /**update edge color in real time*/
-                                        appState.graph.process.onHover(); 
-                                    }}
+                                        color={appState.graph.edges.color}
+                                        onChange={(it) => {
+                                            appState.graph.process.graph.forEachNode(n => {
+
+                                                let red = new THREE.Color(appState.graph.edges.color).r;
+                                                let blue = new THREE.Color(appState.graph.edges.color).g;
+                                                let green = new THREE.Color(appState.graph.edges.color).b;
+                                                n.renderData.linecolor.r = red;
+                                                n.renderData.linecolor.g = blue;
+                                                n.renderData.linecolor.b = green;
+                                            });
+                                            (appState.graph.edges.color = it.hex);
+                                            /**update edge color in real time*/
+                                            appState.graph.process.onHover();
+                                        }}
                                     />
                                 </Popover2>
                             </span>
-                            </div>
-                        
+                        </div>
+
+                    </div>
+
+                    <div className={classnames(Classes.CARD, "sub-option")}>
+                        <div>
+                            <p style={{ display: "inline" }}>Color by Weight: </p>
+                            <span style={{ float: "right" }}>
+                                <label className=".pt-large">
+                                    <input
+                                        type="checkbox"
+                                        onChange={() => {
+                                            appState.graph.colorByWeight = !appState.graph.colorByWeight;
+                                            console.log("Color by Weight:", appState.graph.colorByWeight);
+
+                                            if (appState.graph.colorByWeight &&
+                                                (appState.graph.maxWeight === undefined ||
+                                                    appState.graph.maxWeight === null)) {
+                                                const weights = appState.graph.rawGraph.edges
+                                                    .map((e) => parseFloat(e?.weight))
+                                                    .filter((w) => !isNaN(w));
+                                                const maxWeight =
+                                                    weights.length > 0 ? Math.max(...weights) : 1;
+                                                appState.graph.maxWeight = maxWeight;
+                                                console.log("Computed maxWeight:", maxWeight);
+                                            }
+                                        }}
+                                    />
+                                </label>
+                            </span>
+                        </div>
                     </div>
                 </Collapsable>
-            
-                {/* <Collapsable
+
+                <Collapsable
                     name="Direction"
                     isOpen={this.state.directionOptionOpen}
                     onToggle={() =>
                         this.setState({
-                        directionOptionOpen: !this.state.directionOptionOpen
+                            directionOptionOpen: !this.state.directionOptionOpen
                         })
                     }
-                    >
+                >
                     <div className={classnames(Classes.CARD, "sub-option")}>
-                        <div> 
-                            <p style={{display: "inline"}}>Show Edge Direction: </p>
-                            <span style={{float:"right"}}>
-                            <label class=".pt-large">
-                            <input 
-                                 type="checkbox"
-                                 onChange={it => {
-                                     console.log(appState.graph.directedOrNot);
-                                     appState.graph.directedOrNot = !appState.graph.directedOrNot;
-                                 }
-                                 }
-                               />
-                            </label>
+                        <div>
+                            <p style={{ display: "inline" }}>Show Edge Direction: </p>
+                            <span style={{ float: "right" }}>
+                                <label class=".pt-large">
+                                    <input
+                                        type="checkbox"
+                                        onChange={it => {
+                                            console.log(appState.graph.directedOrNot);
+                                            appState.graph.directedOrNot = !appState.graph.directedOrNot;
+                                        }
+                                        }
+                                    />
+                                </label>
                             </span>
-                            </div>
-                        
+                        </div>
+
                     </div>
-                </Collapsable> */}
-{/* 
+                </Collapsable>
+
+
+
+                {/* 
                 <div>
                      <section style = {{marginTop: "15px"}}>
                          <p style={{display: "inline"}}>Show Edge Direction: </p>

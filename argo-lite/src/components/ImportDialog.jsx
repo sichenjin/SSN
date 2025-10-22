@@ -89,21 +89,21 @@ class ImportDialog extends React.Component {
         isOpen={this.state.nodesOpen}
         onToggle={() => this.setState({ nodesOpen: !this.state.nodesOpen })}
       >
-        <div className={classnames(Classes.CONTROL_GROUP)} style={{margin: "10px"}}>
-        <div className={classnames(Classes.CONTROL_GROUP)}>
-          <div style={{lineHeight:"10px"}} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
-            <input
-              type="file"
-              className={classnames(Classes.DISABLED)}
-              onChange={(event) => {
-                if (event.target.files.length < 1) {
-                  return;
-                }
-                appState.import.selectedNodeFileFromInput = event.target.files[0];
-              }}
-            />
+        <div className={classnames(Classes.CONTROL_GROUP)} style={{ margin: "10px" }}>
+          <div className={classnames(Classes.CONTROL_GROUP)}>
+            <div style={{ lineHeight: "10px" }} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
+              <input
+                type="file"
+                className={classnames(Classes.DISABLED)}
+                onChange={(event) => {
+                  if (event.target.files.length < 1) {
+                    return;
+                  }
+                  appState.import.selectedNodeFileFromInput = event.target.files[0];
+                }}
+              />
+            </div>
           </div>
-        </div>
         </div>
         {/* <Switch
           label="Has Headers"
@@ -119,14 +119,14 @@ class ImportDialog extends React.Component {
               value={nodeFile.mapping.id}
               onSelect={it => (nodeFile.mapping.id = it)}
             />
-            <p sytle = {{margin: '0 0 0px',padding: '0'}}></p>
+            <p sytle={{ margin: '0 0 0px', padding: '0' }}></p>
             Column for Node Longitude:
             <SimpleSelect
               items={nodeFile.columns}
               value={nodeFile.mapping.LonX}
               onSelect={it => (nodeFile.mapping.LonX = it)}
             />
-            <p sytle = {{margin: '0 0 0px',padding: '0'}}></p>
+            <p sytle={{ margin: '0 0 0px', padding: '0' }}></p>
             Column for Node Latitude:
             <SimpleSelect
               items={nodeFile.columns}
@@ -147,8 +147,8 @@ class ImportDialog extends React.Component {
         isOpen={this.state.edgesOpen}
         onToggle={() => this.setState({ edgesOpen: !this.state.edgesOpen })}
       >
-        <div className={classnames(Classes.CONTROL_GROUP)} style={{margin: "10px"}}>
-          <div style={{lineHeight:"10px"}} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
+        <div className={classnames(Classes.CONTROL_GROUP)} style={{ margin: "10px" }}>
+          <div style={{ lineHeight: "10px" }} className={classnames(Classes.INPUT_GROUP, Classes.FILL)}>
             <input
               type="file"
               className={classnames(Classes.DISABLED)}
@@ -188,14 +188,30 @@ class ImportDialog extends React.Component {
               value={edgeFile.mapping.toId}
               onSelect={it => (edgeFile.mapping.toId = it)}
             />
+            <Switch
+              label="Weighted Graph"
+              checked={appState.import.importConfig.edgeFile.isWeighted}
+              onChange={() => (appState.import.importConfig.edgeFile.isWeighted = !appState.import.importConfig.edgeFile.isWeighted)}
+            />
+
+            {appState.import.importConfig.edgeFile.isWeighted && (
+              <>
+                Column for Edge Weight:
+                <SimpleSelect
+                  items={edgeFile.columns}
+                  value={edgeFile.mapping.weight}
+                  onSelect={it => (edgeFile.mapping.weight = it)}
+                />
+              </>
+            )}
           </div>
         )}
       </Collapsable>
     );
   };
 
-  updateDelimiter (newDelimiter) {
-    this.setState({delimiter: newDelimiter});
+  updateDelimiter(newDelimiter) {
+    this.setState({ delimiter: newDelimiter });
 
     if (newDelimiter == "\\t") {
       newDelimiter = "\t"
@@ -208,7 +224,7 @@ class ImportDialog extends React.Component {
   renderDelimiterSelection() {
     return (
       <div className="column-selection">
-        Selected Delimiter: 
+        Selected Delimiter:
         <SimpleSelect
           items={[",", "\\t", ";"]}
           value={this.state.delimiter}
@@ -218,49 +234,49 @@ class ImportDialog extends React.Component {
     )
   }
 
-  renderExampleDataset(){
-    return(
+  renderExampleDataset() {
+    return (
       <div id="exampleTable" className={classnames(Classes.DIALOG_BODY)}>
         <p>Required attributes for nodelist.csv. Each row of the node table should represent attributes of a node, including at least a unique node ID and the node's longitude and latitude. </p>
-                    <table id="exampleNodeTable" className={Classes.TABLE} style={{width: '100%' }}>
-                        <thead >
-                            <tr>
-                                <th > ID (unique node ID field) </th>
-                                <th> LonX (node longitude ) </th>
-                                <th> LatY (node latitude ) </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>"APL"</td>
-                                <td>67.2391</td>
-                                <td>-102.3472</td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                    <p>Required attributes for edgelist.csv. Each row of the edge table should represent attributes of an edge, including at least a source and target column corresponding to the node ID. </p>
-                    <table id = "exampleEdgeTable" className={Classes.TABLE} style={{width: '100%' }}>
-                        <thead>
-                            <tr>
-                                <th > Source </th>
-                                <th> Target </th>
-                              
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>"APL"</td>
-                                <td>"FWL"</td>
-                
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                    <p>Example Dataset:</p>
-                    <a target="_blank" rel="noopener noreferrer" className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1_OIDSbUyM9gTqziVdcqU_NsGxkk6HMTo/view?usp=share_link"> US_airport_nodelist.csv</a>
-                    <a target="_blank" rel="noopener noreferrer" className="pt-button pt-icon-document"  href="https://drive.google.com/file/d/1cvOUir8gKDlS_hhNGL0qQOn2eNHCDsOU/view?usp=share_link"> US_airport_edgelist.csv</a>
-                </div>
+        <table id="exampleNodeTable" className={Classes.TABLE} style={{ width: '100%' }}>
+          <thead >
+            <tr>
+              <th > ID (unique node ID field) </th>
+              <th> LonX (node longitude ) </th>
+              <th> LatY (node latitude ) </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>"APL"</td>
+              <td>67.2391</td>
+              <td>-102.3472</td>
+            </tr>
+
+          </tbody>
+        </table>
+        <p>Required attributes for edgelist.csv. Each row of the edge table should represent attributes of an edge, including at least a source and target column corresponding to the node ID. </p>
+        <table id="exampleEdgeTable" className={Classes.TABLE} style={{ width: '100%' }}>
+          <thead>
+            <tr>
+              <th > Source </th>
+              <th> Target </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>"APL"</td>
+              <td>"FWL"</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+        <p>Example Dataset:</p>
+        <a target="_blank" rel="noopener noreferrer" className="pt-button pt-icon-document" href="https://drive.google.com/file/d/1_OIDSbUyM9gTqziVdcqU_NsGxkk6HMTo/view?usp=share_link"> US_airport_nodelist.csv</a>
+        <a target="_blank" rel="noopener noreferrer" className="pt-button pt-icon-document" href="https://drive.google.com/file/d/1SOIgyAscyob6bUyeFIMiDVzSpfZVWDOt/view?usp=sharing"> US_airport_edgelist.csv</a>
+      </div>
     )
   }
 
@@ -284,7 +300,7 @@ class ImportDialog extends React.Component {
             <div className={classnames(Classes.DIALOG_BODY, "import-dialog")}>
               I have:
               <SimpleSelect
-                items={[ NODE_AND_EDGE_FILE]}
+                items={[NODE_AND_EDGE_FILE]}
                 value={this.state.available}
                 onSelect={this.changeAvailable}
               />

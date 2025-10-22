@@ -254,7 +254,8 @@ module.exports = function (self) {
       if (!self.graph.getLink(link.fromId, link.toId)) {
         self.addEdge(
           self.graph.getNode(link.fromId),
-          self.graph.getNode(link.toId)
+          self.graph.getNode(link.toId),
+          link.data
         );
       }
     });

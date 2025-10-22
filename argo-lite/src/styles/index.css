@@ -270,8 +270,8 @@ html {
 }
 
 .right-overlay-card {
-  right: 5em;
-  bottom: 5em;
+  left: 3vw;
+  bottom: 3vh;
   position: absolute;
   word-wrap: break-word;
 }

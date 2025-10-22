@@ -71,6 +71,7 @@
     "leaflet-area-select": "^1.0.5",
     "leaflet-curve": "^1.0.0",
     "leaflet-draw": "^1.0.4",
+    "leaflet-polylinedecorator": "^1.6.0",
     "leaflet.geodesic": "^2.6.1",
     "leaflet.locationfilter": "^0.1.0",
     "lodash": "^4.17.21",
