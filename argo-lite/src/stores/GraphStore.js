@@ -70,6 +70,8 @@ export default class GraphStore {
     edges: {
       color: "#AFAEAE",
       crossColor: "#0055aa",
+      isWeighted: false, 
+      isDirected: false
     },
     scatterplot: {
       x: "degree",
@@ -175,6 +177,10 @@ export default class GraphStore {
   // Color by weight or not
   @observable colorByWeight = false;
 
+  // Color sociogram edge by distance
+
+  // @observable colorByDistance = false;
+
   @observable maxWeight = null;
 
   // Edge thickness based on
@@ -235,7 +241,10 @@ export default class GraphStore {
       "betweeness centrality",
       "closeness centrality",
       "distance to group center",
-      "strength"
+      "strength",
+      "indegree",
+      "outdegree"
+
     ],
     edgeProperties: ["edgeDistance"],
     snapshotName: "loading...", // Optional: for display in Argo-lite only
@@ -1104,7 +1113,9 @@ export default class GraphStore {
           "distance to center",
           "betweenness",
           "closeness",
-          "strength"
+          "strength",
+          "indegree",
+        "outdegree"
         ],
         edgeProperties: ["edgeDistance"],
       },

@@ -1195,15 +1195,20 @@ class StatGroupPanel extends React.Component {
         <Tooltip
 
           content={
-            <div style={{ width: "400px", paddingLeft: "150px" }}>
-              Compare the network distance (i.e., the geodesic or minimum-hop path) with the Euclidean distance (“pair distance”) between all node pairs. Note: edge weights are not considered when calculating the shortest path—only the number of hops is used.
-            </div>
+            appState.graph.edges.isDirected
+              ? <div style={{  width: "100px", paddingLeft: "5px" }}>Disabled because graph is weighted or directed</div>
+              :
+              <div style={{ width: "400px", paddingLeft: "150px" }}>
+
+                Compare the network distance (i.e., the geodesic or minimum-hop path) with the Euclidean distance (“pair distance”) between all node pairs. Note: edge weights are not considered when calculating the shortest path—only the number of hops is used.
+              </div>
           }
         >
           <Button
             className="bp4-button"
             style={{ zIndex: "1000" }}
             onClick={this.runShortestPath}
+            disabled={appState.graph.edges.isDirected}
           >
             Run Shortest Path
           </Button>
@@ -1285,39 +1290,49 @@ class StatGroupPanel extends React.Component {
         <p className="stat-section-heading">Efficient Distance Analysis</p>
         <Tooltip
           content={
-            <div style={{ width: "300px", paddingLeft: "80px" }}>
-              Local Flattening Ratio is defined as the ratio of a node’s minimized distance needed to connect to any k nearest neighbors to the total actual distance of its connections ( Reference:&nbsp;
-              <a
-                href="https://www.tandfonline.com/doi/full/10.1080/13658816.2019.1567736"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Sarkar et al., 2019
-              </a>).
-            </div>
+            appState.graph.edges.isDirected || appState.graph.edges.isWeighted
+              ? <div style={{  width: "100px", paddingLeft: "5px" }}>Disabled because graph is weighted or directed</div>
+              :
+              <div style={{ width: "300px", paddingLeft: "80px" }}>
+                Local Flattening Ratio is defined as the ratio of a node’s minimized distance needed to connect to any k nearest neighbors to the total actual distance of its connections ( Reference:&nbsp;
+                <a
+                  href="https://www.tandfonline.com/doi/full/10.1080/13658816.2019.1567736"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Sarkar et al., 2019
+                </a>).
+              </div>
           }
         >
           <Button
             className="bp4-button"
             style={{ zIndex: "1000" }}
             onClick={this.runLocalFlatRatio}
+            disabled={appState.graph.edges.isDirected || appState.graph.edges.isWeighted}
           >
             Run Local Flattening Ratio
           </Button>
         </Tooltip>
         <br></br>
         <Tooltip
-          content={
-            <div style={{ width: "500px", paddingLeft: "200px" }}>
-              K-fullfillment is a node-level metric to describe local (dis)connection. It is defined as the percentage of a node’s K-nearest neighbors (in Euclidean space) that it is connected (i.e., connected K-nearest neighbors divided by total K-nearest neighbors, K is node’s degree.) Nodes that are exclusively connected to their nearest neighbors will have a K-fulfillment value of 1. K-fullfillment assumes that the target SSN is an unweighted, undirected network.
 
-            </div>
+          content={
+            appState.graph.edges.isDirected || appState.graph.edges.isWeighted
+              ? <div style={{  width: "100px", paddingLeft: "5px" }}>Disabled because graph is weighted or directed</div>
+              :
+              <div style={{ width: "500px", paddingLeft: "200px" }}>
+                K-fullfillment is a node-level metric to describe local (dis)connection. It is defined as the percentage of a node’s K-nearest neighbors (in Euclidean space) that it is connected (i.e., connected K-nearest neighbors divided by total K-nearest neighbors, K is node’s degree.) Nodes that are exclusively connected to their nearest neighbors will have a K-fulfillment value of 1. K-fullfillment assumes that the target SSN is an unweighted, undirected network.
+
+              </div>
           }
         >
           <Button
             className="bp4-button"
             style={{ zIndex: "1000" }}
             onClick={this.runKfullfillment}
+            disabled={appState.graph.edges.isDirected || appState.graph.edges.isWeighted}
+
           >
             Run K-fullfillment
           </Button>
@@ -1325,22 +1340,27 @@ class StatGroupPanel extends React.Component {
         <br></br>
         <Tooltip
           content={
-            <div style={{ width: "300px", paddingLeft: "80px" }}>
-              Global Flattening Ratio is a network-level metric to measure the spatial tightness of a network. Please find the specific definition in the paper.
-              (<a
-                href="https://www.tandfonline.com/doi/full/10.1080/13658816.2019.1567736"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Sarkar et al., 2019
-              </a>).
-            </div>
+            appState.graph.edges.isDirected || appState.graph.edges.isWeighted
+              ? <div style={{  width: "100px", paddingLeft: "5px" }}>Disabled because graph is weighted or directed</div>
+              :
+              <div style={{ width: "300px", paddingLeft: "80px" }}>
+                Global Flattening Ratio is a network-level metric to measure the spatial tightness of a network. Please find the specific definition in the paper.
+                (<a
+                  href="https://www.tandfonline.com/doi/full/10.1080/13658816.2019.1567736"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Sarkar et al., 2019
+                </a>).
+              </div>
           }
         >
           <Button
             className="bp4-button"
             style={{ zIndex: "1000" }}
             onClick={this.runGlobalFlatRatio}
+            disabled={appState.graph.edges.isDirected || appState.graph.edges.isWeighted}
+
           >
             Run Global Flattening Ratio
           </Button>
@@ -1439,10 +1459,10 @@ class StatGroupPanel extends React.Component {
             content={
               <div style={{ width: "700px", paddingLeft: "330px" }}>
                 Visualizes the relationship between group size, spatial dispersion, and network density. Standard distance (Flury & Riedwyl, 1986) quantifies how spread out members are from the group’s mean center. Each dot represents a group—x: density, y: dispersion, size: group size, color: community.
-                </div>
+              </div>
             }
           >
-          <p style={{ display: "inline", fontSize: "12px" }}>Group By: </p>
+            <p style={{ display: "inline", fontSize: "12px" }}>Group By: </p>
           </Tooltip>
           <span style={{}}>
             <SimpleSelect

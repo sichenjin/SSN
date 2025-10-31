@@ -235,7 +235,7 @@ class Sidebar extends React.Component {
                   class="sidebarButton w3-bar-item-button w3-bar-item w3-button"
                   onClick={this.openCity.bind(this, "Statistics")}
                 >
-                  Statistics
+                  Algorithms
                 </button>
               </div>
               <div id="Appearance" class="city">
@@ -424,7 +424,7 @@ class Sidebar extends React.Component {
                     class="sidebarButton w3-bar-item-button w3-bar-item w3-button"
                     onClick={this.openCity.bind(this, "Statistics")}
                   >
-                    Statistics
+                    Algorithms
                   </button>
                 </div>
                 <div id="Appearance" class="city">
@@ -602,7 +602,7 @@ class Sidebar extends React.Component {
                     class="sidebarButton w3-bar-item-button w3-bar-item w3-button"
                     onClick={this.openCity.bind(this, "Statistics")}
                   >
-                    Statistics
+                    Algorithms
                   </button>
                 </div>
                 <div id="Appearance" class="city">
@@ -738,7 +738,7 @@ class Sidebar extends React.Component {
                   class="sidebarButton w3-bar-item-button w3-bar-item w3-button"
                   onClick={this.openCity.bind(this, "Statistics")}
                 >
-                  Statistics
+                  Algorithms
                 </button>
               </div>
               <div id="Appearance" class="city">
@@ -866,7 +866,7 @@ class Sidebar extends React.Component {
                   class="sidebarButton w3-bar-item-button w3-bar-item w3-button"
                   onClick={this.openCity.bind(this, "Statistics")}
                 >
-                  Statistics
+                  Algorithms
                 </button>
               </div>
               <div id="Appearance" class="city">
@@ -1020,7 +1020,7 @@ class Sidebar extends React.Component {
                   class="sidebarButton w3-bar-item-button w3-bar-item w3-button"
                   onClick={this.openCity.bind(this, "Statistics")}
                 >
-                  Statistics
+                  Algorithms
                 </button>
               </div>
               <div id="Appearance" class="city">

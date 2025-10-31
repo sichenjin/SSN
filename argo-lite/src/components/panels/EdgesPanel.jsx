@@ -8,6 +8,8 @@ import classnames from "classnames";
 import Collapsable from "../utils/Collapsable";
 import SimpleSelect from "../utils/SimpleSelect";
 import mouse from "../../graph-frontend/src/select";
+import * as d3Chromatic from "d3-scale-chromatic";
+
 
 @observer
 class EdgesPanel extends React.Component {
@@ -109,6 +111,55 @@ class EdgesPanel extends React.Component {
                                 </label>
                             </span>
                         </div>
+                        {appState.graph.colorByWeight && (
+                            <div
+                                style={{
+                                    marginTop: 6,
+                                    height: 16,
+                                    width: "100%",
+                                    borderRadius: 4,
+                                    background: `linear-gradient(to right, ${[0, 0.25, 0.5, 0.75, 1]
+                                        .map(t => new THREE.Color(d3Chromatic.interpolateOrRd(t)).getStyle())
+                                        .join(", ")})`
+                                }}
+                            ></div>
+                        )}
+                    </div>
+
+                    <div className={classnames(Classes.CARD, "sub-option")}>
+                        <div>
+                            <p style={{ display: "inline" }}>Color by Distance: </p>
+                            <span style={{ float: "right" }}>
+                                <label className=".pt-large">
+                                    <input
+                                        type="checkbox"
+                                        checked={appState.graph.colorByDistance}
+                                        onChange={() => {
+                                            appState.graph.colorByDistance = !appState.graph.colorByDistance;
+                                            appState.graph.frame.colorByDistance = !appState.graph.frame.colorByDistance;
+                                            if (appState.graph.colorByDistance) {
+                                                appState.graph.frame.applyEdgeColorByDistance();
+                                            } else {
+                                                appState.graph.frame.resetEdgeColors();
+                                            }
+                                        }}
+                                    />
+                                </label>
+                            </span>
+                        </div>
+                        {appState.graph.colorByDistance && (
+                            <div
+                                style={{
+                                    marginTop: 6,
+                                    height: 16,
+                                    width: "100%",
+                                    borderRadius: 4,
+                                    background: `linear-gradient(to right, ${[0, 0.25, 0.5, 0.75, 1]
+                                        .map(t => new THREE.Color(d3Chromatic.interpolateViridis(t)).getStyle())
+                                        .join(", ")})`
+                                }}
+                            ></div>
+                        )}
                     </div>
                 </Collapsable>
 

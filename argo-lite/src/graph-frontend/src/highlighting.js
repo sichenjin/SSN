@@ -4,8 +4,15 @@ var Edge = def.Edge;
 var Node = def.Node;
 var d3 = def.d3;
 var ee = def.ee;
+var d3Scale = require("d3-scale");
+var d3Chromatic = require("d3-scale-chromatic");
 
 module.exports = function (self) {
+
+
+
+
+
   /**
    *  Change color of node edges
    */
@@ -101,9 +108,9 @@ module.exports = function (self) {
         (pathnnodeid.indexOf(link.target.id) !== -1 &&
           pathnnodeid.indexOf(link.source.id) !== -1)
       ) {
-        link.linecolor.r = red;
-        link.linecolor.g = blue;
-        link.linecolor.b = green;
+        link.linecolor.r = self.colorByDistance ? link.linecolor.r : red;
+        link.linecolor.g = self.colorByDistance ? link.linecolor.g : blue;
+        link.linecolor.b = self.colorByDistance ? link.linecolor.b : green;
       }
     });
   };
@@ -169,9 +176,9 @@ module.exports = function (self) {
       //highlight all the edges
 
       self.lineIndices.forEach(function (link) {
-        link.linecolor.r = red;
-        link.linecolor.g = blue;
-        link.linecolor.b = green;
+        link.linecolor.r = self.colorByDistance ? link.linecolor.r : red;
+        link.linecolor.g = self.colorByDistance ? link.linecolor.g : blue;
+        link.linecolor.b = self.colorByDistance ? link.linecolor.b : green;
       });
     } else {
       //only highlight neighbor edges of nodes in the array
@@ -185,9 +192,9 @@ module.exports = function (self) {
       nodearray.forEach((node) => {
         self.lineIndices.forEach(function (link) {
           if (link.source.id == node.id || link.target.id == node.id) {
-            link.linecolor.r = red;
-            link.linecolor.g = blue;
-            link.linecolor.b = green;
+            link.linecolor.r = self.colorByDistance ? link.linecolor.r : red;
+            link.linecolor.g = self.colorByDistance ? link.linecolor.g : blue;
+            link.linecolor.b = self.colorByDistance ? link.linecolor.b : green;
           }
         });
       });
@@ -228,9 +235,9 @@ module.exports = function (self) {
       //don't dehilight only do highlight the node's edges
       self.lineIndices.forEach(function (link) {
         if (link.source.id == node.id || link.target.id == node.id) {
-          link.linecolor.r = red;
-          link.linecolor.g = blue;
-          link.linecolor.b = green;
+          link.linecolor.r = self.colorByDistance ? link.linecolor.r : red;
+          link.linecolor.g = self.colorByDistance ? link.linecolor.g : blue;
+          link.linecolor.b = self.colorByDistance ? link.linecolor.b : green;
         }
       });
     }
@@ -245,9 +252,9 @@ module.exports = function (self) {
       //highlight all the edges
 
       self.lineIndices.forEach(function (link) {
-        link.linecolor.r = red;
-        link.linecolor.g = blue;
-        link.linecolor.b = green;
+        link.linecolor.r = self.colorByDistance ? link.linecolor.r : red;
+        link.linecolor.g = self.colorByDistance ? link.linecolor.g : blue;
+        link.linecolor.b = self.colorByDistance ? link.linecolor.b : green;
       });
     } else {
       //only highlight the node's edges
@@ -260,9 +267,9 @@ module.exports = function (self) {
       //then highlight only the node's edges
       self.lineIndices.forEach(function (link) {
         if (link.source.id == node.id || link.target.id == node.id) {
-          link.linecolor.r = red;
-          link.linecolor.g = blue;
-          link.linecolor.b = green;
+          link.linecolor.r = self.colorByDistance ? link.linecolor.r : red;
+          link.linecolor.g = self.colorByDistance ? link.linecolor.g : blue;
+          link.linecolor.b = self.colorByDistance ? link.linecolor.b : green;
         }
       });
     }
@@ -309,4 +316,50 @@ module.exports = function (self) {
   self.colorNode = function (node, op) {
     node.renderData.draw_object.material.color.setHex(op);
   };
+
+  /**
+   *  rest color of the edges to default edge color
+   */
+  self.resetEdgeColors = function () {
+    const baseColor = new THREE.Color(appState.graph.edges.color);
+
+    self.lineIndices.forEach((link) => {
+      link.linecolor.r = baseColor.r;
+      link.linecolor.g = baseColor.g;
+      link.linecolor.b = baseColor.b;
+    });
+
+    if (self.arrow?.material?.color) {
+      self.arrow.material.color.copy(baseColor);
+    }
+
+    console.log("All edge colors reset to default.");
+  };
+
+  self.applyEdgeColorByDistance = function () {
+
+    // const allDists = self.lineIndices
+    //   .map(e => e.edgeDist)
+    //   .filter(d => d !== undefined && !isNaN(d));
+    // const maxEdgeDist = allDists.length > 0 ? Math.max(...allDists) : 1
+    let maxEdgeDist = 0
+    self.lineIndices.forEach((link) => {
+      maxEdgeDist = Math.max(maxEdgeDist, link.edgeDist)
+    })
+
+    const colorScale = d3Scale.scaleSequential(d3Chromatic.interpolateViridis)
+      .domain([0, maxEdgeDist]);
+
+    self.lineIndices.forEach((link) => {
+      if (link.edgeDist !== undefined) {
+        const color = new THREE.Color(colorScale(link.edgeDist));
+        link.linecolor.copy(color);
+      }
+    });
+
+    console.log("Applied edge color encoding by distance.");
+  };
+
+
+
 };

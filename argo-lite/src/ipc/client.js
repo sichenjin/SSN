@@ -374,9 +374,10 @@ export function requestImportGraphFromCSV(
 
   appState.graph.directedOrNot = false;
   appState.graph.colorByWeight = false;
+  appState.graph.colorByDistance = false;
   appState.graph.maxWeight = null;
-  appState.graph.colorByWeight = false;
-  
+
+
 
   appState.graph.mapEdgeShow = true;
   appState.graph.autoZoom = false;
@@ -401,6 +402,7 @@ export function requestImportGraphFromCSV(
       mapping: toJS(appState.import.importConfig.edgeFile.mapping),
       createMissing: appState.import.importConfig.edgeFile.createMissing,
       isWeighted: appState.import.importConfig.edgeFile.isWeighted,
+      isDirected: appState.import.importConfig.edgeFile.isDirected,
     },
     delimiter,
     newProjectName,
@@ -621,6 +623,8 @@ async function importGraphFromCSV(config) {
   const graph = createGraph();
   const degreeDict = {};
   const strengthDict = {};
+  const inDegreeDict = {};
+  const outDegreeDict = {};
   if (config.hasNodeFile) {
     nodesArr = await readCSV(
       appState.import.selectedNodeFileFromInput,
@@ -649,6 +653,8 @@ async function importGraphFromCSV(config) {
     nodesArr.forEach((n) => {
       degreeDict[n.id] = 0;
       strengthDict[n.id] = 0;
+      inDegreeDict[n.id] = 0;
+      outDegreeDict[n.id] = 0;
     });
   }
   const edges = await readCSV(
@@ -720,6 +726,9 @@ async function importGraphFromCSV(config) {
 
     degreeDict[from] += 1;
     degreeDict[to] += 1;
+    outDegreeDict[from] = (outDegreeDict[from] || 0) + 1;
+    inDegreeDict[to] = (inDegreeDict[to] || 0) + 1;
+
     strengthDict[from] = (strengthDict[from] || 0) + weight;
     strengthDict[to] = (strengthDict[to] || 0) + weight;
 
@@ -920,6 +929,8 @@ async function importGraphFromCSV(config) {
     betweenness: betweenness[n.id],
     degree: parseInt(degreeDict[n.id]),
     strength: parseInt(strengthDict[n.id]),
+    indegree: parseInt(inDegreeDict[n.id]),
+    outdegree: parseInt(outDegreeDict[n.id]),
   }));
   const nodekeyList = Object.keys(nodesArr[0]);
   const nodePropertyTypes = {};
@@ -954,9 +965,11 @@ async function importGraphFromCSV(config) {
         "distance to center",
         "betweenness",
         "closeness",
-        "strength"
+        "strength",
+        "indegree",
+        "outdegree"
       ],
-      edgeProperties: ["source_id", "target_id","weight"],
+      edgeProperties: ["source_id", "target_id", "weight"],
     },
   };
 }

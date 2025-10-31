@@ -191,7 +191,10 @@ class ImportDialog extends React.Component {
             <Switch
               label="Weighted Graph"
               checked={appState.import.importConfig.edgeFile.isWeighted}
-              onChange={() => (appState.import.importConfig.edgeFile.isWeighted = !appState.import.importConfig.edgeFile.isWeighted)}
+              onChange={() => {
+                appState.import.importConfig.edgeFile.isWeighted = !appState.import.importConfig.edgeFile.isWeighted
+                appState.graph.edges.isWeighted = !appState.graph.edges.isWeighted
+              }}
             />
 
             {appState.import.importConfig.edgeFile.isWeighted && (
@@ -204,6 +207,15 @@ class ImportDialog extends React.Component {
                 />
               </>
             )}
+
+            <Switch
+              label="Directed Graph"
+              checked={appState.import.importConfig.edgeFile.isDirected}
+              onChange={() => {
+                appState.import.importConfig.edgeFile.isDirected = !appState.import.importConfig.edgeFile.isDirected
+                appState.graph.edges.isDirected = !appState.graph.edges.isDirected
+              }}
+            />
           </div>
         )}
       </Collapsable>

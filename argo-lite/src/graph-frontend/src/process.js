@@ -51,6 +51,7 @@ var Frame = function(graph, options) {
   this.mapShowing = def.MAP;
   this.mapRenderPerNumberOfFrame = def.MAP_RENDER_PER_NUMBER_OF_FRAME;
   this.darkMode = false;
+  this.colorByDistance = false;
   this.lastNode = null;
   this.rightClickedNode = null;
   this.doHighlightNeighbors = def.NODE_NEIGHBOR_HIGHLIGHT;

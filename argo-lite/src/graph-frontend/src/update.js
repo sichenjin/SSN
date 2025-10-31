@@ -121,6 +121,7 @@ module.exports = function (self) {
     self.directedArrows.attributes.color.needsUpdate = true;
   };
 
+ 
   /**
    *  Update the position of the labels
    */

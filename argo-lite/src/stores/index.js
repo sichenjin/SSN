@@ -117,7 +117,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.directedOrNot = false;
   appState.graph.colorByWeight = false;
   appState.graph.maxWeight = null;
-  appState.graph.colorByWeight = false;
+  appState.graph.colorByDistance = false;
 
   appState.graph.convexNodes = [];
   appState.graph.convexPolygons = [];

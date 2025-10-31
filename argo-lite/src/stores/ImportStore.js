@@ -43,7 +43,8 @@ export default class ImportStore {
       },
       createMissing: true,
       delimiter: ",",
-      isWeighted:false
+      isWeighted:false,
+      isDirected:false
     }
   };
 
