@@ -30,7 +30,7 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   // https://poloclub.github.io/argo-graph-lite/#82ffaa24-1d0f-402d-8d5c-9e6595827bc8
   // c1295995-f0c4-4350-9ea0-c97c8a134a34
   // <iframe src="https://poloclub.github.io/argo-graph-lite/#0add65d1-c16f-4c44-b33f-6bf2adb4b589" width="850" height="500"></iframe>
-  ["Food Sharing", "f87969d9-07b5-43ee-9cb4-d21a3572c1fa"],  
+  ["Food Sharing", { local: "/samples/food_sharing.json" }],  
    
   // 8b1fa770-a1d0-43f0-b798-def14744dd8c
   //without -degree nodes snapshot 
@@ -41,7 +41,7 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   
   ["Mafia Family Network", "c1fd5157-7b7a-4333-8b11-463c527c844a"],
   // c43890f8-1cfb-4599-a0d3-8f47303691fc
-  ["US flight Network", '7aaf0d75-8e38-4823-ad63-3160c1a966e8'],
+  ["US flight Network", { local: "/samples/us_flight.json" }],
   // https://poloclub.github.io/argo-graph-lite/#a6470fe8-f562-4e78-94ee-196f78006c1c
   ['US 117th House Vote of 5 States', 'e8deee45-bd2a-4afe-90ca-1226be8d1e3a'],
   // https://poloclub.github.io/argo-graph-lite/#86665914-5bd3-4293-bc2b-4ab673595c8a

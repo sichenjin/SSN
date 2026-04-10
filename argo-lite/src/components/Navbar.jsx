@@ -327,7 +327,11 @@ class RegularNavbar extends React.Component {
                           iconName="graph"
                           text={sampleSnapshotTitle}
                           onClick={() => {
-                            window.loadAndDisplaySnapshotFromStrapi(sampleSnapshotStrapiUuid);
+                            if (sampleSnapshotStrapiUuid && typeof sampleSnapshotStrapiUuid === "object" && sampleSnapshotStrapiUuid.local) {
+                              window.loadAndDisplaySnapshotFromLocalFile(sampleSnapshotStrapiUuid.local);
+                            } else {
+                              window.loadAndDisplaySnapshotFromStrapi(sampleSnapshotStrapiUuid);
+                            }
                           }}
                         />
                       );
