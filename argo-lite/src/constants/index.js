@@ -39,15 +39,15 @@ export const SAMPLE_GRAPH_SNAPSHOTS = [
   //<iframe src="https://poloclub.github.io/argo-graph-lite/#732a9a88-9123-46b4-a271-3616675eab3d" width="850" height="500"></iframe> 
   // mafia: 6f4e03f4-1de3-485b-96a8-8c3e513b6e54//// 732a9a88-9123-46b4-a271-3616675eab3d
   
-  ["Mafia Family Network", "c1fd5157-7b7a-4333-8b11-463c527c844a"],
+  ["Mafia Family Network", {local: "/samples/mafia.json" }],
   // c43890f8-1cfb-4599-a0d3-8f47303691fc
   ["US flight Network", { local: "/samples/us_flight.json" }],
   // https://poloclub.github.io/argo-graph-lite/#a6470fe8-f562-4e78-94ee-196f78006c1c
-  ['US 117th House Vote of 5 States', 'e8deee45-bd2a-4afe-90ca-1226be8d1e3a'],
+  ['US 117th House Vote of 5 States', { local: "/samples/five_state_congress.json" }],
   // https://poloclub.github.io/argo-graph-lite/#86665914-5bd3-4293-bc2b-4ab673595c8a
   // https://poloclub.github.io/argo-graph-lite/#51cd24cd-0819-4f2c-b28b-364dc84bb055
-  ['US 117th House Vote Network','2de5d17b-7c0e-4e3b-b9d9-bf5e8b01e380'], 
-  ['Github Collaboration Network', '197635e1-6495-4c80-b732-39f20d145e3b']
+  ['US 117th House Vote Network',{ local: "/samples/all_congress.json" }], 
+  // ['Github Collaboration Network', {local: "/samples/github.json" }]
   // "5c1c6b89-24cd-4dff-9748-6cf6ad8a43a1" 960 edges
   // e6d1062c-f1ac-4d69-8039-16d589fb04cf
 ];

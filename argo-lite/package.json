@@ -130,8 +130,8 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider node scripts/start.js",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider node scripts/build.js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "predeploy": "npm run build",
     "deploy": "npm run build && cp build/index.html build/200.html && surge build https://ssndemo.surge.sh"
