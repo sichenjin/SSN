@@ -126,7 +126,7 @@ export default class GraphStore {
   @observable pickUpAlter = true;
   @observable highlightCommonNodes = false;
   @observable showIntersect = false;
-  @observable autoZoom = false;
+  @observable autoZoom = true;
   @observable firstload = true;
   @observable seledctParticipatingNodes = false;
 

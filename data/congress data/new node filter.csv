@@ -1,0 +1,70 @@
+NAME,PARTY,STATE_NAME,LonX,LatY,icpsr,district_code,state_abbrev,born
+Jerry Carl,Republican,Alabama,-87.765,31.097,22108,1,AL,1958
+Barry Moore,Republican,Alabama,-86.071,31.708,22140,2,AL,1966
+Mike Rogers,Republican,Alabama,-85.707,33.156,20301,3,AL,1958
+Robert B. Aderholt,Republican,Alabama,-87.2,34.12,29701,4,AL,1965
+Mo Brooks,Republican,Alabama,-86.712,34.754,21193,5,AL,1954
+Gary J. Palmer,Republican,Alabama,-86.713,33.263,21500,6,AL,1954
+Terri A. Sewell,Democrat,Alabama,-87.625,32.444,21102,7,AL,1965
+Matt Gaetz,Republican,Florida,-86.645,30.716,21719,1,FL,1982
+Neil P. Dunn,Republican,Florida,-84.13,30.078,21714,2,FL,1953
+Kat Cammack,Republican,Florida,-82.059,29.678,22107,3,FL,1988
+John H. Rutherford,Republican,Florida,-81.655,30.357,21744,4,FL,1952
+"Al Lawson, Jr.",Democrat,Florida,-83.327,30.449,21732,5,FL,1948
+Mike Waltz,Republican,Florida,-81.301,29.179,21981,6,FL,1974
+Stephanie N. Murphy,Democrat,Florida,-81.245,28.688,21738,7,FL,1978
+Bill Posey,Republican,Florida,-80.743,28.129,20909,8,FL,1947
+Darren Soto,Democrat,Florida,-81.285,28.035,21746,9,FL,1978
+Val Butler Demings,Democrat,Florida,-81.511,28.544,21713,10,FL,1957
+Daniel Webster,Republican,Florida,-82.167,28.791,21116,11,FL,1949
+Gus M. Bilirakis,Republican,Florida,-82.431,28.281,20758,12,FL,1963
+,Vacant,Florida,-82.722,27.85,21712,13,FL,1956
+Kathy Castor,Democrat,Florida,-82.478,28.041,20708,14,FL,1966
+Scott Franklin,Republican,Florida,-81.977,28.199,22116,15,FL,1964
+Vern Buchanan,Republican,Florida,-82.301,27.527,20709,16,FL,1951
+W. Gregory Steube,Republican,Florida,-81.528,27.244,21971,17,FL,1978
+Brian J. Mast,Republican,Florida,-80.415,27.127,21735,18,FL,1980
+Byron Donalds,Republican,Florida,-81.83,26.464,22111,19,FL,1978
+Sheila Cherfilus-McCormick,Democrat,Florida,-80.58,26.448,29337,20,FL,1936
+Lois Frankel,Democrat,Florida,-80.167,26.546,21321,21,FL,1948
+,Vacant,Florida,-80.166,26.277,20959,22,FL,1966
+Debbie Wasserman Schultz,Democrat,Florida,-80.289,26.064,20504,23,FL,1966
+Frederica S. Wilson,Democrat,Florida,-80.216,25.911,21118,24,FL,1942
+Mario Diaz-Balart,Republican,Florida,-81.157,26.226,20316,25,FL,1961
+Carlos Gimenez,Republican,Florida,-80.817,25.452,22118,26,FL,1954
+Maria Elvira Salazar,Republican,Florida,-80.286,25.699,22150,27,FL,1961
+Earl L. “Buddy” Carter,Republican,Georgia,-81.991,31.308,21513,1,GA,1957
+Sanford D. Bishop Jr.,Democrat,Georgia,-84.411,31.821,29339,2,GA,1947
+A. Drew Ferguson IV,Republican,Georgia,-84.733,33.148,21717,3,GA,1966
+Henry C. “Hank” Johnson Jr.,Democrat,Georgia,-84.05,33.697,20712,4,GA,1954
+Nikema Williams,Democrat,Georgia,-84.401,33.707,22156,5,GA,1978
+Lucy McBath,Democrat,Georgia,-84.345,34.01,21944,6,GA,1960
+Carolyn Bourdeaux,Democrat,Georgia,-84.083,34.042,22104,7,GA,1970
+Austin Scott,Republican,Georgia,-83.453,31.78,21123,8,GA,1969
+Andrew Clyde,Republican,Georgia,-83.687,34.506,22110,9,GA,1963
+Jody B. Hice,Republican,Georgia,-83.062,33.427,21514,10,GA,1960
+Barry Loudermilk,Republican,Georgia,-84.651,34.191,21515,11,GA,1963
+Rick W. Allen,Republican,Georgia,-82.221,32.411,21516,12,GA,1951
+David Scott,Democrat,Georgia,-84.564,33.626,20321,13,GA,1945
+Marjorie Taylor Greene,Republican,Georgia,-85.095,34.433,22121,14,GA,1974
+G. K. Butterfield,Democrat,North Carolina,-77.491,36.009,20340,1,NC,1947
+Deborah K. Ross,Democrat,North Carolina,-78.719,35.729,22149,2,NC,1963
+Gregory F. Murphy,Republican,North Carolina,-76.891,35.378,21987,3,NC,1963
+David E. Price,Democrat,North Carolina,-78.755,36.04,15438,4,NC,1940
+Virginia Foxx,Republican,North Carolina,-81.441,35.906,20521,5,NC,1943
+Kathy Manning,Democrat,North Carolina,-79.88,36.081,22135,6,NC,1956
+David Rouzer,Republican,North Carolina,-78.349,34.661,21544,7,NC,1972
+Richard Hudson,Republican,North Carolina,-79.54,35.293,21346,8,NC,1971
+Dan Bishop,Republican,North Carolina,-79.698,34.902,21986,9,NC,1964
+Patrick T. McHenry,Republican,North Carolina,-80.586,36.095,20522,10,NC,1975
+Madison Cawthorn,Republican,North Carolina,-82.878,35.482,22109,11,NC,1995
+Alma S. Adams,Democrat,North Carolina,-80.838,35.272,21545,12,NC,1946
+Ted Budd,Republican,North Carolina,-79.794,35.911,21708,13,NC,1971
+Kelly Armstrong,Republican,North Dakota,-100.469,47.446,21901,1,ND,1976
+Nancy Mace,Republican,South Carolina,-80.158,32.794,22132,1,SC,1977
+Joe Wilson,Republican,South Carolina,-81.375,33.638,20138,2,SC,1947
+Jeff Duncan,Republican,South Carolina,-82.339,34.356,21174,3,SC,1966
+William R. Timmons IV,Republican,South Carolina,-82.172,34.941,21974,4,SC,1984
+Ralph Norman,Republican,South Carolina,-81.02,34.539,21753,5,SC,1953
+James E. Clyburn,Democrat,South Carolina,-80.525,33.226,39301,6,SC,1940
+Tom Rice,Republican,South Carolina,-79.535,34.127,21359,7,SC,1957
