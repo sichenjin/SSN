@@ -1,0 +1,106 @@
+﻿ID,ORGANIZATION,SHORT,LonX,LatY,centrality,dist_to_center
+HH,Helping Hands,Helping Hands,-80.52155033,37.16109638,0.012,3.687817812
+PFI,Prices Fork Incubator Kitchen,PF Incubator,-80.49099736,37.20781206,0.014,4.491102695
+MBP,"St. Michael's Lutheran Church, (Micah's)",Micah's,-80.46658944,37.21103277,0.004,4.850772858
+SR,Spiritual Roots Community Food Bank,Spiritual Roots,-80.41831827,37.17471653,0.015,5.544366837
+FIE,"Fieldstone Church, (The Giving Tree Food Pantry)",Fieldstone,-80.41763641,37.17613715,0.023,5.671860218
+GB,Gethsemane Baptist Church,Gethsemane Bap,-80.41697482,37.17603415,0.003,5.770615101
+GT,St Mary's Catholic Justice & Peace (The Glean Team),Glean Team,-80.46679697,37.21999747,0.013,5.824946404
+WH,Warm Hearth Foundation,Warm Hearth,-80.41947077,37.19728943,0.011,6.276941776
+VICCC,Valley Interfaith Child Care Center,VICCC,-80.4495162,37.22268194,0.014,6.57951355
+RFDB,Radford-Fairlawn Daily Bread,RF Daily Bread,-80.54285743,37.13573343,0.01,6.628725529
+CFNRV,Community Foundation of the New River Valley,CFNRV,-80.40526282,37.14287995,0.057,7.26154232
+MDSS,Department of Social Services Montgomery,MDSS,-80.41101362,37.13209064,0.017,7.378346443
+NRCAR,"New River Community Action, Radford",NRCAR,-80.55665943,37.14083198,0.004,7.38241148
+UW,United Way of the New River Valley,United Way,-80.41082427,37.12836983,0,7.602631569
+CFM,Christiansburg Farmers Market,Cburg FM,-80.41032146,37.12919672,0.052,7.627581596
+MCCS,Montgomery County Christmas Store,MCCS,-80.40938223,37.12894099,0.009,7.710382938
+VTFNP,Virginia Tech Family Nutrition Program,VTFNP,-80.424202,37.22293598,0.012,7.887331486
+MCEAP,Montgomery County Emergency Assistance Program (MCEAP),MCEAP,-80.40429363,37.13058038,0.008,7.99249649
+NRCAM,"New River Community Action, Montgomery",NRCAM,-80.40427217,37.13059749,0.013,7.99249649
+NRFS,New River Family Shelter,NR Fam Shelter,-80.40427217,37.13058893,0.007,7.99249649
+VTK,VT Campus Kitchen/ VT Engage,VT Kitchen,-80.4341316,37.23086016,0.001,8.02620697
+FARM,"New River Health District, Farmacy Garden",Farmacy,-80.40402654,37.12947049,0,8.045495987
+NRVCSM,"New River Valley Community Services, Montgomery",NRVCSM,-80.43116357,37.23303271,0.012,8.438009262
+VCE,Virginia Cooperative Extension,VCE,-80.39292313,37.13106093,0.014,8.811923981
+BFM,Blacksburg Farmers Market,Bburg FM,-80.41442147,37.22944669,0.096,8.937561989
+BBP,"Bobcat Backpacks Program, Radford Public Schools",Bobcat BP,-80.57139133,37.13246013,0.025,8.944271088
+CC,Carilion Clinic,Carilion,-80.50562529,37.08940601,0.027,9.070832253
+BBRP,Blacksburg Refugee Partnership,BRP,-80.41425702,37.23024081,0.064,9.07854557
+NRCAHS,"New River Community Action, Head Start","NRCA, HS",-80.40732967,37.22539007,0.015,9.121951103
+NRVCSR,"New River Valley Community Services, Radford",NRVCSR,-80.577643,37.13385254,0.011,9.442986488
+YMCA,YMCA at Virginia Tech,YMCA VT,-80.41949553,37.23887516,0.004,9.486832619
+BIFP,Blacksburg Interfaith Food Pantry,BIFP,-80.40631337,37.23680011,0.08,10.0657835
+RDSS,Department of Social Services Radford,RDSS,-80.58396308,37.12774293,0.022,10.19656849
+IAJ,It's All About Jesus Ministries,All About Jesus,-80.58855157,37.12479008,0.014,10.77821922
+BRR,"Beans and Rice, Radford",Beans and Rice,-80.58952135,37.12018291,0.143,11.0145359
+RW,Radford Worship Center,Radford Worship,-80.58843196,37.11720128,0.001,11.07880878
+EEBP,"Eastern Elementary Backpack Program, Christiansburg Rotary",Eastern Elem BP,-80.35832262,37.21503776,0.018,11.98665905
+YMCACG,YMCA Community Garden,YMCA CG,-80.4128085,37.26766922,0.001,12.52996349
+MBL,Meadowbrook Public Library Backpack Program,MB Lib,-80.25589444,37.16708883,0.016,20
+WUMC,White Memorial United Methodist Church,White UMC,-80.25052587,37.17024753,0.011,20.40220451
+NRCC,New River Community College,NRCC,-80.69586293,37.10405559,0.012,20.41200638
+EN,Eagle’s Nest,Eagle's Nest,-80.33919094,37.01768718,0.019,20.90095711
+GDSS,Department of Social Services Giles,GDSS,-80.62925905,37.32034316,0.021,21.42731857
+UMCP,United Methodist Women of Pembroke,UMC Pembroke,-80.63575927,37.32033091,0.007,21.74120522
+SFP,Shawsville Lay Ministerial Association Food Pantry,Shawsville FP,-80.22883746,37.22041007,0.008,23.06729317
+PFM,Pearisburg Community Market (Farmer’s Market),Pburg FM,-80.7195086,37.32638618,0.001,27.50363731
+JC,"Jordan's Chapel Feed My Lambs, Backpack & Food Pantry",Jordan's,-80.77304863,37.08422042,0.011,27.55303955
+GYAP,Giles Youth Adult Partnership (GYAP),GYAP,-80.7293378,37.31819874,0.022,27.58006477
+HFC,"Holy Family Catholic Church, Justice and Peace Committee",Holy Family Cath,-80.71567037,37.33287664,0.019,27.7137146
+PLE,Plenty!,Plenty!,-80.35035943,36.93983356,0.012,27.87436104
+NRVCSG,"New River Valley Community Services, Giles",NRVCSG,-80.7318141,37.32746004,0.014,28.34678078
+GHF,Giles Health and Family Center,Giles Health/Family,-80.73229414,37.32786941,0.019,28.48719025
+GG,Giles Community Garden,Giles Garden,-80.7338711,37.32708718,0.004,28.50438499
+GCM,Giles County Christian Service Mission,Giles Mission,-80.7343242,37.32663181,0.02,28.58338737
+NRCAG,"New River Community Action, Giles",NRCAG,-80.73430274,37.32662327,0.007,28.58338737
+NRVA,New River Valley Agency on Aging,NRV Aging,-80.7762553,37.04816331,0.014,29.42787933
+NRVS,New River Valley Senior Services,NRV Senior,-80.77624457,37.04816331,0.011,29.42787933
+GCS,Giles County Summer Lunch Program,Giles Summer,-80.74392793,37.33138097,0.013,29.52219582
+PLCOG,Pulaski Church of God,Pulaski POG,-80.77754643,37.04562557,0.019,29.65434265
+BRP,"Beans and Rice, Pulaski",Beans and Rice,-80.77926708,37.0487835,0.105,29.6952858
+NRVCSP,"New River Valley Community Services, Pulaski",NRVCSP,-80.78030763,37.04950507,0.001,29.73970222
+ENTF,Emergency Needs Task Force of Pulaski County,ENTF,-80.78163634,37.05060252,0.022,29.784729
+NRCAP,"New River Community Action, Pulaski",NRCAP,-80.78201184,37.05041414,0.008,29.784729
+PG,Pulaski Grow,Pulaski Grow,-80.74725134,37.00456638,0.009,29.86385727
+PCCS,Pulaski County Christmas Store,PC Christmas,-80.7834831,37.04834474,0.014,29.96331024
+PDSS,Department of Social Services Pulaski,PDSS,-80.78085454,37.04534507,0.024,29.9666481
+PCOG,Pearisburg Church of God,Pburg COG,-80.75833083,37.32912197,0.004,30.38716888
+NRVCSF,"New River Valley Community Services, Floyd",NRVCSF,-80.3251187,36.91909506,0.014,30.94769669
+CB,Calvary Baptist Church,Cavalry Bap,-80.27236679,36.93820809,0.005,31.5412426
+NRCAF,"New River Community Action, Floyd",NRCAF,-80.33266837,36.90856234,0.008,31.63100052
+FDSS,Department of Social Services Floyd,FDSS,-80.32168084,36.91263973,0.026,31.70772934
+CH,Copper Hill Church of the Bretheren,Copper Hill,-80.12841649,37.08366378,0.029,32.72002411
+FASWV,Feeding America Southwest Virginia,FASWV,-80.03651902,37.27905515,0.022,41.27045059
+CCS,Council of Community Services,CCS,-79.949939,37.27129754,0.011,48.45864105
+AUMC,Auburn United Methodist Church,Auburn UMC,-80.43937055,37.06509281,0.249,#N/A
+BBBC,Big Brother Big Sister,BBBS,-79.94343682,37.27566081,0.025,#N/A
+BL,Blacksburg Breakfast Lions Club,Lions,-80.40171127,37.19585675,0.027,#N/A
+BUMC,Belview UMC Backpack Program,Belview UMC,-80.50819271,37.17001371,0.053,#N/A
+CHCG,"Community Health Center of the New River Valley, Giles",CHCG,-80.7225259,37.32341456,0.053,#N/A
+CHCM,"Community Health Center of the New River Valley, Montgomery",CHCM,-80.40170633,37.13006054,0.059,#N/A
+CHCRP,"Community Health Center of the New River Valley, Radford/Pulaski",CHCRP,-80.66937451,37.11584483,0.045,#N/A
+CHP,Community Housing Partners,CHP,-80.41046504,37.13937452,0.002,#N/A
+CL,Christ Lutheran Church,Christ Luth,-80.57382183,37.13340559,0.022,#N/A
+DUMC,Dublin United Methodist Church,Dublin UMC,-80.68276118,37.10596942,0.033,#N/A
+FP,Fairlawn Presbyterian Church,Fairlawn Pres,-80.57991814,37.15111541,0.003,#N/A
+GCF,Giles County FOCUS,FOCUS,-80.81105573,37.33151797,0.003,#N/A
+GLA,Glade Church,Glade,-80.4499054,37.23622578,0.014,#N/A
+GS,Giles Shelter,Giles Shelter,-80.80806116,37.33731691,0.001,#N/A
+HC,Heritage Cares,Heritage Cares,-80.69060354,37.14893728,0.014,#N/A
+HF,Healthy Floyd,Healthy Floyd,-80.30965756,36.91636424,0.014,#N/A
+MABP,"Pearisburg First United Methodist Church, (Macy's Backpack Ministries)",Macy's BP,-80.72693137,37.3311309,0.001,#N/A
+NE,Narrows Elem,NE,-80.8130791,37.32682068,0.001,#N/A
+NH,New Harvest,New Harvest,-80.503012,36.85345246,0.01,#N/A
+NL,New Life Church of the Nazarene,New Life,-80.78200097,37.0445225,0.012,#N/A
+NUMC,Newport United Methodist Church,Newport UMC,-80.49466263,37.29553585,0.003,#N/A
+PCS,Pulaski County Public Schools,PC School,-80.77966387,37.04798147,0.011,#N/A
+PDB,Pulaski Daily Bread Inc.,Pulaski DB,-80.7819251,37.05015267,0.016,#N/A
+PW,Pearisburg Junior Women's Club Backpack Program,Pburg Women's,-80.73566077,37.32810958,0.014,#N/A
+RCOG,Riverview Church of God,Riverview CoG,-80.79808957,36.92406236,0.012,#N/A
+RU,Radford University (Highlander Helpers Backpack Club),RU,-80.55107423,37.13990224,0.008,#N/A
+SA,Salvation Army,Sal Army,-80.38720927,37.13377633,0.012,#N/A
+SJ,St. Jude Church,St. Jude,-80.52359027,37.11361599,0.008,#N/A
+SOF,SO Fresh (Southwest Virginia Fresh),SO Fresh,-80.7796746,37.04796434,0.007,#N/A
+UC,Unity Christian Church,Unity Christian,-80.5535014,37.13755709,0.014,#N/A
+WRC,Women's Resource Center of the New River Valley,WRCNRV,-80.55759713,37.13948268,0.003,#N/A

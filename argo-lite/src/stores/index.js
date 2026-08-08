@@ -92,6 +92,14 @@ const loadAndDisplaySnapshotFromURL = (url) => {
   });
 };
 
+const loadAndDisplaySnapshotFromLocalFile = (path) => {
+  loadSnapshotFromURL(path).then((snapshotString) => {
+    appState.graph.metadata.snapshotName = path.split("/").pop();
+    appState.graph.loadImmediateStates(snapshotString);
+    appState.import.loading = false;
+  });
+};
+
 const loadAndDisplaySnapshotFromStrapi = (uuid) => {
   appState.graph.convexPolygons = [];
   appState.graph.modularity = undefined;
@@ -151,6 +159,7 @@ const loadAndDisplaySnapshotFromStrapi = (uuid) => {
 };
 
 window.loadAndDisplaySnapshotFromURL = loadAndDisplaySnapshotFromURL;
+window.loadAndDisplaySnapshotFromLocalFile = loadAndDisplaySnapshotFromLocalFile;
 window.loadAndDisplaySnapshotFromStrapi = loadAndDisplaySnapshotFromStrapi;
 
 // var getFileBlob = function (url, cb) {
@@ -208,7 +217,12 @@ window.loadInitialSampleGraph = async () => {
     }
   }
   // loadAndDisplaySnapshotFromURL(url)
-  loadAndDisplaySnapshotFromStrapi(SAMPLE_GRAPH_SNAPSHOTS[0][1]);
+  const firstSample = SAMPLE_GRAPH_SNAPSHOTS[0][1];
+  if (firstSample && typeof firstSample === "object" && firstSample.local) {
+    loadAndDisplaySnapshotFromLocalFile(firstSample.local);
+  } else {
+    loadAndDisplaySnapshotFromStrapi(firstSample);
+  }
 };
 
 window.saveSnapshotToString = () => {

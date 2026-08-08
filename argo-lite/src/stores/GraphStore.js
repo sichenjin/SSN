@@ -126,7 +126,7 @@ export default class GraphStore {
   @observable pickUpAlter = true;
   @observable highlightCommonNodes = false;
   @observable showIntersect = false;
-  @observable autoZoom = false;
+  @observable autoZoom = true;
   @observable firstload = true;
   @observable seledctParticipatingNodes = false;
 
@@ -319,7 +319,7 @@ export default class GraphStore {
       ...this.metadata.nodeProperties,
       ...this.metadata.nodeComputed,
       // ...this.metadata.edgeProperties,
-    ]).filter((k) => removeList.indexOf(k) === -1); // since node_id is already present
+    ]).filter((k) => k != null && removeList.indexOf(k) === -1); // since node_id is already present
   }
 
   @computed
